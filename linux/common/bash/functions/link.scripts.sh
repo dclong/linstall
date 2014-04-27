@@ -22,10 +22,19 @@ function link.sidir(){
 }
 function link.scripts(){
     link.sidir "$bash_scripts_dir"
-    case "$(uname -v)" in
-        *Debian* ) link.sidir "$debian_dir/bash/scripts";;
-        *Ubuntu* ) link.sidir "$ubuntu_dir/bash/scripts";;
-        * ) ;;
+    if [[ $(uname -a) == CYGWIN* ]]; then
+        link.sidir "$cygwin_dir/bash/scripts"
+        return
+    fi
+    case "$(lsb_release -d)" in
+        *Debian* ) 
+            link.sidir "$debian_dir/bash/scripts";;
+        *Ubuntu* ) 
+            link.sidir "$ubuntu_dir/bash/scripts";;
+        *LMDE* )
+            link.sidir "$lmde_dir/bash/scripts";;
+        * ) 
+            echo "Distribution not supported!";;
     esac
     link.sidir "$python_dir/bin"
 }

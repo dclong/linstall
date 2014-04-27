@@ -6,7 +6,7 @@ Creation-Date: 2014-04-27T10:14:15-04:00
 Created Sunday 27 April 2014
 @robot 
 
-1. smart robot, finally one person control all of them, sm
+1. smart robot, finally one person control all of them, sm, novel, combine all these technologies ...
 
 
 3. human pk robot, use weiqiPY to force all robots do distributed computing

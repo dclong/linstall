@@ -180,7 +180,7 @@ done
 
 if test $dofile = 1; then
     if test -f "$file"; then
-        filepackages="$filepackages `cat "$file" | awk '{printf "%s ", $0}'`"
+        filepackages="$filepackages `cat "$file" | gawk '{printf "%s ", $0}'`"
     else
         echo File $file not found, skipping
     fi
@@ -197,7 +197,7 @@ case "$command" in
 
     list)
         echo 1>&2 The following packages are installed:
-        cat /etc/setup/installed.db | awk '/[^ ]+ [^ ]+ 0/ {print $1}'
+        cat /etc/setup/installed.db | gawk '/[^ ]+ [^ ]+ 0/ {print $1}'
     ;;
 
     search)
@@ -207,10 +207,10 @@ case "$command" in
         for pkg in $packages; do
             echo ""
             echo Searching for installed packages matching $pkg:
-            awk '/[^ ]+ [^ ]+ 0/ {if ($1 ~ query) print $1}' query="$pkg" /etc/setup/installed.db
+            gawk '/[^ ]+ [^ ]+ 0/ {if ($1 ~ query) print $1}' query="$pkg" /etc/setup/installed.db
             echo ""
             echo Searching for installable packages matching $pkg:
-            cat setup.ini | awk -v query="$pkg" \
+            cat setup.ini | gawk -v query="$pkg" \
             'BEGIN{RS="\n\n@ "; FS="\n"; ORS="\n"} {if ($1 ~ query) {print $1}}'
         done
     ;;
@@ -221,7 +221,7 @@ case "$command" in
         getsetup
         for pkg in $packages; do
             echo ""
-            cat setup.ini | awk -v query="$pkg" \
+            cat setup.ini | gawk -v query="$pkg" \
             'BEGIN{RS="\n\n@ "; FS="\n"; ORS="\n"} {if ($1 ~ query) {print $0 "\n"}}'
         done
     ;;
@@ -257,7 +257,7 @@ case "$command" in
             echo Installing $pkg
             # look for package and save desc file
             mkdir -p "release/$pkg"
-            cat setup.ini | awk > "release/$pkg/desc" -v package="$pkg" \
+            cat setup.ini | gawk > "release/$pkg/desc" -v package="$pkg" \
                 'BEGIN{RS="\n\n@ "; FS="\n"} {if ($1 == package) {desc = $0; px++}} \
                 END {if (px == 1 && desc != "") print desc; else print "Package not found"}' 
 
@@ -270,7 +270,7 @@ case "$command" in
             echo Found package $pkg
             # download and unpack the bz2 file
             # pick the latest version, which comes first
-            install=`cat "release/$pkg/desc" | awk '/^install: / { print $2; exit }'` 
+            install=`cat "release/$pkg/desc" | gawk '/^install: / { print $2; exit }'` 
             if test "-$install-" = "--"; then
                 echo "Could not find \"install\" in package description: obsolete package?"
                 exit 1
@@ -279,8 +279,8 @@ case "$command" in
             cd "release/$pkg"
             wget -nc $mirror/$install
             # check the md5
-            digest=`cat "desc" | awk '/^install: / { print $4; exit }'` 
-            digactual=`md5sum $file | awk '{print $1}'`
+            digest=`cat "desc" | gawk '/^install: / { print $4; exit }'` 
+            digactual=`md5sum $file | gawk '{print $1}'`
             if ! test $digest = $digactual; then
                 echo MD5 sum did not match, exiting
                 exit 1
@@ -290,14 +290,14 @@ case "$command" in
             gzip -f "/etc/setup/$pkg.lst"
             cd ../..
             # update the package database
-            cat /etc/setup/installed.db | awk > /tmp/awk.$$ -v pkg="$pkg" -v bz=$file \
+            cat /etc/setup/installed.db | gawk > /tmp/awk.$$ -v pkg="$pkg" -v bz=$file \
               '{if (ins != 1 && pkg < $1) {print pkg " " bz " 0"; ins=1}; print $0} \
                END{if (ins != 1) print pkg " " bz " 0"}'
             mv /etc/setup/installed.db /etc/setup/installed.db-save
             mv /tmp/awk.$$ /etc/setup/installed.db
             # recursively install required packages
             echo > /tmp/awk.$$ '/^requires: / {s=gensub("(requires: )?([^ ]+) ?", "\\2 ", "g", $0); print s}'
-            requires=`cat "release/$pkg/desc" | awk -f /tmp/awk.$$`
+            requires=`cat "release/$pkg/desc" | gawk -f /tmp/awk.$$`
             warn=0
             if ! test "-$requires-" = "--"; then
                 echo Package $pkg requires the following packages, installing:
@@ -356,10 +356,10 @@ case "$command" in
                 rm "/etc/preremove/$pkg.sh"
             fi
 
-            cat "/etc/setup/$pkg.lst.gz" | gzip -d | awk '/[^\/]$/ {print "rm -f \"/" $0 "\""}' | sh
+            cat "/etc/setup/$pkg.lst.gz" | gzip -d | gawk '/[^\/]$/ {print "rm -f \"/" $0 "\""}' | sh
             rm "/etc/setup/$pkg.lst.gz"
             rm -f /etc/postinstall/$pkg.sh.done
-            cat /etc/setup/installed.db | awk > /tmp/awk.$$ -v pkg="$pkg" '{if (pkg != $1) print $0}'
+            cat /etc/setup/installed.db | gawk > /tmp/awk.$$ -v pkg="$pkg" '{if (pkg != $1) print $0}'
             mv /etc/setup/installed.db /etc/setup/installed.db-save
             mv /tmp/awk.$$ /etc/setup/installed.db
             echo Package $pkg removed
