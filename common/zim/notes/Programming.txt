@@ -1,0 +1,60 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-03-18T18:34:26-05:00
+
+====== Programming ======
+Created Tuesday 18 March 2014
+
+
+
+[ ] write a program to analyze your finacial statements 5/1/2014 !!!
+	[ ] fraud detection 
+	[ ] consume summary
+
+[ ] write a program to manage password in command line
+
+	- ask for password, terminal and gui? you can first check whether python is running in terminal ...
+	- for this program, just ask password in terminal, and make it support password option
+	- keep old password ...
+	- directly put decrypted file into memoery sounds like a good choice ... but sure how to do that ...
+
+[ ] write a program to use curl and python to translate Chinese to English using online translation 
+You can use Google translate
+
+[ ] auto download portable apps and other softwares automatically using selenium ...
+
+[ ] Linux voice and image process, 
+write a program to be smartly allow super user access, 
+e.g., use camer to automatically decide whether you are the owner of the laptop or not 
+and adaptive learn habbit of user and so on ...
+learn to combine voice and gestures .... 
+
+
+1. accepted.ips more, auth.log, refused ... 
+
+2. your shortcomings when programming:
+ too many versions without good documentation about which one is the newest 
+
+
+3. write a shell code to install linux image and the correspodning headers automatically
+you can let user select from a list ...
+
+4. Linux alias, function, ls.media mv.media cp.media ...
+
+5. write the sum and product puzzle using julia and implement statistical methods in julia
+
+Write an app to scan barcode and search website for coupon, this is an great idea!
+And if Walmart allows user to scan using their own phone, it even better!
+
+7. Jonhson's alert at a specific location is great!
+You can combine this to get a more powerful alert app
+
+8. About your universal contact idea, use mongodb to do it, waiting for a embeddable powerful nosql is not wise
+you can let user define similar keywords that should treated the same ... and use them to scan for duplicity ...
+
+9. write a program to organize your Walmart purchases,
+link the pictures, OCR, scan recognize numbers ... 
+i think it's possible ...
+or check Walmart electronic receipts ...
+
+10. write a <link:internal>bash</link:internal> function to show descriptions related to branches. Use color ...

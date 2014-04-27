@@ -1,0 +1,34 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-03T14:46:56-05:00
+
+====== TeamDrive ======
+Created Thursday 03 April 2014
+
+1. It seems that [[TeamDrive]] ignores symbolic links ...
+Is possible to keep symbolic links? Just keep these files, don't copy content ...
+Similarly, to Dropbox? At least should give options ...
+
+2. It seems that [[TeamDrive]] is slow when syncing database files.
+This is easy to understand. 
+Actually I think these secure cloud are typically slow
+as it's hard for them to do delta synchronization.
+
+3. How to let [[TeamDrive]] show up in the notification aera in Ubuntu?
+
+5. You can check in virtual machine to see whether a local config file works.
+Contact support first.
+
+16. you should sync the filter files, let ... point to local ...
+
+[ ] Check how you can link [[TeamDrive]] with Amazon S3 or use local disk 
+
+## Tips
+
+1. [[TeamDrive]] clients might show more space usage than the web dashboard. 
+It's because the clients counts everything watched locally including old versions
+while the web only shows the true space usage. 
+
+2. [[TeamDrive]] doesn't sync symbolic links currently!!
+
+3. I don't [[TeamDrive]] support the standard hierarchical configuration files. 

@@ -1,0 +1,25 @@
+[remmina]
+keymap=
+ssh_auth=0
+quality=0
+disableencryption=0
+ssh_charset=
+ssh_privatekey=
+colordepth=8
+hscale=0
+group=
+password=5NOM4v6QSIzAYcXxY4DJ5A==
+name=vnc @ home
+ssh_loopback=0
+viewonly=0
+ssh_username=
+ssh_server=
+disableclipboard=0
+protocol=VNC
+vscale=0
+ssh_enabled=0
+username=dclong
+showcursor=0
+disableserverinput=0
+server=173.25.205.133
+aspectscale=0

@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-07T23:27:05-05:00
+
+====== Questions ======
+Created Monday 07 April 2014
+@question
+
+1. Python, import, should I put it into smallest block or just put it at the beginning of a function
+does it make any difference to performance?
+
+1. it seems that chinese in xetex doesn't wrap automatically?	
+
+how to include packages according to whether it's already included or not?	
+
+difference between input and include? it seems that include 

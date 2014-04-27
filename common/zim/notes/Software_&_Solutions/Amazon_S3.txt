@@ -1,0 +1,23 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-04T23:28:29-05:00
+
+====== Amazon S3 ======
+Created Friday 04 April 2014
+
+0. Might not be a good solution for personal use, but you can use it together with Enterprise solutions, such as AeroFS.
+Don't spend time to figure out how to use it as a secure backup/sync plan.
+Wait until mature products come up.
+
+1. s3cmd, AeroFS, Software:TeamDrive
+
+2. It's interesting to combine S3 with EC2.
+For example, if I upload images to S3
+and I use s3cmd to view directory and files, 
+but I also want to operate (e.g., extract meta information), then EC2 can be very help.
+If EC2 support Linux, then it's the best!
+
+3. check EC2, sounds like a good product ...
+
+4. It's also possible to mount Amazon S3 as a directory in Linux using S3FS. 
+However, I'm mostly worried about security. 

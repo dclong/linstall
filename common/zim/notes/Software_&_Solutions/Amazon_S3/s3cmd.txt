@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-04T23:32:47-05:00
+
+====== s3cmd ======
+Created Friday 04 April 2014
+
+1. support interactive mode, cd and ls, cache, etc ...
+
+2. check if s3cmd with s3 support symbolic link, best if it does 
+an option to follow symbolic link or not is good ...
+but this can be trick ... must use relative symbolic links ...
+
+3. create another testing bucket do test out s3cmd

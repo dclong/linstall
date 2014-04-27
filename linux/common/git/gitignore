@@ -1,0 +1,75 @@
+# linux backup file
+*~
+#.gitignore
+# binary directory
+#bin/
+# vim .swp file
+*.[sS][wW][pP]
+# -------------- Python -------------------
+# python .pyc file
+*.[pP][yY][cC]
+SparkleShare.txt
+# --------------- Java files --------------
+# *.[jJ][aA][rR]
+# ---------------- Eclipse --------------------
+# eclipse .classpath file
+# .[cC][lL][aA][sS][sS][pP][aA][tT][hH]
+# eclipse .project file
+# .[pP][rR][oO][jJ][eE][cC][tT]
+# eclipse .cproject file
+# .[cC][pP][rR][oO][jJ][eE][cC][tT]
+# eclipse .settings file
+# .[sS][eE][tT][tT][iI][nN][gG][sS]
+# ------------ Latex -------------------------
+# latex .aux file
+# *.[aA][uU][xX]
+# latex .bbl file
+# *.[bB][bB][lL]
+# latex .blg file
+# *.[bB][lL][gG]
+# latex .dvi file
+# *.[dD][vV][iI]
+# latex .log file
+# *.[lL][oO][gG]
+# texstudio .synctex.gz file
+# *.[sS][yY][nN][cC][tT][eE][xX].[gG][zZ]
+# -------------- R ---------------------------
+# R hitory file
+# *.[rR][hH][iI][sS][tT][oO][rR][yY]
+# R image file
+# *.[rR][Dd][aA][tT][aA]
+# R documentation file
+#*.[rR][dD]
+# ------------ Matlab ---------------------
+# *.[mM][aA][tT]
+# *.[aA][sS][vV]
+# *.[fF][iI][gG]
+# ------------ Documents -------------------
+# pdf file 
+# *.[pP][dD][fF]
+# eps file
+# *.[eE][pP][sS]
+# word .doc
+# *.[dD][oO][cC]
+# *.[dD][oO][cC][xX]
+# excel
+# *.[xX][lL][sS]
+# *.[xX][lL][sS][xX]
+# *.[pP][pP][tT]
+# ----------- Image -------------------
+# image .png
+# *.[pP][nN][gG]
+# image .jpg
+# *.[jJ][pP][gG]
+# image .jpeg
+# *.[jJ][pP][eE][gG]
+# ---------- GCC --------------------
+# gcc binary output
+# *.[oO][uU][tT]
+# --------- binary data ------------
+# *.[bB][iI][nN]
+# ------- compressed files ---------
+# *.[zZ][iI][pP]
+# *.[tT][aA][rR].[gG][zZ]
+# *.7[zZ][iI][pP]
+

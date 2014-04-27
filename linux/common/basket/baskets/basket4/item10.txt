@@ -1,0 +1,2 @@
+<html><head><meta name="qrichtext" content="1" /></head><body>Here is a basket to show you some examples of usage for this application.<br>
+This basket is used to keep track of research results for a project.</body></html>

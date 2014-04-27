@@ -1,0 +1,27 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-01T21:02:34-05:00
+
+====== Thinkings ======
+Created Tuesday 01 April 2014
+
+## Relations
+1. I now realize that how important relations are. You might have really good ideas, but you might do not the opportunity to do it. 
+Get to know more people!
+
+2. it's alwasy benefitial to think about problem in a unified way
+contacts, robots and so on ...
+social network, cloud storage, chatting tools and so on ...
+
+3. wiki is a good way to compare softwares, products, etc
+just search wiki comparison ... in search engines 
+and for this reason, it's also a great place to find alternatives of software, products, etc
+
+
+4. Parents like to show pictures of babies a lot. 
+I think there's good chance to build a website specifically for Moms.
+Include more functionalities ...
+
+5. How does barcode works for transfering information? Is it possible to use it as a secure way to transfer text information from (e.g., company computer) to phone? 
+
+6. if you want to extend a language, use markers inside its comments is a good idea. 

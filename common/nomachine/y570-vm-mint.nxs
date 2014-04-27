@@ -1,0 +1,141 @@
+<!DOCTYPE NXClientSettings>
+<NXClientSettings version="1.5" application="nxclient" >
+<group name="Advanced" >
+<option key="Disable deferred updates" value="false" />
+<option key="Grab keyboard input" value="false" />
+<option key="Enable remote cursor tracking" value="false" />
+<option key="Enable HTTP proxy" value="false" />
+<option key="HTTP proxy host" value="" />
+<option key="HTTP proxy port" value="8080" />
+<option key="HTTP proxy password" value="EMPTY_PASSWORD" />
+<option key="Remember HTTP proxy password" value="false" />
+<option key="HTTP proxy username" value="" />
+<option key="Enable SSL encryption" value="true" />
+<option key="Disable ZLIB stream compression" value="false" />
+<option key="Enable response time optimisations" value="false" />
+</group>
+<group name="Environment" >
+<option key="Use font server" value="false" />
+<option key="Font server host" value="" />
+<option key="Font server port" value="7100" />
+</group>
+<group name="General" >
+<option key="XAgent encoding" value="true" />
+<option key="Enable session auto-resize" value="false" />
+<option key="Connection service" value="nx" />
+<option key="Command line" value="" />
+<option key="Use custom server" value="false" />
+<option key="Custom server command" value="/etc/NX/nxserver" />
+<option key="Custom Unix Desktop" value="" />
+<option key="Use default image encoding" value="0" />
+<option key="NoMachine daemon port" value="4000" />
+<option key="Desktop" value="" />
+<option key="Disable SHM" value="false" />
+<option key="Disable emulate shared pixmaps" value="false" />
+<option key="Use render" value="true" />
+<option key="Last connection time" value="1396717456" />
+<option key="Link quality" value="5" />
+<option key="Link speed" value="adsl" />
+<option key="Platform of the last connection" value="LMDE Cinnamon Edition" />
+<option key="Session resize mode" value="viewport" />
+<option key="Resize the remote screen to the local geometry" value="true" />
+<option key="Resolution" value="" />
+<option key="Remember password" value="false" />
+<option key="Remember username" value="true" />
+<option key="Session screenshot" value="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" />
+<option key="Server host" value="192.168.0.8" />
+<option key="Server port" value="22" />
+<option key="Server product" value="NoMachine" />
+<option key="Session" value="" />
+<option key="Show remote audio alert message" value="false" />
+<option key="Show remote display resize message" value="false" />
+<option key="Use taint" value="true" />
+<option key="Use UDP communication for multimedia data" value="true" />
+<option key="Virtual desktop" value="false" />
+<option key="Session window state" value="normal" />
+<option key="xdm mode" value="" />
+<option key="xdm broadcast port" value="177" />
+<option key="xdm list host" value="localhost" />
+<option key="xdm list port" value="177" />
+<option key="xdm query host" value="localhost" />
+<option key="xdm query port" value="177" />
+<option key="Port for UDP communication" value="4561" />
+<option key="Maximum port of the UDP ports range" value="4999" />
+<option key="Minimum port of the UDP ports range" value="4011" />
+<option key="Use a random port in the configured range" value="true" />
+<option key="Use upnp to map the port" value="true" />
+</group>
+<group name="Login" >
+<option key="Alternate NX Key" value="" />
+<option key="Forward SSH authentication" value="false" />
+<option key="Guest Mode" value="false" />
+<option key="Guest password" value="" />
+<option key="Guest username" value="" />
+<option key="Server authentication method" value="system" />
+<option key="Auth" value="EMPTY_PASSWORD" />
+<option key="User" value="dclong" />
+<option key="NX login method" value="password" />
+<option key="Private key for NX authentication" value="" />
+<option key="Use alternate smart card module" value="false" />
+<option key="Smart card authentication module" value="" />
+<option key="Private key" value="" />
+<option key="Public Key" value="-----BEGIN DSA PRIVATE KEY-----&#xa;MIIBuwIBAAKBgQCXv9AzQXjxvXWC1qu3CdEqskX9YomTfyG865gb4D02ZwWuRU/9&#xa;C3I9/bEWLdaWgJYXIcFJsMCIkmWjjeSZyTmeoypI1iLifTHUxn3b7WNWi8AzKcVF&#xa;aBsBGiljsop9NiD1mEpA0G+nHHrhvTXz7pUvYrsrXcdMyM6rxqn77nbbnwIVALCi&#xa;xFdHZADw5KAVZI7r6QatEkqLAoGBAI4L1TQGFkq5xQ/nIIciW8setAAIyrcWdK/z&#xa;5/ZPeELdq70KDJxoLf81NL/8uIc4PoNyTRJjtT3R4f8Az1TsZWeh2+ReCEJxDWgG&#xa;fbk2YhRqoQTtXPFsI4qvzBWct42WonWqyyb1bPBHk+JmXFscJu5yFQ+JUVNsENpY&#xa;+Gkz3HqTAoGANlgcCuA4wrC+3Cic9CFkqiwO/Rn1vk8dvGuEQqFJ6f6LVfPfRTfa&#xa;QU7TGVLk2CzY4dasrwxJ1f6FsT8DHTNGnxELPKRuLstGrFY/PR7KeafeFZDf+fJ3&#xa;mbX5nxrld3wi5titTnX+8s4IKv29HJguPvOK/SI7cjzA+SqNfD7qEo8CFDIm1xRf&#xa;8xAPsSKs6yZ6j1FNklfu&#xa;-----END DSA PRIVATE KEY-----" />
+<option key="System auth" value="EMPTY_PASSWORD" />
+<option key="System login method" value="password" />
+<option key="Use alternate NX Key" value="false" />
+<option key="GSSAPI subsystem for the kerberos authentication" value="kerberos" />
+<option key="Kerberos key exchange to identify server host" value="false" />
+<option key="DNS translation when passing server to Kerberos library" value="false" />
+</group>
+<group name="Images" >
+<option key="Disable network-adaptive quality" value="false" />
+<option key="Disable backingstore" value="false" />
+<option key="Disable composite" value="false" />
+<option key="Disable lossless display refinement" value="false" />
+<option key="Disable multi-pass display encoding" value="false" />
+<option key="Save bandwidth on idle" value="false" />
+<option key="Disable image post-processing" value="false" />
+<option key="E-reader display update policy" value="false" />
+<option key="Stream downsampling factor" value="0" />
+<option key="Image Compression Type" value="" />
+<option key="Image encoding quality" value="5" />
+<option key="JPEG Quality" value="" />
+<option key="RDP Image Encoding" value="" />
+<option key="RDP JPEG Quality" value="" />
+<option key="Video encoding quality" value="5" />
+<option key="VNC images compression" value="" />
+<option key="VNC JPEG Quality" value="" />
+</group>
+<group name="Services" >
+<option key="Output audio device" value="autodetect" />
+<option key="Output audio quality" value="5" />
+<option key="Audio" value="true" />
+<option key="IPPPrinting" value="true" />
+<option key="Enable devices sharing" value="true" />
+<option key="Shares" value="true" />
+<option key="Mute audio of the remote physical desktop" value="true" />
+<option key="Input voice device" value="autodetect" />
+<option key="Input voice quality" value="5" />
+<option key="Show remote audio alert message" value="true" />
+</group>
+<group name="VNC Session" >
+<option key="Display" value=":0" />
+<option key="Password" value="EMPTY_PASSWORD" />
+<option key="Remember login credentials" value="false" />
+<option key="Remember" value="false" />
+<option key="Server" value="" />
+</group>
+<group name="Windows Session" >
+<option key="Application" value="" />
+<option key="Authentication" value="2" />
+<option key="Color Depth" value="" />
+<option key="Domain" value="" />
+<option key="Image Cache" value="" />
+<option key="Password" value="EMPTY_PASSWORD" />
+<option key="Remember login credentials" value="false" />
+<option key="Remember" value="false" />
+<option key="Run application" value="false" />
+<option key="Server" value="" />
+<option key="User" value="" />
+</group>
+</NXClientSettings>

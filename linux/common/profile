@@ -1,0 +1,11 @@
+
+# set PATH so it includes user's private bin if it exists
+# note that .profile is read by /bin/sh (which is often dash)
+# please don't use bash features in .profile
+if [ -d "$HOME/bin" ]; then
+#    && [[ "$PATH" != *"$HOME/bin"* ]] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# source in .bashrc
+. "$HOME/.bashrc"

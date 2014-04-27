@@ -1,0 +1,21 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-05T19:17:17-05:00
+
+====== BTSync ======
+Created Saturday 05 April 2014
+
+8. Bittorrent Sync ignore directory?
+it seems to the problem of ignoring directories only
+
+10. bitcasa more free space
+
+7. People say btsync is faster (especially for large files).
+I guess this measures the transfer process. 
+According to my experience, BTSync and Software:AeroFS is not fast when detecting changes and finding peers.
+This is easy to understand.
+Sync solutions based on Software:BitTorrent is not good for real time usages!!!
+They are good for syncing larges files but no need for them to start syncing immediately. 
+
+8. http://www.btsync.com/#/
+

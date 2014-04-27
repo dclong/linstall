@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-07T15:20:52-05:00
+
+====== Calendar ======
+Created Monday 07 April 2014
+
+1. alternative to Google calendar
+	* sync with Thunderbird
+	* have mobile apps
+

@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-04T08:48:11-05:00
+
+====== vbill ======
+Created Friday 04 April 2014
+
+[ ] rewrite your vbill program

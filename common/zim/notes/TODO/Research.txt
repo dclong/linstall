@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-01T21:07:33-05:00
+
+====== Research ======
+Created Tuesday 01 April 2014
+
+2. publish your dclong.spt package
+

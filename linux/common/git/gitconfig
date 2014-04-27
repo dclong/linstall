@@ -1,0 +1,8 @@
+[user]
+	name = Chuanlong (Ben) Du
+	email = duchuanlong+git@gmail.com
+[core]
+	editor = vi
+	excludesfile = ~/.gitignore
+[merge]
+	tool = vimdiff

@@ -1,0 +1,27 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-03-18T18:37:51-05:00
+
+====== Software & Solutions ======
+Created Tuesday 18 March 2014
+
+1. Check how to specify dealine in Zim, and also **tags** ...
+2. zim plugin, vim mode?
+3. zim space? auto list 
+
+3. Android on Linux to use some windows softwares
+4. root android when you have time
+
+7. See whether Portable Apps allow for customized repository ...
+you can request for the feature ...
+
+10. write code to encrypt and upload your files to baidu 
+
+7. Check for best capitalization solution for vim 
+
+6. [[ShareLatex]] sounds like a great tool!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+1. See how you can disable Photo upload in dropbox and bitcasa
+
+
+

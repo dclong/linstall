@@ -1,0 +1,15 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-04T11:35:13-05:00
+
+====== AeroFS ======
+Created Friday 04 April 2014
+
+1. Install [[AeroFS]] server and store your stuff on Amazon S3
+
+3. Can I use multiple servers pointing to Amazon S3?
+
+4. 32 bit version has problems on Debian and LMDE but seems to work well on Ubuntu.
+
+5. Too slow currently, slow to detect changes ..., slow to find peers ...
+not a good solutions to use currently

@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+#' TODO add options to exclude files
+function source.dir.usage(){
+    echo "Source in all shell script (files end with .sh) in a directory."
+    echo "Syntax: source.dir dir"
+}
+
+function source.dir(){
+    if [ "$1" == "-h" ]; then
+        source.dir.usage
+        return 0
+    fi
+    for f in $(ls "$1"); do
+        if [[ "$f" == *.sh ]]; then
+            source "$1/$f"
+        fi
+    done
+}
+
+function source.bashdir(){
+    source.dir "$1/functions"
+    source.dir "$1/aliases"
+    source.dir "$1/config"
+}
+
+bash_dir=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+source.bashdir $bash_dir
+
+# Distribution specific 
+if [[ $(uname -a) == CYGWIN* ]]; then
+    source.bashdir "$cygwin_dir/bash"
+    return
+fi
+case "$(lsb_release -d)" in
+    *Debian* ) source.bashdir "$debian_dir/bash";;
+    *Ubuntu* ) source.bashdir "$ubuntu_dir/bash";;
+    * ) ;;
+esac

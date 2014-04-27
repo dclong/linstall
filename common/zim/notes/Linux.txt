@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-03-24T21:01:59-05:00
+
+====== Linux ======
+Created Monday 24 March 2014
+
+1. Dual monitor problem, currently none of the Linux distributions solve this problem ... 
+try Ubuntu 14.04 after it's released
+
+2. Debian y450 hdmi audio device not show up 
+
+3. What if I put #/bin/bash in .profile? 
+Then I think you can use bash specific features. 
+But I recommend you to do so. 
+
+4. See how you can rename a disk/volumn name in Linux
+
+5. fcitx black box problem, see how to solve it
+try it with Mint virtual machine
+
+6. Arch has a comprehensive wiki that is also very helpful for other Linux distributions.
+Search Arch wiki keywords ...
+
+4. See how you can set up printer on Linux, e.g., Ubuntu and Debian
+
+5. Keep your eyes on Linux voice control applications, such as Blather, Simon, VoxForge, etc.
+
+6. Many deb (if not say for a specific distribution) works best for Ubuntu.
+Ubuntu LTS is a great choice for personal use
+
+7. write a script for running before Linux shutdown!!!

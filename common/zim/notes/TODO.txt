@@ -1,0 +1,24 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-03-19T12:31:23-05:00
+
+====== TODO ======
+Created Wednesday 19 March 2014
+@todo 
+
+1. figure out where is the best location to put your alias and configuration files, .profile or .bash_profile, check the login shell page
+
+2. fix the NFS problem, check ZFS, it seems that it has zfs send functionality
+
+3. See how you can redirect warnings of GUI applications to a file or /dev/null
+
+6. local copy of tax?
+
+7. extract your notes in [[MongoDB]]
+
+8. Virtual machine is a good way to learn new technologies, 
+summary steps to learn Oracle SQL OTN_... and big data, virtual machines ...
+
+9. Encrypt and copy some of your private files to Dropbox 
+so that they can be accessed everywhere.
+You'd better write a script and schedule a job to do so.

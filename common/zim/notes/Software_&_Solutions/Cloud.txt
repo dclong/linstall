@@ -1,0 +1,31 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-05T13:18:14-05:00
+
+====== Cloud ======
+Created Saturday 05 April 2014
+@cloud @backup 
+
+Some Cloud Computing Solutions
+0. Do I need a cloud server? I'm not sure.
+Sounds like not much use. But you can keep your eyes on it. 
+Get one if you have a good deal.
+
+2. https://backupsy.com/ (a little bit expensive, it's more a backup plan) rDTU_637l6 
+3. Incloudibly (even more expensive)
+4. www.ovh.co.uk
+5. digitalocean  https://www.digitalocean.com/?refcode=6f83d05f545f
+6. http://www.28mr.com/ (information about cloud computing servers)
+7. koding.com
+8. openshift
+9. Amazon EC2 (everything is charged even all are cheap, but if you forget to turn it down, wait for your big bill)
+10. rackspace.com
+11. https://www.heroku.com/
+12. [[VolumeDrive]]
+13. http://www.btsync.com/#/
+
+租服务器挺好，一种是vps或者cloud service虚拟服务器；另一种是dedicated server
+前者省事便宜性能稍弱；后者稍贵维护稍微麻烦价格贵性能强
+看你的需求了
+
+1. tonido (for personal file storage, cloud)

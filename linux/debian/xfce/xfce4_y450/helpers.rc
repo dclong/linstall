@@ -1,0 +1,5 @@
+WebBrowser=firefox
+MailReader=icedove
+FileManager=custom-FileManager
+TerminalEmulator=debian-x-terminal-emulator
+

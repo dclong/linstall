@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-01T21:15:06-05:00
+
+====== Robot ======
+Created Tuesday 01 April 2014
+@robot @hat @google_glass 
+从简单的开始，想想如何实现你的机器人的想法。最简单的可能是帽子，类似于Google glass。

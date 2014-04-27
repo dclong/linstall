@@ -1,0 +1,24 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-03T14:48:23-05:00
+
+====== Vim ======
+Created Thursday 03 April 2014
+
+9. UltrSnip:
+#ifm ... 
+
+ifm use as alias of ifmain?
+
+11. UltiSnips, alias of snips? 
+
+12. clang_complete setup?
+13. UltiSnips 
+	a. how to default to edit private snippets?
+	b. why snippets (snip) doesn't trigger when edit directly? I guess it's because of conditional triggering ...
+14. study the python code for tiggering, see how to highlight code
+
+15. best capitalization solutions?
+It seems that you already have a very good, 
+but just how to captilize each word?
+You can of course write a macro to do that ...

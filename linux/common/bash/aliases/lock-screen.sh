@@ -1,0 +1,13 @@
+# lock screen 
+alias xfce.lock.screen='before.lock && xscreensaver-command -lock'
+alias xfce.screen.lock='xfce.lock.screen'
+alias xlock='xfce.lock.screen'
+alias gnome.lock.screen='before.lock && gnome-screensaver-command --lock'
+alias gnome.screen.lock='gnome.lock.screen'
+alias glock='gnome.lock.screen'
+alias xfce.logout='xfce4-session-logout'
+alias xfce.logoff='xfce.logout'
+alias xlogoff='xfce.logout'
+alias gnome.logout='gnome-session-quit'
+alias gnome.logoff='gnome.logout'
+alias glogoff='gnome.logout'

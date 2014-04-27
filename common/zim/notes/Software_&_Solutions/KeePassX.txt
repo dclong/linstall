@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-03T15:35:40-05:00
+
+====== KeePassX ======
+Created Thursday 03 April 2014
+
+1. keepassX, favorate items, tags, etc
+	a. user-defined white spaces is handy
+2. keepassx favorate, most frequently used? or others that support this feature?
+	you either have to do this by yourself or ask people to add this feature
+	
