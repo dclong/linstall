@@ -1,4 +1,3 @@
-
 # move file to trash and backup files to be overwritten
 # you can find config_root_dir automatically,
 # see .bashrc for inspiration
@@ -63,6 +62,8 @@ export s08='student08.econ.iastate.edu'
 export econ3='econ3.econ.iastate.edu'
 export s3='192.168.0.5'
 # export ubsas="chbobdev201"
+export boasas='sas.rvasascoe.bankofamerica.com'
+export sasgrid='boasas'
 #----------------------------------------------
 config_root_dir="$(ancester.path linux /)"
 export config_root_dir="$(dirname ${config_root_dir})"
