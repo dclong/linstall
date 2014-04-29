@@ -45,6 +45,7 @@ export blog_home="${blog_dir}/home"
 export hblog_dir="${blog_dir}/home"
 export hdeploy_dir="$blog_dir/home_deploy"
 # define variables for servers
+export nixuser="$(whoami)"
 export ssh_port='323'
 export l11='linux11.stat.iastate.edu'
 export l10='linux10.stat.iastate.edu'
