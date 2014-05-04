@@ -22,3 +22,5 @@ ifm use as alias of ifmain?
 It seems that you already have a very good, 
 but just how to captilize each word?
 You can of course write a macro to do that ...
+
+16. on windows, there's a vimfiles directory, which has colors folder, you should put color/scheme files here

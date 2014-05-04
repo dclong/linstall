@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-29T23:35:00-04:00
+
+====== Cygwin ======
+Created Tuesday 29 April 2014
+
+1. The portable versions has some problems
+	* users as portable cygwin doesn't have system information, the windows users are not automatically recognized. You have to use the command mkpasswd to ...
+	* vim, edit mode, backspace doesn't work sometimes (identation related)

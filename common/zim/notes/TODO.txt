@@ -22,3 +22,5 @@ summary steps to learn Oracle SQL OTN_... and big data, virtual machines ...
 9. Encrypt and copy some of your private files to Dropbox 
 so that they can be accessed everywhere.
 You'd better write a script and schedule a job to do so.
+
+[ ] write a thunderbird config file, refer to link http://kb.mozillazine.org/Transferring_data_to_a_new_profile_-_Thunderbird#Identify_what_you_want_to_salvage. Also you have to make sure that symbolic links doesn't cause any problems. I somehow remeber that symbolic links caused filter problems before. 

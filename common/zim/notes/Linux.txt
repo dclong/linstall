@@ -30,3 +30,12 @@ Search Arch wiki keywords ...
 Ubuntu LTS is a great choice for personal use
 
 7. write a script for running before Linux shutdown!!!
+
+Install powerful Linux Tips:
+基本要点是
+ext4
+swap 设到hdd上
+tmp丢到内存里
+
+我准备把/ 挂到ssd, /home 挂到hdd
+应该差不多了

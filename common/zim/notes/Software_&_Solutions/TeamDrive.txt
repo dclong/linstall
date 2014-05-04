@@ -21,7 +21,9 @@ Contact support first.
 
 16. you should sync the filter files, let ... point to local ...
 
-[ ] Check how you can link [[TeamDrive]] with Amazon S3 or use local disk 
+6. Teamview mess up file permissions!!!
+
+8. Check how you can link [[TeamDrive]] with Amazon S3 or use local disk 
 
 ## Tips
 
