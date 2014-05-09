@@ -13,7 +13,7 @@ function backup(){
         return 0
     fi
     echo "Backing up directory \"$1\" ..."
-    rsync -a "$1" "$2_$(date +%Y%m%d)"    
+    rsync -a "$1" "$2/$(basename $1)_$(date +%Y%m%d)"    
     echo "Done."
 }
 
