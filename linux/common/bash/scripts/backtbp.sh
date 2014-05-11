@@ -14,8 +14,12 @@ function backtbp(){
         backtbp.usage
         return 0
     fi
+    while [ "$(ps cax | grep thunderbird)" != "" ]; do
+        echo "Please close Thunderbird and then type Enter to proceed!"
+        read 
+    done
     echo "Backing up Thunderbird profile ..."
-    rsync -a $HOME/.thunderbird/ $HOME/backup/tbp_$(date +%Y%m%d)/    
+    rsync -a $HOME/.thunderbird/ $HOME/btsync/backup/tbp_$(date +%Y%m%d)/    
     echo "Done."
 }
 

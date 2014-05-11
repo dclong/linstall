@@ -41,6 +41,7 @@ alias wajig.auto="wajig update && wajig upgrade"
 
 # cp and mv
 alias cpi="cp -i"
+alias cpa="cp -a"
 alias mvi="mv -i"
 
 # grep

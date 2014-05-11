@@ -1,7 +1,9 @@
 #!/bin/bash
 function accepted.ips.usage(){
-    echo "Exact and show accepted ips from authentication log files."
-    echo "Syntax: accepted.ips log_file"
+    cat << EOF
+Exact and show accepted ips from authentication log files.
+Syntax: accepted.ips log_file
+EOF
 }
 function accepted.ips(){
     if [ "${1#*.}" == "gz" ]; then
