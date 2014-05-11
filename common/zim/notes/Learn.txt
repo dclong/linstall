@@ -21,3 +21,14 @@ e.g., download portable apps (english, Chinese, Linux, etc.)
 It seems to be the functionality of Enterprise edition 
 
 3. iptables, firewall on linux
+4. Linux log
+5. ssh port forwarding
+6. hosts.allow
+7. denyhost
+8. mobile phone, how to login? especially ubuntu edge?
+netstat -tnlp 
+learn more about network proctol
+learn fmask and dmask, linux
+sha1 and others hashes
+inotify is very interesting
+
