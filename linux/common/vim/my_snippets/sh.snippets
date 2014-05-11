@@ -50,6 +50,22 @@ case ${1:word} in
 esac
 endsnippet
 
+snippet ifmoba "If running under MobaXterm"
+if [[ "$(uname -a)" == CYGWIN_NT*GNU/Linux ]]; then
+fi
+endsnippet
+
+snippet ifcyg "If running under Cygwin"
+if [[ "$(uname -a)" == CYGWIN_NT*Cygwin ]]; then
+fi
+endsnippet
+
+snippet ifwin "If running under Windows"
+if [[ "$(uname -a)" == CYGWIN_NT* ]]; then
+fi
+endsnippet
+
+
 snippet casedist "case specially for Linux distributions"
 local dist="$(lsb_release -d)"
 case "$dist" in
