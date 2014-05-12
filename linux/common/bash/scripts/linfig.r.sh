@@ -18,6 +18,7 @@ function linfig.r(){
         echo "\"$HOME/.Renviron\" -> \"$lommon/r/Renviron\"" 
         ln -sf "$lommon/r/Rprofile.site" "$HOME/.Rprofile"
         echo "\"$lommon/r/Rprofile.site\" -> \"$HOME/.Rprofile\""
+        return 0
     fi
     ln -Tsvf "$lommon/r/Renviron" "$HOME/.Renviron"
     ln -Tsvf "$lommon/r/Rprofile.site" "$HOME/.Rprofile"
@@ -30,7 +31,6 @@ function linfig.r(){
         mkdir -p "$desdir/library"
     fi
     echo "Done."
-    return 0
 }
 if [ "$0" == ${BASH_SOURCE[0]} ]; then
     linfig.r $@
