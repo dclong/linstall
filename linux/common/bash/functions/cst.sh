@@ -11,7 +11,7 @@ function cst(){
         return 0
     fi
     cs "$@"
-        title "$(basename "$(pwd)")"
+    title "$(basename "$(pwd)")"
 }
 if [ "$0" == ${BASH_SOURCE[0]} ]; then
     cst $@
