@@ -19,12 +19,6 @@ alias ls.tree="ls -R | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e '
 # services
 alias restart.lightdm='sudo service lightdm restart'
 
-# trash
-alias trash='mv -bt "$trash_dir"'
-alias sutrash='sudo mv --backup=t -t ${trash_dir}'
-# terminal
-# alias terminal='gnome-terminal'
-
 # entertainment
 alias fortune.cowsay='fortune | cowsay'
 alias cowsay.fortune='fortune | cowsay'

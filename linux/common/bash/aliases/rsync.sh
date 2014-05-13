@@ -21,3 +21,6 @@ alias rsync4nb205='rsync4server $(whoami)@$nb205 $ssh_port'
 alias rsync4home='rsync4server $(whoami)@$homeip $ssh_port'
 alias rsync4ubsas='rsync4server $(whoami)@${ubsas} 22'
 
+alias backup.thunderbird='backup $HOME/.thunderbird $HOME/btsync/backup/tbp'
+alias backup.tbp='backup.thunderbird'
+

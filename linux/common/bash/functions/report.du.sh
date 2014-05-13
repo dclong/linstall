@@ -1,7 +1,9 @@
 #!/bin/bash
 function report.du.usage(){
-    echo "Report disk usage. Warn user if the disk space is under 5G."
-    echo "Syntax report.du"
+    cat << EOF
+Report disk usage. Warn user if the disk space is under 5G.
+Syntax report.du
+EOF
 }
 function report.du(){
     if [ "$1" == "-h" ]; then

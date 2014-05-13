@@ -1,12 +1,15 @@
 #!/bin/bash
 function rcowsay.usage(){
-    echo "Random version of cowsay."
-    echo "The syntax is the same as cowsay except that you should not use the -f option."
+    cat << EOF
+Random version of cowsay.
+The syntax is the same as cowsay except that you should not use the -f option.
+EOF
 }
 function rcowsay(){
     local pics=($(ls /usr/share/cowsay/cows/))
     local n=${#pics[@]}
-    cowsay -f ${pics[$(Rscript --no-init-file -e "cat(sample(0:($n-1), 1))")]} $@
+    local choice=$(python -c "import random; print(random.sample(range($n-1), 1)[0])")
+    cowsay -f ${pics[$choice]} $@
 }
 if [ "$0" == ${BASH_SOURCE[0]} ]; then
     rcowsay $@

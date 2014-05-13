@@ -13,7 +13,7 @@ EOF
 function linfig.r(){
     echo "Configuring R ..."
     # setup links
-    if [[ "$(uname -a)" == CYGWIN_NT* ]]; then
+    if [[ "$(uname -a)" == CYGWIN_NT*GNU/Linux ]]; then
         ln -sf "$lommon/r/Renviron" "$HOME/.Renviron"
         echo "\"$HOME/.Renviron\" -> \"$lommon/r/Renviron\"" 
         ln -sf "$lommon/r/Rprofile.site" "$HOME/.Rprofile"

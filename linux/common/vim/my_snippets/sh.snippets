@@ -51,16 +51,19 @@ esac
 endsnippet
 
 snippet ifmoba "If running under MobaXterm"
+# if running under MobaXterm in Windows as a virtualization solutions
 if [[ "$(uname -a)" == CYGWIN_NT*GNU/Linux ]]; then
 fi
 endsnippet
 
 snippet ifcyg "If running under Cygwin"
+# if running under Cygwin in Windows as a virtualization solutions
 if [[ "$(uname -a)" == CYGWIN_NT*Cygwin ]]; then
 fi
 endsnippet
 
 snippet ifwin "If running under Windows"
+# if running in Windows as a virtualization solutions
 if [[ "$(uname -a)" == CYGWIN_NT* ]]; then
 fi
 endsnippet
