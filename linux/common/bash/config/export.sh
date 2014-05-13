@@ -4,6 +4,7 @@
 export trash_dir="${HOME}/.local/share/Trash/files"
 export cloud_dir="$HOME/cloud"
 export btsync_dir="$HOME/btsync"
+export backup_dir="$btsync_dir/backup"
 export btsync_dclong="$btsync_dir/dclong"
 export btsync_me="$btsync_dclong"
 export btsync_downloads="$btsync_dclong/downloads"
