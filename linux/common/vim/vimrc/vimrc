@@ -25,6 +25,6 @@ syntax on
 " clang
 :source $lommon/vim/vimrc/clang.vim
 " vim addon 
-:source $lommon/vim/vimrc/vam.vim
+" :source $lommon/vim/vimrc/vam.vim
 " UltiSnips
-:source $lommon/vim/vimrc/ultisnips.vim
+" :source $lommon/vim/vimrc/ultisnips.vim
