@@ -17,8 +17,7 @@ function dl.config(){
     echo "Downloading files into \"$dir\" ..."
     wget --no-check-certificate --load-cookies=/home/mobaxterm/ff_cookies.txt -p https://bitbucket.org/dclong/config/get/master.zip
     unzip bitbucket.org/dclong/config/get/master.zip
-    trash ~/config
-    cp -r dclong-config-* ~/config
+    rsync -a dclong-config-*/* ~/config
 }
 
 if [ "$0" == ${BASH_SOURCE[0]} ]; then
