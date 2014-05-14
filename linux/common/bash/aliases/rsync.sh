@@ -10,7 +10,8 @@ alias rsync2s08='rsync2server lisa1107@$s08 $ssh_port'
 alias rsync2nb205='rsync2server $(whoami)@$nb205 $ssh_port'
 alias rsync2home='rsync2server $(whoami)@$homeip $ssh_port'
 alias rsync2ubsas='rsync2server $(whoami)@${ubsas} 22'
-alias rsync2boasas='rsync2server $(nixuser)@${boasas} 22'
+alias rsync2boasas='rsync2server $nixuser@${boasas} 22'
+alias rsync2sasgrid='rsync2server $nixuser@${sasgrid} 22'
 
 
 
@@ -23,7 +24,7 @@ alias rsync4s08='rsync4server lisa1107@$s08 $ssh_port'
 alias rsync4nb205='rsync4server $(whoami)@$nb205 $ssh_port'
 alias rsync4home='rsync4server $(whoami)@$homeip $ssh_port'
 alias rsync4ubsas='rsync4server $(whoami)@${ubsas} 22'
-alias rsync4boasas='rsync4server $(nixuser)@${boasas} 22'
+alias rsync4sasgrid='rsync4server $nixuser@${sasgrid} 22'
 
 
 alias backup.thunderbird='backup $HOME/.thunderbird "$backup_dir/tbp"'
