@@ -66,9 +66,11 @@ export econ3='econ3.econ.iastate.edu'
 export s3='192.168.0.5'
 # export ubsas="chbobdev201"
 export boasas='sas.rvasascoe.bankofamerica.com'
-export sasgrid='boasas'
+export sasgrid="$boasas"
 export aml='/risk/aml/'
 export myaml="$aml/user_aml/dclong"
+export sashome="/home/sasuser/$nixuser"
+export some="$sashome"
 #----------------------------------------------
 config_root_dir="$(ancester.path linux /)"
 export config_root_dir="$(dirname ${config_root_dir})"
