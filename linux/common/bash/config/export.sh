@@ -70,7 +70,7 @@ export sasgrid="$boasas"
 export aml='/risk/aml/'
 export myaml="$aml/user_aml/dclong"
 export sashome="/home/sasuser/$nixuser"
-export some="$sashome"
+export shome="$sashome"
 #----------------------------------------------
 config_root_dir="$(ancester.path linux /)"
 export config_root_dir="$(dirname ${config_root_dir})"
