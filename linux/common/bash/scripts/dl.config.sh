@@ -14,8 +14,10 @@ function dl.config(){
     fi
     local dir=$(mktemp -d)
     cd "$dir"
+    echo "Downloading files into \"$dir\" ..."
     wget --no-check-certificate --load-cookies=/home/mobaxterm/ff_cookies.txt -p https://bitbucket.org/dclong/config/get/master.zip
     unzip bitbucket.org/dclong/config/get/master.zip
+    trash ~/config
     cp -r dclong-config-* ~/config
 }
 
