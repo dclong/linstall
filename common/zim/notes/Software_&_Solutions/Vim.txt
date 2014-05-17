@@ -7,11 +7,11 @@ Created Thursday 03 April 2014
 ## Plugins
 ### Directly Usable by Copying to .vim
 1. surround
-3. UltrSnip:
+2. UltrSnip:
 #ifm ... 
 
 ifm use as alias of ifmain?
-
+surround /?
 11. UltiSnips, alias of snips? 
 
 12. clang_complete setup?
@@ -27,4 +27,76 @@ You can of course write a macro to do that ...
 
 16. on windows, there's a vimfiles directory, which has colors folder, you should put color/scheme files here
 
+17. mark a line as `a` (or other letters), go to another line, d'a
 
+
+
+You can use the visual mode also (some commands are usable with the delete option also) vip vap to select paragraph, v2ap to select two paragraphs dap works, d2ap also. You can delete within blocks of [ ] like da[
+
+For reference: the types of objects. From vim documentation : section 4. http://vimdoc.sourceforge.net/htmldoc/visual.html
+
+4. Operating on the Visual area             *visual-operators*
+v, d, c all works on the following commands
+...    
+The objects that can be used are:
+aw  a word (with white space)           
+iw  inner word                  
+aW  a WORD (with white space)           
+iW  inner WORD                  
+as  a sentence (with white space)           
+is  inner sentence                  
+ap  a paragraph (with white space)          
+ip  inner paragraph                 
+ab  a () block (with parenthesis)           
+ib  inner () block                  
+aB  a {} block (with braces)            
+iB  inner {} block                  
+a<  a <> block (with <>)                
+i<  inner <> block                  
+a[  a [] block (with [])                
+i[  inner [] block                  
+
+Normal mode
+-----------
+ds  - delete a surrounding
+cs  - change a surrounding
+ys  - add a surrounding
+yS  - add a surrounding and place the surrounded text on a new line + indent it
+yss - add a surrounding to the whole line
+ySs - add a surrounding to the whole line, place it on a new line + indent it
+ySS - same as ySs
+
+Visual mode
+-----------
+s   - in visual mode, add a surrounding
+S   - in visual mode, add a surrounding but place text on new line + indent it
+
+Insert mode
+-----------
+<CTRL-s> - in insert mode, add a surrounding
+<CTRL-s><CTRL-s> - in insert mode, add a new line + surrounding + indent
+<CTRL-g>s - same as <CTRL-s>
+<CTRL-g>S - same as <CTRL-s><CTRL-s>
+
+
+
+the following function comes from http://stackoverflow.com/questions/835008/deleting-blocks-of-text-in-vim?rq=1
+fun! DelBlock(pat)
+  let startLine = search(a:pat, "nbcW")
+  let endLine = search(a:pat, "nW")
+
+  if startLine == 0
+     echo "Block '".a:pat."' not found"
+     return
+  end
+
+  if endLine == 0
+     let endLine = line("$")
+  else
+     let endLine = endLine-1
+  end
+
+  execute startLine.","endLine."delete"
+endfunction
+
+nmap ,d :call DelBlock("^>>Start-pattern")<CR>

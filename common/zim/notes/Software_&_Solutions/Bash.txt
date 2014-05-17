@@ -1,0 +1,19 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-05-17T15:44:37-04:00
+
+====== Bash ======
+Created Saturday 17 May 2014
+
+1. ls [[/home/*]] in bash, don't use it, instead use (/home/*) directly
+
+ls -d "/home/dclong/btsync/backup/tbp_"*
+instead of 
+ls -d "/home/dclong/btsync/backup/tbp_*"
+it seems to me that if you wildcard, then full names are returned, otherwise, short names are returned.
+
+2. cp -a might not be a good idea sometimes, e.g., when in Cygwin/MobaXterm, because you might lose file permissions due to unmatch of users
+
+not condition
+if [ ! -d "$1" ]; then
+    fi

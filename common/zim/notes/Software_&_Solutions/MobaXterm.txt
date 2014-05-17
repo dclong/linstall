@@ -7,3 +7,5 @@ Created Thursday 15 May 2014
 
 ## Available
 1. shutdown, rename (limit functionalities, different from rename in Linux), ssh
+
+2. MobaXterm rename is indeed available, though no documentation available
