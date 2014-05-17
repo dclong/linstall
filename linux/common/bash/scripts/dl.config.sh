@@ -18,6 +18,7 @@ function dl.config(){
     wget --no-check-certificate --load-cookies=/home/mobaxterm/ff_cookies.txt -p https://bitbucket.org/dclong/config/get/master.zip
     unzip bitbucket.org/dclong/config/get/master.zip
     rsync -a dclong-config-*/* ~/config
+    rsync2boasas ~/config/ $shome/config
 }
 
 if [ "$0" == ${BASH_SOURCE[0]} ]; then
