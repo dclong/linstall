@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-05-15T00:50:19-04:00
+
+====== MobaXterm ======
+Created Thursday 15 May 2014
+
+## Available
+1. shutdown, rename (limit functionalities, different from rename in Linux), ssh

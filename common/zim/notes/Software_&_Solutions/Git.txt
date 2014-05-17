@@ -5,3 +5,4 @@ Creation-Date: 2014-05-14T21:02:33-04:00
 ====== Git ======
 Created Wednesday 14 May 2014
 
+1. The trick of creating executable scripts and push them to GitHub/Bitbucket to overcome the difficulty that you can change file permissions on bitbucket.
