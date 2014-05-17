@@ -20,7 +20,5 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m   h   dom   mon   dow   command
- 15   3   *     *     5     duplicity.lbp $HOME/Dropbox/ $HOME/mnt/wd/backup_y570/Dropbox/
-  0   3   *     *     5     duplicity.lbp $HOME/btsync/ $HOME/mnt/wd/backup_y570/btsync/
-
+  0   22  *     *     *     backup.tbp
 

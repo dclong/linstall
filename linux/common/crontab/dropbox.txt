@@ -23,3 +23,4 @@
  15   3   *     *     5     export PASSPHRASE=cooldragon && duplicity --exclude "**.git" $HOME/Dropbox/ file://$HOME/mnt/wd/backup_y570/Dropbox/
 
 
+ 15   3   *     *     5     duplicity.lbp $HOME/Dropbox/ $HOME/mnt/wd/backup_y570/Dropbox/
