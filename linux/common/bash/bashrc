@@ -17,6 +17,9 @@ function source.dir(){
         source.dir.usage
         return 0
     fi
+    if [ ! -d "$1" ]; then
+        return 0
+    fi
     for f in $(ls "$1"); do
         if [[ "$f" == *.sh ]]; then
             source "$1/$f"

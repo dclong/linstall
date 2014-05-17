@@ -14,6 +14,16 @@ function backup(){
     fi
     echo "Backing up directory \"$1\" ..."
     rsync -avh "$1/" "$2_$(date +%Y%m%d)"    
+    # remove old backups if specified
+    if [ "$#" -gt 2 ]; then
+        local copies=($(ls -d "$2_"*))
+        local n=${#copies[@]}
+        for (( i = 0; i < $n - $3; i++ )); do
+            #statements
+            echo "Removing \"${copies[$i]}\" ..."
+            rm -rf "${copies[$i]}"
+        done
+    fi
     echo "Done."
 }
 

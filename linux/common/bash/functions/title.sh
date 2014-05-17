@@ -8,7 +8,13 @@ EOF
 }
 
 function title(){
-    local title="$(cygpath -m $(pwd))"
+    # if running in Windows as a virtualization solutions
+    if [[ "$(uname -a)" == CYGWIN_NT* ]]; then
+        local title="$(cygpath -m $(pwd))"
+    else
+        local title="$(pwd)"
+    fi
+    title="$(basename "$title")"
     if [ "$#" -ne 0 ]; then
         title="$@"
     fi

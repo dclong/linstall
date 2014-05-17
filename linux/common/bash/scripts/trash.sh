@@ -12,6 +12,7 @@ function trash(){
         trash.usage
         return 0
     fi
+    mkdir -p "$trash_dir"
     # if running under MobaXterm in Windows as a virtualization solutions
     if [[ "$(uname -a)" == CYGWIN_NT*GNU/Linux ]]; then
         mv $@ "$trash_dir"
