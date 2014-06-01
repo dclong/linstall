@@ -101,7 +101,7 @@ put together all good software and tips you have
 1. increamental numbers,
 insert/remove a specific character at a given column
 2. capitalize all words on a line
-[ ] combining AutoKey, Senelium and pass/pwman3, you can do lots of cool things, 
+3. combining AutoKey, Senelium and pass/pwman3, you can do lots of cool things, 
 it can also be a GUIless replacement for keepassx
 [ ] building all kinds of database is also a very good idea, 
 just thinking about how much money carfax makes
@@ -137,7 +137,7 @@ inv gamma disribution variance
 
 conditional distribution of multivariate normal distribution
 [ ] EM algorithm:
-1. How many observations are needed in order to estimate all parameters? 
+* How many observations are needed in order to estimate all parameters? 
 And I think some parameters are indistinguishable, right?
 
 2. local vs global maximum, if EM algorithms only finds the local maximum, 
@@ -270,7 +270,7 @@ what's it like?
 independence ...
 [ ] information theory, entropy, how to use these to solve problems, e.g., the best solution?
 [ ] presentation about yourself:
-1. lots of good business ideas, 
+* lots of good business ideas, 
 e.g., similar idea to Dropbox before it became popular,
 actually I even wrote a backup software myself
 
@@ -291,8 +291,8 @@ change fast, keep learning, keep trend, so in short time, your are good
 possible universal ways to solve problems
 
 9. puzzle questions ....
-[ ] Luke Tierny, Iowa, potts model
-[ ] 懂得跟随大趋势的人才是聪明的人, 你看看别人在做什么，这个对你会很有启发。\n要有预见性.\nSo what is about to shake the world?\n1. trend of mobile, pad, laptop, become together\n2. trend of web\n3. 3D printer\n4. auto-drive car\n5. robot\n6. 医生行业以及医疗器材等等\n7. 快递行业，不过可能会被自动投递替代\n8. 另外当所有人涌向一个行业的时候，你应该想这个行业自身的需求是什么？
+10. Luke Tierny, Iowa, potts model
+11. 懂得跟随大趋势的人才是聪明的人, 你看看别人在做什么，这个对你会很有启发。\n要有预见性.\nSo what is about to shake the world?\n1. trend of mobile, pad, laptop, become together\n2. trend of web\n3. 3D printer\n4. auto-drive car\n5. robot\n6. 医生行业以及医疗器材等等\n7. 快递行业，不过可能会被自动投递替代\n8. 另外当所有人涌向一个行业的时候，你应该想这个行业自身的需求是什么？
 
 把自己宣扬出去\nmake yourself well known\nR packages, blog and Julia and possibly other things
 
@@ -336,5 +336,16 @@ check enhanced link analytics, google analytics
 
 BitTorrent Sync打开了网络的洪水猛兽。你可以打广告挣钱。\n利用某些广大人民喜好的信息来勾引用户。可以借助与Vole来实现\n一个用于对付网络检查的办法是，给一个关键的key,利用常规网络宣扬。\n然后这个key可以用来获取某些关键机密或者盗版信息。\n这个key应该是read only的。
 
-
-
+[ ] how can I export call history and use it to update my contact information?
+[ ] develop a chat robot to mimic yourself
+[ ] xp run program confirmation?
+[ ] netbook, frequently, black screen, not sure what happens
+[ ] cstr vba, convert to string
+[ ] vbcrlf vba, ... new line
+[ ] vb source in code in another file? this can be helpful
+[ ] vba better to use msgbox to indicate work is done, o.w., you've no idea ...
+[ ] vba, write to file, UTF-8? default is ansi
+[ ] check firefox plugin [[TableTools2]]
+[ ] check out apach solr
+[ ] use an older linux image solves antiX vboxaddition problem
+[ ] mobaxterm has a much better integration (case insenstive commands) with Windows compared to Cygwin and VM

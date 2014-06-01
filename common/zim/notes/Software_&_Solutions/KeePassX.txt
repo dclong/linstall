@@ -10,3 +10,6 @@ Created Thursday 03 April 2014
 2. keepassx favorate, most frequently used? or others that support this feature?
 	you either have to do this by yourself or ask people to add this feature
 	
+3. use [[AutoKey]] to help you
+don't put the entire password there, just use a partial or or superset one
+or use multiple phrases to help you

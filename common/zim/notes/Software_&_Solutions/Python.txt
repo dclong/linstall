@@ -5,3 +5,4 @@ Creation-Date: 2014-05-17T16:57:07-04:00
 ====== Python ======
 Created Saturday 17 May 2014
 
+1. array, object, pass by ref/value?

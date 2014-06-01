@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-01T02:50:08-04:00
+
+====== Linux ======
+Created Sunday 01 June 2014
+
+1. difference between alias paths and export paths? I think the difference is that whether you can use it in all subshells or not. 

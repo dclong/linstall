@@ -6,3 +6,4 @@ Creation-Date: 2014-05-17T14:40:42-04:00
 Created Saturday 17 May 2014
 
 1. Fail to install [[VirtualBox]] Guest Additions on antiX. Couldn't figure out what caused the problem.
+2. better to make 32 bit virtual machines

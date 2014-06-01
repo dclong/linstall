@@ -8,8 +8,11 @@ Created Thursday 03 April 2014
 ### Directly Usable by Copying to .vim
 1. surround
 2. UltrSnip:
-#ifm ... 
 
+## Plugins for Use in [[MobaXterm]]
+1. snipMate, surround, r, repeat, put into [[MobaXterm]] ...
+
+#ifm ... 
 ifm use as alias of ifmain?
 surround /?
 11. UltiSnips, alias of snips? 
