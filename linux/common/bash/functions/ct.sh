@@ -1,18 +1,18 @@
 #!/bin/bash
-function cst.usage(){
+function ct.usage(){
     cat << EOF
 Enter a directory and display its content.
-Syntax: cst dir
+Syntax: ct dir
 EOF
 }
-function cst(){
+function ct(){
     if [ "$1" == "-h" ]; then
-        cst.usage
+        ct.usage
         return 0
     fi
-    cs "$@"
+    cd "$@"
     title "$(basename "$(pwd)")"
 }
 if [ "$0" == ${BASH_SOURCE[0]} ]; then
-    cst $@
+    ct $@
 fi

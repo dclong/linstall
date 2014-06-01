@@ -17,7 +17,7 @@ function rsync2server(){
     else
         options="$5"
     fi
-    rsync -e "ssh -p $2" -azh --progress "$3" $1:"$4" $5
+    rsync -e "ssh -p $2" -avzh --progress "$3" $1:"$4" $5
 }
 
 if [ "$0" == ${BASH_SOURCE[0]} ]; then
