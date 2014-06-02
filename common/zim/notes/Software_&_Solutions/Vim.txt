@@ -14,7 +14,9 @@ Created Thursday 03 April 2014
 
 #ifm ... 
 ifm use as alias of ifmain?
-surround /?
+
+surround use [[/]] as surrounding symbol?
+
 11. UltiSnips, alias of snips? 
 
 12. clang_complete setup?
@@ -31,7 +33,7 @@ You can of course write a macro to do that ...
 16. on windows, there's a vimfiles directory, which has colors folder, you should put color/scheme files here
 
 17. mark a line as `a` (or other letters), go to another line, d'a
-
+To set a mark, type m followed by a letter. For example, ma sets mark a at the current position (line and column). If you set mark a, any mark in the current file that was previously identified as a is removed. If you set mark A, any previous mark A (in any file) is removed. 
 
 
 You can use the visual mode also (some commands are usable with the delete option also) vip vap to select paragraph, v2ap to select two paragraphs dap works, d2ap also. You can delete within blocks of [ ] like da[

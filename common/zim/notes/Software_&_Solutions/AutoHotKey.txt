@@ -5,4 +5,16 @@ Creation-Date: 2014-05-02T00:42:56-04:00
 ====== AutoHotKey ======
 Created Friday 02 May 2014
 
+## ahk_class
 
+IMWindowClass: Microsoft Lync Office Communicator
+MozillaWindowClass: Firefox
+MozillaUIWindowClass: Thunderbird
+IEFrame: IE Explorer
+rctrl_renwnd32: Outlook
+Chrome_WidgetWin_1: Chrome
+PuTTY: putty
+mintty: mintty
+
+
+cannot put ;coment after a command in a line, must use a new line

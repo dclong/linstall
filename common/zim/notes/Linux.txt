@@ -39,3 +39,15 @@ tmp丢到内存里
 
 我准备把/ 挂到ssd, /home 挂到hdd
 应该差不多了
+
+
+1. difference between alias paths and export paths? I think the difference is that whether you can use it in all subshells or not. 
+2. You cannot connect to not-approved Linux servers in company network, but if you install a virtual machine you can connect to these Linux servers using the virtual machine!! Bang! This is very cool.
+
+To show groups:
+use `groups` or 
+for entire group list use cut -d: -f1 [[/etc/group]]
+
+You can xdotool -> move-to-next-monitor to move active window to next monitor in Linux, check http://makandracards.com/makandra/12447-how-to-move-a-window-to-the-next-monitor-on-xfce-xubuntu for more. You can define shortcut Shift + Win + Left/Right for this.
+
+find a good voice to text software on Linux
