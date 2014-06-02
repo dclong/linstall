@@ -484,3 +484,36 @@ AttributeError: ConfigManager instance has no attribute 'workAroundApps'
 2014-06-01 02:36:59,595 INFO - interface - XRecord interface thread starting
 2014-06-01 02:36:59,596 INFO - service - Service now marked as running
 2014-06-01 02:37:00,048 INFO - root - Entering main()
+2014-06-01 09:18:40,528 INFO - root - Initialising application
+2014-06-01 09:18:40,604 INFO - root - Initialise global hotkeys
+2014-06-01 09:18:40,604 INFO - config-manager - Loading config from existing file: /home/dclong/.config/autokey/autokey.json
+2014-06-01 09:18:40,848 INFO - config-manager - Configuration changed - rebuilding in-memory structures
+2014-06-01 09:18:40,849 INFO - config-manager - Successfully loaded configuration
+2014-06-01 09:18:40,849 INFO - service - Starting service
+2014-06-01 09:18:41,139 INFO - interface - XRecord interface thread starting
+2014-06-01 09:18:41,140 INFO - service - Service now marked as running
+2014-06-01 09:18:41,209 INFO - root - Entering main()
+2014-06-01 09:18:51,292 INFO - root - Shutting down
+2014-06-01 09:18:51,293 INFO - service - Service shutting down
+2014-06-01 09:18:51,350 INFO - config-manager - Persisting configuration
+2014-06-01 09:18:51,351 INFO - config-manager - Backing up existing config file
+2014-06-01 09:18:51,351 INFO - config-manager - Finished persisting configuration - no errors
+2014-06-01 09:18:51,794 INFO - inotify - Shutting down file monitor
+2014-06-01 09:18:55,120 INFO - root - Initialising application
+2014-06-01 09:18:55,126 INFO - root - Initialise global hotkeys
+2014-06-01 09:18:55,126 INFO - config-manager - Loading config from existing file: /home/dclong/.config/autokey/autokey.json
+2014-06-01 09:18:55,129 INFO - config-manager - Configuration changed - rebuilding in-memory structures
+2014-06-01 09:18:55,130 INFO - config-manager - Successfully loaded configuration
+2014-06-01 09:18:55,130 INFO - service - Starting service
+2014-06-01 09:18:55,170 INFO - interface - XRecord interface thread starting
+2014-06-01 09:18:55,171 INFO - service - Service now marked as running
+2014-06-01 09:18:55,194 INFO - root - Entering main()
+2014-06-01 23:03:22,889 INFO - root - Initialising application
+2014-06-01 23:03:23,032 INFO - root - Initialise global hotkeys
+2014-06-01 23:03:23,032 INFO - config-manager - Loading config from existing file: /home/dclong/.config/autokey/autokey.json
+2014-06-01 23:03:24,806 INFO - config-manager - Configuration changed - rebuilding in-memory structures
+2014-06-01 23:03:24,806 INFO - config-manager - Successfully loaded configuration
+2014-06-01 23:03:24,806 INFO - service - Starting service
+2014-06-01 23:03:26,994 INFO - interface - XRecord interface thread starting
+2014-06-01 23:03:26,995 INFO - service - Service now marked as running
+2014-06-01 23:03:27,335 INFO - root - Entering main()
