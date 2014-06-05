@@ -349,3 +349,6 @@ BitTorrent Sync打开了网络的洪水猛兽。你可以打广告挣钱。\n利
 [ ] check out apach solr
 [ ] use an older linux image solves antiX vboxaddition problem
 [ ] mobaxterm has a much better integration (case insenstive commands) with Windows compared to Cygwin and VM
+[ ] try blather on Mint
+[ ] it seems that [[VirtualBox]] has caused the blue screen problem, avoid using it for a while to see whether the problem comes up again.
+[ ] try Cygwin vim in [[MobaXterm]]

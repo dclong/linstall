@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-04T18:44:09-04:00
+
+====== Job ======
+Created Wednesday 04 June 2014
+
+1. update your resume, put the following projects into your resume
+	a. sampling 
+	b. scenario validation, banknotes
+	c. correspondance bank, eft
+	d. otm, 
+	e. influence other people:
+		a. Linux, more people got interested in Linux and started to learn Linux
+		b. automation tools which greatly improve efficient, e.g., Jurui's ES project need to upload files via a software everyday. it's a simpling and boring repeating work, using Sikuli to do it
+		c. Autohotkey, vim, etc.

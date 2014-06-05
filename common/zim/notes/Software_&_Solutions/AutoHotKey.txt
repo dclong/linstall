@@ -16,5 +16,7 @@ Chrome_WidgetWin_1: Chrome
 PuTTY: putty
 mintty: mintty
 
-
 cannot put ;coment after a command in a line, must use a new line
+
+
+`%: literal % or you can continuation mode () or use [[SendRaw]] ...

@@ -51,3 +51,4 @@ for entire group list use cut -d: -f1 [[/etc/group]]
 You can xdotool -> move-to-next-monitor to move active window to next monitor in Linux, check http://makandracards.com/makandra/12447-how-to-move-a-window-to-the-next-monitor-on-xfce-xubuntu for more. You can define shortcut Shift + Win + Left/Right for this.
 
 find a good voice to text software on Linux
+[ ] swap.caps.escape seems to be void after a while, strange!!
