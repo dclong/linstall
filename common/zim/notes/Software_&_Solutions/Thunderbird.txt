@@ -25,4 +25,5 @@ fix the problem!!!!!!!!!!!!!!!!!!!
 11. selective sync using symbolic links, linfig.thunderbird
 or write a sync script by yourself
 
-
+## Shortcut 
+1. Alt + T: Pop up the "Tool" menu.
