@@ -2,20 +2,27 @@
 #                            TextMate Snippets                            #
 ###########################################################################
 
+# library snippets
+snippet ls "Proc SQL" b
+libname ls "/risk/aml/user_aml/dclong/scenario/data";
+endsnippet
+
+snippet ll "Proc SQL" b
+libname ll "/cygdrive/c/Users/zkyr9jm/Documents/projects/online_transaction_monitoring/n3d";
+endsnippet
+
+# data step snippets
+snippet d "Data Step" b
+data d;
+    
+run;
+endsnippet
+
+# procedure snippets
 snippet pp "Proc Print" b
 proc print data = d;
     title "d";
 run;
-endsnippet
-
-snippet %m "Macro Definition" b
-%macro m(arg1);
-%mend;
-endsnippet
-
-snippet m "Macro Definition" b
-%macro m(arg1);
-%mend;
 endsnippet
 
 snippet ps "Proc SQL" b
@@ -27,4 +34,28 @@ proc sql;
 quit;
 endsnippet
 
+# macro snippets
+snippet m "Macro Definition" b
+%macro m;
+    
+%mend;
+endsnippet
+
+snippet m("Macro Definition" b
+%macro m(arg1);
+    
+%mend;
+endsnippet
+
+snippet m(2"Macro Definition" b
+%macro m(arg1, arg2);
+    
+%mend;
+endsnippet
+
+snippet m(3"Macro Definition" b
+%macro m(arg1, arg2, arg3);
+    
+%mend;
+endsnippet
 
