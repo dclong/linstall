@@ -1,4 +1,5 @@
 
+export backup_dir="/risk/aml/user_aml/dclong/backup"
 export misc_dir="${documents}/misc"
 export pelican="/home/mobaxterm/cloud/code/python/blog/pelican"
 export boasas='sas.rvasascoe.bankofamerica.com'
