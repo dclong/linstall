@@ -4,26 +4,10 @@ Creation-Date: 2014-04-03T14:48:23-05:00
 
 ====== Vim ======
 Created Thursday 03 April 2014
-## Plugins
-### Directly Usable by Copying to .vim
-1. surround
-2. UltrSnip:
 
-## Plugins for Use in [[MobaXterm]]
-1. snipMate, surround, r, repeat, put into [[MobaXterm]] ...
-
-#ifm ... 
-ifm use as alias of ifmain?
 
 surround use [[/]] as surrounding symbol?
 
-11. UltiSnips, alias of snips? 
-
-12. clang_complete setup?
-13. UltiSnips 
-	a. how to default to edit private snippets?
-	b. why snippets (snip) doesn't trigger when edit directly? I guess it's because of conditional triggering ...
-14. study the python code for tiggering, see how to highlight code
 
 15. best capitalization solutions?
 It seems that you already have a very good, 
@@ -34,6 +18,8 @@ You can of course write a macro to do that ...
 
 17. mark a line as `a` (or other letters), go to another line, d'a
 To set a mark, type m followed by a letter. For example, ma sets mark a at the current position (line and column). If you set mark a, any mark in the current file that was previously identified as a is removed. If you set mark A, any previous mark A (in any file) is removed. 
+
+3. clang_complete setup?
 
 
 You can use the visual mode also (some commands are usable with the delete option also) vip vap to select paragraph, v2ap to select two paragraphs dap works, d2ap also. You can delete within blocks of [ ] like da[

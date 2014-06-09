@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-08T23:22:13-04:00
+
+====== UltiSnips ======
+Created Sunday 08 June 2014
+
+
+## UltiSnips
+1. snip doesn't expand in *.snippet if not used via [[:UltiSnipsEdit?!!!]]
+2. it seems that snippet.snippet doesn't support symbolic link? That is if I have "UltiSnip" point to a folder, then expansion won't work! It seems that only in a empy file? It seems that ... works in an empty file even if not open using the [[UltiSnipsEditor]] command.
+3. unbalanced parentheses in triggers might cause problems!!!
+4. UltiSnips 
+	a. how to default to edit private snippets?
+	b. why snippets (snip) doesn't trigger when edit directly?
+
+#ifm ... 
+ifm use as alias of ifmain?
