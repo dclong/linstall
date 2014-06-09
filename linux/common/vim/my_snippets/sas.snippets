@@ -3,59 +3,105 @@
 ###########################################################################
 
 # library snippets
-snippet ls "Proc SQL" b
-libname ls "/risk/aml/user_aml/dclong/scenario/data";
+snippet ls "Lib on Server" b
+libname ${1:ls} "/risk/aml/user_aml/dclong/${2:scenario}/data";
 endsnippet
 
-snippet ll "Proc SQL" b
-libname ll "/cygdrive/c/Users/zkyr9jm/Documents/projects/online_transaction_monitoring/n3d";
+snippet ll "Lib on Localhost" b
+libname ${1:ll} "/cygdrive/c/Users/zkyr9jm/Documents/projects/${2:online_transaction_monitoring/n3d}/data";
 endsnippet
 
 # data step snippets
 snippet d "Data Step" b
-data d;
-    
+data ${1:d};
+   ${2:...} 
 run;
 endsnippet
 
 # procedure snippets
 snippet pp "Proc Print" b
-proc print data = d;
-    title "d";
+proc print data = ${1:d};
+    title "$1";
 run;
 endsnippet
 
 snippet ps "Proc SQL" b
 proc sql;
-    select * 
+    select ${1:*} 
     from 
-        t
+        ${2:t}
     ;
 quit;
 endsnippet
 
-# macro snippets
-snippet m "Macro Definition" b
-%macro m;
-    
+# macro defintion snippets
+snippet '^%m|^m' "Macro Definition Without Arguments" r
+%macro ${1:m};
+    ${2:...} 
 %mend;
 endsnippet
 
-snippet m("Macro Definition" b
-%macro m(arg1);
-    
+snippet '^%m1|^m1' "Macro Definition With 1 Argument" r
+%macro ${1:m}(${2:arg1});
+    ${3:...} 
 %mend;
 endsnippet
 
-snippet m(2"Macro Definition" b
-%macro m(arg1, arg2);
-    
+snippet '^%m2|^m2' "Macro Definition With 2 Arguments" b
+%macro ${1:m}(${2:arg1}, ${3:arg2});
+    ${4:...}
 %mend;
 endsnippet
 
-snippet m(3"Macro Definition" b
-%macro m(arg1, arg2, arg3);
-    
+snippet '^%m3|^m3' "Macro Definition With 3 Arguments" b
+%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3});
+    ${5:...}
 %mend;
 endsnippet
 
+# %do ... %end;
+snippet %do "Do Loop" b
+%do i = 1 %to 2 %by 1;
+    
+%end;
+endsnippet
+
+# do; ... end;
+snippet do "Do End Group" b
+do;
+    
+end;
+endsnippet
+
+snippet dl "Do Until Loop" b
+do i = 1 to 2 by 1;
+
+end;
+endsnippet
+
+snippet for "Do Until Loop" b
+do i = 1 to 2 by 1;
+
+end;
+endsnippet
+
+snippet until "Do Until Loop" b
+do until ();
+
+end;
+endsnippet
+
+snippet while "Do While Loop" b
+do while ();
+
+end;
+endsnippet
+
+ 
+snippet %a "%array" !b
+%array(${1:arr}, data=, var=, values=, delim=%str( ), debug=N, numlist=Y);
+endsnippet
+
+snippet %o "%do_over" !b
+%do_over(${1:arr}, values=, delim=%str( ), phrase=?, escape=?, between=, macro=, keyword=);
+endsnippet
