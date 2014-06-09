@@ -29,5 +29,5 @@ alias rsync4sasgrid='rsync4server $nixuser@${sasgrid} 22'
 
 alias backup.thunderbird='backup $HOME/.thunderbird "$backup_dir/tbp" 3'
 alias backup.tbp='backup.thunderbird'
-alias backup.documents='backup "$documents" "$backup_dir/documents" 30'
+alias backup.documents='backup "$documents" "zkyr9jm@$boasas:$backup_dir/documents" 7'
 alias backup.doc='backup.documents'
