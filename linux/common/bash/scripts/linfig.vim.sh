@@ -8,6 +8,7 @@ Make a symbolic link of \"$lommon/vim/vimrc/vimrc\" to \"$HOME/.vimrc\".
 Make a symbolic link of \"$lommon/vim/colors\" to \"$HOME/.vim/colors\".
 EOF
 }
+
 function linfig.vim(){
     echo "Configuring Vim ..."
     local desdir="$HOME/.vim"
