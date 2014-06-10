@@ -7,5 +7,5 @@ alias git.deleted="git status | grep 'deleted' | sed 's/^#.*deleted://'"
 alias git.renamed="git status | grep 'renamed' | sed 's/^#.*renamed://'"
 alias git.stat='git status'
 alias git.commit='git commit -m'
-alias git.om="git push origin master"
-alias push.om="git.om"
+alias push.om="git push origin master"
+alias pull.om="git pull origin master"

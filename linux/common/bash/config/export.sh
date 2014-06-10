@@ -65,7 +65,7 @@ export s08='student08.econ.iastate.edu'
 export econ3='econ3.econ.iastate.edu'
 export s3='192.168.0.5'
 # export ubsas="chbobdev201"
-export aml='/risk/aml/'
+export aml='/risk/aml'
 export myaml="$aml/user_aml/dclong"
 #----------------------------------------------
 config_root_dir="$(ancester.path linux /)"
