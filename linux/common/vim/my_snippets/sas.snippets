@@ -4,24 +4,30 @@
 
 # library snippets
 snippet ls "Lib on Server" b
-libname ${1:ls} "/risk/aml/user_aml/dclong/$1/data";
+libname ${1:ls} "/risk/aml/user_aml/dclong/${2:$1}/data";
 endsnippet
 
 snippet ll "Lib on Localhost" b
-libname ${1:ll} "/cygdrive/c/Users/zkyr9jm/Documents/projects/${2:online_transaction_monitoring/n3d}/data";
+libname ${1:ll} "/cygdrive/c/Users/zkyr9jm/Documents/projects/${2:$1}/data";
 endsnippet
 
 # data step snippets
 snippet d "Data Step" b
 data ${1:d};
-   ${2:...} 
+    ${2:...} 
 run;
 endsnippet
 
 # procedure snippets
 snippet pp "Proc Print" b
 proc print data = ${1:d};
-    title "$1";
+    title "${2:$1}";
+run;
+endsnippet
+
+snippet pp5 "Print Top 5" b
+proc print data = ${1:d} (obs=5);
+    title "${2:$1}";
 run;
 endsnippet
 
@@ -59,49 +65,48 @@ snippet '^%m3|^m3' "Macro Definition With 3 Arguments" b
 %mend;
 endsnippet
 
+snippet %a "%array" !b
+%array(${1:arr}${2:, data=${3:d}}${4:, var=${5:v}}${6:, values=${7:l}}${8:, delim=%str(${9: })}${10:, debug=${11:N}}${12:, numlist=${13:Y}});
+endsnippet
+
+snippet %o "%do_over" !b
+%do_over(${1:arr}${2:, values=${3:v}}${4:, delim=%str(${5: })}${6:, phrase=${7:?}}${8:, escape=${9:?}}${10:, between=${11:b}}${12:, macro=${13:m}}${14:, keyword=$15});
+endsnippet
+
+snippet %p "Macro %percentile" !b
+%percentile(data=${1:d}${2:, var=$3}${4:, qtArr=$5}${6:, qtList=$7});
+endsnippet
+
 # %do ... %end;
-snippet %do "Do Loop" b
-%do i = 1 %to 2 %by 1;
-    
+snippet %dl "Do Loop" b
+%do ${1:i} = ${2:1} %to ${3:2} %by ${4:1};
+    ${5:...}
 %end;
 endsnippet
 
 # do; ... end;
-snippet do "Do End Group" b
+snippet db "Do End Group" b
 do;
-    
+    ${1:...}
 end;
 endsnippet
 
-snippet dl "Do Until Loop" b
-do i = 1 to 2 by 1;
-
-end;
-endsnippet
-
-snippet for "Do Until Loop" b
-do i = 1 to 2 by 1;
-
+snippet '^dl|\s+dl|^for|\s+for' "Do Loop" r
+do ${1:i} = ${2:1} to ${3:2} by ${4:1};
+    ${5:...}
 end;
 endsnippet
 
 snippet until "Do Until Loop" b
-do until ();
-
+do until ($1);
+    ${2:...}
 end;
 endsnippet
 
 snippet while "Do While Loop" b
-do while ();
-
+do while ($1);
+    ${2:...}
 end;
 endsnippet
 
  
-snippet %a "%array" !b
-%array(${1:arr}, data=, var=, values=, delim=%str( ), debug=N, numlist=Y);
-endsnippet
-
-snippet %o "%do_over" !b
-%do_over(${1:arr}, values=, delim=%str( ), phrase=?, escape=?, between=, macro=, keyword=);
-endsnippet
