@@ -33,10 +33,10 @@ endsnippet
 
 snippet ps "Proc SQL" b
 proc sql;
-    select ${1:*} 
+    ${1:select ${2:*} 
     from 
-        ${2:t}
-    ;
+        ${3:t}
+    ;}
 quit;
 endsnippet
 
@@ -53,15 +53,57 @@ snippet '^%m1|^m1' "Macro Definition With 1 Argument" r
 %mend;
 endsnippet
 
-snippet '^%m2|^m2' "Macro Definition With 2 Arguments" b
+snippet '^%m2|^m2' "Macro Definition With 2 Arguments" r
 %macro ${1:m}(${2:arg1}, ${3:arg2});
     ${4:...}
 %mend;
 endsnippet
 
-snippet '^%m3|^m3' "Macro Definition With 3 Arguments" b
+snippet '^%m3|^m3' "Macro Definition With 3 Arguments" r
 %macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3});
     ${5:...}
+%mend;
+endsnippet
+
+snippet '^%m4|^m4' "Macro Definition With 4 Arguments" r
+%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4});
+    ${6:...}
+%mend;
+endsnippet
+
+snippet '^%m5|^m5' "Macro Definition With 5 Arguments" r
+%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5});
+    ${7:...}
+%mend;
+endsnippet
+
+snippet '^%m6|^m6' "Macro Definition With 6 Arguments" r
+%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6});
+    ${8:...}
+%mend;
+endsnippet
+
+snippet '^%m7|^m7' "Macro Definition With 7 Arguments" r
+%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7});
+    ${9:...}
+%mend;
+endsnippet
+
+snippet '^%m8|^m8' "Macro Definition With 8 Arguments" r
+%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7}, ${9:arg8});
+    ${10:...}
+%mend;
+endsnippet
+
+snippet '^%m9|^m9' "Macro Definition With 9 Arguments" r
+%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7}, ${9:arg8}, ${10:arg9});
+    ${11:...}
+%mend;
+endsnippet
+
+snippet '^%m10|^m10' "Macro Definition With 10 Arguments" r
+%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7}, ${9:arg8}, ${10:arg9}, ${11:arg10});
+    ${12:...}
 %mend;
 endsnippet
 
@@ -69,16 +111,24 @@ snippet %a "%array" !b
 %array(${1:arr}${2:, data=${3:d}}${4:, var=${5:v}}${6:, values=${7:l}}${8:, delim=%str(${9: })}${10:, debug=${11:N}}${12:, numlist=${13:Y}});
 endsnippet
 
+snippet %av "%array" !b
+%array(${1:arr}, values=${7:v});
+endsnippet
+
 snippet %o "%do_over" !b
 %do_over(${1:arr}${2:, values=${3:v}}${4:, delim=%str(${5: })}${6:, phrase=${7:?}}${8:, escape=${9:?}}${10:, between=${11:b}}${12:, macro=${13:m}}${14:, keyword=$15});
 endsnippet
 
+snippet %om "%do_over" !b
+%do_over(${1:arr}, macro=${2:m});
+endsnippet
+
 snippet %p "Macro %percentile" !b
-%percentile(data=${1:d}${2:, var=$3}${4:, qtArr=$5}${6:, qtList=$7});
+%percentile(data=${1:d}${2:, var=$3}${4:, pctArr=$5}${6:, pctList=$7});
 endsnippet
 
 # %do ... %end;
-snippet %dl "Do Loop" b
+snippet '^\s*%dl|^\s*for' "Do Loop" r
 %do ${1:i} = ${2:1} %to ${3:2} %by ${4:1};
     ${5:...}
 %end;
@@ -91,20 +141,20 @@ do;
 end;
 endsnippet
 
-snippet '^dl|\s+dl|^for|\s+for' "Do Loop" r
+snippet '^\s*dl|^\s*for' "Do Loop" r
 do ${1:i} = ${2:1} to ${3:2} by ${4:1};
     ${5:...}
 end;
 endsnippet
 
 snippet until "Do Until Loop" b
-do until ($1);
+do until (${1:condition});
     ${2:...}
 end;
 endsnippet
 
 snippet while "Do While Loop" b
-do while ($1);
+do while (${1:condition});
     ${2:...}
 end;
 endsnippet
