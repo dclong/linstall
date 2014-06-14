@@ -1,7 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-04-06T21:21:55-05:00
-
-====== StackOverflow ======
-Created Sunday 06 April 2014
-

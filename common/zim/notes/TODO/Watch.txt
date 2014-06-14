@@ -7,8 +7,6 @@ Created Tuesday 01 April 2014
 
 0. bitcasa, AeroFS
 1. Vole
-2. Supertab
-3. Ultrsnips
-4. Julia
-5. Clang_complete
-6. eclim
+2. Julia
+3. Clang_complete
+4. eclim

@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-06-01T16:17:26-04:00
-
-====== Vim ======
-Created Sunday 01 June 2014
-
-define ;---------- comment block for ahk files

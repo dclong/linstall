@@ -6,6 +6,3 @@ Creation-Date: 2014-04-05T13:09:19-05:00
 Created Saturday 05 April 2014
 
 1. Fix the Disqus link issue, you change your links ...
-
-2. update your program, en, home, misc, search in all of them!!!
-	* add

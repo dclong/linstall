@@ -59,3 +59,30 @@ i think it's possible ...
 or check Walmart electronic receipts ...
 
 10. write a <link:internal>bash</link:internal> function to show descriptions related to branches. Use color ...
+
+## R
+[ ] 1. make tranv more powerful, first work on marix and list,
+second, possible accept varadic arguments ...
+your collapse function requires arguments have no special chars 
+
+## Linux
+4. write a function to help you run script in a file line by line,
+for lines that should be treated together, run them together
+this sounds like not easy, mostly, how to group lines correctly ...
+use a point to lines in file and so on ...
+
+## Projects
+[ ] presentation ideas:
+let computer recognize human gesture while doing presentations, combined with voice recognition,
+I think it's easy to implement things such waving hand -> go to next slide
+this save people hassle of using clipboard, but you should let people using clipboard
+
+I'm acutally thinking more on this, is it possible to let machine highlight words or point at 
+words automatically, as we do presentation?
+I think it is not hard, but voice recognition is very important!!!
+
+or combine hand gesture and voice, let point point ...
+it is possible,
+
+## Finance
+[ ] rewrite your vbill program

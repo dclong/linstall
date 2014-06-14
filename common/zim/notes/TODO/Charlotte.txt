@@ -16,30 +16,12 @@ Created Wednesday 02 April 2014
 
 4. badminton court? (school) club?
 5. tennis court, (school) club?
-6. 6/30/2014 when have I to move out?
-
-8. insurance agent?
-9. good place for fishing?
-12 clothes dry wash?
+6. good place for fishing?
 
 ## Housework
-
 1. iron shirts
 2. vacuum carpet
-
-3. (Probably need to) get a new license plate and new driver's license and new insurance 
-
-4. Call Julie to cacel your current car insurance.
-
-
-
-## Software to Install on Company Computer
-
-1. R
-2. Python
-3. Zim 
-4. Eclipse
-5. JDK
+3. (Probably need to) get a new license plate 
 
 ## Ask HR
 
@@ -48,15 +30,10 @@ Created Wednesday 02 April 2014
 3. 401K how much?
 
 ## To find
-
 1. library
-2. badminton/tennis court
-
-## Apartment
-Beacon Hill
-2215 lawry run dr charlotte NC 28273
-Aspen Peak
 
 
-6. build a website like [[StackOverflow]] ... ask Yihui for suggestions on template, framework ...
+6. build a website like StackOverflow ... ask Yihui for suggestions on template, framework ...
 
+## Questions to Ask Zhao, Cong
+1. does libary require a card to get in?

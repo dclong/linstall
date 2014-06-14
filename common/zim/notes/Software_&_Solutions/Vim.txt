@@ -9,12 +9,30 @@ Created Thursday 03 April 2014
 surround use [[/]] as surrounding symbol?
 
 
+1. E507: Close error for backup file (add ! to override), what's wrong?
+2. faster way for change case of a whole line? try guj, guk ...
+3. auto incremental numbers?
+4. define more snippets %av: array keep value only and %omb do_over keep macro and between only
+5. user-defined commands operate on marked range? e.g., delete the last column?
+6. collect common table names and select common table names ...
+7. quickly find digits and increase them? 1->2, 2->3, etc.
+8. "sel", I want to use it in both sas and sql, any easy way to do that? I don't want to keep 2 copies.
+9. or just a command to quickly increase current digit?
+10. vim ultisnips $1 does not have to be continuous!!!
+11. set in data setp set sales(where=(product='whizmo')); you can use options ...
+12. 1 line comment, 2 line, etc. for [[/*]] ...*/ for all 
+13. 13. ultisnips %m\d? is it possible to pass \d to ...
+14. regular expression ultisnips cause ... snips to be starting from the first column ,indention won't work
+
+    :sp filename for a horizontal split
+    :vsp filename or :vs filename for a vertical split
 15. best capitalization solutions?
 It seems that you already have a very good, 
 but just how to captilize each word?
 You can of course write a macro to do that ...
 
 16. on windows, there's a vimfiles directory, which has colors folder, you should put color/scheme files here
+17. Don't use the Windows version, use Vim in MobaXterm/Cygwin instead.
 
 17. mark a line as `a` (or other letters), go to another line, d'a
 To set a mark, type m followed by a letter. For example, ma sets mark a at the current position (line and column). If you set mark a, any mark in the current file that was previously identified as a is removed. If you set mark A, any previous mark A (in any file) is removed. 

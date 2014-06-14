@@ -5,14 +5,15 @@ Creation-Date: 2014-03-24T21:01:59-05:00
 ====== Linux ======
 Created Monday 24 March 2014
 
-1. Dual monitor problem, currently none of the Linux distributions solve this problem ... 
-try Ubuntu 14.04 after it's released
-
-2. Debian y450 hdmi audio device not show up 
+## Config
+1. figure out where is the best location to put your alias and configuration files, .profile or .bash_profile, check the login shell page
 
 3. What if I put #/bin/bash in .profile? 
 Then I think you can use bash specific features. 
 But I recommend you to do so. 
+
+## Monitor
+2. Debian y450 hdmi audio device not show up 
 
 4. See how you can rename a disk/volumn name in Linux
 
@@ -25,21 +26,12 @@ Search Arch wiki keywords ...
 4. See how you can set up printer on Linux, e.g., Ubuntu and Debian
 
 5. Keep your eyes on Linux voice control applications, such as Blather, Simon, VoxForge, etc.
+And find a good voice to text software on Linux
 
 6. Many deb (if not say for a specific distribution) works best for Ubuntu.
 Ubuntu LTS is a great choice for personal use
 
 7. write a script for running before Linux shutdown!!!
-
-Install powerful Linux Tips:
-基本要点是
-ext4
-swap 设到hdd上
-tmp丢到内存里
-
-我准备把/ 挂到ssd, /home 挂到hdd
-应该差不多了
-
 
 1. difference between alias paths and export paths? I think the difference is that whether you can use it in all subshells or not. 
 2. You cannot connect to not-approved Linux servers in company network, but if you install a virtual machine you can connect to these Linux servers using the virtual machine!! Bang! This is very cool.
@@ -50,5 +42,12 @@ for entire group list use cut -d: -f1 [[/etc/group]]
 
 You can xdotool -> move-to-next-monitor to move active window to next monitor in Linux, check http://makandracards.com/makandra/12447-how-to-move-a-window-to-the-next-monitor-on-xfce-xubuntu for more. You can define shortcut Shift + Win + Left/Right for this.
 
-find a good voice to text software on Linux
 [ ] swap.caps.escape seems to be void after a while, strange!!
+
+2. fix the NFS problem, check ZFS, it seems that it has zfs send functionality
+
+3. See how you can redirect warnings of GUI applications to a file or /dev/null
+
+[ ] write a linux user guide book when you have time
+put together all good software and tips you have
+

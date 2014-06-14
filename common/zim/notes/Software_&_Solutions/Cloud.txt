@@ -21,7 +21,7 @@ Get one if you have a good deal.
 9. Amazon EC2 (everything is charged even all are cheap, but if you forget to turn it down, wait for your big bill)
 10. rackspace.com
 11. https://www.heroku.com/
-12. [[VolumeDrive]]
+12. VolumeDrive
 13. http://www.btsync.com/#/
 
 租服务器挺好，一种是vps或者cloud service虚拟服务器；另一种是dedicated server

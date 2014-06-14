@@ -6,27 +6,31 @@ Creation-Date: 2014-03-19T12:31:23-05:00
 Created Wednesday 19 March 2014
 @todo 
 
-1. figure out where is the best location to put your alias and configuration files, .profile or .bash_profile, check the login shell page
+## Blog
 
-2. fix the NFS problem, check ZFS, it seems that it has zfs send functionality
+[ ] write a post to talk about "Yangguizi"
 
-3. See how you can redirect warnings of GUI applications to a file or /dev/null
+[ ] blog about the notes taking program
+and other programs you wrote
 
-6. local copy of tax?
 
-7. extract your notes in [[MongoDB]]
+## Cloud
 
-8. Virtual machine is a good way to learn new technologies, 
-summary steps to learn Oracle SQL OTN_... and big data, virtual machines ...
-
+BitTorrent Sync打开了网络的洪水猛兽。你可以打广告挣钱。\n利用某些广大人民喜好的信息来勾引用户。可以借助与Vole来实现\n一个用于对付网络检查的办法是，给一个关键的key,利用常规网络宣扬。\n然后这个key可以用来获取某些关键机密或者盗版信息。\n这个key应该是read only的。
 9. Encrypt and copy some of your private files to Dropbox 
 so that they can be accessed everywhere.
 You'd better write a script and schedule a job to do so.
+If do this, then TeamDrive is no longer useful.
 
-[ ] write a thunderbird config file, refer to link http://kb.mozillazine.org/Transferring_data_to_a_new_profile_-_Thunderbird#Identify_what_you_want_to_salvage. Also you have to make sure that symbolic links doesn't cause any problems. I somehow remeber that symbolic links caused filter problems before. 
+[ ] find an alternative of btsync (not Dropbox) which is faster on syncing small files
+
+
+## SAS
 [ ] add an example about goto in tips for sas
 give an example about the type=data_type ... sas tips
 add an example about // and || and !!
+
+## Research
 [ ] thinking about how to come up with a point estimator in situations
 when mean, media and mode are not immediately applicable. 
 \theta^n_i \sim F_n
@@ -34,73 +38,60 @@ d is some metric
 use the \theta in \{\theta_i\} that has the minimum distance to others on average. 
 What properties does this estimator have? 
 Specially when n goes to infinity, what happens?
+
 [ ] 2. UARS non-regular, von Mises regular, try it and see whether it works
+
 [ ] vole is going to shake the world, I think it's the future of social network
 thinking about develop a apps platform for vole and sell apps on it
 this is also a brilliant idea!
+
 [ ] 个人形像设计
+
 [ ] keep an eye on shogun which is a toolbox for machine learning
 learn Data-Driven Documents
 study more about all kinds of machine learning algorithms
 and how to use them
-[ ] 1. make tranv more powerful, first work on marix and list,
-second, possible accept varadic arguments ...
-your collapse function requires arguments have no special chars 
 
-4. write a function to help you run script in a file line by line,
-for lines that should be treated together, run them together
-this sounds like not easy, mostly, how to group lines correctly ...
-use a point to lines in file and so on ...
-[ ] write a blog to broardcast yourself, who you are, 
-what skills you have, what want to do in future, ideas, 
-and so on
-let people know that you're different, you're special!
-also, thinking about build a more professional website of yourself
-questons: if I point my guithub blog to another one ...
-buy a domain name!!!
-publish your packages and so on!!!
 [ ] install vehicle dvr ...
-[ ] move java-jmail and dclong.jmail to github and invite people to contribute to it
+
 ars package ...
-and cpp-spt, dclong.fs, dclong.jio
-submit all your usable r packages to cran
+
 [ ] Zhaoshang yinhang, change email address to longendu@gmail.com if possible
-[ ] make your git.sh more robust, if not git repository ... and so on
+
 [ ] learn D3, jQuery, AJAX and so on
+
+## MultiMedia
+
 [ ] check the 2 examples of adding lines numbers to pdf 
 see whether they are useful for you
-[ ] presentation ideas:
-let computer recognize human gesture while doing presentations, combined with voice recognition,
-I think it's easy to implement things such waving hand -> go to next slide
-this save people hassle of using clipboard, but you should let people using clipboard
-
-I'm acutally thinking more on this, is it possible to let machine highlight words or point at 
-words automatically, as we do presentation?
-I think it is not hard, but voice recognition is very important!!!
-
-or combine hand gesture and voice, let point point ...
-it is possible,
-[ ] blog about the notes taking program
-and other programs you wrote
 [ ] extract data from http://uk.camelcamelcamel.com/ and see whether you can 
 predit price well
-[ ] learn SQL, PIG, Hadoop and scalding, OpenBugs, make/cmake, Spark (big data, berkerly)
+
+[ ] learn PIG, Hadoop and scalding, OpenBugs, make/cmake, Spark (big data, berkerly)
 eclim
+
 [ ] write a program to analyze your income and expense
+
 [ ] a stackoverflow-like replacement for MITBBS
+
 [ ] think about whether you can solve the parking problem
+
 [ ] write-up for Jianzhong's project
+
 [ ] start writing a book about human brain simulation after accumulating enough experience and knowledge,
 I image this book will be the greatest technical book that is every sold
-[ ] write a post to talk about "Yangguizi"
+
 [ ] write a program to solve absorption probability and expected absorption time in Markov chains with absorption state
-[ ] write a linux user guide book when you have time
-put together all good software and tips you have
-[ ] find an alternative of btsync (not Dropbox) which is faster on syncing small files
-[]create vim commands for frequent tasks:
-1. increamental numbers,
-insert/remove a specific character at a given column
+
+## Vim
+
+[ ] create vim commands for frequent tasks:
+
+1. Insert/Remove A Specific Character at a given column
 2. capitalize all words on a line
+you can use macro to achieve this, though not as convenient as you original though, 
+it's pretty convenient already. or you can record it as a default macro.
+
 3. combining AutoKey, Senelium and pass/pwman3, you can do lots of cool things, 
 it can also be a GUIless replacement for keepassx
 [ ] building all kinds of database is also a very good idea, 
@@ -269,6 +260,9 @@ what's it like?
 [ ] it seems that you came across an interesting mistake when your were TA for STAT 642,
 independence ...
 [ ] information theory, entropy, how to use these to solve problems, e.g., the best solution?
+
+## Presentation
+
 [ ] presentation about yourself:
 * lots of good business ideas, 
 e.g., similar idea to Dropbox before it became popular,
@@ -290,7 +284,7 @@ change fast, keep learning, keep trend, so in short time, your are good
 8. capable, NoTech (my review for myself, functional programming in R, tranv, always think about better and 
 possible universal ways to solve problems
 
-9. puzzle questions ....
+9. puzzle questions Dan Nettleton ....
 10. Luke Tierny, Iowa, potts model
 11. 懂得跟随大趋势的人才是聪明的人, 你看看别人在做什么，这个对你会很有启发。\n要有预见性.\nSo what is about to shake the world?\n1. trend of mobile, pad, laptop, become together\n2. trend of web\n3. 3D printer\n4. auto-drive car\n5. robot\n6. 医生行业以及医疗器材等等\n7. 快递行业，不过可能会被自动投递替代\n8. 另外当所有人涌向一个行业的时候，你应该想这个行业自身的需求是什么？
 
@@ -315,10 +309,13 @@ multiple models vs confidence interval, which to use？\nDon't waste time think 
 给T-shirt配上各种袖套是不错的想法，可以做一做。你的想法挺多，问题是如何开始呢？\n我突然有更好的想法了，如果你能做出一个流行的网站，那么卖T-shirt的同时，你可以卖袖套，应该是个很不错的想法。\n问题时袖套需要定做吧?找哪个公司呢？
 
 童年的回忆\n考虑做成漫画或电影形式 ...\n1. 动漫\n希曼，六神合体，一休哥，奥特曼，忍者神龟\n2. 食物\n笑话糖，棉花糖，糖果子\n3. 玩具\n猪的膀胱，铁链枪，泥巴碗反扣比谁的更响\n开裆裤\n飞机， 四角板（用纸折成）在地上互板，反面的被输掉。\n玻璃珠游戏，地上挖坑\n自行车，三脚架，骑车，就是小时候个子矮，不能像大人们一样骑车，但是可以骑三脚架，踩半圈（你可以搜集图片等等）\n弹弓，打鸟，烤着吃。。。\n池塘里游泳，扎猛子。。。\n（我想编一个关于80后的故事，从婴儿到老，最好老的时候，回忆儿童，正在看这个书等等，你可以历数80后经历的种种，当然也可以穿插期间中国发生的大事等等。。。\n这个故事需要弄得比较普遍，让人都有认同感。那可能得从农村娃入手。。。）\n4. 桑椹\n或者你可以考虑把这些东西揉为一体，编成一个（最好是一套故事，漫画，电视剧，类似的等等）\n我觉得做成小册子贩卖，每个独特的回忆给上一个独特的故事或是感想会比较好。越是让人感伤怀旧越好。\n赚钱方式一定要依赖于网络。\n现在的穿越剧非常火热...，想想有什么感悟\n这个弄得好甚至可以拍成电影 。。。\n而且这个甚至也可以做成游戏，不过市场可能会小了点。
+## Politics
 
 考虑组建一个隐秘组织，主要是为了维护华人权益。\n所有组员每个月必须上交一定费用，比如说$5。\n费用的主要目的是让组员有付出感，从而更加对组织有归属感。\n收取的费用还可以用于其他各种活动。\n\n所有组织里面的成员相互帮助，比如说推荐工作等等。\n\n组织分层次，\n会员应该组织小规模的探讨活动等等，\n主要是实时更近政治动向，\n同时也可以关心其他方面的东西。\n\n1. 如何组织会员？所有会员对外开放，还是单向可见？\n\n这个取决于组织的目的。如果你希望组织能够以擦边球的形式惩罚损伤华人利益的个人或者团体，\n那么这个组织最好要低调，隐秘，并且单向可见可以从很大程度上保护领导人的安全等等。\n\n2. 会费交多少?\n$5/mo貌似是个不错的数目。首先费用不能过高，其次一定要收取会费。\n会费的首要目的是让会员有付出感，从而对组织有归属和忠诚感。\n收取的会费还可以用作其他目的。\n\n3. 是否可以收取赞助费用？\n这个是民间自发组织，虽然我们是维护政治利益的团体，但是我们尽量避免国家政治等等。\n所以不应该收取来自与政治/国家的赞助费用。即便收取，也要表明我们有独立的政治目标。\n\n4. 会员互助\n比如说某位会员发生意外，其他会员应该热情提供帮助。\n我觉得实名捐助是个不错的方法。\n\n5. 惩罚敌人\n\n6. 严格控制会员质量\n有政治理想，热情，乐于付出，同时有足够的经济实力
 
 check enhanced link analytics, google analytics
+
+## Business
 
 开发一套供自动驾驶汽车使用的bid系统也是个不错的想法
 
@@ -332,23 +329,38 @@ check enhanced link analytics, google analytics
 
 中英汉字的一个差距是：中文汉字是元素的空间组合，而英文字母是基本元素的一维线性组合。是什么造成了这种差距？而这种差距有对不同民族的文化产生了什么样的影响？
 
+## Thinkings
+
 对于习近平大大吃包子的事情，我事后的反应是为什么你之前没有想到去收集其相应的物件呢？比如说那把凳子。\n如果你这种思维多一点，那么你暴富只是迟早的事。
 
-BitTorrent Sync打开了网络的洪水猛兽。你可以打广告挣钱。\n利用某些广大人民喜好的信息来勾引用户。可以借助与Vole来实现\n一个用于对付网络检查的办法是，给一个关键的key,利用常规网络宣扬。\n然后这个key可以用来获取某些关键机密或者盗版信息。\n这个key应该是read only的。
 
+## Mobile
 [ ] how can I export call history and use it to update my contact information?
 [ ] develop a chat robot to mimic yourself
 [ ] xp run program confirmation?
 [ ] netbook, frequently, black screen, not sure what happens
+
+## VBA
 [ ] cstr vba, convert to string
 [ ] vbcrlf vba, ... new line
 [ ] vb source in code in another file? this can be helpful
 [ ] vba better to use msgbox to indicate work is done, o.w., you've no idea ...
 [ ] vba, write to file, UTF-8? default is ansi
-[ ] check firefox plugin [[TableTools2]]
+
+## Software
+[ ] check firefox plugin TableTools2
 [ ] check out apach solr
-[ ] use an older linux image solves antiX vboxaddition problem
-[ ] mobaxterm has a much better integration (case insenstive commands) with Windows compared to Cygwin and VM
+
+## Voice Control
 [ ] try blather on Mint
+
+## Virtualization
+[ ] mobaxterm has a much better integration (case insenstive commands) with Windows compared to Cygwin and VM
+[ ] use an older linux image solves antiX vboxaddition problem
 [ ] it seems that [[VirtualBox]] has caused the blue screen problem, avoid using it for a while to see whether the problem comes up again.
-[ ] try Cygwin vim in [[MobaXterm]]
+
+## DMML
+[ ] use text mining to see what people say on forums!!! cool!
+
+## Programming
+[ ] fuzz match in python or R?
