@@ -9,7 +9,7 @@ snippet #! "Shebang header for python scripts" b
 $0
 endsnippet
 
-snippet ifmain "ifmain" b
+snippet '^ifmain|^ifm' "ifmain" !r
 if __name__ == '__main__':
 	${1:main()}$0
 #end if
