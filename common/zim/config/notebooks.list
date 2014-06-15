@@ -11,6 +11,6 @@ icon=None
 
 [Notebook]
 uri=~/git/office-todo-tips
-name=Office TODO & Tips
+name=office-todo-tips
 interwiki=None
 icon=None
