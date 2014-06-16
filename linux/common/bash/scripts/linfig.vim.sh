@@ -22,14 +22,17 @@ function linfig.vim(){
         ln -sf "$srcfile" "$desfile"
         echo "\"$desfile\" -> \"$srcfile\"" 
         ln -sf "$lommon/vim/colors" "$desdir"
-        echo "\"$desdir\" -> \"$lommon/vim/colors\"" 
+        echo "\"$desdir/colors\" -> \"$lommon/vim/colors\"" 
+        ln -svf "$lommon/vim/pythonx" "$desdir"
+        echo "\"$desdir/pythonx\" -> \"$lommon/vim/pythonx\"" 
         ln -sf "$lommon/vim/my_snippets" "$desdir" 
-        echo "\"$lommon/vim/my_snippets\" -> \"$desdir\"" 
+        echo "\"$desdir/my_snippets\" -> \"$lommon/vim/my_snippets\"" 
         echo "Done."
         return 0
     fi
     ln -Tsvf "$srcfile" "$desfile"
     ln -svf "$lommon/vim/colors" "$desdir"
+    ln -svf "$lommon/vim/pythonx" "$desdir"
     ln -svf "$lommon/vim/my_snippets" "$desdir" 
     echo "Done."
 }
