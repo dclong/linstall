@@ -2,6 +2,10 @@
 #                            TextMate Snippets                            #
 ###########################################################################
 
+global !p
+from complete import *
+endglobal
+
 # library snippets
 snippet ls "Lib on Server" b
 libname ${1:ls} "/risk/aml/user_aml/dclong/${2:$1}/data";
@@ -20,14 +24,20 @@ endsnippet
 
 # procedure snippets
 snippet pp "Proc Print" b
-proc print data = ${1:d};
-    title "${2:$1}";
+proc print data = ${1:d} ${2:(${3:where=(${4: })} ${5:obs=${6: }})};
+    title "${7:$1}";
 run;
 endsnippet
 
 snippet pp5 "Print Top 5" b
-proc print data = ${1:d} (obs=5);
-    title "${2:$1}";
+proc print data = ${1:d} ${2:(obs=${3:5})};
+    title "${4:$1}";
+run;
+endsnippet
+
+snippet ppw "Print with Where" b
+proc print data = ${1:d} ${2:(where=(${3: }))};
+    title "${4:$1}";
 run;
 endsnippet
 
