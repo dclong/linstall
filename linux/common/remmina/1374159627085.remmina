@@ -7,7 +7,7 @@ ssh_charset=
 ssh_privatekey=
 console=0
 resolution=
-group=
+group=IASTATE
 password=8YBB/vijBNWiSuSuMUj5CA==
 name=RDP @ SAS
 ssh_loopback=0
