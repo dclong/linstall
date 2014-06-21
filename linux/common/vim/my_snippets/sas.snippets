@@ -51,67 +51,67 @@ quit;
 endsnippet
 
 # macro defintion snippets
-snippet '^\s*%m|^\s*m' "Macro Definition Without Arguments" r
+snippet '%m|m' "Macro Definition Without Arguments" rb
 %macro ${1:m};
     ${2:...} 
 %mend $1;
 endsnippet
 
-snippet '^\s*%m1|^\s*m1' "Macro Definition With 1 Argument" r
+snippet '%m1|m1' "Macro Definition With 1 Argument" rb
 %macro ${1:m}(${2:arg1});
     ${3:...} 
 %mend $1;
 endsnippet
 
-snippet '^%m2|^m2' "Macro Definition With 2 Arguments" r
+snippet '%m2|m2' "Macro Definition With 2 Arguments" rb
 %macro ${1:m}(${2:arg1}, ${3:arg2});
     ${4:...}
 %mend $1;
 endsnippet
 
-snippet '^%m3|^m3' "Macro Definition With 3 Arguments" r
+snippet '%m3|m3' "Macro Definition With 3 Arguments" rb
 %macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3});
     ${5:...}
 %mend $1;
 endsnippet
 
-snippet '^%m4|^m4' "Macro Definition With 4 Arguments" r
+snippet '%m4|m4' "Macro Definition With 4 Arguments" rb
 %macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4});
     ${6:...}
 %mend $1;
 endsnippet
 
-snippet '^%m5|^m5' "Macro Definition With 5 Arguments" r
+snippet '%m5|m5' "Macro Definition With 5 Arguments" rb
 %macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5});
     ${7:...}
 %mend $1;
 endsnippet
 
-snippet '^%m6|^m6' "Macro Definition With 6 Arguments" r
+snippet '%m6|m6' "Macro Definition With 6 Arguments" rb
 %macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6});
     ${8:...}
 %mend $1;
 endsnippet
 
-snippet '^%m7|^m7' "Macro Definition With 7 Arguments" r
+snippet '%m7|m7' "Macro Definition With 7 Arguments" rb
 %macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7});
     ${9:...}
 %mend $1;
 endsnippet
 
-snippet '^%m8|^m8' "Macro Definition With 8 Arguments" r
+snippet '%m8|m8' "Macro Definition With 8 Arguments" rb
 %macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7}, ${9:arg8});
     ${10:...}
 %mend $1;
 endsnippet
 
-snippet '^%m9|^m9' "Macro Definition With 9 Arguments" r
+snippet '%m9|m9' "Macro Definition With 9 Arguments" rb
 %macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7}, ${9:arg8}, ${10:arg9});
     ${11:...}
 %mend $1;
 endsnippet
 
-snippet '^%m10|^m10' "Macro Definition With 10 Arguments" r
+snippet '%m10|m10' "Macro Definition With 10 Arguments" rb
 %macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7}, ${9:arg8}, ${10:arg9}, ${11:arg10});
     ${12:...}
 %mend $1;
@@ -131,6 +131,10 @@ endsnippet
 
 snippet %om "%do_over" !b
 %do_over(${1:arr}, macro=${2:m})
+endsnippet
+
+snippet %omb "%do_over" !b
+%do_over(${1:arr}, macro=${2:m}, between=${3: })
 endsnippet
 
 snippet %op "%do_over" !b
@@ -154,7 +158,7 @@ snippet %temp "A Temp Macro" !b
 endsnippet
 
 # %do ... %end;
-snippet '^\s*%dl|^\s*for' "Do Loop" r
+snippet '%dl|%for' "Do Loop" rb
 %do ${1:i} = ${2:1} %to ${3:2} %by ${4:1};
     ${5:...}
 %end;
@@ -167,7 +171,7 @@ do;
 end;
 endsnippet
 
-snippet '^\s*dl|^\s*for' "Do Loop" r
+snippet 'dl|for' "Do Loop" rb
 do ${1:i} = ${2:1} to ${3:2} by ${4:1};
     ${5:...}
 end;

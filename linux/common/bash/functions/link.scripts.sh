@@ -42,6 +42,7 @@ function link.scripts(){
     # then link scripts in the cygwin directory
     if [[ $(uname -a) == CYGWIN* ]]; then
         link.sidir "$cygwin_dir/bash/scripts"
+        link.sidir "$python_dir/bin"
         return
     fi
     # link Linux distribution-specific scripts
