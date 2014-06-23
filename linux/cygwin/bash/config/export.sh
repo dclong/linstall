@@ -26,6 +26,7 @@ export zdrive='/cygdrive/z'
 export nixuser='zkyr9jm'
 export winhome="${cdrive}/Users/$nixuser"
 export whome="$winhome"
+export desktop="$winhome/Desktop"
 export downloads="${winhome}/Downloads"
 export documents="${winhome}/Documents"
 export projects="${documents}/projects"
