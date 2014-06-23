@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function linstall.thunderbird.usage(){
     cat << EOF
 Automatically download the right latest version of Thunderbird, install and configure it.

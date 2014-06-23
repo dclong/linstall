@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function autostart.remove.usage(){
     cat << EOF

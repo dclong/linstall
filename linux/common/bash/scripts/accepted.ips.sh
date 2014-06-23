@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function accepted.ips.usage(){
     cat << EOF
 Exact and show accepted ips from authentication log files.

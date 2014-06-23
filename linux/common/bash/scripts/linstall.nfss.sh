@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function linstall.nfss.usage(){
     cat << EOF

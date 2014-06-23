@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function wikisole.usage(){
     echo "Get Wikepedia definition of words."
     echo "Syntax: wikisole word"

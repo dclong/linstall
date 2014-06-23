@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function deb.reconfig.usage(){
     cat << EOF
 Reconfigure a Debian series Linux distribution.

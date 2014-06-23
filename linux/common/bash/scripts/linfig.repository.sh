@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function linfig.respository.usage(){
     echo "Configure apt-get source repository."
     echo "Syntax: linfig aptget"

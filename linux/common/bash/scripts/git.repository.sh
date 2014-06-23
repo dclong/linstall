@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function git.repository.usage(){
     echo "Report status of GIT repositories in a directory."
     echo "Syntax: git.repository source_dir [source_dir] ..."

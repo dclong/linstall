@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #------------------ Install -------------------------------
 function linstall.server(){
     apt-get install sudo wajig vim openssh-client openssh-server screen tmux 

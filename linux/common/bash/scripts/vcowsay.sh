@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function vcowsay.usage(){
     echo "Display a cow saying words and play synthertized sound of the words."
     echo "Syntax: vcowsay words"

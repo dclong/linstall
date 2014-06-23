@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function cecho.usage(){
     echo "Display colorful text in terminal."
     echo "Syntax: cecho color text"

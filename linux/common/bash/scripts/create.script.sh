@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function create.script.usage(){
     cat << EOF
 Create a script of the given name using template.
@@ -22,7 +22,7 @@ function create.script(){
     fi
     touch "$srcdir/$1.sh"
     cat << CREATE_SCRIPT_EOF > "$srcdir/$1.sh"
-#!/bin/bash
+#!/usr/bin/env bash
 
 function $1.usage(){
     cat << EOF

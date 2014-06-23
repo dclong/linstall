@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function vbvm.export.usage(){
     echo "Export virtualbox virtual machines. This function creates a directory with the name of the virtual machine and current date and export files into this directory."
     echo "Syntax: vbvm.export vm_name des_dir"

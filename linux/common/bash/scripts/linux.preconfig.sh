@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function debian.install.0.usage(){
     cat << EOF
 Installs and configures wajig and sudo.

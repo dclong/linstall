@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function linstall.r.usage(){
         cat << EOF
 Install R.

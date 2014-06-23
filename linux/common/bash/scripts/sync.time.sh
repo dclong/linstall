@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function synctime.usage(){
     echo "Sync system clock."
     echo "Syntax: synctime"
