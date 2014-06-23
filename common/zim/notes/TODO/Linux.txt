@@ -51,3 +51,29 @@ You can xdotool -> move-to-next-monitor to move active window to next monitor in
 [ ] write a linux user guide book when you have time
 put together all good software and tips you have
 
+one possible way to repeat what have just typed in parameter, press enter let the command fail, 
+use !! then esc + . edit the parameter ... 
+
+
+We went through a few basic keyboard shortcuts in our beginner's guide, but there are quite a few in there that, while not exactly intuitive, are incredibly useful just for navigating the shell. They also come in handy when you want to refer back to previous commands.
+
+    Up/Down Arrows: The up and down arrows on your keyboard move through your last used commands. So, if you wanted to run the second to last command you ran, just hit the up arrow twice and hit Enter. You can also edit the command before you run it.
+    Ctrl+Left and Ctrl+Right: Hitting Ctrl and the left or right arrow keys jumps between arguments in your command. So, if you had a typo in the middle of the command, you could jump to it quickly with Ctrl and a few taps of the left arrow key. Note that on Mac OS X and Windows, this shortcut is Esc+B and Esc+F instead. This is pretty awkward, but OS X users can change it from the Terminal's preferences if they so choose.
+    Home and End: The Home and End buttons on your keyboard move your cursor to the beginning and the end of the currently typed command, respectively. This is useful if you've, say, typed in a command but realize that there's a typo in the first word. Instead of holding down the left arrow key, just hit home and correct it. You can also do the same thing with Ctrl+A and Ctrl+E, respectively (on Mac OS X, Ctrl+A and Ctrl+E are the only way to do this).
+    Ctrl+U: This clears the entire line so you can type in a completely new command.
+    Ctrl+K: This deletes the line from the position of the cursor to the end of the line.
+    Ctrl+W: This deletes the word before the cursor only.
+    Ctrl+R: This lets you search your command history for something specific. For example, if you wanted to search for the recent commands that included nano, you would hit Ctrl+R and type nano. It would show your most recent command, and you could use the up and down arrows to cycle through your history of commands using nano in them.
+    Tab: One of everyone's favorite shortcuts employs Tab to autocomplete a line of text. So, say you wanted to type cd ~/Dropbox/, you could just type cd ~/Dr, hit Tab to autocomplete opbox, and continue on with your day.
+expansion is great!
+
+matlab.desktop
+myCluster = parcluster('local');
+myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
+saveProfile(myCluster);    % 'local' profile now updated,
+                           % 'Modified' property now FALSE  
+
+command vs function different, cannot mixed together in m-files
+run('./file.m') vs run('file.m') doesn't work 
+
+zim itself, better save before close, otherwise might lose data. I have the impression before that zim automatically saves notes. This might still be true, but just when your computer is too busy. It loses data. So you'd better save notes manually yourself.
