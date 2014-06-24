@@ -5,3 +5,4 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"] 
 " let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsEditSplit="horizontal"
+let g:UltiSnipsListSnippets="<c-l>" 
