@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function linstall.ibus.usage(){
     cat << EOF

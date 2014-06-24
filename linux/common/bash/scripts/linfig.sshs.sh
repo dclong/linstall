@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function linfig.sshs.usage(){
     cat << EOF
 Configure SSH server.

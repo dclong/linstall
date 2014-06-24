@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function  rmdir.nest.usage(){
     cat << EOF

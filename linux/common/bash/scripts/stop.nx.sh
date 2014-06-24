@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function stop.nx.usage(){
     cat << EOF
 Stop the NX server if it's running.

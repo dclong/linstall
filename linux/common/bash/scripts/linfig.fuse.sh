@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function linfig.fuse.usage(){
     cat << EOF
 Configures fuse. The specified user or the current user is added to the fuse group.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #---------------- Uninstall -------------------------------
 
 function linfig.uninstall.juliastudio(){

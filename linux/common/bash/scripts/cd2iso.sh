@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function cd2iso.usage(){
     cat <<EOF
 Make an iso image from a CD/DVD file.

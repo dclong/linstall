@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function linfig.terminator.usage(){
     echo "Configure terminator."

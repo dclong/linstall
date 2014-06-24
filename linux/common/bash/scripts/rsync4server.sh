@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function rsync4server.usage(){
     echo "Sync files from server to local."
     echo "Syntax: rsync4server server port remote_file local_file [options]"

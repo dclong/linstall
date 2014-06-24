@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function sshfs.server.usage(){
     echo "Mount remote filesystem using sshfs and fuse."
     echo "Syntax: sshfs.server server port remote_dir local_dir"

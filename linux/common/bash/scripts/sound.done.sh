@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function sound.done.usage(){
     echo "Play the sound \"Job is done.\" repeatedly."
     echo "Syntax: sound.done n i"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function cpustat.usage(){
     echo "Display average (if multicore) usage of cpu."
     echo "Syntax: cpustat"

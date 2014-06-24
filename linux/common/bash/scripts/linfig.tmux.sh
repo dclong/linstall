@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function linfig.tmux.usage(){
     echo "Configure tmux."
     echo "Syntax: linfig.jabref"

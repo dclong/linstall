@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function linfig.firefox.usage(){
     cat << EOF

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function convert.pdf2png.usage(){
     cat << EOF
 Convert all pdf images in a directory to PNG images.

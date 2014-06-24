@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function suffix.date.usage(){
     echo "Suffix date (of format YYYYMMDD) to arguments."
     echo "Syntax: suffix.date arg1 [arg2] ..."

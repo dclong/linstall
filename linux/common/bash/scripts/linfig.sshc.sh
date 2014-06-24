@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function linfig.sshc(){
     echo "Configuring SSH ..."

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function linstall.dict.usage(){
     cat << EOF
 Installs some useful dictionaries. Databases dict-gcide, dict-devil, dict-jargon, dict-xdict and dict-stardic are installed.

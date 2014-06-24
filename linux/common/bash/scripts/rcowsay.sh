@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function rcowsay.usage(){
     cat << EOF
 Random version of cowsay.

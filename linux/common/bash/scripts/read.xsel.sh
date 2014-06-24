@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function read.xsel.usage(){
     echo "Play synthetised sound of selected text in X."
     echo "Syntax: read.xsel"
