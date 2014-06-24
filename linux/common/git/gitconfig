@@ -6,3 +6,5 @@
 	excludesfile = ~/.gitignore
 [merge]
 	tool = vimdiff
+[color]
+	ui = auto
