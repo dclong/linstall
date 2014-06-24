@@ -20,3 +20,4 @@ cannot put ;coment after a command in a line, must use a new line
 
 
 `%: literal % or you can continuation mode () or use SendRaw ...
+1. take another look at the ignoring case functionality!!!

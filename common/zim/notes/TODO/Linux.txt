@@ -77,3 +77,8 @@ command vs function different, cannot mixed together in m-files
 run('./file.m') vs run('file.m') doesn't work 
 
 zim itself, better save before close, otherwise might lose data. I have the impression before that zim automatically saves notes. This might still be true, but just when your computer is too busy. It loses data. So you'd better save notes manually yourself.
+
+!:-$ ⇔ !!, i.e., the whole command, $ is the last parameter
+1. The Ctrl + C trick when remote Linux server freezes at login. 
+2. fg % job_number "jobs" ... or just use fg
+3. If you're using BASH, just press CTRL-Z, which will suspend the process, and then use the bg command to send it to the background. If you want more detail have a look at this article on BASH job control.

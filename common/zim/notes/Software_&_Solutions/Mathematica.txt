@@ -1,0 +1,29 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-21T18:07:32-04:00
+
+====== Mathematica ======
+Created Saturday 21 June 2014
+
+1. <> join strings, StringJoin, + in python, Java, etc. A missing <> not necesarry cause error but of course give you wrong answer, so be careful!!!
+2. You can write program in plain text (and save it as .m file). You can import the functions in the file using Import[file_path]. This is the suggested way for you to manager your own Mathematica code.
+3. You can specify scope of notebook "Evaluation -> Notebook's Default Context" and then select one of the options.
+4. Be careful when you save your notebook as .m file. The stupid software comments out every line!!! You can just save it as plain text or copy and paste it into a .m file. 
+5. The stupid Mathematica 9 screws up scopes. Even if you have run the definition of a function in a notebook that is set as global, it's not seen in other notebooks!!!
+6. check whether a plain text file can also be imported!!!!
+	a. mathematics 	Mathematics 	MATHEMATICS
+7. just use ?FunName to get help of a function. If you are not sure whether a function is defined or not, this also helps.
+8. the result of ParallelTable is the same as Table except for side effect of computation.
+9. parallize[table[]]
+10. use "" for string instead of ‘’
+11. missing semicolon is a common mistake
+12. cannot use _ in variable names, cause error message: Set::write: Tag Times in 1 x_ is Protected. >>
+13. f[x_Real]:=x^2; pass integer to it won't work!!!
+14. f[x_Real:3.]=x^2 default parameter
+15. nohup math -run "<<../mle_2_10.m" & do not quote  in 	Mathematica you use <<"../mle_2_10.m", but here quote <<../mle_2_10.m instead of the file name.
+16. Get[file_path] <<file_path Import[file_path]
+17. nohup matlab -nodesktop -nosplash file.m (don't put & as it cause matlab not to start)
+18. SetDirectory["/home/dclong/simulation"] Directory[] FileNames[]
+19. it is suggested that you use java camelCase style to name variables in 	Mathematica which can distinguish them from functions
+20. integer cannot be use in string concatenation directly, must use [[ToString]] to convert it to a String first.
+21. mle [[/.]] Rule -> (#2 &) 

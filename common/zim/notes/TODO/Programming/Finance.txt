@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-21T18:10:21-04:00
+
+====== Finance ======
+Created Saturday 21 June 2014
+
+1. rewrite your vbill program
+2. write a program to analyze your finacial statements 5/1/2014 !!!
+	[ ] fraud detection 
+	[ ] consume summary, charts, etc.

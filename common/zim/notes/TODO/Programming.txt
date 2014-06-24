@@ -5,12 +5,6 @@ Creation-Date: 2014-03-18T18:34:26-05:00
 ====== Programming ======
 Created Tuesday 18 March 2014
 
-
-
-[ ] write a program to analyze your finacial statements 5/1/2014 !!!
-	[ ] fraud detection 
-	[ ] consume summary
-
 [ ] write a program to manage password in command line
 
 	- ask for password, terminal and gui? you can first check whether python is running in terminal ...
@@ -84,5 +78,4 @@ I think it is not hard, but voice recognition is very important!!!
 or combine hand gesture and voice, let point point ...
 it is possible,
 
-## Finance
-[ ] rewrite your vbill program
+1. implement md5deep by yourself as it is not available on some Linux servers. Use python.
