@@ -14,4 +14,4 @@ Created Sunday 08 June 2014
 	a. how to default to edit private snippets?
 	b. why snippets (snip) doesn't trigger when edit directly?
 ultisnips auto indent problem?
-
+5. exclude all.snippets? or just move things from it to txt.snippets
