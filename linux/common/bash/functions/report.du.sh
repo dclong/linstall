@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function report.du.usage(){
     cat << EOF
 Report disk usage. Warn user if the disk space is under 5G.

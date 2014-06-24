@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function cs.usage(){
     echo "Enter a directory and display its content."
     echo "Syntax: cs dir"

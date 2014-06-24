@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # TODO make this more powerful, up k levels
 # more robust about error and so on
 function ancester.path.usage(){

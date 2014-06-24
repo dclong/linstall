@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function cst.usage(){
     cat << EOF
 Enter a directory and display its content.
