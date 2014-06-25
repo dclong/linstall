@@ -60,6 +60,6 @@ alias btsync.default='btsync --config "$HOME/.sync/btsync.conf"'
 alias ff='firefox &'
 
 # matlab
-alias matlab.cl='matlab -nodesktop -nosplash'
-alias matlab.nogui='matlab.cl'
-alias matlab.tm='matlab.cl'
+alias matlab.nogui='matlab -nodesktop -nosplash'
+alias matlab.cl='matlab.nogui'
+alias matlab.tm='matlab.nogui'

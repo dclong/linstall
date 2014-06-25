@@ -27,6 +27,8 @@ function linfig.vim(){
         echo "\"$desdir/pythonx\" -> \"$lommon/vim/pythonx\"" 
         ln -sf "$lommon/vim/my_snippets" "$desdir" 
         echo "\"$desdir/my_snippets\" -> \"$lommon/vim/my_snippets\"" 
+        ln -sf "$lommon/vim/UltiSnips" "$desdir" 
+        echo "\"$desdir/UltiSnips\" -> \"$lommon/vim/UltiSnips\"" 
         echo "Done."
         return 0
     fi
@@ -34,6 +36,7 @@ function linfig.vim(){
     ln -svf "$lommon/vim/colors" "$desdir"
     ln -svf "$lommon/vim/pythonx" "$desdir"
     ln -svf "$lommon/vim/my_snippets" "$desdir" 
+    ln -svf "$lommon/vim/UltiSnips" "$desdir" 
     echo "Done."
 }
 if [ "$0" == ${BASH_SOURCE[0]} ]; then
