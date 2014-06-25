@@ -22,7 +22,7 @@ function source.dir(){
     fi
     for f in $(ls "$1"); do
         if [[ "$f" == *.sh ]]; then
-            source "$1/$f"
+            . "$1/$f"
         fi
     done
 }
