@@ -1,0 +1,31 @@
+snippet 'p|paste' "function paste" !rw
+paste($1${2:, sep="$3"}${4:, collapse="$5"})
+endsnippet
+
+snippet ps "function paste with option sep" !w
+paste($1, sep="$2")
+endsnippet
+
+snippet pc "function paste with option collapse" !w
+paste($1, collapse="$2")
+endsnippet
+
+snippet wt "function write.table" !w
+write.table(x=$1, file=$2, row.names=${3:FALSE}, col.names=${4:TRUE}, sep="${5: }")
+endsnippet
+
+snippet 'T|true' "TRUE" !rw
+TRUE
+endsnippet
+
+snippet 'T|false' "FALSE" !rw
+FALSE
+endsnippet
+
+snippet cat "function cat" !w
+cat(${1:...}${2:, file = ""}${3:, sep = "${4:}"}${5:, fill = ${6:FALSE}}${7:, labels = ${8:NULL}}${9:, append = ${10:FALSE}})
+endsnippet
+
+snippet cats "function cat with option sep" !w
+cat(${1:...}, sep = "${2:}")
+endsnippet
