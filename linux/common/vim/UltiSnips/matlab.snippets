@@ -1,0 +1,52 @@
+snippet if "if statement" !b
+if ${1:condition}
+	$2
+end
+endsnippet
+
+snippet fun "Function Definition" !b
+function ${1:y} = ${2:f}()
+	$3
+endsnippet
+
+snippet for "for loop" !b
+for ${1:i} = ${2:1}:${3:1}:${4:2}
+	$5
+end
+endsnippet
+
+snippet '(\s)pr|\sprint|\scat|\sdisp' "function disp" !r
+`!p snip.rv = match.group(1)`disp($1);
+endsnippet
+
+snippet '\sstrcat|\spaste|\spa' "function strcat" !r
+ strcat($1, $2);
+endsnippet
+
+snippet '\stoString|\stostring|\sstring|\sstr|\sn2s|\snum2str' "function num2str" !r
+ num2str($1);
+endsnippet
+
+snippet " "Literal String" !w
+'$1'
+endsnippet
+
+snippet '\sread.table|\srt|\sdlmread' "function dlmread" !r
+dlmread(${1:file});
+endsnippet
+
+snippet '\swrite.table|\swt|\sdlmwrite' "function dlmwrite" !r
+ dlmwrite(${1:file}, ${2:obj}${3:, 'precision', ${4:15}});
+endsnippet
+
+snippet '\sInf|\sinf' "Infinity" !r
+ Inf
+endsnippet
+
+snippet '\sfread|\sread' "function fread" !r
+ fread(${1:fileHandle}, ${2:Inf}, ${3:'double'});
+endsnippet
+
+snippet '\sreshape|\smatrix|\sarray' "function reshape" !r
+ reshape(${1:array}, [$2]);
+endsnippet
