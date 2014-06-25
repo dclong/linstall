@@ -2,6 +2,10 @@
 #                            TEXTMATE SNIPPETS                            #
 ###########################################################################
 
+global !p
+from complete import *
+endglobal
+
 #! header
 snippet #! "Shebang header for python scripts" b
 #!/usr/bin/env python
@@ -576,3 +580,38 @@ endsnippet
 
 # vim:ft=snippets:
 
+snippet open "Open a File" !w
+${1:f} = open(${2:file})
+endsnippet
+
+snippet len "function len" !w
+${1:n} = len(${2:obj})
+endsnippet
+
+snippet rng "function range" !w
+range(${1:n})
+endsnippet
+
+snippet range "function range" !w
+range(${1:n})
+endsnippet
+
+snippet s. "String Methods" !w
+s.$1`!p snip.rv = complete(t[1], ["capitalize", "center", "count", "decode", "encode", "endswith", "expandtabs", "find", "format", "index", "isalnum", "isalpha", "isdigit", "islower", "isspace", "istitle", "isupper", "join", "ljust", "lower", "lstrip", "partition", "replace", "rfind", "rindex", "rjust", "rpartition", "rsplit", "rstrip", "split", "splitlines", "startswith", "strip", "swapcase", "title", "translate", "upper", "zfill", "isnumeric", "isdecimal"])`
+endsnippet
+
+snippet s.strip "str.strip()" !w
+${2:s}.strip(${1:chars})
+endsnippet
+
+snippet s.upper "str.upper()" !w
+${1:s}.upper()
+endsnippet
+
+snippet f. "File Methods" !w
+f.$1`!p snip.rv = complete(t[1], ["close", "flush", "fileno", "isatty", "next", "read", "readline", "readlines", "xreadlines", "seek", "tell", "truncate", "write", "writelines"])`
+endsnippet
+
+snippet f.writelines "file.writelines()" !w
+${2:f}.writelines(${1:sequence})
+endsnippet
