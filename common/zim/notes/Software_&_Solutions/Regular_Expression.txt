@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-25T00:57:06-04:00
+
+====== Regular Expression ======
+Created Wednesday 25 June 2014
+
+vim  R
+\w [[:alphabet:]]
+
+vim: [[/,]] \@! negative use \@! the previous pattern (space in this example) is negated
