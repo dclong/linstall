@@ -109,3 +109,5 @@ fun! DelBlock(pat)
 endfunction
 
 nmap ,d :call DelBlock("^>>Start-pattern")<CR>
+
+check superTab and clang-python

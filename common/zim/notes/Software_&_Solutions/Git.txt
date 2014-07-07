@@ -7,3 +7,4 @@ Created Wednesday 14 May 2014
 
 1. The trick of creating executable scripts and push them to GitHub/Bitbucket to overcome the difficulty that you can change file permissions on bitbucket.
 2. is it possible to let git keep original (creation) time stamps of files?
+3. Switching branches carries uncommitted changes with you. Either commit first, run git checkout . to undo them, or run git stash before switching. (You can get your changes back with git stash apply)

@@ -1,0 +1,19 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-06T19:13:27-04:00
+
+====== Driving ======
+Created Sunday 06 July 2014
+
+1. I-485 exit number increases clockwisely. 
+
+## I-485 Ramp and Exit
+1. Grand Asian Market: 52
+2. I-485 -> I-77: 67
+3. I-77 -> I-485: 1
+4. I-485 -> University Blvd: 33
+5. I-485 -> Tryon: 32
+## I-85
+1. I-85 -> Harris Blvd: 45A (southeast) 45B (northwest)
+2. I-85 -> I-77: 38 (be careful about which direction you are going to keep left or right)
+3. I-77 -> I-85: 13A (northeast direction) 13B (southwest direction)
