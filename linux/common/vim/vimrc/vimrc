@@ -28,3 +28,5 @@ syntax on
 :source $lommon/vim/vimrc/vam.vim
 " UltiSnips
 :source $lommon/vim/vimrc/ultisnips.vim
+" airline
+:source $lommon/vim/vimrc/airline.vim

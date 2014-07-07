@@ -51,7 +51,10 @@ fun! SetupVAM()
     let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
 
     " Tell VAM which plugins to fetch & load:
-    call vam#ActivateAddons(["repeat", "SAS_Syntax", "surround", "UltiSnips", "SuperTab%182", "Vim-R-plugin", "pythoncomplete"], {'auto_install' : 0})
+    call vam#ActivateAddons(["repeat", "surround", "UltiSnips", "vim-airline", "SAS_Syntax", "Vim-R-plugin"], {'auto_install' : 0})
+    "SuperTab%182"
+    "pythoncomplete"
+    "jedi-vim",
     "SQLComplete", 
     " SuperTab%182
     " Python-mode-klen, SuperSnipMate
