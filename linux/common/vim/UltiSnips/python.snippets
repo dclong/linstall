@@ -15,7 +15,9 @@ endsnippet
 
 snippet '^ifmain|^ifm' "ifmain" !r
 if __name__ == '__main__':
-	${1:main()}$0
+    import sys
+    ${1:sys.argv.pop(0)}
+    $2
 #end if
 endsnippet
 
@@ -375,7 +377,7 @@ snip += tripple_quotes(snip) `
 endsnippet
 
 snippet def "Function With 1 Argument and Without Docstrings" b
-def ${1:function}(${2:arg1})
+def ${1:function}(${2:arg1}):
 	${3:pass}
 #end def
 endsnippet
@@ -575,7 +577,7 @@ endsnippet
 # vim:ft=snippets:
 
 snippet open "Open a File" !w
-${1:f} = open(${2:file})
+${1:f} = open(${2:file}, '${3:r}')
 endsnippet
 
 snippet len "function len" !w
@@ -609,3 +611,36 @@ endsnippet
 snippet f.writelines "file.writelines()" !w
 ${2:f}.writelines(${1:sequence})
 endsnippet
+
+snippet "is null" "is null transformation" !w
+== None
+endsnippet
+
+snippet "is not null" "is not null transformation" !w
+!= None
+endsnippet
+
+snippet re. "Methods of re"
+${2:re}.$1`!p snip.rv = complete(t[1], ["compile", "DEBUG", "I", "IGNORECASE", "L", "LOCALE", "M", "MULTILINE", "S", "DOTALL", "U", "UNICODE", "X", "VERBOSE", "search", "match", "split", "findall", "finditer", "sub", "subn", "escape", "purge"])`
+endsnippet
+
+snippet bi. "Methods of bi"
+${2:bi}.$1`!p snip.rv = complete(t[1], ["abs", "all", "any", "basestring", "bin", "bool", "bytearray", "callable", "chr", "classmethod", "cmp", "compile", "complex", "delattr", "dict", "dict", "dict", "dir", "divmod", "enumerate", "eval", "execfile", "file", "filter", "float", "format", "frozenset", "getattr", "globals", "hasattr", "hash", "help", "hex", "id", "input", "int", "int", "isinstance", "issubclass", "iter", "len", "list", "locals", "long", "long", "map", "max", "max", "memoryview", "min", "min", "next", "object", "oct", "open", "ord", "pow", "print", "property", "range", "range", "raw_input", "reduce", "reload", "repr", "reversed", "round", "set", "setattr", "slice", "slice", "sorted", "staticmethod", "str", "sum", "super", "tuple", "type", "type", "unichr", "unicode", "unicode", "vars", "xrange", "xrange", "zip", "__import__", "apply", "buffer", "coerce", "intern"])`
+endsnippet
+
+snippet to "Ternary Operator" !w
+${1:a} if ${2:condition} else ${3:b}
+endsnippet
+
+snippet ?: "Ternary Operator" !w
+${1:a} if ${2:condition} else ${3:b}
+endsnippet
+
+snippet true "True" !w
+True
+endsnippet
+
+snippet false "False" !w
+False
+endsnippet
+
