@@ -644,3 +644,17 @@ snippet false "False" !w
 False
 endsnippet
 
+snippet with "With Block" !b
+with $1 as $2:
+$3
+#end with
+endsnippet
+
+snippet [ "Construct List" !w
+[${1:elem} for $1 in ${2:array}]
+endsnippet
+
+snippet tolower "function lower" !w
+lower
+endsnippet
+
