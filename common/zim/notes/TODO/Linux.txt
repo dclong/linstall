@@ -188,3 +188,7 @@ complete: complete [-abcdefgjksuv] [-pr] [-DE] [-o option] [-A action] [-G globp
     Exit Status:
     Returns success unless an invalid option is supplied or an error occurs.
 
+
+swap.case.escape doesn't work after a while, not sure why
+
+zip -r myarchive.zip dir1 -x dir1/ignoreDir1/**\* dir1/ignoreDir2/**\*

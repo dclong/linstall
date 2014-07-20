@@ -1,0 +1,86 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-19T23:09:03-04:00
+
+====== Choice ======
+Created Saturday 19 July 2014
+
+强烈推荐的：
+Zenefits
+业务模式为帮公司做Benefits的免费SAAS，收医疗保险得佣金。非常大的市场, 增长非
+常快，Andresson Horowitz下了重金。即使现在去我觉得也来得及。
+
+Zenpayroll
+做好用的payroll.相信大家都用过ADP，用户体验多糟糕不说了。ADP和另外一家竞争对
+手paychex都是上百亿市值。
+
+Blend Labs
+给Mortgage公司做SAAS,现在revenue已经过百万，现金流为正。mortgage在美国就是上
+万亿市场，我觉得上升潜力很大。创始人从Palantir出来。我面了没拿到offer
+
+很有前景的
+Shopular
+coupon app，不要小看，这个领域已经出了两家10多亿规模的公司。现在已经几百万用
+户，红杉投资。未来目标是O2O整合线下零售业
+
+WealthFront
+没有仔细分析，不过觉得他们思路靠谱，也有traction，还处于成长早期
+
+AngelList
+想象空间较大，比如未上市公司股票和期权的交易，团队很强
+
+DataBricks
+berkeley造Spark的团队。我已经看到很多创业公司用spark。盈利模式参照cloudera
+
+Stripe
+现在1.7billion的估值，我认为远远不止，因为market place/on demand service是这
+一波的趋势。另外据估计paypal分拆上市都是30-40B
+
+Robinhood
+zero-commision stock trading，市场需求很强烈，团队非常牛，两个创始人是斯坦福
+数学顶尖学生，去搞了几年quant，产品还没正式推出，所以风险也较大
+
+还接触到一些比较热门的比如instacart, nextdoor,我分析后认为前景不大没有面
+没有面的公司还包括以下几个领域的，我主要认为各家没有明显竞争优势
+企业通讯：Slack, Hall.com, highfive,UberConference面临cisco jabber的竞争
+服务器监控：New relic, app dynamics, pagerduty, apptio
+
+
+我筛选Startup的过程
+一看团队，主要搜linkedin, 包括教育背景，从业经历，是否与现在的业
+务相关
+
+二看发展情况，包括alexa看网站流量, app annie看app排名增长，SAAS软件看现有客
+户，营收增长情况
+
+三看竞争对手，如果在对抗大公司，优势在哪？如果与自己有重量相当的对手，那它处
+于什么位置，这个市场是赢家通吃还是可以容纳多家公司。是否可以找到同类型已经上
+市公司，作为收入和估值的参照？zenpayroll就是个好例子，虽然已经有成熟竞争对手
+，但是我看到两家并存，都还市值很大，反而更容易理解潜在
+估值
+
+四看投资者，投资者比我们了解更多未披露信息。是否YC毕业，投资者如果来自红杉，
+andreessen horowitz, Accel,
+Greylock，KPCB并且是重金砸入会靠谱很多。红杉和andreessen horowitz我认为是最
+牛的。如果有像老虎基金，Fidelity, goldman sachs, IVP这种private equity fund/
+institutional investor投资，说明离上市已经不远，估值还有1.5-4倍左右增长空间,
+这些基金都是risk-averse的
+
+五看Review,包括quora, app store, play store, glassdoor，甚至yelp上也有些网站
+和app reivew，而且往往更详细
+
+六看成长阶段，去crunchbase看看融资处于那一轮，去angelist看看股票能给多少。给
+公司一个估值，我认为预期一百万的股票收入才是值得的
+
+这些条件最好是有多个满足，不能看到一两个很好就认为公司不错。比如红杉也曾2千
+多万投资著名的bubble叫Color
+
+另外多读读techcrunch关于这家公司的文章，了解他的发展历程。
+
+
+
+筛选创业公司是很累的，基本猎头给我20个公司我可以筛出一家来。除了来自猎头的推
+荐，我也自己关注techcrunch, angelist, 在quora上搜索"startup to watch”。凡是
+业务模式我看不懂，没有信心的我都不面，因为我觉得宁可错过，也不能浪费好几年时间
+
+另外大家熟知的Airbnb, dropbox, pinterest, uber我就不说了,从了其中一个

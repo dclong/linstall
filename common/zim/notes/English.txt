@@ -5,5 +5,27 @@ Creation-Date: 2014-06-07T10:09:37-04:00
 ====== English ======
 Created Saturday 07 June 2014
 
+http://www.grammarly.com/handbook/
+http://grammarist.com/
+
 1. Easygoing NOT easy going NOT easy-going
 2. pop up, pop-up, popup?
+3. start-up or startup, the former is older style widely used, however, the latter is more and more used in media now and is considered a word
+4. etc. instead etc (without ending dot)
+5. union (bad choice in sql) is a noun not a verb. Unite is the corresponding verb.
+6. fait accompli
+
+
+
+Every Time
+
+Everytime should be written as two separate words: every time.
+
+While some compound words like everywhere and everyone have become commonplace in the English language everytime is not considered an acceptable compound word.
+
+    You don’t need to remind me to do the dishes everytime.
+
+    You don’t need to remind me to do the dishes every time.
+
+    Every time we breathe, we inhale pollutants.
+

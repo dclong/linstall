@@ -6,9 +6,30 @@ Creation-Date: 2014-05-17T16:57:07-04:00
 Created Saturday 17 May 2014
 
 1. array, object, pass by ref/value?
-2. NLTK, fuzzywuzzy, weechat and scrapy modules, sounds interesting
+2. curses, ncurses, NLTK, fuzzywuzzy, weechat and scrapy modules, sounds interesting
 In general practice, it's probably not that beneficial. In fact, most Python style guides encourage programmers to place all imports at the beginning of the module file.
 
+cd path/to/foo
+python setup.py install --user
 
+If you are using easy_install and would like the package downloaded and installed:
+
+easy_install --prefix=$HOME/.local/ foo
+
+It's a little more work if you are using pip to download and install:
+
+pip install --install-option="--prefix=$HOME/.local" foo
+
+pip install --user mercurial
+
+## Design
+1. The bottom-most package in Java should be a file in Python
+
+    Do not use inner classes. Just put classes in the same module
+    By convention, things that start with _ are "private"
+    It's OK to have "public variables"
+
+## numerical
+1. by default integer division, import division; float
 
 

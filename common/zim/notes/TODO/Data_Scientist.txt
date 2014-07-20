@@ -12,3 +12,9 @@ http://jliblog.com/app/rweibo
 http://cos.name/cn/topic/108972
 
 http://cos.name/cn/topic/156375
+
+http://www.mitbbs.com/article_t/DataSciences/7313.html
+
+http://www.erogol.com/large-set-machine-learning-resources-beginners-mavens/
+
+1. use text minign to help u quickly extract main point of blog post and comments, etc. You probably can use htmlParser to do this.
