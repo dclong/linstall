@@ -1,5 +1,8 @@
 {
     "usageCount": 0, 
+    "omitTrigger": false, 
+    "prompt": false, 
+    "description": "Insert Date", 
     "abbreviation": {
         "wordChars": "[\\w]", 
         "abbreviations": [], 
@@ -8,18 +11,16 @@
         "backspace": true, 
         "triggerInside": false
     }, 
-    "modes": [
-        3
-    ], 
-    "title": "Sample Scripts", 
     "hotkey": {
-        "hotKey": "<f2>", 
+        "hotKey": null, 
         "modifiers": []
     }, 
+    "modes": [], 
+    "showInTrayMenu": false, 
     "filter": {
         "regex": null, 
         "isRecursive": false
     }, 
-    "type": "folder", 
-    "showInTrayMenu": false
+    "type": "script", 
+    "store": {}
 }
