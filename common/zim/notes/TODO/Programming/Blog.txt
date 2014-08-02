@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-27T22:45:30-04:00
+
+====== Blog ======
+Created Sunday 27 July 2014
+
+1. update title and slug after rename a post
+2. remove **...** after move post from misc to en, and do the opposite after move from en to misc
+3. publish all, and cache results, i.e., record which has been edited but not yet published ...

@@ -22,3 +22,10 @@ Don’t Amend Public Commits
 Use git show $COMMIT. It'll show you the log message for the commit, and the diff of that particular commit.
 
 git diff 15dc8^!
+
+    git config --global http.proxy http://proxyuser:proxypwd@proxy.server.com:8080
+    git config --global https.proxy http://proxyuser:proxypwd@proxy.server.com:8080
+    git config --system http.sslverify false
+
+
+
