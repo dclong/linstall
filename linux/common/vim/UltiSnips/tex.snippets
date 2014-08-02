@@ -134,4 +134,36 @@ endsnippet
 snippet lp "Long parenthesis" 
 \left(${1:${VISUAL:contents}}\right)$0
 endsnippet
-# vim:ft=snippets:
+
+snippet f "Fraction" !i
+\frac{$1}{$2}
+endsnippet
+
+snippet ( "Parenthesis" !i
+($1)
+endsnippet
+
+snippet p "Parenthesis" !i
+($1)
+endsnippet
+
+snippet { "Curly Brace" !i
+{$1}
+endsnippet
+
+snippet \{ "Curly Brace" !i
+\{$1\}
+endsnippet
+
+snippet \\{ "Literal Curly Brace" !i
+\\{$1\\}
+endsnippet
+
+snippet i "Integral" !i
+\int_{${1:ll}}^{${2:ul}} ${3:f} 
+endsnippet
+
+snippet o "Integral" !i
+\overset{$1}{$2}
+endsnippet
+

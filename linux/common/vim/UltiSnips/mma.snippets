@@ -1,18 +1,48 @@
-snippet ts "ToString - Mathematica" !w
-ToString[$1];
+snippet ts "ToString" !w
+ToString[$1]
 endsnippet
 
-snippet ft "Flatten - Mathematica" !w
-Flatten[$1];
+snippet tostr "ToString" !w
+ToString[$1]
 endsnippet
 
-snippet rule "Rule - Mathematica" !w
+snippet str "ToString" !w
+ToString[$1]
+endsnippet
+
+snippet tostring "ToString" !w
+ToString[$1]
+endsnippet
+
+snippet paste "StringJoin" !w
+StringJoin[${1:s1}, ${2:s2}]
+endsnippet
+
+snippet ft "Flatten" !w
+Flatten[$1]
+endsnippet
+
+snippet rule "Rule" !w
 /. Rule -> $1
 endsnippet
 
-snippet l "Lambda Function - Mathematica" !w
+snippet l "Lambda Function" !w
 (${1:#1} &)
 
 snippet if "If" !b
 If[${1:condition}, ${2:t}, ${3:f}];
 endsnippet
+
+snippet module "Module" !b
+{$1:FunName}[${2:arg1}_$3] := Module[
+	{},
+	$4
+];
+endsnippet
+
+snippet for "For" !b
+For[${1:${2:i} = ${3:1}}, ${4:$2 <= ${5:2}}, ${3:$2++},
+	$6
+];
+endsnippet
+
