@@ -8,10 +8,12 @@
         "backspace": true, 
         "triggerInside": false
     }, 
-    "modes": [], 
+    "modes": [
+        3
+    ], 
     "title": "Sample Scripts", 
     "hotkey": {
-        "hotKey": null, 
+        "hotKey": "<f2>", 
         "modifiers": []
     }, 
     "filter": {

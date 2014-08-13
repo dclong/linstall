@@ -364,3 +364,8 @@ check enhanced link analytics, google analytics
 
 ## Programming
 [ ] fuzz match in python or R?
+
+1. 做个足球比赛评分系统？
+
+2. 幼儿园评分系统？
+

@@ -1,0 +1,36 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-06T15:17:54-04:00
+
+====== Discount ======
+Created Sunday 06 July 2014
+
+
+http://www.mitbbs.com/mitbbs_article_t.php?board=Automobile&gid
+
+private cash coupon:
+到Ford网上登记要那个Brochure，登记两遍，以防万一系统里没信息。然后第
+2天拨打Ford Marketing部门的电话，800-334-4375，跟客服讲你朋友收到这个750的
+coupon，你刚刚登记了，但是马上要买车，来不及收到了，让客服电话里查找你的信息
+，如果750已经issue了，他们电话里可以直接给出Certificate number/customer
+number，如果去买车的时候没有收到纸coupon或者email coupon，就把你的coupon号报
+给dealer，让他们在系统里查，如果dealer赖账说没有就当场电话Ford客服。
+
+慢，从网上登记到收到小册子差不多要将近一个月。我的感觉是他们收到你的个人信息
+才印刷封面（封面上有你的名字、地址和rebate）、装订那个小册子。
+
+这个voucher 主要从两个页面跳出来 build& price 和 Model& specs
+
+一般上半个月不会有的，你如果一直刷只会跳出来request for quote，如果你看到这
+个跳出来，就说明今天还没有1000 private offer，可以洗洗睡了
+
+到了下半个月在那两个页面刷个十来分钟就应该有，如果一直没有的话，你就应该换一
+台电脑，那个offer 应该是记录mac地址的，这台电脑出过了，就不会再出来了，换浏
+览器清理cookie都没用
+
+cash back 是 Chevrolet 给的manufacture rebate 可以叠加的
+
+去Chevrolet 官网 进入任意一个车型 就会看到 build&price 和 specs两个页面
+刷出来任意Chevy 车通用
+
+另外决定买chevy的新手去看看我另外一个和dealer讲价的帖子 至少省你几百块

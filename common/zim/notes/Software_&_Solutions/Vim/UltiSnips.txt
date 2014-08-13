@@ -20,3 +20,4 @@ Possibly because you used option `r` for a non-regular expression trigger, or mi
 7. let complete function ignore case?
 8. k.len -> len(k) in python
 9. fuzz complete and case-insensitive compelete has problem. One way to avoid this is to user later completions to correct them. fuzz matching, regular expression, etc. ...
+10. how to automatically add filetypes (e.g., text) when a markdown file is opened?

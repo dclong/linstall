@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-28T20:16:12-04:00
+
+====== Markdown ======
+Created Monday 28 July 2014
+
+1. cannot have too many empty lines before a list. 1 at most
+
+2. immediately after a list, the code block should be indent 8 spaces,
+the second code block only has to indent 4 spaces

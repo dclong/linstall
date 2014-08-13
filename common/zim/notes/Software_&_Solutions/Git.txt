@@ -7,3 +7,25 @@ Created Wednesday 14 May 2014
 
 1. The trick of creating executable scripts and push them to GitHub/Bitbucket to overcome the difficulty that you can change file permissions on bitbucket.
 2. is it possible to let git keep original (creation) time stamps of files?
+3. Switching branches carries uncommitted changes with you. Either commit first, run git checkout . to undo them, or run git stash before switching. (You can get your changes back with git stash apply)
+4. git log origin/master..HEAD
+5. git diff origin/master..HEAD
+6. git log <since>..<until>
+
+git pull --rebase origin master
+git add <some-file>
+git rebase --continue
+git rebase --abort
+
+Don’t Amend Public Commits
+
+Use git show $COMMIT. It'll show you the log message for the commit, and the diff of that particular commit.
+
+git diff 15dc8^!
+
+    git config --global http.proxy http://proxyuser:proxypwd@proxy.server.com:8080
+    git config --global https.proxy http://proxyuser:proxypwd@proxy.server.com:8080
+    git config --system http.sslverify false
+
+
+

@@ -27,3 +27,11 @@ Created Saturday 21 June 2014
 19. it is suggested that you use java camelCase style to name variables in 	Mathematica which can distinguish them from functions
 20. integer cannot be use in string concatenation directly, must use [[ToString]] to convert it to a String first.
 21. mle [[/.]] Rule -> (#2 &) 
+22. Export[output, result, "Table"];
+
+## common mistakes
+1. forget {}, in Module
+
+## IO
+1. put and PutAppends 
+2. >> and >>> similar to Linux bash > and >>
