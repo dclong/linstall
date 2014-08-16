@@ -8,3 +8,5 @@ let @b = '0xj'
 let @l = '<G'
 " capitalize first letter in a word
 let @t = 'gUlw'
+" surround current word with space
+let @s = 'i 2wi '
