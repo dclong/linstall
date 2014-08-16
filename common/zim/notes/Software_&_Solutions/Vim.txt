@@ -111,3 +111,7 @@ endfunction
 nmap ,d :call DelBlock("^>>Start-pattern")<CR>
 
 check superTab and clang-python
+
+the html < > example? in tutorial!!
+
+:[range]g/pattern/cmd

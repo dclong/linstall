@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-03T09:56:52-04:00
+
+====== Links ======
+Created Sunday 03 August 2014
+
+[Kaz's SAS, HLM, and Rasch Model](http://www.estat.us/id38.html)
+
+
+
+

@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-09T21:07:34-04:00
+
+====== SAS ======
+Created Saturday 09 August 2014
+
+1. study more about the return type of putn, it seems that it can either be numeric or string 
+depending on the outformat?

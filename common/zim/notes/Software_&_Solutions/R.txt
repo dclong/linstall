@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-09T13:29:48-04:00
+
+====== R ======
+Created Saturday 09 August 2014
+
+## graphics
+1. lattice: is more stylized, good for making multiple frequently used plots in panels.
+2. roxygen2, inherit definition of parameters?
+3. unit test?
+4. polygon for shading an area, and your dclong.drawing package
