@@ -49,4 +49,25 @@ snippet tp "template <typename ..> (template)"
 template <typename ${1:_InputIter}>
 endsnippet
 
-# vim:ft=snippets:
+snippet m "main function" !b
+int main(){
+    $1
+    return 0;
+}
+endsnippet
+
+snippet ifdef "#ifdef" !b
+#ifdef $1
+    $2
+#else
+    $3
+#endif
+endsnippet
+
+snippet #ifdef "#ifdef" !b
+#ifdef $1
+    $2
+#else
+    $3
+#endif
+endsnippet
