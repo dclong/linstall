@@ -5,9 +5,6 @@ Creation-Date: 2014-08-10T23:25:46-04:00
 ====== Boston ======
 Created Sunday 10 August 2014
 
-2. print 4 copies of your resume (can probably do it in the hotel)
-3. read your on-site tips again
-
 ## Tech
 1. more on HLM and mixed models, etc., the bayesian class notes
 2. geometry, cities, get clear about boston, etc.
