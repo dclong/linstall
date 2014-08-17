@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-15T22:43:53-04:00
+
+====== Ideas ======
+Created Friday 15 August 2014
+
+1. RF good for non-linear relatioship.
+Even if a predictor has no correlation with the response varaible 
+it still might be useful because of possible non-linear relationship with the response variable.
