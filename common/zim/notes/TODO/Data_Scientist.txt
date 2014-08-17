@@ -20,3 +20,180 @@ http://www.erogol.com/large-set-machine-learning-resources-beginners-mavens/
 https://www.rulequest.com/see5-info.html
 
 1. use text minign to help u quickly extract main point of blog post and comments, etc. You probably can use htmlParser to do this.
+
+
+接触big data时间不长，但是随着现在big data的兴起
+越来越多的人投入这个领域，加上以前是做分布式系统开发的
+所以很自然地就进入了领域，一路弄下来，庆幸的是统计没白学
+这个领域我的感觉，就是cs的应用统计学，这块占了80％
+剩下20％是分布式算法，我觉得有几个帖子很有价值，罗列如下：
+
+这个贴把每个大概的部分最关键的方法论全部点出来了，非常精炼
+http://www.mitbbs.com/article/JobHunting/32600683_0.html
+
+里面说到的clustering，这个可能是最新的一个比较好的option
+http://www.mitbbs.com/article_t/DataSciences/6761.html
+http://data-sci.appspot.com/index.html
+
+面试关键字，看东肥的贴
+http://www.mitbbs.com/article_t/JobHunting/32058385.html
+
+关于学习，我觉得apprentice00说的关于python和java的经验
+跟我的感觉高度吻合，具体见这个贴
+http://www.mitbbs.com/article/JobHunting/32721739_3.html
+
+我发表一下看法：
+过去二十年CS深受OO和互联网的影响。所有的数据和业务逻辑都被封装在大大小小的模
+块里面，这样保证了能够传输，移植和复用等问题。
+
+但是被小心翼翼封装在json或者packet里面的数据已经没法流动起来了。rdbms虽然能
+够处理transaction但是对于高维稀疏而且schema多变的数据也无能为力，以致于现在
+最靠谱的数据共享方式还是文件或者文件的变种。
+
+所谓的大数据工具，是一种海量拆包的工具，只不过是在反过来做过去20年各种无谓的
+encapsulation。可以认为互联网每天成千上百个pb的数据里面，真正有价值的部分只
+是几十个tb，而其中能够分析也不过这当中的一个百分比。无论是tableau也好还是
+gnip也好还是sumologic也好，做的都是这些器，这些东西十几年前都做过了，只不过
+现在从pc软件变成了web service。
+
+靠谱
+
+不过oo跟互联网还不是一个时代，互联网更靠后一些
+oop很早就显现出了替代其他各种paradigms的架势
+随之而来的是软件工程这个学科的兴起
+然后逐步替换并淘汰掉c为代表的硬件/命令式编程
+开始剥离出抽象的逻辑代码而非命令代码
+最早做出垮平台的是fortran，字节码那些都是fortran先搞出来的
+然后oop优化最早是smalltalk，以及后来的strongtalk搞出来的理论
+再然后lars bak等人根据strongtalk的经验
+address了sun的一个项目组用c++用疯了的问题
+这就是oak以及后来的java还有官方jvm hotspot的第一版
+然后就是java瞄准了网络时代，sun提出了the network is the computer
+java上各种socket等的编程也远比c什么容易很多，封装得更彻底
+最早c/c++什么用corba，简直不是人用的
+然后java在corba基础之上搞出了rmi
+再后来是ejb，ejb就是分布式系统的一个典型应用
+然后ejb太过于复杂，加上m$被一脚踢出了java阵营
+所以迫不及待需要一个更高level的通信协议，这就是后来xml
+然后基于xml演化出了uddi, wsdl&soap这个web service的第一代
+但是web service还是太过于复杂，于是有个phd提出了restful构架
+简化了web service，然后就有了网络上各种产品比如json的今天
+同时server side以ejb为代表的j2ee大规模应用，但是ejb本身也太过于复杂
+rod johnson和gavin king为代表的aussie建议简化，同时orm也被提出
+建议对传统db做封装，因为sql太不统一了，而且关系型数据跟oo概念有很大出入
+这就有了spring和hibernate，然后spring和hibernate横行，就有了分布式今天的基础
+架构
+再然后，google等web公司逐步兴起，又提出了很多新概念，比如nosql和map reduce这些
+后来，yahoo根据google的各种概念，作出了java版的google系统的翻版
+然后贡献给了apache并开源了，其他公司就都跑去抄yahoo的这个东西，不要钱比什么
+都重要
+这就是hadoop，hadoop在一定程度上拓宽了传统db的范畴
+这几个基本上构成了今天分布式的基础架构
+再然后，这一套完成之后，人们开始想办法针对这一套架构做优化
+简单说就是如何引入脚本来简化某些领域的开发，就像以前sql对db一样
+这就有了ruby以及jruby，js以及rhino和nashorn，python和jython
+同时jvm自身也在摸索一些更为合理的编程方式，这就是scala，groovy还有clojure
+再然后，也就是一年前，更多的专业脚本语言被提出，要搬到jvm上去
+这就是renjin，也就是r在jvm上的impl，以及hadoop自身发展出的类似sql的ql
+比如cassandra用的cql，同时java本身也在拓展jvm的性能
+java引入了script engine，随着java版本的逐步完善，以后让jvm直接执行脚本
+比如python, ruby, js,groovy这些，会变得更为方便和便捷
+但是jvm毕竟还是java的一部分，不懂jvm还是不行
+另外很多人还在用并行计算的思维来思考分布式计算，都是hpc那些，这个也不对
+不懂分布式就很难理解分布式所带来的各种问题，hadoop等都在尝试着让分布式变得更
+简单
+cloud也在努力使分布式变得更为简单，但是要做到无脑就用的程度
+还是太遥远了，因为各种东西都很不完善，至少现阶段，还是要会java才行
+否则都是toy，各种兼容性的问题，不胜其烦，生产系统可没办法这样搞
+多来几个生产bugs，编程师就要准备打包滚蛋了
+
+不过这些都是empirical东西
+真正的big data和分布式理论要超越这些具体的impl
+理论上用什么都可以做出来，用汇编都行，但是实践是另外一回事
+实际干活还是以堆轮子为首选，否则没办法维护
+
+
+jvm也是c写的，最终什么都是c，但是c和汇编都太底层了
+跟人的思维接不上，人毕竟是人，不可能完全用机器的思维方式去思考和书写语言
+整个计算机系统就是层层封装的结果
+
+并行计算跟分布式计算是两回事
+并行计算很多时候对于单机更有意义，共享内存这些
+分布式计算一定涉及网络连接，分布式计算不在乎甚至有意识地破坏某些nodes
+以测试整个系统的健壮程度，比如chaos monkey，就是要让某些nodes fail掉
+看看系统work不work，并行计算用得比较多的是hpc，而不是分布式系统
+分布式系统因为nodes上各种乱七八糟的系统什么良莠不齐
+所以找到一个统一的平台非常重要，否则每个node都要求定制软件，工作量太大
+jvm是目前能找到的最好平台
+其他语言要么效率比不过jvm，要么就是兼容性比不过java
+
+hpc上的mpi这些到还真是用c比较多，物理系什么都很喜欢写pbsscript
+然后提交hpc排队，执行后看结果，并行计算和分布式计算有一些共性和重叠
+但是毕竟不是一个东西，不同的topics
+
+从效率上说，效率提升不只比单线程的效率
+是多线程，多进程的效率提升，能并行处理的部分越多，可以提升的空间就越大
+要并行处理，就需要decoupling，割裂多个模块，使之可以并行
+这个要看需求，不同需求决定了dependency的多寡，一般科学计算依赖较强
+web的相互依赖较弱，所以一般这种都最先用在web上
+
+还有就是效率本身，java和c的差异主要体现在内存的管理上
+那效率也是由综合因素决定的，也不仅仅取决于内存操作的执行效率
+还同样取决于网络，which是分布式计算一定要涉及的部分
+网络的io比起内存，那是要慢太多了
+一般来说操作效率cpu>>内存>>硬盘>>网络
+这里面还有什么l1 cache，l2 cache这些就都不细说了，n年不搞这些了
+但是网络的latency远远高过硬盘，内存耗时这些应该是个共识
+工作时候，网络的io是要尽量减少的，所以就算你辛辛苦苦用c实现了
+提升了内存效率，但是还是改变不了网络的延迟，该慢还是慢，那你用c做有意义么？
+木桶原理，决定高度的是最短的一块，分布式最短也就是最慢的一般都是网络操作
+但是分布式又离不开网络操作，否则就不是分布式了
+
+而且割裂的平台会使得很多优化手段无法使用
+一个统一的平台远比几个不同平台各搞各的要容易优化
+python的包很多都是fortran, c++还有python自身写的
+乱七八糟，不仅垮平台很难实现，还同时导致综合执行效率降低
+c++的有些优化手段，fortran就用不了，反之亦然，因为毕竟不是一个语言
+很多特性不一样，相比之下，java所有的包都是jvm上的
+所有代码有一个工整的执行格式，那么优化手段就多了
+
+jvm本身在lars bak手下制作的时候，lars bak注册了23项专利
+大部分都是优化专利，google后来雇用了lars bak，搞了v8引擎
+结果就被oracle告了，就因为lars bak的专利
+lars bak从strongtalk时代开始搞oop的优化，老鸟中的老鸟，巨牛无比
+其他没有办法过他手优化的，比如ruby和python，效率就偏低，就慢
+所以现在都争着往jvm上搬，什么jruby, jython, js这些，都有jvm的版本
+到了jvm，就能用上lars bak的东西了，就快不少
+现在lars bak在搞dart
+
+大多数人，如果没有经过一定的代码优化理论训练
+就算能用c或者汇编写一个hadoop这么大的东西出来
+其执行效率还是会低于jvm和hadoop，更不要说开发和维护的效率了
+
+分布式是一个非常大的topic，能涵盖你所知道的全部
+我不认为有谁能够一个人搞定全部，这么想的基本上都属于盲目自大的
+所以搞分布式学会利用别人做好的轮子非常重要，否则事倍功半
+有些东西根本不是一个人一天两天能写出来的，比如os, jvm, db这些
+这些都是群策群力多年积累下来的东西，大多数人穷其一生
+能做其中一个，并得到市场的认同
+就牛得不得了了，更不要说上面各种类库，spring, hibernate, hadoop
+这些要是有人能写一个出来，都不要写完整了，你能参与其中
+你就已经很牛了，这些都是apache top level档次的projects
+能做其中一个，做到创始人的话，应该就能在wikipedia上有一个term来描述你的生平
+你这辈子其实不用打工了，到处演讲卖书就好了
+甚至到一些大学里面混个什么荣誉博士，问题不大
+
+收藏了！
+
+我是把分布式计算和并行计算混为一谈，因为我用到的都是后者。
+
+按照你的说法，其实分布式计算很适合节点间数据传递较少的任务。对于这些任务，网
+速不一定是瓶颈。比如一个大程序，是同时cpu intensive和memory intensive的，但
+是可以分割，并且每个分割出来的小任务，也都是cpu&memory intensive的，但是同时
+节点间的数据传递有限。这样的任务，网络的latency就不是瓶颈了吧。而且用C也比
+java效率高吧？
+
+跨平台的确是个问题。要不是有这个问题，肯定现在最流行的是C，并且比第二的语言
+可能高出一个数量的使用度。问个外行话，能不能先在所有的unix和linux系统下先把C
+跨平台了？
+

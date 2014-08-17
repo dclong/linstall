@@ -8,3 +8,4 @@ Created Sunday 27 July 2014
 1. update title and slug after rename a post
 2. remove **...** after move post from misc to en, and do the opposite after move from en to misc
 3. publish all, and cache results, i.e., record which has been edited but not yet published ...
+4. suggest tags, category, etc. using text mining

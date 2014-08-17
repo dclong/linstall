@@ -53,3 +53,101 @@ endsnippet
 snippet b. "Boolean Values" !w
 $1`!p snip.rv = complete(t[1], ["FALSE", "TRUE"])`
 endsnippet
+
+snippet #' "Help Documentation" !b
+#' @title ${1:title of this help documentation}
+#'
+#' @description ${2:give a description of each function in this page}
+${3:#' 
+#' @aliases ${4:`!p snip.rv = os.path.splitext(fn)[0]`}}
+${5:#'
+#' @param ${6:first parameter}}
+${7:#'
+#' @param ${8:more parameter}}
+${9:#' 
+#' @return ${10:return value of the function following}}
+#' 
+#' @author ${11:Ben Chuanlong Du}
+${12:#' 
+#' @keywords ${13:kw1, kw2}}
+${14:#' 
+#' @seealso ${15:simular functions}}
+${16:#'
+#' @references ${17:references based on which the function are implemented}}
+${18:#'
+#' @export}
+#'
+${19:#' @rdname ${20:`!p snip.rv = os.path.splitext(fn)[0]`}}
+${21:#' 
+#' @example
+#' \dontrun{
+#' ${22:code here}
+#' }}
+#'
+endsnippet
+
+snippet if "If" !b
+if(${1:condition}){
+	$2
+}
+endsnippet
+
+snippet @e "@export" !b
+#' @export
+endsnippet
+
+snippet @e "@examples" !b
+#' @examples
+endsnippet
+
+snippet @ep "@export" !b
+#' @export
+endsnippet
+
+snippet @p "@param" !b
+#' @param
+endsnippet
+
+snippet @r "@rdname" !b
+#' @rdname
+endsnippet
+
+snippet @r "@rdname" !b
+#' @rdname
+endsnippet
+
+snippet @a "@author" !b
+#' @author
+endsnippet
+
+snippet @t "@title" !w
+@title
+endsnippet
+
+snippet @t "@title" !b
+#' @title
+endsnippet
+
+snippet @d "@description" !b
+#' @description
+endsnippet
+
+snippet @d "@description" !b
+#' @description
+endsnippet
+
+snippet @ex "@examples" !b
+#' @examples
+#' \dontrun{
+#'
+#' }
+endsnippet
+
+snippet \l "Link" !w
+\link{$1}
+endsnippet
+
+snippet \c "Link" !w
+\code{$1}
+endsnippet
+

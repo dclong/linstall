@@ -9,3 +9,8 @@ Created Monday 28 July 2014
 
 2. immediately after a list, the code block should be indent 8 spaces,
 the second code block only has to indent 4 spaces
+
+3. it seems that you cannot directly embed pdf images, must use, jpg, png, git, etc.
+4. not convenient to write latex align evnironment without equation number, don't use align*
+use \nonumber to suppress equations numbers. 
+The reason is that * has special meaning in markdown.

@@ -167,3 +167,23 @@ snippet o "Integral" !i
 \overset{$1}{$2}
 endsnippet
 
+snippet nn "\nonumber \\" !w
+\nonumber \\
+endsnippet
+
+snippet min "min{}" !w
+min\\{$1\\}
+endsnippet
+
+snippet max "max{}" !w
+max\\{$1\\}
+endsnippet
+
+snippet '([a-zA-Z]+)(\d+)' "X_1" !r
+`!p snip.rv = match.group(1) + "_" + match.group(2)`
+endsnippet
+
+snippet '([a-zA-Z]+)\((\d+)' "X_1" !r
+`!p snip.rv = match.group(1) + "_{(" + match.group(2) + ")}"`
+endsnippet
+
