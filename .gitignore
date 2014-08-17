@@ -1,0 +1,5 @@
+# .gitignore itself should be track
+autokey.log
+autokey.log.*
+autokey.pid
+.zim
