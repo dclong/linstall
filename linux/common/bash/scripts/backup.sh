@@ -3,7 +3,7 @@
 function backup.usage(){
     cat << EOF
 Description
-Syntax: backup src_dir des_dir
+Syntax: backup src_dir des_dir max_copies
 EOF
 }
 
