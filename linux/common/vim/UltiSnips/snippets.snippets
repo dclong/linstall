@@ -46,7 +46,10 @@ snippet complete "function complete" !w
 complete(t[${1:1}], [$2])
 endsnippet
 
-snippet py. "Python Functions" !w
+snippet "p(ython)?" "Python Functions" !rw
 $1`!p snip.rv = complete(t[1], ["complete", "match.group"])`
 endsnippet
 
+snippet "m(atch.group)?" "match.group()" !rw
+match.group(${1:1})
+endsnippet

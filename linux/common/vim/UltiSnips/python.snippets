@@ -447,6 +447,15 @@ if ${1:condition}:
 #end if
 endsnippet
 
+snippet elif "Else If" !b
+elif ${1:condition}:
+	${2:pass}
+endsnippet
+
+snippet #endif "end if" !b
+#end if
+endsnippet
+
 snippet #if "end if" !b
 #end if
 endsnippet
@@ -592,24 +601,24 @@ snippet range "function range" !w
 range(${1:n})
 endsnippet
 
-snippet s. "String Methods" !w
-s.$1`!p snip.rv = complete(t[1], ["capitalize", "center", "count", "decode", "encode", "endswith", "expandtabs", "find", "format", "index", "isalnum", "isalpha", "isdigit", "islower", "isspace", "istitle", "isupper", "join", "ljust", "lower", "lstrip", "partition", "replace", "rfind", "rindex", "rjust", "rpartition", "rsplit", "rstrip", "split", "splitlines", "startswith", "strip", "swapcase", "title", "translate", "upper", "zfill", "isnumeric", "isdecimal"])`
+snippet "s(tr)?." "Methods of The str Class" !rw
+str.$1`!p snip.rv = complete(t[1], ["capitalize", "center", "count", "decode", "encode", "endswith", "expandtabs", "find", "format", "index", "isalnum", "isalpha", "isdigit", "islower", "isspace", "istitle", "isupper", "join", "ljust", "lower", "lstrip", "partition", "replace", "rfind", "rindex", "rjust", "rpartition", "rsplit", "rstrip", "split", "splitlines", "startswith", "strip", "swapcase", "title", "translate", "upper", "zfill", "isnumeric", "isdecimal"])`
 endsnippet
 
-snippet s.strip "str.strip()" !w
-${2:s}.strip(${1:chars})
+snippet str.strip "str.strip()" !w
+${2:str}.strip(${1:chars})
 endsnippet
 
-snippet s.upper "str.upper()" !w
-${1:s}.upper()
+snippet str.upper "str.upper()" !w
+${1:str}.upper()
 endsnippet
 
-snippet f. "File Methods" !w
-f.$1`!p snip.rv = complete(t[1], ["close", "flush", "fileno", "isatty", "next", "read", "readline", "readlines", "xreadlines", "seek", "tell", "truncate", "write", "writelines"])`
+snippet "f(ile)?." "File Methods" !rw
+file.$1`!p snip.rv = complete(t[1], ["close", "flush", "fileno", "isatty", "next", "read", "readline", "readlines", "xreadlines", "seek", "tell", "truncate", "write", "writelines"])`
 endsnippet
 
-snippet f.writelines "file.writelines()" !w
-${2:f}.writelines(${1:sequence})
+snippet file.writelines "file.writelines()" !w
+${2:file}.writelines(${1:sequence})
 endsnippet
 
 snippet "is null" "is null transformation" !w
@@ -620,7 +629,7 @@ snippet "is not null" "is not null transformation" !w
 != None
 endsnippet
 
-snippet re. "Methods of re"
+snippet "r(e)?." "Methods of re" !rw
 ${2:re}.$1`!p snip.rv = complete(t[1], ["compile", "DEBUG", "I", "IGNORECASE", "L", "LOCALE", "M", "MULTILINE", "S", "DOTALL", "U", "UNICODE", "X", "VERBOSE", "search", "match", "split", "findall", "finditer", "sub", "subn", "escape", "purge"])`
 endsnippet
 
@@ -668,5 +677,9 @@ endsnippet
 
 snippet "i(mport)?" "import" !br
 import $1`!p snip.rv = complete(t[1], ["os", "subprocess", "warnings", "shutil", "hashlib", "sys"])`
+endsnippet
+
+snippet none "None" !w
+None
 endsnippet
 

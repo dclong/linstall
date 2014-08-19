@@ -23,8 +23,40 @@ run;
 endsnippet
 
 # procedure snippets
-snippet pp "Proc Print" b
-proc print data = ${1:d} ${2:(${3:where=(${4: })} ${5:obs=${6: }})};
+
+snippet "p(roc)?" "Procedure" !rb
+proc $1`!p snip.rv = complete(t[1], ["fcmp", "freq", "format", "glm", "iml", "logistic", "means", "mixed", "print", "rank", "reg", "sql", "sort", "transpose", "univariate"])`
+endsnippet
+
+snippet "proc fcmp" "The FCMP Procedure" !b
+proc fcmp outlib = ${1:lib}.${2:funcs}.${3:category};
+    $4
+run;
+endsnippet
+
+snippet "proc sql" "The SQL Procedure" !b
+proc sql;
+    select ${1:distinct }${2:top ${3:5} }${4:*}
+    from
+        ${5:t1}
+    ${6:${7:inner join
+        ${8:t2}
+    on
+        ${9:condition}}
+    ${10:where
+        ${11:condition}}}
+    ${12:group by
+        ${13:1}
+    ${14:having
+        ${15:condition}}}
+    ${16:order by
+        ${17:1} ${18:desc}}
+    ;
+quit;
+endsnippet
+
+snippet "proc print" "The Print Procedure" !b
+proc print data = ${1:d} ${2:(${3:where=(${4:condition})} ${5:obs=${6:5}})};
     title "${7:$1}";
 run;
 endsnippet
@@ -39,15 +71,6 @@ snippet ppw "Print with Where" b
 proc print data = ${1:d} ${2:(where=(${3: }))};
     title "${4:$1}";
 run;
-endsnippet
-
-snippet ps "Proc SQL" b
-proc sql;
-    ${1:select ${2:*} 
-    from 
-        ${3:t}
-    ;}
-quit;
 endsnippet
 
 # macro defintion snippets
@@ -257,3 +280,26 @@ proc sort data = ${1:d} ${2:out = ${3:o}};
 	by ${5:descending} ${6:var};
 run;
 endsnippet
+
+snippet "f(unction)?" "Function Definition" !rb
+function ${1:f}(${2:arg1}${3:$})${4:$};
+    $5
+    return(${6:rv});
+endsub;
+endsnippet
+
+snippet "s(ubroutine)?" "Subroutine Definition" !rb
+subroutine ${1:f}(${2:arg1}${3:$})${4:$};
+    $5
+    return(${6:rv});
+endsub;
+endsnippet
+
+snippet "o(ptions)?" "Methods of options" !rb
+options $1`!p snip.rv = complete(t[1], ["append=", "appletloc=", "authproviderdomain", "autosaveloc=", "binding=", "bottommargin=", "bufno=", "bufsize=", "byerr", "byline", "bysorted", "caps", "cardimage", "catcache=", "cbufno=", "center", "cgoptimize=", "charcode", "cleanup", "cmplib=", "cmpmodel=", "cmpopt=", "collate", "colorprinting", "compress=", "copies=", "cpucount=", "cpuid", "datastmtchk=", "date", "datestyle=", "deflation=", "details", "device=", "dkricond=", "dkrocond=", "dldmgaction=", "dmr", "dms", "dmsexp", "dmslogsize=", "dmsoutsize=", "dmspgmlinesize=", "dmssynchk", "dsnferr", "dtreset", "duplex", "echoauto", "emailauthprotocol=", "emailfrom", "emailhost=", "emailid=", "emailport", "emailpw=", "engine=", "errorabend", "errorbyabend", "errorcheck=", "errors=", "explorer", "filesync=", "firstobs=", "fmterr", "fmtsearch=", "fontembedding", "fontrendering=", "fontsloc=", "formchar=", "formdlim=", "forms=", "gstyle", "gwindow", "helpbrowser=", "helpencmd", "helphost", "helpport=", "httpserverportmax=", "httpserverportmin=", "ibufno=", "ibufsize=", "initcmd", "initstmt=", "insert=", "intervalds=", "invaliddata=", "jpegquality=", "label", "_last_=", "leftmargin=", "linesize=", "logparm=", "lrecl=", "maps=", "mergenoby", "missing=", "msglevel=", "multenvappl", "news=", "notes", "number", "obs=", "orientation=", "ovp", "pagebreakinitial", "pageno=", "pagesize=", "paperdest=", "papersize=", "papersource=", "papertype=", "parm=", "parmcards=", "pdfaccess", "pdfassembly", "pdfcomment", "pdfcontent", "pdfcopy", "pdffillin", "pdfpagelayout=", "pdfpageview=", "pdfpassword=", "pdfprint=", "pdfsecurity=", "primaryproviderdomain=", "printerpath=", "printinit", "printmsglist", "quotelenmax", "replace", "reuse=", "rightmargin=", "rlang", "rsasuser", "s=", "s2=", "s2v=", "sashelp=", "sasuser=", "seq=", "setinit", "skip=", "solutions", "sortdup=", "sortequals", "sortsize=", "sortvalidate", "source", "source2", "spool", "sqlconstdatetime", "sqlreduceput=", "sqlreduceputobs=", "sqlreduceputvalues=", "sqlremerge", "sqlundopolicy=", "startlib", "stepchkpt", "stepchkptlib=", "steprestart", "sumsize=", "svgcontrolbuttons", "svgheight=", "svgpreserveaspectratio=", "svgtitle=", "svgviewbox=", "svgwidth=", "svgx=", "svgy=", "syntaxcheck", "sysprintfont=", "terminal", "termstmt=", "textureloc=", "threads", "toolsmenu", "topmargin=", "trainloc=", "universalprint", "uprintcompression", "user=", "utilloc=", "uuidcount=", "uuidgendhost=", "v6createupdate=", "validfmtname=", "validvarname=", "varlenchk=", "viewmenu", "vnferr", "work=", "workinit", "workterm", "yearcutoff="])`
+endsnippet
+
+snippet "(data \w )\(" "Methods of data" !rb
+`!p snip.rv = match.group(1)`($1`!p snip.rv = complete(t[1], ["alter=", "bufno=", "bufsize=", "cntllev=", "compress=", "dldmgaction=", "encrypt=", "genmax=", "gennum=", "index=", "label=", "obsbuf=", "outrep=", "pw=", "pwreq=", "read=", "repempty=", "replace=", "reuse=", "sortedby=", "spill=", "tobsno=", "type=", "write=", "fileclose=", "firstobs=", "in=", "obs=", "pointobs=", "where=", "whereup=", "idxname=", "idxwhere=", "drop=", "keep=", "rename="])`)
+endsnippet
+
