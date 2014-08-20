@@ -1,5 +1,7 @@
 # extends c
 
+extends programming
+
 global !p
 from complete import *
 endglobal
@@ -32,8 +34,7 @@ endsnippet
 
 snippet readfile "read file (readF)"
 std::vector<char> v;
-if (FILE *fp = fopen(${1:"filename"}, "r"))
-{
+if (FILE *fp = fopen(${1:"filename"}, "r")){
 	char buf[1024];
 	while(size_t len = fread(buf, 1, sizeof(buf), fp))
 		v.insert(v.end(), buf, buf + len);
@@ -53,59 +54,6 @@ snippet tp "template <typename ..> (template)"
 template <typename ${1:_InputIter}>
 endsnippet
 
-snippet "m(ain)?" "main()" !rb
-int main(int argc, char *argv[]){
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
-	return 0;
-}
-endsnippet
-
-snippet ifdef "#ifdef" !b
-#ifdef $1
-    $2
-#else
-    $3
-#endif
-endsnippet
-
-snippet #ifdef "#ifdef" !b
-#ifdef $1
-    $2
-#else
-    $3
-#endif
-endsnippet
-
-snippet "f(unction)?" "Function" !rb
-${1:T} ${2:funname}($3){
-    $4
-}
-endsnippet
-
-snippet while "while loop" !b
-while(${1:condition}){
-    $2
-}
-endsnippet
-
-snippet for "for loop" !b
-for(${1:init}; ${2:stop}; ${3:change}){
-    $4
-}
-endsnippet
-
-snippet "inc(rease)?" "+=" !rw
-+= 
-endsnippet
-
-snippet le "<=" !i
-<=
-endsnippet
-
-snippet ge ">=" !i
->=
-endsnippet
-
 snippet std "std::" !w
 std::
 endsnippet
@@ -114,11 +62,11 @@ snippet stol "std::stol" !w
 std::stol(${1:str})
 endsnippet
 
-snippet "in(clude)?" "#include" !rb
+snippet "in(c(l(u(d(e)?)?)?)?)?" "#include" !rb
 #include <$1`!p snip.rv = complete(t[1], ["chrono", "iostream", "list", "map", "pair", "random", "set", "string", "tuple", "unordered_map", "unordered_set", "vector"])`>
 endsnippet
 
-snippet "s(tring)?" "Functions/methods of String" !rw
+snippet ".s(t(r(i(n(g)?)?)?)?)?|s(t(r(i(n(g)?)?)?)?)?." "Functions/methods of String" !rw
 str.$1`!p snip.rv = complete(t[1], ["atoi", "atol", "atoll", "stoi", "stol", "stoll", "size"])`
 endsnippet
 

@@ -1,5 +1,9 @@
 extends texmath
 
+global !p
+from complete import *
+endglobal
+
 ###########################################################################
 #                             LATEX SNIPPETS                              #
 ###########################################################################
@@ -15,7 +19,7 @@ endsnippet
 #################
 # GENERAL STUFF #
 #################
-snippet "b(egin)?" "begin{} / end{}" br
+snippet "\\?b(e(g(i(n)?)?)?)?" "begin{} / end{}" !br
 \begin{${1:something}}
 	${0:${VISUAL}}
 \end{$1}
@@ -34,7 +38,7 @@ endsnippet
 ########################
 # ENUM, DESCR, ITEMIZE #
 ########################
-snippet enum "Enumerate" b
+snippet "\\?e(n(u(m(e(r(a(t(e)?)?)?)?)?)?)?)?" "Enumerate Environment" !rb
 \begin{enumerate}
 	\item $0
 \end{enumerate}
@@ -135,7 +139,7 @@ snippet lp "Long parenthesis"
 \left(${1:${VISUAL:contents}}\right)$0
 endsnippet
 
-snippet f "Fraction" !i
+snippet "\\?f(r(a(c(t(i(o(n)?)?)?)?)?)?)" "Fraction" !rw
 \frac{$1}{$2}
 endsnippet
 
@@ -159,12 +163,16 @@ snippet \\{ "Literal Curly Brace" !i
 \\{$1\\}
 endsnippet
 
-snippet i "Integral" !i
-\int_{${1:ll}}^{${2:ul}} ${3:f} 
+snippet "\\?i(n(t(e(g(r(a(l)?)?)?)?)?)?)?" "Integral" !rw
+\int_{${1:lower_limit}}^{${2:upper_limit}} ${3:integrand} 
 endsnippet
 
-snippet o "Integral" !i
+snippet "\\?o(v(e(r(s(e(t)?)?)?)?)?)?" "\overset" !rw
 \overset{$1}{$2}
+endsnippet
+
+snippet "\\?n(o(n(u(m(b(e(r)?)?)?)?)?)?)?" "\nonumber" !rw
+\nonumber 
 endsnippet
 
 snippet nn "\nonumber \\" !w
@@ -183,11 +191,14 @@ snippet '([a-zA-Z]+)(\d+)' "X_1" !r
 `!p snip.rv = match.group(1) + "_" + match.group(2)`
 endsnippet
 
-snippet '([a-zA-Z]+)\((\d+)' "X_1" !r
+snippet '([a-zA-Z]+)\((\d+)' "X_(1)" !r
 `!p snip.rv = match.group(1) + "_{(" + match.group(2) + ")}"`
 endsnippet
 
-snippet a "\author{}" !b
+snippet "\\?a(u(t(h(o(r)?)?)?)?)?" "\author{}" !rb
 \author{${1:Ben Chuanlong Du}}
 endsnippet
 
+snippet "\\?l(e(f(t)?)?)?" "\left" !rw
+\left$1`!p snip.rv = complete(t[1], ["<", "(", "{", "["])`
+endsnippet
