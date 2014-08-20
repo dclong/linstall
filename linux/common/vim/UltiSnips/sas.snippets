@@ -7,6 +7,15 @@ from complete import *
 endglobal
 
 # library snippets
+
+snippet "lib(n(a(m(e)?)?)?)?" "libname" !rb
+libname $1`!p snip.rv = complete(t[1], ["_all_"])`
+endsnippet
+
+snippet "(libname \w)" "libname" !rb
+`!p snip.rv = match.group(1)` $1`!p snip.rv = complete(t[1], ["clear", "list"])`
+endsnippet
+
 snippet ls "Lib on Server" b
 libname ${1:ls} "/risk/aml/user_aml/dclong/${2:$1}/data";
 endsnippet
@@ -24,7 +33,7 @@ endsnippet
 
 # procedure snippets
 
-snippet "p(roc)?" "Procedure" !rb
+snippet "p(r(o(c)?)?)?" "Procedure" !rb
 proc $1`!p snip.rv = complete(t[1], ["fcmp", "freq", "format", "glm", "iml", "logistic", "means", "mixed", "print", "rank", "reg", "sql", "sort", "transpose", "univariate"])`
 endsnippet
 
@@ -281,21 +290,21 @@ proc sort data = ${1:d} ${2:out = ${3:o}};
 run;
 endsnippet
 
-snippet "f(unction)?" "Function Definition" !rb
+snippet "f(u(n(c(t(i(o(n)?)?)?)?)?)?)?" "Function Definition" !rb
 function ${1:f}(${2:arg1}${3:$})${4:$};
     $5
     return(${6:rv});
 endsub;
 endsnippet
 
-snippet "s(ubroutine)?" "Subroutine Definition" !rb
+snippet "s(u(b(r(o(u(t(i(n(e)?)?)?)?)?)?)?)?)?" "Subroutine Definition" !rb
 subroutine ${1:f}(${2:arg1}${3:$})${4:$};
     $5
     return(${6:rv});
 endsub;
 endsnippet
 
-snippet "o(ptions)?" "Methods of options" !rb
+snippet "o(p(t(i(o(n(s)?)?)?)?)?)?" "Methods of options" !rb
 options $1`!p snip.rv = complete(t[1], ["append=", "appletloc=", "authproviderdomain", "autosaveloc=", "binding=", "bottommargin=", "bufno=", "bufsize=", "byerr", "byline", "bysorted", "caps", "cardimage", "catcache=", "cbufno=", "center", "cgoptimize=", "charcode", "cleanup", "cmplib=", "cmpmodel=", "cmpopt=", "collate", "colorprinting", "compress=", "copies=", "cpucount=", "cpuid", "datastmtchk=", "date", "datestyle=", "deflation=", "details", "device=", "dkricond=", "dkrocond=", "dldmgaction=", "dmr", "dms", "dmsexp", "dmslogsize=", "dmsoutsize=", "dmspgmlinesize=", "dmssynchk", "dsnferr", "dtreset", "duplex", "echoauto", "emailauthprotocol=", "emailfrom", "emailhost=", "emailid=", "emailport", "emailpw=", "engine=", "errorabend", "errorbyabend", "errorcheck=", "errors=", "explorer", "filesync=", "firstobs=", "fmterr", "fmtsearch=", "fontembedding", "fontrendering=", "fontsloc=", "formchar=", "formdlim=", "forms=", "gstyle", "gwindow", "helpbrowser=", "helpencmd", "helphost", "helpport=", "httpserverportmax=", "httpserverportmin=", "ibufno=", "ibufsize=", "initcmd", "initstmt=", "insert=", "intervalds=", "invaliddata=", "jpegquality=", "label", "_last_=", "leftmargin=", "linesize=", "logparm=", "lrecl=", "maps=", "mergenoby", "missing=", "msglevel=", "multenvappl", "news=", "notes", "number", "obs=", "orientation=", "ovp", "pagebreakinitial", "pageno=", "pagesize=", "paperdest=", "papersize=", "papersource=", "papertype=", "parm=", "parmcards=", "pdfaccess", "pdfassembly", "pdfcomment", "pdfcontent", "pdfcopy", "pdffillin", "pdfpagelayout=", "pdfpageview=", "pdfpassword=", "pdfprint=", "pdfsecurity=", "primaryproviderdomain=", "printerpath=", "printinit", "printmsglist", "quotelenmax", "replace", "reuse=", "rightmargin=", "rlang", "rsasuser", "s=", "s2=", "s2v=", "sashelp=", "sasuser=", "seq=", "setinit", "skip=", "solutions", "sortdup=", "sortequals", "sortsize=", "sortvalidate", "source", "source2", "spool", "sqlconstdatetime", "sqlreduceput=", "sqlreduceputobs=", "sqlreduceputvalues=", "sqlremerge", "sqlundopolicy=", "startlib", "stepchkpt", "stepchkptlib=", "steprestart", "sumsize=", "svgcontrolbuttons", "svgheight=", "svgpreserveaspectratio=", "svgtitle=", "svgviewbox=", "svgwidth=", "svgx=", "svgy=", "syntaxcheck", "sysprintfont=", "terminal", "termstmt=", "textureloc=", "threads", "toolsmenu", "topmargin=", "trainloc=", "universalprint", "uprintcompression", "user=", "utilloc=", "uuidcount=", "uuidgendhost=", "v6createupdate=", "validfmtname=", "validvarname=", "varlenchk=", "viewmenu", "vnferr", "work=", "workinit", "workterm", "yearcutoff="])`
 endsnippet
 
