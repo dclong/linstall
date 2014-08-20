@@ -1,4 +1,8 @@
-extends c
+# extends c
+
+global !p
+from complete import *
+endglobal
 
 ###########################################################################
 #                            TextMate Snippets                            #
@@ -49,10 +53,10 @@ snippet tp "template <typename ..> (template)"
 template <typename ${1:_InputIter}>
 endsnippet
 
-snippet m "main function" !b
-int main(){
-    $1
-    return 0;
+snippet "m(ain)?" "main()" !rb
+int main(int argc, char *argv[]){
+	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+	return 0;
 }
 endsnippet
 
@@ -71,3 +75,50 @@ snippet #ifdef "#ifdef" !b
     $3
 #endif
 endsnippet
+
+snippet "f(unction)?" "Function" !rb
+${1:T} ${2:funname}($3){
+    $4
+}
+endsnippet
+
+snippet while "while loop" !b
+while(${1:condition}){
+    $2
+}
+endsnippet
+
+snippet for "for loop" !b
+for(${1:init}; ${2:stop}; ${3:change}){
+    $4
+}
+endsnippet
+
+snippet "inc(rease)?" "+=" !rw
++= 
+endsnippet
+
+snippet le "<=" !i
+<=
+endsnippet
+
+snippet ge ">=" !i
+>=
+endsnippet
+
+snippet std "std::" !w
+std::
+endsnippet
+
+snippet stol "std::stol" !w
+std::stol(${1:str})
+endsnippet
+
+snippet "in(clude)?" "#include" !rb
+#include <$1`!p snip.rv = complete(t[1], ["chrono", "iostream", "list", "map", "pair", "random", "set", "string", "tuple", "unordered_map", "unordered_set", "vector"])`>
+endsnippet
+
+snippet "s(tring)?" "Functions/methods of String" !rw
+str.$1`!p snip.rv = complete(t[1], ["atoi", "atol", "atoll", "stoi", "stol", "stoll", "size"])`
+endsnippet
+
