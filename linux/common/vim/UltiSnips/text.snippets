@@ -1,3 +1,7 @@
+global !p
+from complete import *
+endglobal
+
 ##########################
 # LOREM IPSUM GENERATORS #
 ##########################
@@ -67,6 +71,14 @@ snippet cp "CygwinPortable" w
 [CygwinPortable](https://github.com/CybeSystems/CygwinPortable)
 endsnippet
 
+snippet sas "SAS" !w
+SAS
+endsnippet
+
+snippet SAS "SAS Enterprise Guide" !w
+SAS Enterprise Guide
+endsnippet
+
 snippet seg "SAS Enterprise Guide" w
 SAS Enterprise Guide
 endsnippet
@@ -87,8 +99,12 @@ snippet cm "Cygwin/MobaXterm" !w
 Cygwin/MobaXterm
 endsnippet
 
-snippet mx "Cygwin/MobaXterm" !w
+snippet "m(o(b(a(x(t(e(r(m)?)?)?)?)?)?)?)?" "Cygwin/MobaXterm" !w
 MobaXterm
+endsnippet
+
+snippet by "by phrases" !w
+by $1`!p snip.rv = complete(t[1], ["default", "the way"])`
 endsnippet
 
 snippet bd "by default" !w

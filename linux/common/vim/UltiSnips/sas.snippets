@@ -25,10 +25,17 @@ libname ${1:ll} "/cygdrive/c/Users/zkyr9jm/Documents/projects/${2:$1}/data";
 endsnippet
 
 # data step snippets
-snippet d "Data Step" b
-data ${1:d};
-    ${2:...} 
+snippet "d(a(t(a)?)?)?" "Data Step" !rb
+data ${1:data_set_name};
+    $2`!p snip.rv = complete(t[2], ["input", "merge", "set"])`$3
 run;
+endsnippet
+
+snippet input "Input in a Data Step" !b
+input ${1:variable_name};
+datalines;
+${2:/*type in data here*/}
+;
 endsnippet
 
 # procedure snippets
@@ -226,7 +233,7 @@ snippet fm "Filename of Macro Directory" !b
 filename macro "/risk/aml/user_aml/dclong/macro";
 endsnippet
 
-snippet %p "%put" !b
+snippet "%p(u(t)?)?" "%put" !rb
 %put $1`!p snip.rv = complete(t[1], ["_user_", "_automatic_", "_global_", "_local_"])`;
 endsnippet
 
@@ -246,16 +253,16 @@ snippet %imn "Include %array" !b
 %include ${1:macro}(numlist.sas);
 endsnippet
 
-snippet 'c1|/1|/*1' "Description" !rb
+snippet 'c1|/1|/\*1' "Description" !rb
 /*${1: }*/
 endsnippet
 
-snippet 'c2|/2|/*2' "Description" !rb
+snippet 'c2|/2|/\*2' "Description" !rb
 /*${1: }
 */
 endsnippet
 
-snippet 'c3|/3|/*3' "Description" !rb
+snippet 'c3|/3|/\*3' "Description" !rb
 /*
 ${1: }
 */
