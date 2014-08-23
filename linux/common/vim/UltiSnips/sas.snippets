@@ -1,3 +1,6 @@
+
+extends programming
+
 ###########################################################################
 #                            TextMate Snippets                            #
 ###########################################################################
@@ -31,6 +34,7 @@ data ${1:data_set_name};
 run;
 endsnippet
 
+# @TODO there is a trailing space issue here!!!
 snippet input "Input in a Data Step" !b
 input ${1:variable_name};
 datalines;
@@ -47,6 +51,12 @@ endsnippet
 snippet "proc fcmp" "The FCMP Procedure" !b
 proc fcmp outlib = ${1:lib}.${2:funcs}.${3:category};
     $4
+run;
+endsnippet
+
+snippet "proc sort" "The SORT Procedure" !b
+proc sort ${1:data = data_set_name} ${2:out = ${3:output_data_set_name}};
+    by ${1:column_name};
 run;
 endsnippet
 
@@ -90,69 +100,9 @@ run;
 endsnippet
 
 # macro defintion snippets
-snippet '%m|m' "Macro Definition Without Arguments" !rb
-%macro ${1:m};
-    ${2:...} 
-%mend $1;
-endsnippet
-
-snippet '%m1|m1' "Macro Definition With 1 Argument" rb
-%macro ${1:m}(${2:arg1});
-    ${3:...} 
-%mend $1;
-endsnippet
-
-snippet '%m2|m2' "Macro Definition With 2 Arguments" rb
-%macro ${1:m}(${2:arg1}, ${3:arg2});
-    ${4:...}
-%mend $1;
-endsnippet
-
-snippet '%m3|m3' "Macro Definition With 3 Arguments" rb
-%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3});
-    ${5:...}
-%mend $1;
-endsnippet
-
-snippet '%m4|m4' "Macro Definition With 4 Arguments" rb
-%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4});
-    ${6:...}
-%mend $1;
-endsnippet
-
-snippet '%m5|m5' "Macro Definition With 5 Arguments" rb
-%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5});
-    ${7:...}
-%mend $1;
-endsnippet
-
-snippet '%m6|m6' "Macro Definition With 6 Arguments" rb
-%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6});
-    ${8:...}
-%mend $1;
-endsnippet
-
-snippet '%m7|m7' "Macro Definition With 7 Arguments" rb
-%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7});
-    ${9:...}
-%mend $1;
-endsnippet
-
-snippet '%m8|m8' "Macro Definition With 8 Arguments" rb
-%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7}, ${9:arg8});
-    ${10:...}
-%mend $1;
-endsnippet
-
-snippet '%m9|m9' "Macro Definition With 9 Arguments" rb
-%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7}, ${9:arg8}, ${10:arg9});
-    ${11:...}
-%mend $1;
-endsnippet
-
-snippet '%m10|m10' "Macro Definition With 10 Arguments" rb
-%macro ${1:m}(${2:arg1}, ${3:arg2}, ${4:arg3}, ${5:arg4}, ${6:arg5}, ${7:arg6}, ${8:arg7}, ${9:arg8}, ${10:arg9}, ${11:arg10});
-    ${12:...}
+snippet '%?m(a(c(r(o)?)?)?)?' "Macro Definition Without Arguments" !rb
+%macro ${1:macro_name}(${2:arg1});
+    ${3:/* start here */} 
 %mend $1;
 endsnippet
 
@@ -196,8 +146,7 @@ snippet %temp "A Temp Macro" !b
 %temp;
 endsnippet
 
-# %do ... %end;
-snippet '%dl|%for' "Do Loop" rb
+snippet "%d(o( (l(o(o(p)?)?)?)?)?)?|%f(o(r (l(o(o(p)?)?)?)?)?)?" "Do Loop" !rb
 %do ${1:i} = ${2:1} %to ${3:2} %by ${4:1};
     ${5:...}
 %end;
