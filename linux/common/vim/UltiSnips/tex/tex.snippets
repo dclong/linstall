@@ -8,17 +8,10 @@ endglobal
 #                             LATEX SNIPPETS                              #
 ###########################################################################
 
-snippet r "\\ref{}" w
+snippet "[^a-zA-Z]\\?r(e(f)?)?" "\\ref{}" !rw
 \ref{$1}
 endsnippet
 
-###########################################################################
-#                            TEXTMATE SNIPPETS                            #
-###########################################################################
-
-#################
-# GENERAL STUFF #
-#################
 snippet "\\?b(e(g(i(n)?)?)?)?" "begin{} / end{}" !br
 \begin{${1:something}}
 	${0:${VISUAL}}
@@ -33,27 +26,6 @@ snippet tab
 \begin{${1:t}${1/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}{${2:c}}
 $0${2/((?<=.)c|l|r)|./(?1: & )/g}
 \end{$1${1/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}
-endsnippet
-
-########################
-# ENUM, DESCR, ITEMIZE #
-########################
-snippet "\\?e(n(u(m(e(r(a(t(e)?)?)?)?)?)?)?)?" "Enumerate Environment" !rb
-\begin{enumerate}
-	\item $0
-\end{enumerate}
-endsnippet
-
-snippet item "Itemize" b
-\begin{itemize}
-	\item $0
-\end{itemize}
-endsnippet
-
-snippet desc "Description" b
-\begin{description}
-	\item[$1] $0
-\end{description}
 endsnippet
 
 #####################################
@@ -130,7 +102,7 @@ endsnippet
 #  Utilities  #
 ###############
 
-snippet pac "Package" b
+snippet "\\?(use)?p(a(c(k(a(g(e)?)?)?)?)?)?" "Package" !rb
 \usepackage[${1:options}]{${2:package}}$0
 endsnippet
 
@@ -139,15 +111,11 @@ snippet lp "Long parenthesis"
 \left(${1:${VISUAL:contents}}\right)$0
 endsnippet
 
-snippet "\\?f(r(a(c(t(i(o(n)?)?)?)?)?)?)" "Fraction" !rw
+snippet "[^a-zA-Z]\\?f(r(a(c(t(i(o(n)?)?)?)?)?)?)" "Fraction" !rw
 \frac{$1}{$2}
 endsnippet
 
 snippet ( "Parenthesis" !i
-($1)
-endsnippet
-
-snippet p "Parenthesis" !i
 ($1)
 endsnippet
 
@@ -163,19 +131,19 @@ snippet \\{ "Literal Curly Brace" !i
 \\{$1\\}
 endsnippet
 
-snippet "\\?i(n(t(e(g(r(a(l)?)?)?)?)?)?)?" "Integral" !rw
+snippet "[^a-zA-Z]\\?i(n(t(e(g(r(a(l)?)?)?)?)?)?)?" "Integral" !rw
 \int_{${1:lower_limit}}^{${2:upper_limit}} ${3:integrand} 
 endsnippet
 
-snippet "\\?o(v(e(r(s(e(t)?)?)?)?)?)?" "\overset" !rw
+snippet "[^a-zA-Z]\\?o(v(e(r(s(e(t)?)?)?)?)?)?" "\overset" !rw
 \overset{$1}{$2}
 endsnippet
 
-snippet "\\?n(o(n(u(m(b(e(r)?)?)?)?)?)?)?" "\nonumber" !rw
+snippet "[^a-zA-Z]\\n(o(n(u(m(b(e(r)?)?)?)?)?)?)?" "\nonumber" !rw
 \nonumber 
 endsnippet
 
-snippet nn "\nonumber \\" !w
+snippet "[^a-zA-Z]\\?nn" "\nonumber \\" !rw
 \nonumber \\
 endsnippet
 
@@ -199,6 +167,6 @@ snippet "\\?a(u(t(h(o(r)?)?)?)?)?" "\author{}" !rb
 \author{${1:Ben Chuanlong Du}}
 endsnippet
 
-snippet "\\?l(e(f(t)?)?)?" "\left" !rw
-\left$1`!p snip.rv = complete(t[1], ["<", "(", "{", "["])`
+snippet "[^a-zA-Z]\\?l(e(f(t)?)?)?" "\left" !rw
+\left$1`!p snip.rv = complete(t[1], ["<", "(", "{", "["])`\right$1
 endsnippet

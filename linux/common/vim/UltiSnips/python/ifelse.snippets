@@ -1,0 +1,79 @@
+
+snippet if "If" !b
+if ${1:condition}:
+	${2:pass}
+#end if
+endsnippet
+
+snippet "elif|elseif|ei" "Else If" !rb
+elif ${1:condition}:
+	${2:pass}
+endsnippet
+
+snippet ife "If / Else" b
+if ${1:condition}:
+	${2:pass}
+else:
+	${3:pass}
+#end if
+endsnippet
+
+snippet ifee "If / Elif / Else" b
+if ${1:condition}:
+	${2:pass}
+elif ${3:condition}:
+	${4:pass}
+else:
+	${5:pass}
+#end if
+endsnippet
+
+
+##########################
+# Try / Except / Finally #
+##########################
+snippet try "Try / Except" b
+try:
+	${1:pass}
+except ${2:Exception}, ${3:e}:
+	${4:raise $3}
+#end try
+endsnippet
+
+snippet try "Try / Except / Else" b
+try:
+	${1:pass}
+except ${2:Exception}, ${3:e}:
+	${4:raise $3}
+else:
+	${5:pass}
+#end try
+endsnippet
+
+snippet try "Try / Except / Finally" b
+try:
+	${1:pass}
+except ${2:Exception}, ${3:e}:
+	${4:raise $3}
+finally:
+	${5:pass}
+#end try
+endsnippet
+
+snippet try "Try / Except / Else / Finally" b
+try:
+	${1:pass}
+except${2: ${3:Exception}, ${4:e}}:
+	${5:raise}
+else:
+	${6:pass}
+finally:
+	${7:pass}
+#end try
+endsnippet
+
+snippet for "for loop" b
+for ${1:item} in ${2:iterable}:
+	${3:pass}
+#end for
+endsnippet
