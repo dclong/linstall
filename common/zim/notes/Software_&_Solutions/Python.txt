@@ -34,3 +34,5 @@ pip install --user mercurial
 1. by default integer division, import division; float
 
 os.path.splitext(filename)[0]
+
+ord unichar
