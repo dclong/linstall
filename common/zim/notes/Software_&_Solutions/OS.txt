@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-23T22:39:59-04:00
+
+====== OS ======
+Created Saturday 23 August 2014
+
+
+## New Line/Line Terminator
+
+    LF:    Multics, Unix and Unix-like systems (GNU/Linux, OS X, FreeBSD, AIX, Xenix, etc.), BeOS, Amiga, RISC OS and others.
+    CR:    Commodore 8-bit machines, Acorn BBC, ZX Spectrum, TRS-80, Apple II family, Mac OS up to version 9 and OS-9
+    RS:    QNX pre-POSIX implementation.
+    0x9B:  Atari 8-bit machines using ATASCII variant of ASCII. (155 in decimal)
+    LF+CR: Acorn BBC and RISC OS spooled text output.
+    CR+LF: Microsoft Windows, DEC TOPS-10, RT-11 and most other early non-Unix and non-IBM OSes, CP/M, MP/M, DOS (MS-DOS, PC DOS, etc.), Atari TOS, OS/2, Symbian OS, Palm OS, Amstrad CPC
