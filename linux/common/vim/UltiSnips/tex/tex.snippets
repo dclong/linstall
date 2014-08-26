@@ -8,7 +8,7 @@ endglobal
 #                             LATEX SNIPPETS                              #
 ###########################################################################
 
-snippet r "\\ref{}" w
+snippet "[^a-zA-Z]\\?r(e(f)?)?" "\\ref{}" !rw
 \ref{$1}
 endsnippet
 
@@ -19,7 +19,7 @@ endsnippet
 #################
 # GENERAL STUFF #
 #################
-snippet "\\?b(e(g(i(n)?)?)?)?" "begin{} / end{}" br
+snippet "^\s*\\?b(e(g(i(n)?)?)?)?" "begin{} / end{}" r
 \begin{${1:something}}
 	${0:${VISUAL}}
 \end{$1}
@@ -130,7 +130,7 @@ endsnippet
 #  Utilities  #
 ###############
 
-snippet pac "Package" b
+snippet "\\?(use)?p(a(c(k(a(g(e)?)?)?)?)?)?" "Package" !rb
 \usepackage[${1:options}]{${2:package}}$0
 endsnippet
 
@@ -144,10 +144,6 @@ snippet "\b\\?f(r(a(c(t(i(o(n)?)?)?)?)?)?)" "Fraction" r
 endsnippet
 
 snippet ( "Parenthesis" i
-($1)
-endsnippet
-
-snippet p "Parenthesis" i
 ($1)
 endsnippet
 
@@ -175,7 +171,7 @@ snippet "\b\\?n(o(n(u(m(b(e(r)?)?)?)?)?)?)?" "\nonumber" r
 \nonumber 
 endsnippet
 
-snippet nn "\nonumber \\" w
+snippet "\b\\?nn" "\nonumber \\" w
 \nonumber \\
 endsnippet
 
@@ -200,5 +196,5 @@ snippet "^\s*\\?a(u(t(h(o(r)?)?)?)?)?" "\author{}" r
 endsnippet
 
 snippet "\b\\?l(e(f(t)?)?)?" "\left" r
-\left$1`!p snip.rv = complete(t[1], ["<", "(", "{", "["])`
+\left$1`!p snip.rv = complete(t[1], ["<", "(", "{", "["])`\right$1
 endsnippet
