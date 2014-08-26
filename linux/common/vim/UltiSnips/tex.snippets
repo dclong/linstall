@@ -19,7 +19,7 @@ endsnippet
 #################
 # GENERAL STUFF #
 #################
-snippet "\\?b(e(g(i(n)?)?)?)?" "begin{} / end{}" !br
+snippet "\\?b(e(g(i(n)?)?)?)?" "begin{} / end{}" br
 \begin{${1:something}}
 	${0:${VISUAL}}
 \end{$1}
@@ -38,7 +38,7 @@ endsnippet
 ########################
 # ENUM, DESCR, ITEMIZE #
 ########################
-snippet "\\?e(n(u(m(e(r(a(t(e)?)?)?)?)?)?)?)?" "Enumerate Environment" !rb
+snippet "^\s*\\?e(n(u(m(e(r(a(t(e)?)?)?)?)?)?)?)?" "Enumerate Environment" r
 \begin{enumerate}
 	\item $0
 \end{enumerate}
@@ -139,66 +139,66 @@ snippet lp "Long parenthesis"
 \left(${1:${VISUAL:contents}}\right)$0
 endsnippet
 
-snippet "\\?f(r(a(c(t(i(o(n)?)?)?)?)?)?)" "Fraction" !rw
+snippet "\b\\?f(r(a(c(t(i(o(n)?)?)?)?)?)?)" "Fraction" r
 \frac{$1}{$2}
 endsnippet
 
-snippet ( "Parenthesis" !i
+snippet ( "Parenthesis" i
 ($1)
 endsnippet
 
-snippet p "Parenthesis" !i
+snippet p "Parenthesis" i
 ($1)
 endsnippet
 
-snippet { "Curly Brace" !i
+snippet { "Curly Brace" i
 {$1}
 endsnippet
 
-snippet \{ "Curly Brace" !i
+snippet \{ "Curly Brace" i
 \{$1\}
 endsnippet
 
-snippet \\{ "Literal Curly Brace" !i
+snippet \\{ "Literal Curly Brace" i
 \\{$1\\}
 endsnippet
 
-snippet "\\?i(n(t(e(g(r(a(l)?)?)?)?)?)?)?" "Integral" !rw
+snippet "\b\\?i(n(t(e(g(r(a(l)?)?)?)?)?)?)?" "Integral" r
 \int_{${1:lower_limit}}^{${2:upper_limit}} ${3:integrand} 
 endsnippet
 
-snippet "\\?o(v(e(r(s(e(t)?)?)?)?)?)?" "\overset" !rw
+snippet "\b\\?o(v(e(r(s(e(t)?)?)?)?)?)?" "\overset" r
 \overset{$1}{$2}
 endsnippet
 
-snippet "\\?n(o(n(u(m(b(e(r)?)?)?)?)?)?)?" "\nonumber" !rw
+snippet "\b\\?n(o(n(u(m(b(e(r)?)?)?)?)?)?)?" "\nonumber" r
 \nonumber 
 endsnippet
 
-snippet nn "\nonumber \\" !w
+snippet nn "\nonumber \\" w
 \nonumber \\
 endsnippet
 
-snippet min "min{}" !w
+snippet min "min{}" w
 min\\{$1\\}
 endsnippet
 
-snippet max "max{}" !w
+snippet max "max{}" w
 max\\{$1\\}
 endsnippet
 
-snippet '([a-zA-Z]+)(\d+)' "X_1" !r
+snippet '([a-zA-Z]+)(\d+)' "X_1" r
 `!p snip.rv = match.group(1) + "_" + match.group(2)`
 endsnippet
 
-snippet '([a-zA-Z]+)\((\d+)' "X_(1)" !r
+snippet '([a-zA-Z]+)\((\d+)' "X_(1)" r
 `!p snip.rv = match.group(1) + "_{(" + match.group(2) + ")}"`
 endsnippet
 
-snippet "\\?a(u(t(h(o(r)?)?)?)?)?" "\author{}" !rb
+snippet "^\s*\\?a(u(t(h(o(r)?)?)?)?)?" "\author{}" r
 \author{${1:Ben Chuanlong Du}}
 endsnippet
 
-snippet "\\?l(e(f(t)?)?)?" "\left" !rw
+snippet "\b\\?l(e(f(t)?)?)?" "\left" r
 \left$1`!p snip.rv = complete(t[1], ["<", "(", "{", "["])`
 endsnippet
