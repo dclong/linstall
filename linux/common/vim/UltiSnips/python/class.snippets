@@ -90,14 +90,14 @@ $1 = property(**$1(), doc=$1.__doc__)
 endsnippet
 
 
-snippet def "Function With 1 Argument and Without Docstrings" !b
+snippet def "Function With 1 Argument and Without Docstrings" b
 def ${1:function}(${2:arg1})
 	${3:pass}
 #end def
 endsnippet
 
 
-snippet def# "function with docstrings" !b
+snippet def# "function with docstrings" b
 def ${1:function}(`!p
 if snip.indent:
 	snip.rv = 'self' + (", " if len(t[2]) else "")`${2:arg1}):

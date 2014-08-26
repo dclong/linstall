@@ -7,28 +7,28 @@ snippet from "from module import name" b
 from ${1:module} import ${2:Stuff}
 endsnippet
 
-snippet to "Ternary Operator" !w
+snippet to "Ternary Operator" w
 ${1:a} if ${2:condition} else ${3:b}
 endsnippet
 
-snippet ?: "Ternary Operator" !w
+snippet ?: "Ternary Operator" w
 ${1:a} if ${2:condition} else ${3:b}
 endsnippet
 
-snippet with "With Block" !b
+snippet with "With Block" b
 with $1 as $2:
 $3
 #end with
 endsnippet
 
 #! header
-snippet #! "Shebang header for python scripts" !b
+snippet #! "Shebang header for python scripts" b
 #!/usr/bin/env python
 # encoding: utf-8
 $0
 endsnippet
 
-snippet '^ifm(a(i(n)?)?)?' "ifmain" !r
+snippet '^ifm(a(i(n)?)?)?' "ifmain" r
 if __name__ == '__main__':
     import sys
     ${1:sys.argv.pop(0)}

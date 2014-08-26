@@ -2,7 +2,7 @@ global !p
 from complete import *
 endglobal
 
-snippet s "Select Statement" !b
+snippet "^\s*s(e(l(e(c(t)?)?)?)?)?" "Select Statement" r
 select ${1:distinct }${2:top ${3:5} }${4:*}
 from
 	${5:t1}
@@ -21,7 +21,15 @@ ${16:order by
 ;
 endsnippet
 
-snippet ct "Create Table" !b
+snippet "^\s*c(r(e(a(t)?)?)?)?" "create" r
+create
+endsnippet
+
+snippet create "create" b
+create $1 `!p snip.rv = complete(t[1], ["table", "view"])`
+endsnippet
+
+snippet ct "Create Table" b
 create ${1:$2set }table ${3:t} (
 	${4:f1} ${5:t1},
 	${6:f2} ${7:t2}
@@ -29,7 +37,7 @@ create ${1:$2set }table ${3:t} (
 ;
 endsnippet
 
-snippet cv "Create View" !b
+snippet cv "Create View" b
 create ${1:$2set }view ${3:t} ${4:as }(
 	${4:f1} ${5:t1},
 	${6:f2} ${7:t2}
@@ -37,43 +45,43 @@ create ${1:$2set }view ${3:t} ${4:as }(
 ;
 endsnippet
 
-snippet st "Show Table" !b
+snippet st "Show Table" b
 show table ${1:t};
 endsnippet
 
-snippet sv "Show View" !b
+snippet sv "Show View" b
 show view ${1:v};
 endsnippet
 
-snippet dt "Drop Table" !b
+snippet dt "Drop Table" b
 drop table ${1:t};
 endsnippet
 
-snippet dv "Drop Table" !b
+snippet dv "Drop Table" b
 drop view ${1:t};
 endsnippet
 
-snippet ht "Help Table" !b
+snippet ht "Help Table" b
 help table ${1:t};
 endsnippet
 
-snippet hv "Help View" !b
+snippet hv "Help View" b
 help view ${1:t};
 endsnippet
 
-snippet in "In Condition" !w
+snippet in "In Condition" w
 in ($1)
 endsnippet
 
-snippet join "Join Table" !b
+snippet join "Join Table" b
 $1`!p snip.rv = complete(t[1], ["inner", "left", "right", "outer"])` join
 endsnippet
 
-snippet hc "Help Column" !b
+snippet hc "Help Column" b
 help column ${1:t}.${2:*};
 endsnippet
 
-snippet case "Case ... End" !b
+snippet case "Case ... End" b
 case
 	when ${1:c1} then 
 		${2:v1}
@@ -84,15 +92,15 @@ case
 end
 endsnippet
 
-snippet cnt "Count Function" !b
+snippet cnt "Count Function" b
 count(${1:distinct }${2:v})
 endsnippet
 
-snippet u "Standard ID" !w
+snippet u "Standard ID" w
 zkyr9jm_
 endsnippet
 
-snippet ii "insert into" !b
+snippet ii "insert into" b
 insert into
 	${1:t}
 values
@@ -100,7 +108,7 @@ values
 ;
 endsnippet
 
-snippet '/*|cb' "Comment Block" !rb
+snippet '/\*|cb' "Comment Block" rb
 /*
 ${1:* @author ${2:Ben Chuanlong}}
 ${3:* @description $4}
@@ -109,4 +117,3 @@ ${7:* @return $8}
 ${9:* @summary $9}
 */
 endsnippet
-

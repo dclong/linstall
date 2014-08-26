@@ -2,27 +2,27 @@ global !p
 from complete import *
 endglobal
 
-snippet "\.s(t(r)?)?" "Methods of The str Class" !rw
+snippet "\b\.s(t(r)?)?" "Methods of The str Class" r
 .$1`!p snip.rv = complete(t[1], ["capitalize", "center", "count", "decode", "encode", "endswith", "expandtabs", "find", "format", "index", "isalnum", "isalpha", "isdigit", "islower", "isspace", "istitle", "isupper", "join", "ljust", "lower", "lstrip", "partition", "replace", "rfind", "rindex", "rjust", "rpartition", "rsplit", "rstrip", "split", "splitlines", "startswith", "strip", "swapcase", "title", "translate", "upper", "zfill", "isnumeric", "isdecimal"])`
 endsnippet
 
-snippet "[^a-zA-Z]s(t(r)?)?\." "Methods of The str Class" !rw
+snippet "\bs(t(r)?)?\." "Methods of The str Class" r
 str.$1`!p snip.rv = complete(t[1], ["capitalize", "center", "count", "decode", "encode", "endswith", "expandtabs", "find", "format", "index", "isalnum", "isalpha", "isdigit", "islower", "isspace", "istitle", "isupper", "join", "ljust", "lower", "lstrip", "partition", "replace", "rfind", "rindex", "rjust", "rpartition", "rsplit", "rstrip", "split", "splitlines", "startswith", "strip", "swapcase", "title", "translate", "upper", "zfill", "isnumeric", "isdecimal"])`
 endsnippet
 
-snippet str.strip "str.strip()" !w
-${2:str}.strip(${1:chars})
+snippet "\b\.strip\s*" "str.strip()" r
+.strip(${1:chars})
 endsnippet
 
-snippet str.upper "str.upper()" !w
-${1:str}.upper()
+snippet "\b\.upper\s*" "str.upper()" r
+.upper()
 endsnippet
 
-snippet "[^a-zA-Z]tolower|lcase" "function lower" !rw
+snippet "\b(tolower|lcase)" "Function Lower" r
 lower
 endsnippet
 
-snippet "[^a-zA-Z]toupper|[^a-zA-Z]ucase" "function lower" !rw
+snippet "\b(toupper|ucase)" "function lower" r
 upper
 endsnippet
 

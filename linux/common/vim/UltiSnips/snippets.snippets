@@ -10,13 +10,13 @@ endglobal
 
 # We use a little hack so that the snippet is expanded
 # and parsed correctly
-snippet snip "Snippet definition" !
-`!p snip.rv = "snippet"` ${1:Tab_trigger} "${2:Description}" ${3:!b}
+snippet "^\s*s(n(i(p(p(e(t)?)?)?)?)?)?" "Snippet definition" r
+`!p snip.rv = "snippet"` ${1:Tab_trigger} "${2:Description}" ${3:b}
 $0
 `!p snip.rv = "endsnippet"`
 endsnippet
 
-snippet global "Global snippet" !
+snippet "^\s*g(l(o(b(a(l)?)?)?)?)?" "Global snippet" r
 `!p snip.rv = "global"` !p
 $0
 `!p snip.rv = "endglobal"`
@@ -26,30 +26,26 @@ snippet vis "${VISUAL}" i
 \$\{VISUAL${1:${2:default}${3:/transform/}}\}
 endsnippet
 
-snippet '(\d+)' "Surround as Default Value of $1" !rw
+snippet '\b(\d+)' "Surround as Default Value of $1" r
 ${`!p snip.rv = match.group(1)`:${VISUAL}}
 endsnippet
 
-#snippet ` "Paired Back Tick" !w
+#snippet ` "Paired Back Tick" w
 #`$1`
 #endsnippet
 
-snippet py "Python Script" !i
-\`!p snip.rv = $1\`
-endsnippet
-
-snippet vi "Vim Script" !w
+snippet vi "Vim Script" w
 \`!v $1\`
 endsnippet
 
-snippet complete "function complete" !w
-complete(t[${1:1}], [$2])
+snippet "\bc(o(m(p(l(e(t(e)?)?)?)?)?)?)?" "function complete" r
+complete(t[${1:1}], [${2:string_element}])
 endsnippet
 
-snippet "p(ython)?" "Python Functions" !rw
-$1`!p snip.rv = complete(t[1], ["complete", "match.group"])`
+snippet "\bp(y(t(h(o(n)?)?)?)?)?" "Python Functions" r
+`!p snip.rv = unichr(96) + "!p snip.rv = "`${1:pass}`!p snip.rv = unichr(96)`
 endsnippet
 
-snippet "m(atch.group)?" "match.group()" !rw
+snippet "\bm(atch.group)?" "match.group()" r
 match.group(${1:1})
 endsnippet

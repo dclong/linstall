@@ -2,19 +2,23 @@ global !p
 from complete import *
 endglobal
 
-snippet open "Open a File" !w
+snippet "\bo(p(e(n)?)?)?" "Open a File" r
+open
+endsnippet
+
+snippet open "Open a File" w
 ${1:f} = open(${2:file}, '${3:r}')
 endsnippet
 
-snippet "[^a-zA-Z]\.f(i(l(e)?)?)?" "File Methods" !rw
+snippet "\b\.f(i(l(e)?)?)?" "File Methods" r
 .$1`!p snip.rv = complete(t[1], ["close", "flush", "fileno", "isatty", "next", "read", "readline", "readlines", "xreadlines", "seek", "tell", "truncate", "write", "writelines"])`
 endsnippet
 
-snippet "[^a-zA-Z]f(i(l(e)?)?)?\." "File Methods" !rw
+snippet "\bf(i(l(e)?)?)?\." "File Methods" r
 ${2:file}.$1`!p snip.rv = complete(t[1], ["close", "flush", "fileno", "isatty", "next", "read", "readline", "readlines", "xreadlines", "seek", "tell", "truncate", "write", "writelines"])`
 endsnippet
 
-snippet .writelines "file.writelines()" !w
+snippet .writelines "file.writelines()" w
 .writelines(${1:sequence})
 endsnippet
 

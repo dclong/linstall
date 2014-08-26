@@ -1,16 +1,15 @@
-
-snippet if "If" !b
+snippet if "If" b
 if ${1:condition}:
 	${2:pass}
 #end if
 endsnippet
 
-snippet "elif|elseif|ei" "Else If" !rb
+snippet "^\s*(elif|elseif|ei)" "Else If" r
 elif ${1:condition}:
 	${2:pass}
 endsnippet
 
-snippet ife "If / Else" b
+snippet "^\s*ife(l(s(e)?)?)?" "If / Else" r
 if ${1:condition}:
 	${2:pass}
 else:
@@ -18,14 +17,9 @@ else:
 #end if
 endsnippet
 
-snippet ifee "If / Elif / Else" b
-if ${1:condition}:
-	${2:pass}
-elif ${3:condition}:
-	${4:pass}
+snippet "^\s*e(l(s(e)?)?)?" "else" r
 else:
-	${5:pass}
-#end if
+    ${1:pass}
 endsnippet
 
 
