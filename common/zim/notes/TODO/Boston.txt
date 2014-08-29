@@ -5,11 +5,7 @@ Creation-Date: 2014-08-10T23:25:46-04:00
 ====== Boston ======
 Created Sunday 10 August 2014
 
-## Tech
-1. more on HLM and mixed models, etc., the bayesian class notes
-2. geometry, cities, get clear about boston, etc.
-3. boosting trees
-4. logistic regression
-
-1. More practice on [[www.footballiqscore.com]].
-2. read more about Altisource
+1. housing
+	a. [[MIT]] Boston
+	2. craigslist
+	2. houses broker
