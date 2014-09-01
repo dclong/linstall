@@ -4,12 +4,12 @@ if ${1:condition}:
 #end if
 endsnippet
 
-snippet "^\s*(elif|elseif|ei)" "Else If" r
+snippet "elif|elseif|ei" "Else If" rb
 elif ${1:condition}:
 	${2:pass}
 endsnippet
 
-snippet "^\s*ife(l(s(e)?)?)?" "If / Else" r
+snippet "ife(l(s(e)?)?)?" "If / Else" rb
 if ${1:condition}:
 	${2:pass}
 else:
@@ -17,7 +17,7 @@ else:
 #end if
 endsnippet
 
-snippet "^\s*e(l(s(e)?)?)?" "else" r
+snippet "e(l(s(e)?)?)?" "else" rb
 else:
     ${1:pass}
 endsnippet

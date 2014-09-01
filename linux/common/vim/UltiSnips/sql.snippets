@@ -2,7 +2,7 @@ global !p
 from complete import *
 endglobal
 
-snippet "^\s*s(e(l(e(c(t)?)?)?)?)?" "Select Statement" r
+snippet "s(e(l(e(c(t)?)?)?)?)?" "Select Statement" rb
 select ${1:distinct }${2:top ${3:5} }${4:*}
 from
 	${5:t1}
@@ -21,7 +21,7 @@ ${16:order by
 ;
 endsnippet
 
-snippet "^\s*c(r(e(a(t)?)?)?)?" "create" r
+snippet "c(r(e(a(t)?)?)?)?" "create" rb
 create
 endsnippet
 

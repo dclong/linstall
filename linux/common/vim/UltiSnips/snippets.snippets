@@ -10,13 +10,13 @@ endglobal
 
 # We use a little hack so that the snippet is expanded
 # and parsed correctly
-snippet "^\s*s(n(i(p(p(e(t)?)?)?)?)?)?" "Snippet definition" r
+snippet "s(n(i(p(p(e(t)?)?)?)?)?)?" "Snippet definition" rb
 `!p snip.rv = "snippet"` ${1:Tab_trigger} "${2:Description}" ${3:b}
 $0
 `!p snip.rv = "endsnippet"`
 endsnippet
 
-snippet "^\s*g(l(o(b(a(l)?)?)?)?)?" "Global snippet" r
+snippet "g(l(o(b(a(l)?)?)?)?)?" "Global snippet" rb
 `!p snip.rv = "global"` !p
 $0
 `!p snip.rv = "endglobal"`

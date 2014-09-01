@@ -1,5 +1,5 @@
 
-snippet "^\s*\\?b(e(g(i(n)?)?)?)?" "begin{} / end{}" r
+snippet "\\?b(e(g(i(n)?)?)?)?" "begin{} / end{}" rb
 \begin{${1:something}}
 	${0:${VISUAL}}
 \end{$1}
@@ -21,7 +21,7 @@ snippet "\b\\?n(o(n(u(m(b(e(r)?)?)?)?)?)?)?" "\nonumber" r
 \nonumber 
 endsnippet
 
-snippet "\b\\?nn" "\nonumber \\" w
+snippet "\b\\?nn" "\nonumber \\" r
 \nonumber \\
 endsnippet
 

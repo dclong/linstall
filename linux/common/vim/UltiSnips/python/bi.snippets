@@ -1,0 +1,372 @@
+global !p
+from complete import *
+endglobal
+
+snippet bi. "Built-in Methods" w
+$1`!p snip.rv = complete(t[1], ["abs", "all", "any", "basestring", "bin", "bool", "bytearray", "callable", "chr", "classmethod", "cmp", "compile", "complex", "delattr", "dict", "dict", "dict", "dir", "divmod", "enumerate", "eval", "execfile", "file", "filter", "float", "format", "frozenset", "getattr", "globals", "hasattr", "hash", "help", "hex", "id", "input", "int", "int", "isinstance", "issubclass", "iter", "len", "list", "locals", "long", "long", "map", "max", "max", "memoryview", "min", "min", "next", "object", "oct", "open", "ord", "pow", "print", "property", "range", "range", "raw_input", "reduce", "reload", "repr", "reversed", "round", "set", "setattr", "slice", "slice", "sorted", "staticmethod", "str", "sum", "super", "tuple", "type", "type", "unichr", "unicode", "unicode", "vars", "xrange", "xrange", "zip", "__import__", "apply", "buffer", "coerce", "intern"])`
+endsnippet
+
+snippet abs "abs" b
+abs(${1:x})
+endsnippet
+
+snippet all "all" b
+all(${1:iterable})
+endsnippet
+
+snippet any "any" b
+any(${1:iterable})
+endsnippet
+
+snippet basestring "basestring" b
+basestring()
+endsnippet
+
+snippet bin "bin" b
+bin(${1:x})
+endsnippet
+
+snippet bool "bool" b
+bool(${1:${2:x}})
+endsnippet
+
+snippet bytearray "bytearray" b
+bytearray(${1:${2:source}${3:, ${4:encoding}${5:, ${6:errors}}}})
+endsnippet
+
+snippet callable "callable" b
+callable(${1:object})
+endsnippet
+
+snippet chr "chr" b
+chr(${1:i})
+endsnippet
+
+snippet classmethod "classmethod" b
+classmethod(${1:function})
+endsnippet
+
+snippet cmp "cmp" b
+cmp(${1:x}, ${2:y})
+endsnippet
+
+snippet compile "compile" b
+compile(${1:source}, ${2:filename}, ${3:mode}${4:, ${5:flags}${6:, ${7:dont_inherit}}})
+endsnippet
+
+snippet complex "complex" b
+complex(${1:${2:real}${3:, ${4:imag}}})
+endsnippet
+
+snippet delattr "delattr" b
+delattr(${1:object}, ${2:name})
+endsnippet
+
+snippet dict "dict" b
+dict(${1:**kwarg})
+endsnippet
+
+snippet dict "dict" b
+dict(${1:mapping}, ${2:**kwarg})
+endsnippet
+
+snippet dict "dict" b
+dict(${1:iterable}, ${2:**kwarg})
+endsnippet
+
+snippet dir "dir" b
+dir(${1:${2:object}})
+endsnippet
+
+snippet divmod "divmod" b
+divmod(${1:a}, ${2:b})
+endsnippet
+
+snippet enumerate "enumerate" b
+enumerate(${1:sequence}, ${2:start=0})
+endsnippet
+
+snippet eval "eval" b
+eval(${1:expression}${2:, ${3:globals}${4:, ${5:locals}}})
+endsnippet
+
+snippet execfile "execfile" b
+execfile(${1:filename}${2:, ${3:globals}${4:, ${5:locals}}})
+endsnippet
+
+snippet file "file" b
+file(${1:name}${2:, ${3:mode}${4:, ${5:buffering}}})
+endsnippet
+
+snippet filter "filter" b
+filter(${1:function}, ${2:iterable})
+endsnippet
+
+snippet float "float" b
+float(${1:${2:x}})
+endsnippet
+
+snippet format "format" b
+format(${1:value}${2:, ${3:format_spec}})
+endsnippet
+
+snippet frozenset "frozenset" b
+frozenset(${1:${2:iterable}})
+endsnippet
+
+snippet getattr "getattr" b
+getattr(${1:object}, ${2:name}${3:, ${4:default}})
+endsnippet
+
+snippet globals "globals" b
+globals()
+endsnippet
+
+snippet hasattr "hasattr" b
+hasattr(${1:object}, ${2:name})
+endsnippet
+
+snippet hash "hash" b
+hash(${1:object})
+endsnippet
+
+snippet help "help" b
+help(${1:${2:object}})
+endsnippet
+
+snippet hex "hex" b
+hex(${1:x})
+endsnippet
+
+snippet id "id" b
+id(${1:object})
+endsnippet
+
+snippet input "input" b
+input(${1:${2:prompt}})
+endsnippet
+
+snippet int "int" b
+int(${1:x=0})
+endsnippet
+
+snippet int "int" b
+int(${1:x}, ${2:base=10})
+endsnippet
+
+snippet isinstance "isinstance" b
+isinstance(${1:object}, ${2:classinfo})
+endsnippet
+
+snippet issubclass "issubclass" b
+issubclass(${1:class}, ${2:classinfo})
+endsnippet
+
+snippet iter "iter" b
+iter(${1:o}${2:, ${3:sentinel}})
+endsnippet
+
+snippet len "len" b
+len(${1:s})
+endsnippet
+
+snippet list "list" b
+list(${1:${2:iterable}})
+endsnippet
+
+snippet locals "locals" b
+locals()
+endsnippet
+
+snippet long "long" b
+long(${1:x=0})
+endsnippet
+
+snippet long "long" b
+long(${1:x}, ${2:base=10})
+endsnippet
+
+snippet map "map" b
+map(${1:function}, ${2:iterable}, ${3:...})
+endsnippet
+
+snippet max "max" b
+max(${1:iterable}${2:, ${3:key}})
+endsnippet
+
+snippet max "max" b
+max(${1:arg1}, ${2:arg2}, ${3:*args}${4:, ${5:key}})
+endsnippet
+
+snippet memoryview "memoryview" b
+memoryview(${1:obj})
+endsnippet
+
+snippet min "min" b
+min(${1:iterable}${2:, ${3:key}})
+endsnippet
+
+snippet min "min" b
+min(${1:arg1}, ${2:arg2}, ${3:*args}${4:, ${5:key}})
+endsnippet
+
+snippet next "next" b
+next(${1:iterator}${2:, ${3:default}})
+endsnippet
+
+snippet object "object" b
+object()
+endsnippet
+
+snippet oct "oct" b
+oct(${1:x})
+endsnippet
+
+snippet open "open" b
+open(${1:name}${2:, ${3:mode}${4:, ${5:buffering}}})
+endsnippet
+
+snippet ord "ord" b
+ord(${1:c})
+endsnippet
+
+snippet pow "pow" b
+pow(${1:x}, ${2:y}${3:, ${4:z}})
+endsnippet
+
+snippet print "print" b
+print(${1:*objects}, ${2:sep=' '}, ${3:end='\n'}, ${4:file=sys.stdout})
+endsnippet
+
+snippet property "property" b
+property(${1:${2:fget}${3:, ${4:fset}${5:, ${6:fdel}${7:, ${8:doc}}}}})
+endsnippet
+
+snippet range "range" b
+range(${1:stop})
+endsnippet
+
+snippet range "range" b
+range(${1:start}, ${2:stop}${3:, ${4:step}})
+endsnippet
+
+snippet raw_input "raw_input" b
+raw_input(${1:${2:prompt}})
+endsnippet
+
+snippet reduce "reduce" b
+reduce(${1:function}, ${2:iterable}${3:, ${4:initializer}})
+endsnippet
+
+snippet reload "reload" b
+reload(${1:module})
+endsnippet
+
+snippet repr "repr" b
+repr(${1:object})
+endsnippet
+
+snippet reversed "reversed" b
+reversed(${1:seq})
+endsnippet
+
+snippet round "round" b
+round(${1:number}${2:, ${3:ndigits}})
+endsnippet
+
+snippet set "set" b
+set(${1:${2:iterable}})
+endsnippet
+
+snippet setattr "setattr" b
+setattr(${1:object}, ${2:name}, ${3:value})
+endsnippet
+
+snippet slice "slice" b
+slice(${1:stop})
+endsnippet
+
+snippet slice "slice" b
+slice(${1:start}, ${2:stop}${3:, ${4:step}})
+endsnippet
+
+snippet sorted "sorted" b
+sorted(${1:iterable}${2:, ${3:cmp}${4:, ${5:key}${6:, ${7:reverse}}}})
+endsnippet
+
+snippet staticmethod "staticmethod" b
+staticmethod(${1:function})
+endsnippet
+
+snippet str "str" b
+str(${1:object=''})
+endsnippet
+
+snippet sum "sum" b
+sum(${1:iterable}${2:, ${3:start}})
+endsnippet
+
+snippet super "super" b
+super(${1:type}${2:, ${3:object-or-type}})
+endsnippet
+
+snippet tuple "tuple" b
+tuple(${1:${2:iterable}})
+endsnippet
+
+snippet type "type" b
+type(${1:object})
+endsnippet
+
+snippet type "type" b
+type(${1:name}, ${2:bases}, ${3:dict})
+endsnippet
+
+snippet unichr "unichr" b
+unichr(${1:i})
+endsnippet
+
+snippet unicode "unicode" b
+unicode(${1:object=''})
+endsnippet
+
+snippet unicode "unicode" b
+unicode(${1:object}${2:, ${3:encoding}${4:, ${5:errors}}})
+endsnippet
+
+snippet vars "vars" b
+vars(${1:${2:object}})
+endsnippet
+
+snippet xrange "xrange" b
+xrange(${1:stop})
+endsnippet
+
+snippet xrange "xrange" b
+xrange(${1:start}, ${2:stop}${3:, ${4:step}})
+endsnippet
+
+snippet zip "zip" b
+zip(${1:${2:iterable}, ${3:...}})
+endsnippet
+
+snippet __import__ "__import__" b
+__import__(${1:name}${2:, ${3:globals}${4:, ${5:locals}${6:, ${7:fromlist}${8:, ${9:level}}}}})
+endsnippet
+
+snippet apply "apply" b
+apply(${1:function}, ${2:args}${3:, ${4:keywords}})
+endsnippet
+
+snippet buffer "buffer" b
+buffer(${1:object}${2:, ${3:offset}${4:, ${5:size}}})
+endsnippet
+
+snippet coerce "coerce" b
+coerce(${1:x}, ${2:y})
+endsnippet
+
+snippet intern "intern" b
+intern(${1:string})
+endsnippet
+
