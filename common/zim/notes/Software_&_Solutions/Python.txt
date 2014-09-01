@@ -36,3 +36,8 @@ pip install --user mercurial
 os.path.splitext(filename)[0]
 
 ord unichar
+
+## Modules
+1. argparse
+2. getopt: great for paring arguments in a list! very cool, sounds like more general than argparse
+
