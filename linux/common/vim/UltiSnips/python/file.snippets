@@ -10,7 +10,9 @@ snippet open "Open a File" w
 ${1:f} = open(${2:file}, '${3:r}')
 endsnippet
 
-snippet "\b\.f(i(l(e)?)?)?" "File Methods" r
+# it is not a good idea to allow .fi, .fil or .file to trigger this snippet
+# becuase it creases the chance of confliction with methods of classes/modules
+snippet "\b\.f" "File Methods" r
 .$1`!p snip.rv = complete(t[1], ["close", "flush", "fileno", "isatty", "next", "read", "readline", "readlines", "xreadlines", "seek", "tell", "truncate", "write", "writelines"])`
 endsnippet
 

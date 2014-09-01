@@ -1,0 +1,16 @@
+global !p
+from complete import *
+endglobal
+
+snippet "^i(m(p(o(r(t)?)?)?)?)?" "import" r
+import $1`!p snip.rv = complete(t[1], ["nltk", "numpy", "os", "subprocess", "warnings", "shutil", "hashlib", "sys"])`
+endsnippet
+
+snippet "\br(e)?\." "Methods of the re Module" r
+re.$1`!p snip.rv = complete(t[1], ["compile", "DEBUG", "I", "IGNORECASE", "L", "LOCALE", "M", "MULTILINE", "S", "DOTALL", "U", "UNICODE", "X", "VERBOSE", "search", "match", "split", "findall", "finditer", "sub", "subn", "escape", "purge"])`
+endsnippet
+
+snippet bi. "Methods of bi" w
+$1`!p snip.rv = complete(t[1], ["abs", "all", "any", "basestring", "bin", "bool", "bytearray", "callable", "chr", "classmethod", "cmp", "compile", "complex", "delattr", "dict", "dict", "dict", "dir", "divmod", "enumerate", "eval", "execfile", "file", "filter", "float", "format", "frozenset", "getattr", "globals", "hasattr", "hash", "help", "hex", "id", "input", "int", "int", "isinstance", "issubclass", "iter", "len", "list", "locals", "long", "long", "map", "max", "max", "memoryview", "min", "min", "next", "object", "oct", "open", "ord", "pow", "print", "property", "range", "range", "raw_input", "reduce", "reload", "repr", "reversed", "round", "set", "setattr", "slice", "slice", "sorted", "staticmethod", "str", "sum", "super", "tuple", "type", "type", "unichr", "unicode", "unicode", "vars", "xrange", "xrange", "zip", "__import__", "apply", "buffer", "coerce", "intern"])`
+endsnippet
+

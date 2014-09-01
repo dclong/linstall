@@ -2,7 +2,9 @@ global !p
 from complete import *
 endglobal
 
-snippet "\b\.s(t(r)?)?" "Methods of The str Class" r
+# it is not a good idea to all .st or .str to trigger this snippet
+# because it increases the change of confliction with methods of classes/modules
+snippet "\b\.s" "Methods of The str Class" r
 .$1`!p snip.rv = complete(t[1], ["capitalize", "center", "count", "decode", "encode", "endswith", "expandtabs", "find", "format", "index", "isalnum", "isalpha", "isdigit", "islower", "isspace", "istitle", "isupper", "join", "ljust", "lower", "lstrip", "partition", "replace", "rfind", "rindex", "rjust", "rpartition", "rsplit", "rstrip", "split", "splitlines", "startswith", "strip", "swapcase", "title", "translate", "upper", "zfill", "isnumeric", "isdecimal"])`
 endsnippet
 
