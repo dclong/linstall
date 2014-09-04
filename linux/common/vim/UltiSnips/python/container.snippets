@@ -22,7 +22,7 @@ def __contains__(self, item):
 	${7:pass}
 endsnippet
 
-snippet "\br(a(n(g(e)?)?)?)?" "Function Range" r
+snippet "\br(a(n(g)?)?)?" "Function Range" r
 range
 endsnippet
 
@@ -31,7 +31,7 @@ range(${1:n})
 endsnippet
 
 snippet [ "Construct List" w
-[${1:elem} for $1 in ${2:array}]
+[${3:$1} for ${1:elem} in ${2:array}${4: if condition}]
 endsnippet
 
 snippet len "function len" w
