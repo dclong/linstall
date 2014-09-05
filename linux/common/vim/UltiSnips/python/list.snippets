@@ -2,6 +2,8 @@ global !p
 from complete import *
 endglobal
 
+priority 1
+
 snippet "l(i(s(t)?)?)?\." "Methods of list." r
 list.$1`!p snip.rv = complete(t[1], ["append", "extend", "insert", "len", "list", "remove", "pop", "index", "count", "sort", "reverse"])`
 endsnippet

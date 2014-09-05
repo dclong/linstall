@@ -3,11 +3,11 @@ from complete import *
 endglobal
 
 snippet "\bf(i(l(e)?)?)?\." "File Methods" r
-${2:file}.$1`!p snip.rv = complete(t[1], ["close", "flush", "fileno", "isatty", "next", "open", "read", "readline", "readlines", "xreadlines", "seek", "tell", "truncate", "write", "writelines"])`
+file.$1`!p snip.rv = complete(t[1], ["close", "flush", "fileno", "isatty", "next", "open", "read", "readline", "readlines", "xreadlines", "seek", "tell", "truncate", "write", "writelines"])`
 endsnippet
 
-snippet file.open "Open a File" w
-${1:fd} = open(${1:name}${2:, ${3:mode}${4:, ${5:buffering}}})
+snippet "\bfile.open[a-zA-Z]?" "Open a File" r
+${6:fd} = open(${1:name}${2:, ${3:mode}${4:, ${5:buffering}}})
 endsnippet
 
 ################################################################################
@@ -56,7 +56,7 @@ snippet "\bfile.truncate[a-zA-Z]?" "file.truncate" r
 ${2:file}.truncate(${1:size})
 endsnippet
 
-snippet "\bfile.write[a-zA-Z]?" "file.write" r
+snippet "\bfile.write[a-zA-Z]?\b" "file.write" r
 ${2:file}.write(${1:str})
 endsnippet
 
