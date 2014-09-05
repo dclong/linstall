@@ -5,7 +5,7 @@ endglobal
 priority 1
 
 snippet bi. "Built-in Methods" w
-bi.$1`!p snip.rv = complete(t[1], ["abs", "all", "any", "basestring", "bin", "bool", "bytearray", "callable", "chr", "classmethod", "cmp", "compile", "complex", "delattr", "dict", "dict", "dict", "dir", "divmod", "enumerate", "eval", "execfile", "file", "filter", "float", "format", "frozenset", "getattr", "globals", "hasattr", "hash", "help", "hex", "id", "input", "int", "int", "isinstance", "issubclass", "iter", "len", "list", "locals", "long", "long", "map", "max", "max", "memoryview", "min", "min", "next", "object", "oct", "open", "ord", "pow", "print", "property", "range", "raw_input", "reduce", "reload", "repr", "reversed", "round", "set", "setattr", "slice", "slice", "sorted", "staticmethod", "str", "sum", "super", "tuple", "type", "type", "unichr", "unicode", "unicode", "vars", "xrange", "xrange", "zip", "__import__", "apply", "buffer", "coerce", "intern"])`
+bi.$1`!p snip.rv = complete(t[1], ["abs", "all", "any", "basestring", "bin", "bool", "bytearray", "callable", "chr", "classmethod", "cmp", "compile", "complex", "delattr", "dict", "dict", "dict", "dir", "divmod", "enumerate", "eval", "execfile", "file", "filter", "float", "format", "frozenset", "getattr", "globals", "hasattr", "hash", "help", "hex", "id", "input", "int", "int", "isinstance", "issubclass", "iter", "len", "list", "locals", "long", "long", "map", "max", "memoryview", "min", "next", "object", "oct", "open", "ord", "pow", "print", "property", "range", "raw_input", "reduce", "reload", "repr", "reversed", "round", "set", "setattr", "slice", "slice", "sorted", "staticmethod", "str", "sum", "super", "tuple", "type", "type", "unichr", "unicode", "unicode", "vars", "xrange", "xrange", "zip", "__import__", "apply", "buffer", "coerce", "intern"])`
 endsnippet
 
 snippet bi.abs "abs" b
@@ -29,7 +29,7 @@ bin(${1:x})
 endsnippet
 
 snippet bi.bool "bool" b
-bool(${1:${2:x}})
+bool(${1:x})
 endsnippet
 
 snippet bi.bytearray "bytearray" b
@@ -77,7 +77,7 @@ dict(${1:iterable}, ${2:**kwarg})
 endsnippet
 
 snippet bi.dir "dir" b
-dir(${1:${2:object}})
+dir(${1:object})
 endsnippet
 
 snippet bi.divmod "divmod" b
@@ -105,7 +105,7 @@ filter(${1:function}, ${2:iterable})
 endsnippet
 
 snippet bi.float "float" b
-float(${1:${2:x}})
+float(${1:x})
 endsnippet
 
 snippet bi.format "format" b
@@ -113,7 +113,7 @@ format(${1:value}${2:, ${3:format_spec}})
 endsnippet
 
 snippet bi.frozenset "frozenset" b
-frozenset(${1:${2:iterable}})
+frozenset(${1:iterable})
 endsnippet
 
 snippet bi.getattr "getattr" b
@@ -133,7 +133,7 @@ hash(${1:object})
 endsnippet
 
 snippet bi.help "help" b
-help(${1:${2:object}})
+help(${1:object})
 endsnippet
 
 snippet bi.hex "hex" b
@@ -145,7 +145,7 @@ id(${1:object})
 endsnippet
 
 snippet bi.input "input" b
-input(${1:${2:prompt}})
+input(${1:prompt})
 endsnippet
 
 snippet bi.int "int" b
@@ -173,7 +173,7 @@ len(${1:s})
 endsnippet
 
 snippet bi.list "list" b
-list(${1:${2:iterable}})
+list(${1:iterable})
 endsnippet
 
 snippet bi.locals "locals" b
@@ -193,19 +193,11 @@ map(${1:function}, ${2:iterable}, ${3:...})
 endsnippet
 
 snippet bi.max "max" b
-max(${1:iterable}${2:, ${3:key}})
-endsnippet
-
-snippet bi.max "max" b
 max(${1:arg1}, ${2:arg2}, ${3:*args}${4:, ${5:key}})
 endsnippet
 
 snippet bi.memoryview "memoryview" b
 memoryview(${1:obj})
-endsnippet
-
-snippet bi.min "min" b
-min(${1:iterable}${2:, ${3:key}})
 endsnippet
 
 snippet bi.min "min" b
@@ -249,7 +241,7 @@ range(${1:stop})
 endsnippet
 
 snippet bi.raw_input "raw_input" b
-raw_input(${1:${2:prompt}})
+raw_input(${1:prompt})
 endsnippet
 
 snippet bi.reduce "reduce" b
@@ -273,7 +265,7 @@ round(${1:number}${2:, ${3:ndigits}})
 endsnippet
 
 snippet bi.set "set" b
-set(${1:${2:iterable}})
+set(${1:iterable})
 endsnippet
 
 snippet bi.setattr "setattr" b
@@ -309,7 +301,7 @@ super(${1:type}${2:, ${3:object-or-type}})
 endsnippet
 
 snippet bi.tuple "tuple" b
-tuple(${1:${2:iterable}})
+tuple(${1:iterable})
 endsnippet
 
 snippet bi.type "type" b
@@ -333,7 +325,7 @@ unicode(${1:object}${2:, ${3:encoding}${4:, ${5:errors}}})
 endsnippet
 
 snippet bi.vars "vars" b
-vars(${1:${2:object}})
+vars(${1:object})
 endsnippet
 
 snippet bi.xrange "xrange" b

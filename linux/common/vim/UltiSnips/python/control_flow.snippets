@@ -1,3 +1,17 @@
+global !p
+from complete import *
+endglobal
+
+snippet "cf\." "Control Flow" r
+$1`!p snip.rv = complete(t[1], ["for", "while", "break", "continue", "exit", "if", "elif", "else", "try", "pass"])`
+endsnippet
+
+snippet for "for loop" b
+for ${1:item} in ${2:iterable}:
+	${3:pass}
+#end for
+endsnippet
+
 snippet if "If" b
 if ${1:condition}:
 	${2:pass}
@@ -66,8 +80,3 @@ finally:
 #end try
 endsnippet
 
-snippet for "for loop" b
-for ${1:item} in ${2:iterable}:
-	${3:pass}
-#end for
-endsnippet

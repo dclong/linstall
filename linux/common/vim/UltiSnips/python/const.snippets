@@ -1,3 +1,12 @@
+global !p
+from complete import *
+endglobal
+
+priority 1
+
+snippet "c(o(n(s(t)?)?)?)?\." "Const Variables" r
+$1`!p snip.rv = complete(t[1], ["True", "False", "None", "math.pi", "math.e"])`
+endsnippet
 
 snippet "is null" "is null transformation" w
 == None
