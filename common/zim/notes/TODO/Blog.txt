@@ -12,3 +12,6 @@ Created Saturday 05 April 2014
 add and remote necessary comments
 5. dirichlet distribution, circle, unit, identical, mixing problem ...
 6. how do i number figures in html, can I use latex to do it?
+
+
+http://blog.gillerinvestments.com/archive.aspx
