@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 function linstall.firefox.usage(){
     cat << EOF
-    Automatically download the latest version of Firefox (for the current Linux distribution), install and configure it.
+Automatically download the latest version of Firefox (for the current Linux distribution), install and configure it.
 Syntax: linstall.firefox
 EOF
 }
