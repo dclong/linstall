@@ -30,3 +30,5 @@ or write a sync script by yourself
 
 ## Shortcut 
 1. Alt + T: Pop up the "Tool" menu.
+
+use filter to make a copy of each email in the sent folder to the inbox is probably a better way
