@@ -1,9 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-08-10T14:53:07-04:00
-
-====== html ======
-Created Sunday 10 August 2014
-
-1. it seems that figcaption in html5 cannot align correctly, must rely on div to align, but only center works perfect.
-
