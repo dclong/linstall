@@ -4,7 +4,11 @@ endglobal
 
 priority 1
 
-snippet "c(o(n(s(t)?)?)?)?\." "Const Variables" r
+snippet "\bb(o(o(l(e(a(n)?)?)?)?)?)?\." "Const Variables" r
+$1`!p snip.rv = complete(t[1], ["True", "False"])`
+endsnippet
+
+snippet "\bc(o(n(s(t)?)?)?)?\." "Const Variables" r
 $1`!p snip.rv = complete(t[1], ["True", "False", "None", "math.pi", "math.e"])`
 endsnippet
 
