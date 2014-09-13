@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-13T10:16:22-04:00
+
+====== Git ======
+Created Saturday 13 September 2014
+
+1. Repository hosting
+
+gitolite
