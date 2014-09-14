@@ -5,13 +5,12 @@ Creation-Date: 2014-04-05T13:09:19-05:00
 ====== Blog ======
 Created Saturday 05 April 2014
 
-0. since all your media is stored under the home/media blog, don't forget to push it before you use media in it!!!
 
-2. Fix the Disqus link issue, you change your links ...
-3. add a function to move blog between misc and en, 
-add and remote necessary comments
-5. dirichlet distribution, circle, unit, identical, mixing problem ...
-6. how do i number figures in html, can I use latex to do it?
+
+
+
+
+
 
 
 http://blog.gillerinvestments.com/archive.aspx
