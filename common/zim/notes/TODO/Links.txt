@@ -10,3 +10,6 @@ Created Wednesday 16 July 2014
 
 # apps
 http://appcrawlr.com/
+
+# fun problems
+https://projecteuler.net/
