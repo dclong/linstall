@@ -1,4 +1,5 @@
 # define some paths
+export PATH=/home/zkyr9jm/bin:/cygdrive/c/Users/ZKYR9JM/AppData/CygwinPortable/app/ConEmu/ConEmu:/cygdrive/c/Users/ZKYR9JM/AppData/CygwinPortable/app/ConEmu:/usr/bin
 export cdrive='/cygdrive/c'
 export ddrive='/cygdrive/d'
 export edrive='/cygdrive/e'
