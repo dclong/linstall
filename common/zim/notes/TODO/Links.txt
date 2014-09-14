@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-07-16T17:22:45-04:00
-
-====== Links ======
-Created Wednesday 16 July 2014
-
-1. http://eric-yuan.me/

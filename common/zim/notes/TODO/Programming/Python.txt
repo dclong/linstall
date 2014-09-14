@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-09-02T01:21:08-04:00
-
-====== Python ======
-Created Tuesday 02 September 2014
-
-write a program to find modules that need to be imported

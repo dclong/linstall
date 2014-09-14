@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-05-17T15:09:16-04:00
-
-====== config ======
-Created Saturday 17 May 2014
-
-1. keep local config files is a good idea, anyway you don't need them in other places

@@ -28,4 +28,5 @@ eclim
 
 Tor
 
+best way to keep windows active? prevent it from sleeping and communicator?
 

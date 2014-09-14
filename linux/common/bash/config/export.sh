@@ -2,6 +2,7 @@
 # you can find config_root_dir automatically,
 # see .bashrc for inspiration
 export trash_dir="${HOME}/.local/share/Trash/files"
+export git_dir="$HOME/git"
 export cloud_dir="$HOME/cloud"
 export btsync_dir="$HOME/btsync"
 export backup_dir="$btsync_dir/backup"

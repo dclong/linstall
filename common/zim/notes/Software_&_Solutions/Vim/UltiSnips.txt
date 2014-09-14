@@ -1,34 +1,13 @@
 Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.4
-Creation-Date: 2014-06-08T23:22:13-04:00
+Creation-Date: 2014-09-13T13:22:15-04:00
 
 ====== UltiSnips ======
-Created Sunday 08 June 2014
+Created Saturday 13 September 2014
 
+make python support ++, etc.
 
-## UltiSnips
-1. snip doesn't expand in *.snippet if not used via [[:UltiSnipsEdit?!!!]]
+scan your latex code to find these symbols that you use frequently
 
-2. it seems that snippet.snippet doesn't support symbolic link? That is if I have "UltiSnip" point to a folder, then expansion won't work! It seems that only in a empy file? It seems that ... works in an empty file even if not open using the UltiSnipsEditor command.
-
-3. unbalanced parentheses in triggers might cause problems!!!
-
-4. UltiSnips 
-	a. how to default to edit private snippets?
-	b. why snippets (snip) doesn't trigger when edit directly?
-ultisnips auto indent problem?
-
-5. exclude all.snippets? or just move things from it to txt.snippets
-
-6. SnippetSyntaxError: Invalid multiword trigger: 'pa' in git/config/linux/common/vim/UltiSnips/r.snippets:5
-Possibly because you used option `r` for a non-regular expression trigger, or miss '' for regular expression triggers.
-
-7. let complete function ignore case?
-
-8. k.len -> len(k) in python
-
-9. fuzz complete and case-insensitive compelete has problem. One way to avoid this is to user later completions to correct them. fuzz matching, regular expression, etc. ...
-
-10. how to automatically add filetypes (e.g., text) when a markdown file is opened?
-
-11. The $0 tabstop is special: it defines the final position of the cursor, regardless of how many tabstops you specify.
+latex
+http://en.wikibooks.org/wiki/LaTeX/Command_Glossary

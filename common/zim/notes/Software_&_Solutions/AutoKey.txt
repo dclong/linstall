@@ -1,9 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-06-21T18:23:02-04:00
-
-====== AutoKey ======
-Created Saturday 21 June 2014
-
-1. matching case is very interesting, sounds like something to save your work
-2. the file based structure is not good as it restrict names that can be used for hotkeys ...

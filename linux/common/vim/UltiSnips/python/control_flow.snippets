@@ -6,6 +6,10 @@ snippet "cf\." "Control Flow" r
 $1`!p snip.rv = complete(t[1], ["for", "while", "break", "continue", "exit", "if", "elif", "else", "try", "pass"])`
 endsnippet
 
+snippet "lo(o(p)?)?\." "Loop" r
+$1`!p snip.rv = complete(t[1], ["for", "while", "break", "continue", "exit"])`
+endsnippet
+
 snippet for "for loop" b
 for ${1:item} in ${2:iterable}:
 	${3:pass}

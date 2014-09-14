@@ -4,29 +4,3 @@ Creation-Date: 2014-04-03T14:48:45-05:00
 
 ====== Thunderbird ======
 Created Thursday 03 April 2014
-
-1. it seems that imap email sync has problems now!!!?
-
-4. Thunderbird is slow very often, see how you can make it faster
-I think using tags to filter emails is much faster than search directly, of course!!!!
-
-5. Thunderbird duchuanlong@gmail.com filter doesn't work any more.
-The filter file is there but not shown.
-
-6. Any plugin to insert contact information directly?
-This can be very useful! Write one if there's no existing one.
-
-7. You universal contact software. Is it better to connect it with Thunderbird?
-
-8. strange, I've moved it a new place but it still places mails in the old place 
-fix the problem!!!!!!!!!!!!!!!!!!!
-
-9. lightning calendar, which online calendars can be synced?
-10. Google calendar
-11. selective sync using symbolic links, linfig.thunderbird
-or write a sync script by yourself
-
-12. thunderbird works well with Outlook calendar invitation
-
-## Shortcut 
-1. Alt + T: Pop up the "Tool" menu.

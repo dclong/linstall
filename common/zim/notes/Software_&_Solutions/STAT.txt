@@ -5,8 +5,15 @@ Creation-Date: 2014-08-27T21:44:50-04:00
 ====== STAT ======
 Created Wednesday 27 August 2014
 
+According to Bill Kahn, the following models are important.
 ## Tech
 1. more on HLM and mixed models, etc., the bayesian class notes
 2. boosting trees
 3. logistic regression
+4. random forest
 
+SALFORD
+GBM
+
+excellent tech skill
+good relationship with people
