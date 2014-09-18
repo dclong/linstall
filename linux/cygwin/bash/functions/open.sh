@@ -22,7 +22,7 @@ function open(){
     # check if the path exists
     if [ -e "$location" ]; then
         WIN_PATH=`cygpath -w -a "${location}"`
-        cmd /C start "" "$WIN_PATH"
+        /cygdrive/c/Windows/System32/cmd /C start "" "$WIN_PATH"
     else
         echo ${location} does not exist!
         return 2
