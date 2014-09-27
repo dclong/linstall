@@ -5,7 +5,7 @@ function linfig.synaptics(){
     desdir="/etc/X11/xorg.conf.d"
     desfile="$desdir/10-synaptics.conf"
     srcfile="$lommon/synaptics/10-synaptics.conf"
-    mkdir -p "$desdir" sudo
+    sudo mkdir -p "$desdir" 
     local state=$?
     if [ $state -eq 0 ]; then
         if [ -f "$desfile" ]; then

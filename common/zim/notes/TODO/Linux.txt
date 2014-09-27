@@ -5,6 +5,9 @@ Creation-Date: 2014-03-24T21:01:59-05:00
 ====== Linux ======
 Created Monday 24 March 2014
 
+1. recently the LMDE ecounter all kinds of issues frequently, not what have cause the problem, takes long time to boot, sometimes fail to boot, etc. It seems that you'd better use Debian
+
+
 ## Config
 1. figure out where is the best location to put your alias and configuration files, .profile or .bash_profile, check the login shell page
 

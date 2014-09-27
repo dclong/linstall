@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-21T20:26:41-04:00
+
+====== Debian ======
+Created Sunday 21 September 2014
+
+http://debgen.simplylinux.ch/
+
+prefer testing, multi-source is much harder to maintain especially when you want to support multi-archi
+

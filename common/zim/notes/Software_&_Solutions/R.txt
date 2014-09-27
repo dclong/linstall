@@ -21,3 +21,5 @@ sentiment, twitteR, tm, wordcloud
 
 
 installr::install.Cygwin(URL = "http://cygwin.com/setup.exe", ...) 
+
+http://mathesaurus.sourceforge.net/
