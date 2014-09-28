@@ -35,18 +35,15 @@ function linstall.thunderbird(){
             echo "Copying thunderbird to /opt ..."
             sudo rm -rf /opt/thunderbird
             sudo cp -r thunderbird /opt/
-            # uninstall iceweasel
+            # uninstall icedove
             if [ "$(wajig list | grep -i icedove)" != "" ]; then
-                # wajig purge -y iceweasel
+                # wajig purge -y icedove
                 echo "Please uninstall icedove."
             fi
-            return 0;;
         *LMDE* )
             wajig install thunderbird
-            return 0;;
         *Ubuntu* )
             wajig install thunderbird
-            return 0;;
         * )
             echo "This script does not support ${dist:13}."
             return 1;;
