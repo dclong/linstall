@@ -10,3 +10,9 @@ http://www.datasavantconsulting.com/roland/Spectre/maclist2.html#util
 ftp://ftp.sas.com/pub/neural/functions/cat.txt
 
 http://www.sasanalysis.com/2011/01/top-10-most-powerful-functions-for-proc.html
+
+https://oj.leetcode.com/
+
+http://answer.ninechapter.com/
+
+https://github.com/leetcoders/LeetCode
