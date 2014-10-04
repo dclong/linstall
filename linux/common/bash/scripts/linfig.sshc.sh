@@ -9,13 +9,13 @@ function linfig.sshc(){
     if [[ "$(uname -a)" == CYGWIN_NT* ]]; then
         ln -sf "$srcdir/ssh_config" "$desdir/config"
         echo "\"$desdir/config\" -> \"$srcdir/ssh_config\"" 
-        ln -sf "$srcdir/authorized_keys" "$desdir"
-        echo "\"$desdir/authorized_keys\" -> \"$srcdir/authorized_keys\"" 
+#        ln -sf "$srcdir/authorized_keys" "$desdir"
+#        echo "\"$desdir/authorized_keys\" -> \"$srcdir/authorized_keys\"" 
         echo "Done."
         return 0
     fi
     ln -Tsvf "$srcdir/ssh_config" "$desdir/config"
-    ln -svf "$srcdir/authorized_keys" "$desdir"
+#    ln -svf "$srcdir/authorized_keys" "$desdir"
     echo "Done."
 }
 
