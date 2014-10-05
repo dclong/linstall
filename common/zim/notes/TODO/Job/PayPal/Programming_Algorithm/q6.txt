@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:02:00-04:00
+
+====== q6 ======
+Created Saturday 04 October 2014
+
+int f(int n)
+{
+    return n * f(n-1);
+}
+
+print(f(100));  
+
+1. no termination condition 
+2. overflow problem

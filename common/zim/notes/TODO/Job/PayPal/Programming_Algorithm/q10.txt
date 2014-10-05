@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:30:48-04:00
+
+====== q10 ======
+Created Saturday 04 October 2014
+
+pirnt
+1
+1 2 1
+1 3 3 1 

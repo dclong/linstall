@@ -1,0 +1,15 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:36:35-04:00
+
+====== Puzzles ======
+Created Saturday 04 October 2014
+
+Prepare puzzles well.
+1) Odd Ball problem
+2) Hourglass problem
+
+Why the manhole is round in shape 
+So that it is easier to roll from mid road to side and and it wont fall inside the gutter in any angle it is tilted.
+
+How do you estimate the number of something (molecules?) in a room?  

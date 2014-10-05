@@ -1,0 +1,24 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:31:11-04:00
+
+====== a1 ======
+Created Saturday 04 October 2014
+
+public String newStr(int n){
+        String modStr="";
+        int i=n;
+        int j=1;
+        if(n>1){
+            i=n+1;
+        }
+        else
+            i=n;
+        modStr+=1;
+        while((modStr.length()<i-1)){
+            modStr+=n;
+
+        }
+        if(n>1)
+        modStr+=1;
+        return
