@@ -1,0 +1,15 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:11:04-04:00
+
+====== Data Structure ======
+Created Saturday 04 October 2014
+
+Implement a Hashmap
+from initialization of object array till handling collisions and handling millions of items.
+
+
+Linked list implementation 
+
+
+you are given a pointer to a node in a singly linked list. Delete that node. 

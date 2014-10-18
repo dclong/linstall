@@ -43,13 +43,10 @@ function linstall.firefox(){
                 # wajig purge -y iceweasel
                 echo "Please uninstall iceweasel manually!"
             fi
-            return 0;;
         *LMDE* )
             wajig install firefox mint-flashplugin
-            return 0;;
         *Ubuntu* )
             wajig install firefox flashplugin-installer
-            return 0;;
         * )
             echo "This script does not support ${dist:13}."
             return 1;;

@@ -13,7 +13,6 @@ function linfig.zim(){
         return 0
     fi
     ln -Tsvf $common/zim/notes $HOME/.zim
-    ln -Tsvf $common/zim/config $HOME/.config/zim
 }
 
 if [ "$0" == ${BASH_SOURCE[0]} ]; then

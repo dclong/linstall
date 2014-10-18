@@ -1,0 +1,38 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:24:30-04:00
+
+====== a3 ======
+Created Saturday 04 October 2014
+
+static String convert_al(String text, int nRows)
+    {
+        char [] char_array = text.toCharArray();
+
+        StringBuffer []array = new StringBuffer[nRows];
+
+        for(int i=0;i<nRows;i++)
+            array[i] = new StringBuffer();
+
+        int j=0;
+        for(int i=0;i<text.length();)
+        {
+            for(j=0;j<nRows && i<text.length();j++)
+            {
+                array[j] = array[j].append(char_array[i]);
+                i++;
+            }
+            for(j=nRows-2;j>0 && i<text.length();j--)
+            {
+                array[j] = array[j].append(char_array[i]);
+                i++;
+            }
+
+        }
+
+        StringBuffer result = new StringBuffer();
+        for(int i=0;i<nRows;i++)
+            result = result.append(array[i].toString());
+
+        return result.toString();
+    }

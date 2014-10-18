@@ -1,0 +1,23 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:18:23-04:00
+
+====== q7 ======
+Created Saturday 04 October 2014
+
+A small directory is hard-coded as an array in the code:
+
+String names[] = { "Elon Musk",
+            "Ken Howery",
+            "Luke Nosek",
+            "Max Levchin",
+            "Peter Thiel" };
+
+A requirement is to be able to extend this directory dynamically at
+runtime, without persistent storage. The directory can eventually grow
+to hundreds or thousands of names and must be searchable by first or
+last name.
+
+1) What approach would you take? (Ans: HashMap)
+2) Write an implementation for the add and search methods in pseudo-code
+using data structures you have in mind. 

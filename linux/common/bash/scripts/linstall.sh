@@ -122,17 +122,6 @@ function linstall.git(){
     wajig install -y git
     linfig.git
 }
-function linstall.fonts.usage(){
-    echo 'Install some fonts (mostly chinese related) including: ttf-arphic-uming, ttf-wqy-microhei, ttf-wqy-zenhei, xfonts-wqy and fonts-sil-abyssinica.'
-    echo 'You can also installing existing (via symbolic link) fonts using linfig.fonts.'
-    echo 'Syntax: linstall.fonts'
-}
-# chinese fonts
-function linstall.fonts(){
-    wajig install -y ttf-arphic-uming ttf-wqy-microhei ttf-wqy-zenhei \
-        xfonts-wqy fonts-sil-abyssinica
-    linfig.fonts
-}
 # install tools needed to build .deb packages
 function linstall.deb(){
     wajig install -y build-essential autoconf automake libtool pkg-config intltool checkinstall

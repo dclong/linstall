@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T19:32:03-04:00
+
+====== C++ ======
+Created Saturday 04 October 2014
+
+1. What's the difference between null and 0 in C++
+None because in <stdio.h> you'll find #define NULL 0
+
+How would you use various backing data structures you could use when implementing a deque in C++? (ie, array, linked list implementations, etc.)   

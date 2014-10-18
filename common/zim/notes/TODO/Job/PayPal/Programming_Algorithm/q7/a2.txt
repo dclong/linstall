@@ -1,0 +1,75 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:19:19-04:00
+
+====== a2 ======
+Created Saturday 04 October 2014
+
+public class Dictionary {
+    static HashMap <String, List<String>> firstNameMap= new HashMap<String,List<String>>();
+    static HashMap <String, List<String>> lastNameMap= new HashMap<String,List<String>>();
+
+    public static boolean add(String name){
+
+        if(name==null || name.isEmpty())
+          return false;
+        String[] stringArr=name.split("\\s+");
+        String fName=stringArr[0];
+        String lName=stringArr[1];
+
+        if((firstNameMap.containsKey(fName)) && lastNameMap.containsKey(lName)){
+            System.out.println("Name already exists");
+            return true;
+        }
+
+        if(firstNameMap.containsKey(fName)) {
+            List<String> temp = firstNameMap.get(fName);
+            temp.add(name);
+        } else {
+
+            List<String> temp=new ArrayList<String>();
+            temp.add(name);
+            firstNameMap.put(fName, temp);
+            //System.out.println("Name:"+name+" added successfully\n");
+        }
+        if(lastNameMap.containsKey(lName))
+        {
+            List<String> temp=lastNameMap.get(lName);;
+            temp.add(name);
+            lastNameMap.put(lName, temp);
+        }
+        else{
+            List<String> temp=new ArrayList<String>();
+            temp.add(name);
+            lastNameMap.put(lName, temp);
+        }
+
+        return true;
+    }
+
+    public static List<String> searchByFirstName(String fName){
+        if(fName==null)
+            return null;
+        if(firstNameMap.containsKey(fName))
+            return firstNameMap.get(fName);
+        else
+        {
+            System.out.println("First Name does not exist add First name "+fName);
+            return null;
+        }
+
+    }
+
+    public static List<String> searchByLastName(String lName){
+        if(lName==null)
+            return null;
+
+    if(lastNameMap.containsKey(lName))
+            return lastNameMap.get(lName);
+        else
+        {
+            System.out.println("Last Name does not exist add Last name "+lName);
+            return null;
+        }
+
+    }

@@ -1,0 +1,33 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:23:59-04:00
+
+====== a1 ======
+Created Saturday 04 October 2014
+
+static String convert(String sentence, int numberOfRows) {
+
+        char[] arr = sentence.toCharArray();
+        String ret = "";
+        if(numberOfRows == 1)
+            return sentence;
+
+        int repeatPattern = numberOfRows + (numberOfRows - 2);
+
+        for(int i = 0; i < numberOfRows; i++){
+            int s = i;
+            do{
+
+               ret += String.valueOf(arr[s]);
+               if(i < numberOfRows - 1 ) {
+                s = s + repeatPattern;
+               }
+               else
+                s = s + numberOfRows + (numberOfRows - 2);
+            }while(s < arr.length);
+
+            repeatPattern -= 2;
+        }
+
+        return ret;
+    }

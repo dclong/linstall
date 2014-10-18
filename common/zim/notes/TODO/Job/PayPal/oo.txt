@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:46:00-04:00
+
+====== oo ======
+Created Saturday 04 October 2014
+
+How to implement a class without instance..? 

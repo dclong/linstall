@@ -1,0 +1,25 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T20:26:18-04:00
+
+====== sql ======
+Created Saturday 04 October 2014
+
+We have the following schema of a table:
+
+  create table Test (id number, name varchar2(32), desc varchar2(400));
+  create index index_test on Test (name);
+
+Which of the following statements will invoke an index scan by oracle
+execution plan
+
+ a) select * from test where name='name';
+ b) select * from test where name like 'name%';
+ c) select * from test where name like '%name';
+ d) select * from test where name like '%name%';" 
+
+name like 'name%'
+Source: docs.oracle - wild-card searches should not be in a leading position otherwise the condition name like '%name' does not result in a range scan.
+
+How oracle stores the indexes?
+B+ tree

@@ -1,0 +1,6 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-04T19:48:00-04:00
+
+====== Programming Algorithm ======
+Created Saturday 04 October 2014
