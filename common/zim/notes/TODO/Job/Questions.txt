@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-13T09:52:04-05:00
+
+====== Questions ======
+Created Monday 13 October 2014
+
+1. introduce a little bit about the team?
+
+2. how often do you travel?
+
+3. tools: software, programming language, etc.
+
+4. How does EY evaluate its employees?
