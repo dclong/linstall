@@ -23,3 +23,7 @@ Source: docs.oracle - wild-card searches should not be in a leading position oth
 
 How oracle stores the indexes?
 B+ tree
+
+Given table A with id, name and age write a query to display distinct pairs or people with same name.
+
+Why are indexes used?

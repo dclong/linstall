@@ -5,6 +5,8 @@ Creation-Date: 2014-10-04T20:14:40-04:00
 ====== Algorithm ======
 Created Saturday 04 October 2014
 
-Spiral Traversal of a Matrix, BFS, DFS related
+Spiral Traversal of a Matrix
+
+BFS, DFS related
 
 Quick sort

@@ -40,17 +40,16 @@ g)c.equals e <true>
 4. Code time!!!
 program a method that returns an inOrder Arraylist of the nodes in a tree
 public ArrayList<Integer> inOrder(Node root);
-1a) One is synchronized and the other one is not. Hence one is quicker than the other due to this fact.
-1b) You should know this one.
+
 
 public ArrayList<Integer> InOrder(Node root){
-ArrayList<Integer>result=new ArrayList<Integer>();
-if(root=!=null){
-result.addAll(InOrder(root.left()));
-result.add(root.value());
-result.addAll(InOrder(root.right()));
-}
-return result;
+	ArrayList<Integer>result=new ArrayList<Integer>();
+	if(root=!=null){
+		result.addAll(InOrder(root.left()));
+		result.add(root.value());
+		result.addAll(InOrder(root.right()));
+	}
+	return result;
 }
 
 
@@ -78,30 +77,29 @@ Some points to answer this question:
      Another challenge would the the use of pointers in C++, due to which it is possible to access memory of other objects leading to errors. This is another challenge that will need to be tackled as the JVM (depending on language specific implementation), may not be using pointers and also may not allow accessing memory of other objects.
      You will need to be aware of the language specific implementation changes that JVM has with C++ compiled code and these will need to be tackled (these sections of code need to be changed so that the compiled code can no be seamlessly converted to a JVM byte code.
 
-3. Reversing a Linked List, String are Anagram or not., Hashtable insertion and Retrieval
-4. phone interview: ask concept of class, inner join, overload, override
-5. Read nodes at each level BST
+3. Reversing a Linked List, 
+4. String are Anagram or not., 
+5. Hashtable insertion and Retrieval
+6. phone interview: ask concept of class, inner join, overload, override
+7. Read nodes at each level BST
 Diff interface and abstract
 any sql query
-what are web services
-how to decrease latency for web service
 Diff between distributed and parallel computing
-Diff between stringbuffer and string
 Design Pattern Factory and singleton
 How will you convert sorted array in BST
 Finding deadlock in code
-what is CSS
-what is Dom
+
+
 final, finalize and finally
+
 design classes for bookstore
 How will you start a project
-java.util ??
+
 stream classses in java
 jdbc
-Difference between java and c++
-Hashmaps
-Linked List
-How will you merge two sorted array ?
+
+How will you merge two sorted array?
+
 Virtual table in C++ 
 
 Difference between variable hiding and shadowing

@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-19T10:46:53-04:00
+
+====== dictionary ======
+Created Sunday 19 October 2014
+
+
+[ ] write a program to use curl and python to translate Chinese to English using online translation 
+You can use Google translate

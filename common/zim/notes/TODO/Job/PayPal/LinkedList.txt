@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-07T12:38:43-04:00
+
+====== LinkedList ======
+Created Tuesday 07 October 2014
+
+
+
+2nd poroblem was based on linked list and it was to delete an element that was currently pointed without the help of any head or tail pointer.
+
+    How to build a tree using linked list?   

@@ -5,82 +5,28 @@ Creation-Date: 2014-10-04T19:06:42-04:00
 ====== PayPal ======
 Created Saturday 04 October 2014
 
-http://www.careercup.com/page?pid=paypal-interview-questions
-
-Write a function to convert the string 'abcdabcdac' into 'a3b2c3d2'. Each charater is followed by the number of times in occurs in the original string. What is the order of this function? How would you improve it?
-
-Given table A with id, name and age write a query to display distinct pairs or people with same name.
-
-Why are indexes used?
-
-There was a question based on Diamond inheritance hierarchy in C++.
-
-What are static functions in C++?
-
-What is the difference between simple function, virtual function and a pure virtual function?
-
-What are templates in C++? 
-
-Design strategy of person who drives a truck he/she able to drive car and identify another person which only drives car?
-
-String reverse without using method?
-public static String reverse(String s) {
-        int length = s.length();
-        StringBuffer sb = new StringBuffer(length);
-        for(int i = 0; i < length; i++) {
-            sb.append(s.charAt(length - 1 - i));
-        }
-        return sb.toString();
-    }
 
 
-C++ questions: How do implement java interface in C++? What do you do when constructor fails? Why make a destructor virtual? How to decouple classes. Object Oriented concepts: Polymorphism, Abstraction, Encapsulation, Inheritance. Java: Access specifiers in Java.
-On site interview consisted of 4 1:1 interviews with engineers. Consisted of puzzles, white board coding, design pattern questions. Examples: Design a hash table. Generate permutation of n characters. Recursively reverse string or linked list. Big O questions. Find the kth element in an unsorted array.
+Examples: 
+Design a hash table. 
+Generate permutation of n characters. 
+Recursively reverse string or linked list. 
+Find the kth element in an unsorted array.
 
 Find the size of an object in a dll file wiout using sizeof().
 
 
-mplement the atoi c function   Answer Question
-Implement function that revert link list recursive   Answer Question
-Implement function that inverts all the words whithin a string, each word separate with space, notice do not revert the statment just the words.   Answer Question
-Implement function that Revert the bits within unsigned int, using bit opperation
-unsigned int rev_bits(unsigned int n)
-{
-    unsigned int res=0;
 
-    int length = sizeof(unsigned int)*8;
+ You are given a glass bottle which will be broken if thrown from a particular flat of 100 story building. What's the efficient way to find that flat.
 
-    for(int i=0; i<length; i++)
-    {
-        res<<=1;
-
-                       if(n&1)position
-                          res|=1;
-
-                        right side
-
-                        n>>=1;
-    }
-
-                   return res;
-}
-
- You are given a glass bottle which will be broken if thrown from a particular flat of 100 story building. What's the efficient way to find that flat.   View Answers (3)
-
-1 of the problem was to find the longest substring match in a system which can accept only one character at a time. 2nd poroblem was based on linked list and it was to delete an element that was currently pointed without the help of any head or tail pointer.
-
-foo (int n) {
-if (n%2 == 0) return 1;
-else return foo(n/2);
-}  
+    Design a FSA - Finite State Automaton to perform search  
 
 
-    How to build a tree using linked list?   Answer Question
-    Design a FSA - Finite State Automaton to perform search   Answer Question
-    Find longest palindrome in a string.   Answer Question
-    What is C++ inheritance, polymophism, overloading/overriding, constructor/destructors, connections to database?   Answer Question
 
 
-    What's different between passing by value, by reference or by pointer if calling the function with wrong type of object   Answer Question
 
-How to reverse a string without using a buffer 
+
+
+    What's different between passing by value, by reference or by pointer if calling the function with wrong type of object   
+
+
