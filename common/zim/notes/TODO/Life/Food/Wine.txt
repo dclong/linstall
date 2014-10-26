@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-07-26T11:34:35-04:00
-
-====== Wine ======
-Created Saturday 26 July 2014
-
-1. Vidal Blanc tastes good

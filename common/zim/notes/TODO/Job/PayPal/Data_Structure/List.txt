@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-10-07T02:17:03-04:00
-
-====== List ======
-Created Tuesday 07 October 2014
-
-Implement function that revert link list recursive

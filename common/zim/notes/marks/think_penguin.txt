@@ -1,7 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-09-29T12:58:56-04:00
-
-[[https://www.thinkpenguin.com/catalog/printer-all-one|Catalog ]]
-
-//Monday 29 September 2014//

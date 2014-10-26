@@ -1,7 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-09-29T12:16:53-04:00
-
-[[http://blog.ynema.com/?p=192|create graphviz image from textfile ]]
-
-//Monday 29 September 2014//

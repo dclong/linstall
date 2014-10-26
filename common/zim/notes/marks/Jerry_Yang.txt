@@ -1,7 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-10-03T19:11:01-04:00
-
-[[http://www.forbes.com/sites/parmyolson/2014/09/30/how-jerry-yang-made-the-most-lucrative-bet-in-tech-history/|Finding Alibaba: How Jerry Yang Made The Most Lucrative Bet In Silicon Valley History]]
-
-//Friday 03 October 2014//

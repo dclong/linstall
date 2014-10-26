@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-10-04T13:14:18-04:00
-
-====== Learn ======
-Created Saturday 04 October 2014
-
-Cassara, Pig, spark, recommending system

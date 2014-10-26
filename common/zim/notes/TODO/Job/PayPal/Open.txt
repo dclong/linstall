@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-10-07T01:30:57-04:00
-
-====== Open ======
-Created Tuesday 07 October 2014
-
-Design strategy of person who drives a truck he/she able to drive car and identify another person which only drives car?

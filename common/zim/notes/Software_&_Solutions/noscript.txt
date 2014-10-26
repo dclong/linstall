@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-07-13T12:16:52-04:00
-
-====== noscript ======
-Created Sunday 13 July 2014
-
-1. mostly Chinese web pages are full of malwares. Is it possible to let noscript block these by default, but not others?
