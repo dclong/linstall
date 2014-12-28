@@ -1,5 +1,0 @@
-# Unison preferences file
-root = /home/dclong/AeroFS
-root = ssh://dclong@y570.stat.iastate.edu:323//home/dclong/AeroFS
-times = true
-batch = true
