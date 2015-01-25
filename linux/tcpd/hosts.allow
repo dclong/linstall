@@ -15,8 +15,8 @@ ALL : localhost : allow
 ALL : 192.168. allow
 ALL : .iastate.edu allow
 # Jordan Creek Mall @ Des Moines
-sshd : 64.134.123. allow
-mongod : 64.134.123. allow
+#sshd : 64.134.123. allow
+#mongod : 64.134.123. allow
 #--------------------------------------------------------------------------
 ALL : ALL : deny
 
