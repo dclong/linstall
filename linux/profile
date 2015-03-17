@@ -7,5 +7,18 @@ if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
 fi
 
+# switch to bash
+case $- in
+  *i*)
+    # Interactive session. Try switching to bash.
+    if [ -z "$BASH" ]; then # do nothing if running under bash already
+      bash=$(command -v bash)
+      if [ -x "$bash" ]; then
+        export SHELL="$bash"
+        exec "$bash"
+      fi
+    fi
+esac
+
 # source in .bashrc
-. "$HOME/.bashrc"
+#. "$HOME/.bashrc"
