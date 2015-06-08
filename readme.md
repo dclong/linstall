@@ -15,7 +15,7 @@ using
 ```
 or 
 ```bash
-source bashrc.
+source bashrc
 ```
 5. Configure shell. 
 ```bash
