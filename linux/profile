@@ -21,4 +21,4 @@ case $- in
 esac
 
 # source in .bashrc
-#. "$HOME/.bashrc"
+. "$HOME/.bashrc"
