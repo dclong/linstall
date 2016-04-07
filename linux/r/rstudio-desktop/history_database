@@ -1,0 +1,1178 @@
+0:install.packages('QusiSeq')
+0:install.packages('QusiSeq')
+0:source("http://bioconductor.org/biocLite.R")
+0:biocLite('QusiSeq')
+0:biocLite('QuasiSeq')
+0:total = 1800
+0:actual = 1555.57
+0:(total - actual) / total
+0:q('no')
+0:source('~/.active-rstudio-document')
+0:transitionMatrix(10)
+0:transitionMatrix(10)->j
+0:j^1000
+0:matpow
+0:dir.r()
+0:source('~/.active-rstudio-document')
+0:matrixPower(j,100)
+0:matrixPower(j,1000)
+0:matrixPower(j,10000)
+0:matrixPower(j,100000)
+0:j
+0:source('~/.active-rstudio-document')
+0:matrixPower(j,100000)
+0:?source
+0:?.GlobalEnv
+0:args(assign)
+0:source('~/.active-rstudio-document')
+0:ls()
+0:f(1)
+0:ls()
+0:nima
+0:globalenv()->j
+0:j==.GlobalEnv
+0:j
+0:.GlobalEnv
+0:new.env()
+0:new.env()->j
+0:source('~/.active-rstudio-document')
+0:j
+0:ls()
+0:rm(nima)
+0:f(1000)
+0:ls()
+0:j
+0:env.profile(j)
+0:get
+0:get("nima")
+0:nima
+0:get("nima",pos=j)
+0:source('~/.active-rstudio-document')
+0:f(10000)
+0:ls()
+0:ls()
+0:source('rscript.r',pos=new.env())
+0:source
+0:source('rscript.r',local=new.env())
+0:ls()
+0:source('rscript.r',local=new.env())
+0:source('rscript.r',local=emptyenv())
+0:?grepl
+0:38000/4
+0:38000/4/3600
+0:q('no')
+0:q('no')
+0:install.packages('dclong.spt')
+0:q('no')
+0:library(dclong.spt)
+0:library(dclong.spt)
+0:?cxxspt
+0:?cxxwrapper
+0:tsf_code = read_code("test_statistics.cpp")
+0:tsf_code
+0:read_code
+0:system.file("test_statistics", package = "dclong.spt")
+0:system.file("test_statistics.cpp", package = "dclong.spt")
+0:system.file("rcpp", package = "dclong.spt")
+0:system.file("test_statistics.cpp", package = "dclong.spt")
+0:system.file("rcpp/test_statistics.cpp", package = "dclong.spt")
+0:library(dclong.spt)
+0:tsf_code = read_code("test_statistics.cpp")
+0:tsf_code
+0:cxxwrapper(tsf_code, "abs_mean_diff0", "abs_mean_diff", c("n1", "", "int")) -> cxxspt
+0:library(dclong.spt)
+0:tsf_code = read_code("test_statistics.cpp")
+0:cxxwrapper(tsf_code, "abs_mean_diff0", "abs_mean_diff", c("n1", "", "int")) -> cxxspt
+0:cxxspt
+0:spt
+0:?spt
+0:install.packages('testthat')
+0:test_package
+0:library(testthat)
+0:test_package
+0:install.packages(RCurl)
+0:install.packages("RCurl")
+0:install.packages("RCurl")
+0:library(RCurl)
+0:getBinaryURL('dclong.github.io/media/spt/spt_data.rda')
+0:dir()
+0:?getBinaryURL
+0:getURL('dclong.github.io/media/spt/spt_data.rda')
+0:?getURL
+0:download.file
+0:?download.file
+0:download.file('dclong.github.io/media/spt/spt_data.rda')
+0:download.file('dclong.github.io/media/spt/spt_data.rda','spt_data.rda')
+0:download.file('http://dclong.github.io/media/spt/spt_data.rda','spt_data.rda')
+0:dir()
+0:load('spt_data.rda')
+0:download.file('http://dclong.github.io/media/spt/spt_data.rda','spt_data.rda')
+0:spt
+0:libray(dclong.spt)
+0:library(dclong.spt)
+0:?spt
+0:library(dclong.spt)
+0:?est_m0
+0:?m0.bdn
+0:source('~/.active-rstudio-document')
+0:j
+0:?cxxwrapper
+0:tsf_code = read_code("test_statistics.cpp")
+0:# genrate function for sequential permutation test
+0:# for no location difference between two samples
+0:cxxwrapper(tsf_code, "abs_mean_diff0", "abs_mean_diff", c("n1", "", "int")) -> cxxspt
+0:# download data
+0:if(!file.exists('spt_data.rda')){
+0:download.file('http://dclong.github.io/media/spt/spt_data.rda', 'spt_data.rda')
+0:}
+0:load('spt_data.rda')
+0:system.time(cxxspt(leukemia, 10, 1000, n1=5) -> cxxspt.out)->j
+0:j
+0:dim(leukemia)
+0:dir()
+0:library(dclong.spt)
+0:?m0.bdn
+0:Sys.time()
+0:source('~/.active-rstudio-document')
+0:source('~/.active-rstudio-document')
+0:j
+0:time.used
+0:source('~/.active-rstudio-document')
+0:time.used
+0:Sys.time() -> time.begin
+0:#simulate 1000 p-vlaues from a mixture beta and uniform distribution.
+0:p = rbunif(1000, alpha=1, beta=29, gamma=0.7)
+0:#estimate m0 using the method in Story and Tibshirani (2003).
+0:m0.st(p)
+0:#estimate m0 using the method in Nettleton et al. (2006)
+0:m0.nhcw(p)
+0:# ---------- a real example in Bancroft, Du and Nettleton (2013) --------------
+0:# read in C++ source code
+0:tsf_code = read_code("test_statistics.cpp")
+0:# genrate function for sequential permutation test
+0:# for no location difference between two samples
+0:cxxwrapper(tsf_code, "abs_mean_diff0", "abs_mean_diff", c("n1", "", "int")) -> cxxspt
+0:# download data
+0:if(!file.exists('spt_data.rda')){
+0:download.file('http://dclong.github.io/media/spt/spt_data.rda', 'spt_data.rda')
+0:}
+0:load('spt_data.rda')
+0:cxxspt(leukemia, 10, 1000, n1=5) -> cxxspt.out
+0:#estimate m0 using the method in Bancroft, Du and Nettleton (2013).
+0:m0.bdn(cxxspt.out, 20)
+0:Sys.time() -> time.end
+0:time.end - time.begin -> time.used
+0:time.used
+0:?plot
+0:?plot.spt
+0:source('~/.active-rstudio-document')
+0:time.used
+0:?spt
+0:source('~/.active-rstudio-document')
+0:print(time.used)
+0:?cxxwrapper
+0:source('~/.active-rstudio-document')
+0:x
+0:exists(x)
+0:missing(x)
+0:object.exists
+0:x
+0:exists("x")
+0:x=1
+0:exists("x")
+0:remove.packages('dclong.spt')
+0:install.packages('dclong.spt')
+0:q('no')
+0:choose(8,1)
+0:choose(8,2)
+0:choose(8,3)
+0:choose(8,4)
+0:choose(8,4) + choose(8,3) + choose(8,2) + choose(8,1)
+0:q('no')
+0:remove.packages('dclong.fs')
+0:q('no')
+0:update.packages()
+0:q()
+0:update.packages()
+0:q('no')
+0:source('~/Dropbox/research/nettleton/kun_1/hmm/clean-data.r')
+0:get_clean_probes() -> j
+0:library(BionInstaller)
+0:library(BiocInstaller)
+0:biocLite('hgu95av2.db')
+0:get_clean_probes() -> j
+0:get_clean_probes() -> j
+0:j[["GO:0008150"]]
+0:length(j[["GO:0008150"]])
+0:j[["GO:0019222"]]
+0:length(j[["GO:0019222"]])
+0:setdiff(j[["GO:0019222"]], j[["GO:0008152"]])
+0:which(j[["GO:0019222"]] %in% j[["GO:0008152"]])
+0:which(!j[["GO:0019222"]] %in% j[["GO:0008152"]])
+0:j[["GO:0019222"]][857]
+0:j[["GO:0019222"]][c(857, 1989)]
+0:j[["GO:0019222"]][c(857, 1989, 5238)]
+0:j[["GO:0019222"]][c(857, 1989, 5238, 5386)]
+0:j[["GO:0019222"]][c(857, 1989, 5238, 5386, 5793)]
+0:GO:0042592, GO:0032844) -> nodes
+0:source('~/.active-rstudio-document')
+0:matrix
+0:matrix(nodes, byrow=T, ncol=2)
+0:matrix(nodes, byrow=T, ncol=2) -> nodes
+0:vector
+0:probes = vector("list", 139)
+0:probes
+0:for(i in 1:139){
+0:pprobes = j[[nodes[i, 1]]]
+0:cprobes = j[[nodes[i, 2]]]
+0:probes[[i]] = cprobes[!cprobes %in% pprobes]
+0:}
+0:probes
+0:probes = vector("list", 139)
+0:for(i in 1:139){
+0:pprobes = j[[nodes[i, 1]]]
+0:cprobes = j[[nodes[i, 2]]]
+0:probes[[i]] = cprobes[!cprobes %in% pprobes]
+0:}
+0:j
+0:probes
+0:for(i in 1:9){
+0:pprobes = j[[nodes[i, 1]]]
+0:print(pprobes)
+0:cprobes = j[[nodes[i, 2]]]
+0:print(cprobes)
+0:probes[[i]] = cprobes[!cprobes %in% pprobes]
+0:}
+0:}
+0:"GO:0042592", "GO:0032844") -> nodes
+0:matrix(nodes, byrow=T, ncol=2) -> nodes
+0:probes = vector("list", 139)
+0:for(i in 1:139){
+0:pprobes = j[[nodes[i, 1]]]
+0:cprobes = j[[nodes[i, 2]]]
+0:probes[[i]] = cprobes[!cprobes %in% pprobes]
+0:}
+0:probes
+0:for(i in 1:3){
+0:pprobes = j[[nodes[i, 1]]]
+0:print(pprobes)
+0:cprobes = j[[nodes[i, 2]]]
+0:probes[[i]] = cprobes[!cprobes %in% pprobes]
+0:}
+0:"GO:0042592", "GO:0032844") -> nodes
+0:matrix(nodes, byrow=T, ncol=2) -> nodes
+0:nodes
+0:source('~/.active-rstudio-document')
+0:source('~/.active-rstudio-document')
+0:probes
+0:j[["GO:0008152"]]
+0:names(j[["GO:0008152"]])
+0:table(names(j[["GO:0008152"]]))
+0:probes
+0:ls
+0:cat
+0:cat(probes,file="problematic_probes.txt")
+0:sink('problematic_probes.txt')
+0:probes
+0:sink()
+0:j[["GO:0048523"]]
+0:length(j[["GO:0048523"]])
+0:j[["GO:0048523"]][1:1000]
+0:j[["GO:0048523"]][1001:2000]
+0:j[["GO:0048523"]][2001:3000]
+0:j[["GO:0048523"]][3001:4000]
+0:j[["GO:0048523"]]
+0:j[["GO:0048523"]] %in% j[["GO:0009987"]]
+0:j[["GO:0048523"]][!j[["GO:0048523"]] %in% j[["GO:0009987"]]]
+0:length(j[["GO:0048523"]][!j[["GO:0048523"]] %in% j[["GO:0009987"]]])
+0:all(j[["GO:0048523"]] %in% j[["GO:0009987"]])
+0:length(j[["GO:0048523"]])
+0:length(j[["GO:0009987"]])
+0:all(j[["GO:0050794"]] %in% j[["GO:0009987"]])
+0:node[108,]
+0:nodes[108,]
+0:j[["GO:0060284"]]
+0:j[["GO:0060284"]] == "32025_at"
+0:any(j[["GO:0060284"]] == "32025_at")
+0:nodes[108,]
+0:any(j[["GO:0048468"]] == "32025_at")
+0:j[["GO:0048468"]]
+0:sort(j[["GO:0048468"]])
+0:sort(j[["GO:0048468"]])[1:2000]
+0:sort(j[["GO:0048468"]])[1:500]
+0:sort(j[["GO:0048468"]])[1:1000]
+0:node[108,]
+0:nodes[108,]
+0:sort(j[["GO:0060284"]])[1:1000]
+0:nodes[108,]
+0:j[["GO:0060284"]])
+0:j[["GO:0060284"]]
+0:nodes[108,]
+0:j[["GO:0048523"]][!j[["GO:0048523"]] %in% j[["GO:0009987"]]]
+0:names(j)
+0:length(names(j))
+0:length(j)
+0:j[[1]]
+0:j[["GO:0048468"]]
+0:any(j[["GO:0048468"]] == "32025_at")
+0:any(j[["GO:0048468"]] == "32025_at")
+0:length(j[["GO:0048468"]])
+0:length(d_probes[["GO:0048468"]])
+0:d_probes = get_clean_probes()
+0:length(d_probes[["GO:0048468"]])
+0:source('~/Dropbox/research/nettleton/kun_1/hmm/clean-data.r')
+0:d_probes = get_clean_probes()
+0:d_probes[[1]]
+0:dir.r()
+0:dir.r('..')
+0:dir('..')
+0:cd('/home/dclong/archives/code/cpp/hmm/cpp')
+0:cd
+0:library('dclong.spt')
+0:library('dclong.fs')
+0:cd
+0:setwd('/home/dclong/archives/code/cpp/hmm/cpp')
+0:setwd('/home/dclong/archives/code/cpp/hmm/data')
+0:dir.r()
+0:dir.r('..')
+0:file.edit('../get_clean_data.r')
+0:dir()
+0:file.edit('data_from_r.r')
+1420407020817:readText
+1420407043852:library(dclong.fs)
+1421016065730:scan
+1421016068053:?scan
+1421016096484:scan(file="clipboard", what=integer()) -> j
+1421034954899:install.packages("Rcpp")
+1421034999939:install.packages("inline")
+1421035010114:install.packages("GO.db")
+1421035457789:source("http://bioconductor.org/biocLite.R")
+1421035479855:biocLite("GO.db")
+1421036583902:biocLite("GO.db")
+1421036711796:q()
+1421036734243:library(BiocInstaller)
+1421036745174:biocLite(GO.db)
+1421036753035:biocLite("GO.db")
+1421036872752:q()
+1421036986012:library(BiocInstaller)
+1421037009088:biocValid()
+1421037121693:setwd('downloads/')
+1421037123141:dir()
+1421037241444:dir()
+1421037249875:install.packages('GO.db_3.0.0.tar.gz')
+1421039862394:?write.table
+1422916122090:dir()
+1422916128111:setwd('disqus/')
+1422916129811:dir()
+1422916136136:readLines
+1422916142712:readLines('export-dclong-yN210S')
+1422916149966:readLines('export-dclong-yN210S') -> urls
+1422916863999:trim
+1422916875111:library(stringr)
+1422916883224:ls(package:stringr)
+1422916890200:str_trim
+1422916950212:str_replace
+1422916984037:?str_replace
+1422917190461:str_replace("http://dclong.github.com/en/2012/04/install-software-linux/", "/20\d{2}/\d{2}/", "/")
+1422917198746:str_replace("http://dclong.github.com/en/2012/04/install-software-linux/", "/20\\d{2}/\\d{2}/", "/")
+1422917208680:str_replace("http://dclong.github.com/en/2012/04/install-software-linux/", "/20\\d{2}/\\d{2}/", "/")
+1422918293516:str_split
+1422918296584:?str_split
+1422918301696:?split
+1422918304396:?str_split
+1422918374872:table(c(1,2,2,3,1,3))
+1422918419923:source('disqus.r')
+1422918451363:readLines('export-dclong-yN210S') -> urls
+1422918472855:stat_url(urls)
+1422918781476:str_index
+1422918788399:ls(package:stringr)
+1422919011996:readLines('export-dclong-yN210S') -> urls
+1422919012932:source('disqus.r')
+1422919014947:stat_url(urls)
+1423334947350:install.packages('knitr')
+1423450067339:readLines('export-dclong-yN210S') -> urls
+1423450080853:getwd()
+1423450088227:setwd('archives/disqus/')
+1423450091480:dir()
+1423450098329:save.image('disqus.rdata')
+1423450102366:readLines('export-dclong-yN210S') -> urls
+1423450104562:source('disqus.r')
+1423450105698:stat_url(urls)
+1423450324716:readLines('export-dclong-yN210S') -> urls
+1423450325536:source('disqus.r')
+1423450327439:stat_url(urls)
+1423450493406:readLines('export-dclong-yN210S') -> urls
+1423450493943:source('disqus.r')
+1423450494620:stat_url(urls)
+1423450496718:urls = tran_url(urls)
+1423450497851:stat_url(urls)
+1423450571762:readLines('export-dclong-yN210S') -> urls
+1423450572488:source('disqus.r')
+1423450573102:stat_url(urls)
+1423450573569:urls = tran_url(urls)
+1423450573924:stat_url(urls)
+1423450751256:cat
+1423450754574:file(cat)
+1423450759817:args(cat)
+1423450765433:dir()
+1423450781520:cat(urls, file="urls.txt")
+1423450814947:cat(urls, file="urls.txt", sep="\n")
+1423451209953:dir()
+1423451216420:save.image('disqus.rdata')
+1423451218698:q()
+1424418682463:dir()
+1424418694959:read.table('speed_in_milliseconds.txt')
+1424418706784:read.table('speed_in_milliseconds.txt')->speed
+1424418710343:colnames(speed)
+1424418729965:colnames(speed) = c("Upper", "Milliseconds")
+1424418732769:speed
+1424418786471:read.table('speed_in_milliseconds.txt') -> speed
+1424418786864:colnames(speed) = c("Upper", "Milliseconds")
+1424418789796:speed
+1424418813005:plot(speed$Upper, speed$Milliseconds)
+1424418840406:plot(speed$Upper, speed$Milliseconds, type="l")
+1424418863849:plot(speed$Upper, log(speed$Milliseconds), type="l")
+1424418895046:?lm
+1424418952616:speed = cbind(speed, LogMS=log(speed$Milliseconds))
+1424418956710:speed
+1424418975719:lm(LogMS ~ Upper, data=speed)
+1424419113407:plot(log(speed$Upper), log(speed$Milliseconds), type="l")
+1424419141632:speed = cbind(speed, LogUpper=log(speed$Upper), LogMS=log(speed$Milliseconds))
+1424419144776:read.table('speed_in_milliseconds.txt') -> speed
+1424419145183:colnames(speed) = c("Upper", "Milliseconds")
+1424419145537:speed
+1424419146281:plot(speed$Upper, speed$Milliseconds, type="l")
+1424419146786:plot(log(speed$Upper), log(speed$Milliseconds), type="l")
+1424419148626:speed = cbind(speed, LogUpper=log(speed$Upper), LogMS=log(speed$Milliseconds))
+1424419149955:speed
+1424419180086:lm(LogMS ~ LogUpper, data=speed)
+1424419264366:lm(LogMS ~ LogUpper, data=speed) -> lmout
+1424419276001:?predict.lm
+1424419361195:data.frame(1,2)
+1424419425755:predict(lmout, newdata=data.frame(logUpper=log(600)))
+1424419433961:predict(lmout, newdata=data.frame(LogUpper=log(600)))
+1424419480692:time = function(upper){
+1424419481136:exp(predict(lmout, data.frame(LogUpper=log(upper))))
+1424419481494:}
+1424419488086:summary(lmout)
+1424419501911:time = function(upper, lmout){
+1424419502299:exp(predict(lmout, data.frame(LogUpper=log(upper))))
+1424419502695:}
+1424419534469:estimate_run_time = function(upper, lmout){
+1424419534752:exp(predict(lmout, data.frame(LogUpper=log(upper))))
+1424419535041:}
+1424419544717:estimate_run_time(600)
+1424419548845:estimate_run_time(600, lmout)
+1424419553211:estimate_run_time(600, lmout)/1000
+1424419591455:estimate_run_time(1000, lmout)/1000
+1424419598057:293/35
+1424419671754:(1000/6000)^4
+1424419675330:(1000/600)^4
+1424419716732:dir()
+1424419724180:save.image('speed.rdata')
+1424420123324:source('~/archives/in_action/sum_prod/performance/rscript.r')
+1424420156271:estimate_total_run_time(60, 1000, lmout)
+1424420280507:#' Print total run time.
+1424420280719:estimate_total_run_time = function(upper_1, upper_2, lmout){
+1424420280901:time = 0
+1424420281086:for(upper in upper_1:upper_2){
+1424420281238:time = time + estimate_run_time(upper, lmout) / 1000
+1424420281412:}
+1424420281635:cat("The estimated total run tim is: ", time, " seconds.")
+1424420281907:return(time)
+1424420282268:}
+1424420282706:estimate_total_run_time(60, 1000, lmout)
+1424420304958:estimate_total_run_time(60, 1000, lmout)/3600
+1424420349069:dir()
+1424420356089:save.image('speed.rdata')
+1427042774216:ls()
+1427042789315:str(cloneCluster)
+1427042807101:str(nClusterSize)
+1427042826965:class(cloneCluster)
+1427042836765:cloneCluster[1:5,1:5]
+1427042885865:cloneCluster[1:10,1:5]
+1427042894034:cloneCluster[1:10,1:10]
+1427042905835:class(nClusterSize)
+1427042916304:str(nClusterSize)
+1427042919391:nClusterSize
+1427042933699:nClusterSize[1]
+1427042936282:nClusterSize[10]
+1427042939613:nClusterSize[100]
+1427042976006:ls()
+1427042982849:class(M)
+1427042986298:head(M)
+1427042990227:ls()
+1427042997645:str(pcount)
+1427043029303:max(pcount)
+1427043062007:ls()
+1427043069264:class(childrenIndexMat)
+1427043077509:head(childrenIndexMat)
+1427043089519:childrenIndexMat[1:5, 1:5]
+1427043108285:max(childrenIndexMat)
+1427043116717:ls(0)
+1427043118484:ls()
+1427043126649:M[1:5, 1:5]
+1427043139007:size(childrenIndexMat)
+1427043142486:dim(childrenIndexMat)
+1427043147407:dim(pcount)
+1427043152469:length(pcount)
+1427043157160:dim(M)
+1427055243001:d_genes = as.list(hgu95av2.db::hgu95av2GO2ALLPROBES)
+1427055247757:d_genes = as.list(hgu95av2.db::hgu95av2GO2ALLPROBES)
+1427055259940:library(hgu95av2.db)
+1427055298743:library(hgu95av2.db)
+1427055316248:library(GO.db)
+1427433770914:ls()
+1427433791307:class(d_probes)
+1427433794546:d_probes
+1427433852338:d_probes$"GO:0031100"
+1427433858954:length(d_probes$"GO:0031100")
+1427433940733:d_probes$"GO:0030859"
+1427433953752:q()
+1428277181967:?edit
+1428644567152:??ljung
+1428644583763:box.test(1:1000, lag=40)
+1428644592452:Box.test(1:1000, lag=40)
+1428644607202:Box.test(1:1000, lag=40, type="Ljung-Box")
+1430522371441:setwd('/home/dclong/archives/kaggle/facebook')
+1430522373516:dir()
+1430522402225:dir('data/')
+1430522417805:read.csv
+1430522420728:?read.csv
+1430522439381:read.csv(file='data/training.csv')
+1430522456410:train = read.csv(file='data/train.csv')
+1430522460989:head(train)
+1430522488178:train$outcome
+1430522494132:mean(train$outcome)
+1430522521175:train = read.csv(file='data/train.csv', as.is=TRUE)
+1430522530050:train
+1430522535255:head(train)
+1430522540319:dim(train)
+1430522631632:dir('data')
+1430522674143:test = read.csv(file='data/test.csv', as.is=TRUE)
+1430522676328:head(test)
+1430522710412:dir('data')
+1430525653057:dir('data')
+1430525667119:bids = read.csv(file='data/bids.csv', as.is=TRUE)
+1430526499849:head(bids)
+1430545457558:dir()
+1430545467304:save.image('robot.rdata')
+1430606446595:dir()
+1430606451420:ls()
+1430606458341:head(bids)
+1430606579165:head(train)
+1430606583477:head(test)
+1430606606176:dim(train)
+1430606614840:dim(test)
+1430619077785:ls()
+1430619083378:head(train)
+1430619550956:head(bids)
+1430619558501:bids$time
+1430619561949:str(bids)
+1430619586137:bids$time[1]
+1430619616566:bids$time[1] / 24 / 3600 / 365
+1430619622204:bids$time[1] / 24 / 3600 / 365 / 1000
+1430619630428:bids$time[1] / 24 / 3600 / 365 / 1000 / 1000
+1430619681502:summary(bids$time)
+1430619705136:iqr
+1430619707365:??iqr
+1430619728844:IQR(bids$time)
+1430619918755:ls()
+1430619924729:head(bids)
+1430620008228:j=bids[bids$bidder_id=="0051aef3fdeacdadba664b9b3b07e04e4coc6",]
+1430620013713:dim(j)
+1430620021878:j
+1430620089659:?table
+1430620132103:head(j)
+1430620143233:table(j$bid_id, j$device)
+1430620180121:j[j$device=="phone262", ]
+1430620372032:j[j$device=="phone262", ][1:4, ]
+1430620380174:jj=j[j$device=="phone262", ][1:4, ]
+1430620394975:jj$time
+1430620402456:diff(jj$time)
+1430620409080:?option
+1430620418599:option(digits=15)
+1430620423477:options(digits=15)
+1430620426750:jj$time
+1430620430995:diff(jj$time)
+1430620463262:21789473684/24/3600
+1430620472622:21789473684/24/3600/1000
+1430620499747:21789473684/24/3600/1000/1000
+1430620521246:52631578/24/3600/1000
+1430620526704:52631578/24/3600/1000/1000
+1430620544235:52631578/3600/1000/1000
+1430620552280:52631578/1000/1000
+1430620659393:ls()
+1430620689312:head(train)
+1430620724791:robots = train[train$outcome==1, ]
+1430620729704:dim(robots)
+1430620739718:robots
+1430620760893:ls()
+1430620769799:head(bids)
+1430620785515:sum(bids$bid_id=="5354c02817e47f28e60e44a40ca5e48dll4sz")
+1430620825475:sum(bids$bidder_id=="5354c02817e47f28e60e44a40ca5e48dll4sz")
+1430620874374:robot_5354_bids = bids[bids$bidder_id=="5354c02817e47f28e60e44a40ca5e48dll4sz", ]
+1430620880633:robot_5354_bids
+1430620887610:robot_5354_bids
+1430620938338:robot_5354_bids$time
+1430620944922:diff(robot_5354_bids$time)
+1430620956556:min(diff(robot_5354_bids$time))
+1430620985727:min(diff(robot_5354_bids$time)) / 1000
+1430620991550:min(diff(robot_5354_bids$time)) / 1000 / 1000
+1430621032290:min(diff(robot_5354_bids$time)) / 1000 / 1000 / 1000
+1430621176110:ls()
+1430621179429:head(bids)
+1430621588860:within
+1430621615494:within(bids, auction=="ewmzr" && merchandise=="jewelry")
+1430622155625:bids[bids$auction=="ewmzr" && bids$merchandise=="jewelry", ] -> bids_ewmzr_jew
+1430622173442:dim(bids_ewmzr_jew)
+1430622205292:head(bids_ewmzr_jew)
+1430622220174:hist(bids_ewmzr_jew$time)
+1430622252174:bids[bids$auction=="ewmzr" & bids$merchandise=="jewelry", ] -> bids_ewmzr_jew
+1430622262788:hist(bids_ewmzr_jew$time)
+1430622524886:head(train)
+1430622534002:ls()
+1430622537389:robots
+1430622550908:ls()
+1430622560473:head(bids_ewmzr_jew)
+1430622595821:intersect(bids_ewmzr_jew$bidder_id, robots$bidder_id)
+1430622648938:bids_ewmzr_jew[bids_ewmzr_jew$bidder_id=="c2e1242ad5ea781923a08987d55365c69fii7", ] -> robot_c2e1_ewmzr_jew
+1430622654456:robot_c2e1_ewmzr_jew
+1430622664115:dim(robot_c2e1_ewmzr_jew)
+1430622692909:?hist
+1430622714921:hist(bids_ewmzr_jew$time, prob=T)
+1430622757374:hist(robot_c2e1_ewmzr_jew$time, prob=T, add=T, col="red")
+1430622768418:hist(bids_ewmzr_jew$time, prob=T)
+1430622774785:hist(robot_c2e1_ewmzr_jew$time, prob=T, add=T, col="red")
+1430622778480:hist(bids_ewmzr_jew$time, prob=T, add=T)
+1430622876610:hist(bids_ewmzr_jew$time)
+1430622882741:hist(robot_c2e1_ewmzr_jew$time, add=T, col="red")
+1430622977713:intersect(bids_ewmzr_jew$bidder_id, robots$bidder_id)
+1430623017895:bids_ewmzr_jew[bids_ewmzr_jew$bidder_id=="6e848149cabc4434155aacb610fb20de6vq5b", ] -> robot_6e84_ewmzr_jew
+1430623056117:hist(robot_6e84_ewmzr_jew$time, add=T, col="blue")
+1430623070043:dim(robot_6e84_ewmzr_jew)
+1430623083540:robot_6e84_ewmzr_jew
+1430623164610:?hist
+1430623188981:hist(bids_ewmzr_jew$time, nclass=15)
+1430623234142:hist(robot_c2e1_ewmzr_jew$time, add=T, col="red", nclass=15)
+1430623237968:hist(robot_6e84_ewmzr_jew$time, add=T, col="blue", nclass=15)
+1430623471111:diff(bids_ewmzr_jew$bidder_id, robots$bidder_id)
+1430623480995:difference(bids_ewmzr_jew$bidder_id, robots$bidder_id)
+1430623503594:??setdi
+1430623509959:??setdiff
+1430623517521:??differ
+1430623529542:?intersect
+1430623537864:setdiff(bids_ewmzr_jew$bidder_id, robots$bidder_id)
+1430623571242:bids_ewmzr_jew[bids_ewmzr_jew$bidder_id=="5e0487d6779bb0420d8e9bbf8d9004f72fd0o", ] -> human_5e04_ewmzr_jew
+1430623583044:hist(bids_ewmzr_jew$time, nclass=15)
+1430623583592:hist(robot_c2e1_ewmzr_jew$time, add=T, col="red", nclass=15)
+1430623599540:hist(human_5e04_ewmzr_jew$time, add=T, col="blue", nclass=15)
+1430623616383:dim(human_5e04_ewmzr_jew)
+1430624059842:dim(train)
+1430631223103:dir()
+1430631227812:save.image('robot.rdata')
+1431492612793:?regex
+1431492866913:grep("\s", "abc ")
+1431492873018:grep("\\s", "abc ")
+1431493215104:grep('\\s', c("abc ", "hello"))
+1431659936188:1+3
+1431664242671:a = 1:3
+1431664243146:a
+1431664245272:b = a
+1431664246252:a
+1431664246853:b
+1431664249921:b[1]
+1431664253821:b[1] = 1000
+1431664254321:a
+1431664254896:b
+1431664260048:q()
+1432587864097:library(GO.db)
+1432594755986:NA
+1432594758413:NA == 1
+1433133604364:j=read.table(file='clipboard')
+1433133606930:j
+1433133687977:file = "/home/dclong/corn_future_pricing/CH1960.csv"
+1433133688859:price = read.csv(file=file)
+1433133694817:head(price)
+1433133837596:file = "/home/dclong/corn_future_pricing/CH1960.csv"
+1433133846195:?read.csv
+1433133885933:price = read.csv(file=file, as.is=TRUE)
+1433133888728:head(price)
+1433133893952:str(price)
+1433133925424:head(price)
+1433133934206:?substr
+1433133972237:month = substr9(price$Date, 1, 8)
+1433133979703:month = substr(price$Date, 1, 8)
+1433133983485:month
+1433133997602:price$month = substr(price$Date, 1, 8)
+1433134004378:head(price)
+1433134065462:day = as.integer(substr(price$Date, 9, 10))
+1433134066182:day
+1433134108387:?tapply
+1433134367583:tapply(price$Date, month, function(x){
+1433134367900:day = as.integer(substr(x, 9, 10))
+1433134368228:x[which.min(abs(day - 15))]
+1433134368629:})
+1433134406421:price$Date
+1433134432251:keep = tapply(price$Date, month, function(x){
+1433134432447:day = as.integer(substr(x, 9, 10))
+1433134432697:x[which.min(abs(day - 15))]
+1433134433143:})
+1433134492316:rownames(price)
+1433134503528:rownames(price) = price$Date
+1433134508205:head(price)
+1433134524817:price_keep = price[keep, ]
+1433134528403:price_keep
+1433134581300:outer(keep, price$Date, "==")
+1433134605772:apply(outer(keep, price$Date, "=="), 1, which)
+1433134620702:keep
+1433134652064:price[apply(outer(keep, price$Date, "=="), 1, which), ]
+1433773987843:source('~/archives/disqus/disqus.r')
+1433774313174:source('disqus.r')
+1433774314253:readLines('2/links.csv') -> urls
+1433774315434:stat_url(urls)
+1433774325372:stat_url(urls)
+1433774432639:stat_url(urls)
+1433774434225:urls = tran_url(urls)
+1433774435095:stat_url(urls)
+1433774617926:source('disqus.r')
+1433774618466:readLines('2/links.csv') -> urls_old
+1433774618900:stat_url(urls_old)
+1433774620087:urls_new = tran_url(urls_old)
+1433774628745:stat_url(urls_new)
+1433774645785:length(urls_old)
+1433774648286:length(urls_new)
+1433774667632:mapping = cbind(urls_old, urls_new)
+1433774671827:head(mapping)
+1433774737967:write.csv
+1433774741625:?write.csv
+1433774761965:write.csv(mapping, file="mapping.csv")
+1433774803873:write.csv(mapping, file="mapping.csv", row.names=F, col.names=F)
+1433774850772:write.csv(mapping, file="mapping.csv", col.names=FALSE, row.names=F)
+1433774877792:write.table(mapping, file="mapping.csv", col.names=F, row.names=F, sep=",")
+1433775069832:length(urls_new)
+1433775086922:write.table(mapping, file="2/mapping.csv", col.names=F, row.names=F, sep=", ")
+1433775273175:source('disqus.r')
+1433775273611:readLines('2/links.csv') -> urls_old
+1433775273800:stat_url(urls_old)
+1433775273975:urls_new = tran_url(urls_old)
+1433775274154:stat_url(urls_new)
+1433775274654:mapping = cbind(urls_old, urls_new)
+1433775292392:urls_new
+1433775300420:?regex
+1433775313398:?grep
+1433775348329:grep("what-do-email", urls_new)
+1433775355684:grep("what-do-email", urls_new, fixed=T, values=T)
+1433775365953:grep("what-do-email", urls_new, fixed=T, value=T)
+1433775392550:source('~/archives/disqus/rscript.r')
+1433775452960:source('~/archives/disqus/disqus.r')
+1433775456011:source('~/archives/disqus/rscript.r')
+1433776001124:source('~/archives/disqus/disqus.r')
+1433776003571:source('~/archives/disqus/rscript.r')
+1433776234710:ls(package:stringr)
+1433776243851:ls("package:stringr")
+1433776248166:ls("package::stringr")
+1433776257063:ls(package::stringr)
+1433776260039:ls(package:stringr)
+1433776266422:library(stringr)
+1433776267831:ls(package:stringr)
+1433776314036:grep("/blog/", url)
+1433776327063:grep("/blog/", urls_old)
+1433776331278:grepl("/blog/", urls_old)
+1433776340065:!grepl("/blog/", urls_old)
+1433776461417:source('~/archives/disqus/rscript.r')
+1433776997326:source('disqus.r')
+1433776997982:readLines('2/links.csv') -> urls_old
+1433776998745:stat_url(urls_old)
+1433776999272:pattern = "linux-emulation|install-gsl|scientific-computing|texstudio-bravo|do-email|matlab-code"
+1433777000535:grep(pattern, urls_old, value=T)
+1433777042227:source('disqus.r')
+1433777042694:readLines('2/links.csv') -> urls_old
+1433777043063:stat_url(urls_old)
+1433777043380:pattern = "linux-emulation|install-gsl|scientific-computing|texstudio-bravo|do-email|matlab-code"
+1433777043747:urls_old = grep(pattern, urls_old, value=T)
+1433777044604:urls_new = tran_url(urls_old)
+1433777046512:stat_url(urls_new)
+1433777054642:mapping = cbind(urls_old, urls_new)
+1433777071519:cat(urls, file="urls.txt", sep="\n")
+1433777072332:write.table(mapping, file="2/mapping.csv", col.names=F, row.names=F, sep=", ")
+1436718542820:class(GO.id)
+1436718548729:ls()
+1436718553108:pcount
+1436718557145:class(pcount)
+1436718563422:is.numeric(pcount)
+1436718569221:is.vector(pcount)
+1436718661321:ls()
+1436718667021:class(childrenIndexMat)
+1436718676483:childrenIndexMat[1:5, 1:5]
+1436718697045:dim(childrenIndexMat)
+1436723729320:ls()
+1436723980748:M
+1436723984445:class(M)
+1436723990420:M[1:5, 1:5]
+1436724007906:dim(M)
+1436924175770:ls()
+1436924409254:ls()
+1436924441809:pcount
+1436924447050:class(pcount)
+1437337650438:setwd('..')
+1437337652272:ls
+1437337656033:dir()
+1437337671316:library(dclong.fs)
+1437337725389:readLines('main.cpp')
+1437337738549:paste(readLines('main.cpp'), collapse="\n")
+1437337780289:cxxfunction
+1437337784060:?cxxfunction
+1437337787749:library(inline)
+1437337788199:library(Rcpp)
+1437337791891:?cxxfunction
+1437337995475:library(inline)
+1437337996454:library(Rcpp)
+1437337997234:src = paste(readLines('main.cpp'), collapse="\n")
+1437337998855:includes = "tree.h"
+1437338001432:settings=getPlugin("Rcpp")
+1437338003665:settings$env$PKG_CXXFLAGS=paste('-std=c++0x ',settings$env$PKG_CXXFLAGS)
+1437338005499:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1437338139573:library(inline)
+1437338139997:library(Rcpp)
+1437338140359:src = paste(readLines('main.cpp'), collapse="\n")
+1437338141125:includes = "#include "tree.h"
+1437338169831:library(inline)
+1437338170200:library(Rcpp)
+1437338170632:src = paste(readLines('main.cpp'), collapse="\n")
+1437338171175:includes = '#include "tree.h'
+1437338172551:settings=getPlugin("Rcpp")
+1437338173021:settings$env$PKG_CXXFLAGS=paste('-std=c++0x ',settings$env$PKG_CXXFLAGS)
+1437338173776:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1437338221284:library(inline)
+1437338221486:library(Rcpp)
+1437338221695:src = paste(readLines('main.cpp'), collapse="\n")
+1437338221890:includes = '#include "tree.h"'
+1437338222129:settings=getPlugin("Rcpp")
+1437338224494:library(inline)
+1437338224781:library(Rcpp)
+1437338224969:src = paste(readLines('main.cpp'), collapse="\n")
+1437338225192:includes = '#include "tree.h"'
+1437338225449:settings=getPlugin("Rcpp")
+1437338225952:settings$env$PKG_CXXFLAGS=paste('-std=c++0x ',settings$env$PKG_CXXFLAGS)
+1437338226421:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1437338360191:source('~/archives/hmm/main.r')
+1437338570081:source('~/archives/hmm/main.r')
+1437342155097:source('~/archives/hmm/main.r')
+1437349632737:source('~/archives/hmm/main.r')
+1437349709100:source('~/archives/hmm/main.r')
+1437349747509:source('~/archives/hmm/main.r')
+1437349772740:r_tree = fx()
+1437353546835:names(r_tree)
+1437353553540:r_tree$all_genes
+1437353561295:length(r_tree$all_genes)
+1437353565794:names(r_tree)
+1437353571315:length(r_tree$all_nodes)
+1437353607503:(r_tree$all_nodes)
+1437353610938:names(r_tree)
+1437353617514:r_tree$children_index
+1437353622784:dim(r_tree$children_index)
+1437353686767:names(r_tree)
+1437353695609:dim(r_tree$parent_index)
+1437353705895:(r_tree$parent_index)
+1437353714691:max(r_tree$parent_index)
+1437353725033:min(r_tree$parent_index)
+1437353729666:length(r_tree$parent_index)
+1437354820415:source('~/archives/hmm/main.r')
+1437355002708:source('~/archives/hmm/main.r')
+1437356003764:source('~/archives/hmm/main.r')
+1437356216138:source('~/archives/hmm/main.r')
+1437356874912:source('~/archives/hmm/main.r')
+1437356893482:j = fx()
+1437356915961:source('~/archives/hmm/r/get_clean_data.r')
+1437357009909:tree = fx(get_clean_children(), get_clean_genes(), "GO:0008150")
+1437357025217:install.packages("GO.db")
+1437358665382:library(BiocInstaller)
+1437358685406:biocLite("GO.db")
+1437358872330:biocLite("GO.db")
+1437358906353:library(GO.db)
+1438062182318:library(inline)
+1438062182891:library(Rcpp)
+1438062183398:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438062183970:includes = '#include "tree.h"'
+1438062187776:settings=getPlugin("Rcpp")
+1438062189444:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438062190496:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438062256636:library(inline)
+1438062257081:library(Rcpp)
+1438062257793:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438062258232:includes = '#include "tree.h"'
+1438062258656:settings=getPlugin("Rcpp")
+1438062259061:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438062259708:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438062454268:library(inline)
+1438062455391:library(Rcpp)
+1438062460521:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438062462386:includes = '#include "tree.h"'
+1438062464469:settings=getPlugin("Rcpp")
+1438062466708:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438062470104:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438062553162:library(inline)
+1438062553738:library(Rcpp)
+1438062554248:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438062554681:includes = '#include "tree.h"'
+1438062555069:settings=getPlugin("Rcpp")
+1438062555509:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438062556292:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438088873915:library(inline)
+1438088874671:library(Rcpp)
+1438088875173:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438088876252:includes = '#include "tree.h"'
+1438088876971:settings=getPlugin("Rcpp")
+1438088877766:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438088878270:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438088898854:tree = fx()
+1438156532550:names(tree)
+1438156542304:all_genes
+1438156548466:tree$all_genes
+1438156553201:names(tree)
+1438156561098:class(tree$genes_index)
+1438156567805:class(tree$all_genes)
+1438156573624:length(tree$all_genes)
+1438156580782:is.vector(tree$all_genes)
+1438156603471:dim(tree$genes_index)
+1438156619946:names(tree)
+1438156628026:dim(tree$children_index)
+1438156640474:length(tree$parent_index)
+1438156646768:is.vector(tree$parent_index)
+1438156658145:length(tree$clones)
+1438156664957:class(tree$clones)
+1438156671802:(tree$clones)
+1438238909430:library(inline)
+1438238909945:library(Rcpp)
+1438238910555:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438238911091:includes = '#include "tree.h"'
+1438238912711:settings=getPlugin("Rcpp")
+1438238915729:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438238918319:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438238984625:library(inline)
+1438238985242:library(Rcpp)
+1438238985646:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438238986069:includes = '#include "tree.h"'
+1438238986440:settings=getPlugin("Rcpp")
+1438238986933:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438238987401:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438239097156:library(inline)
+1438239097623:library(Rcpp)
+1438239097991:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438239098457:includes = '#include "tree.h"'
+1438239098847:settings=getPlugin("Rcpp")
+1438239099352:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438239099830:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438239221990:library(inline)
+1438239222457:library(Rcpp)
+1438239222755:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438239223042:includes = '#include "tree.h"'
+1438239223366:settings=getPlugin("Rcpp")
+1438239223755:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438239224149:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438239316229:library(inline)
+1438239316642:library(Rcpp)
+1438239316851:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438239317030:includes = '#include "tree.h"'
+1438239317211:settings=getPlugin("Rcpp")
+1438239317534:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438239317958:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438239704546:library(inline)
+1438239705023:library(Rcpp)
+1438239705337:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438239705662:includes = '#include "tree.h"'
+1438239705951:settings=getPlugin("Rcpp")
+1438239706274:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438239706671:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438239901280:library(inline)
+1438239901896:library(Rcpp)
+1438239902429:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438239902801:includes = '#include "tree.h"'
+1438239903184:settings=getPlugin("Rcpp")
+1438239903552:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438239904022:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438239970907:library(inline)
+1438239971266:library(Rcpp)
+1438239971592:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438239971925:includes = '#include "tree.h"'
+1438239972277:settings=getPlugin("Rcpp")
+1438239972674:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438239973253:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438240005201:library(inline)
+1438240005378:library(Rcpp)
+1438240005601:src = paste(readLines('main_2.cpp'), collapse="\n")
+1438240005951:includes = '#include "tree.h"'
+1438240006285:settings=getPlugin("Rcpp")
+1438240006640:settings$env$PKG_CXXFLAGS=paste('-std=c++0x -I /home/dclong/archives/hmm/', settings$env$PKG_CXXFLAGS)
+1438240006966:fx = cxxfunction(body=src, includes=includes, settings=settings)
+1438240033141:tree = fx()
+1438261241644:names(tree)
+1438261264872:length(tree$all_genes)
+1438261277878:length(tree$mapping)
+1438261289609:length(tree$clones)
+1438261293279:tree$clones
+1438261302670:tree$mapping
+1438262339310:dir()
+1438262360926:save.image(file="tree.rdata")
+1438528912766:?std
+1438528920937:??std
+1438528923864:?sd
+1438529062611:matrix(1:24, nrow=4)
+1438529065019:matrix(1:24, nrow=4)->j
+1438529066586:sd(j)
+1438545846665:ls()
+1438545852151:names(tree)
+1438545856027:tree$clones
+1438545910422:ls()
+1438545913003:names(tree)
+1438545917172:tree$mapping
+1438545957520:names(tree)
+1438546081175:name(tree)
+1438546084869:names(tree)
+1438652524524:ls()
+1438653434086:ls()
+1438653453390:names(tree)
+1445185120012:setwd('/home/dclong/archives/code/r/dclong.fs/dclong.fs/R
+1445185120039:')
+1445185123585:setwd('/home/dclong/archives/code/r/dclong.fs/dclong.fs/R')
+1445185125405:dir()
+1445185128830:library(formatR)
+1445185138382:tidy_source
+1445185142215:?tidy_source
+1445185205598:tidy_source('dir.extension.r', file='dir.extension_2.r')
+1445187142630:tidy_source('is_file.r', file='is_file_2.r')
+1445187414188:tidy_source('sym2str.r', file='sym2str_2.r')
+1446558902055:?readLines
+1446561872499:?regex
+1446561875877:?readLines
+1446561909852:?regex
+1446561932776:?grep
+1446562560787:??Sys
+1446991301112:?print
+1446992124265:?read.table
+1446993475730:default.stringAsFactors()
+1446993487580:default.stringsAsFactors()
+1446996245236:?grep
+1446997964188:?grepRaw
+1446998012610:?agrep
+1446998173086:?nchar
+1446998290084:strsplit
+1446998292636:?strsplit
+1446998479349:?replace
+1446998558604:?stringr:str_replace
+1446998567152:library(stringr)
+1446998570870:?str_replace
+1446998734517:?str_split
+1446999397916:?system.time
+1446999435674:?Sys.time
+1446999534794:?system.which
+1446999544104:??sys.which
+1447250507940:?apply
+1447252828956:?table
+1447252921852:?unique
+1447253036529:?table
+1447253117937:?as.
+1447253120660:??as
+1447253128892:?as.numeric
+1447255855992:?write.csv
+1447256404298:?rnorm
+1447492423414:13 * 4
+1447492439707:choose
+1447492447835:choose(52, 2)
+1447492462284:choose(13, 2) / choose(52, 2)
+1447492464965:choose(13, 2) / choose(52, 2) * 4
+1447492925680:choose(13, 2) / choose(52, 2)
+1447492971915:choose(52-5, 2)
+1447492990045:choose(8, 2) / choose(52-5, 2)
+1447493496792:5/6 * 3.5/4.5
+1447493501512:1 - 5/6 * 3.5/4.5
+1447493664819:10/11 * 10/11
+1447493668342:1 - 10/11 * 10/11
+1447493679146:20
+1447494171204:(1-7/45)
+1447494181738:(1-7/45) * (1-10/45)
+1447494224941:4/45
+1447494233637:41/45
+1447494236990:41/45 * 41/45
+1447494261939:41/45 * 40/44
+1447494297121:6.5 / 3.5
+1447494331022:8.3/1.7
+1447495579137:100/16
+1447495680120:16100/13
+1447495684162:100/13-1
+1447495856137:100/15
+1447495928493:100/14
+1447495976890:100/1.56
+1447495979495:100/15.6
+1447496049624:100/14.8
+1447496082265:100/13
+1447496125056:100 / 11.4
+1447496581362:100/17-1
+1447496985093:100/22.8
+1447497241269:100/23
+1447497243299:100/23 - 1
+1447497301969:100/ 20.6
+1447497305944:100/ 20.6 - 1
+1447497357046:100 / 17.7
+1447497361018:100 / 17.7 - 1
+1447497416955:100 / 15.38
+1447497566673:100 / 16
+1447497618562:100 / 14.46
+1447497623293:100 / 14.46 - 1
+1447497662605:100/13
+1447497665231:100/13 - 1
+1447497706031:100/13 - 1
+1447497795036:100/11
+1447497812045:100/11 - 1
+1447498330704:100/21
+1447498332594:100/21 - 1
+1447498431579:100/22 - 1
+1447507134060:100/18 -1
+1447507163037:100/15 - 1
+1447507192360:100/14.5
+1448197062626:?ifelse
+1448197351728:min
+1448197354151:?min
+1448197541267:?is.integer
+1448197551109:??is.
+1448197579947:?is.vector
+1448197673071:?is.list
+1448197700354:is.double
+1448197706304:?is.data.frame
+1448198152193:?as.integer
+1448198202481:?as.vector
+1448198265028:?as.integer
+1448198287921:?as.numeric
+1448198310411:?as.list
+1448198349727:?as.double
+1448198379271:?as.data.frame
+1448198450541:x = data.frame(paste("x", 1:10), paste("y", 1:10))
+1448198451434:x
+1448198458848:str(x)
+1448198472674:?data.frame
+1448198505927:d = data.frame(x=paste("x", 1:10), y=paste("y", 1:10), stringAsFactor=F)
+1448198506960:d
+1448198519139:d = data.frame(x=paste("x", 1:10), y=paste("y", 1:10), stringsAsFactors=F)
+1448198520121:d
+1448198523208:str(d)
+1448198531372:j = as.data.frame(d)
+1448198534707:str(j)
+1448198618916:?as.data.frame
+1448198641109:?data.frame
+1448198695356:?as.matrix
+1448200052624:?min
+1448200121821:sin
+1448200123821:?sin
+1448200161163:?mean
+1448200792492:?pmean
+1448490226753:source('~/.active-rstudio-document')
+1448492549875:?str
+1448493089703:1:3+1
+1448493093946:1:3^2
+1448493134296:median(1:4)
+1448493200646:round(2.5)
+1448493208476:round(3.5)
+1448493928938:seq(from=1, to=10, by=2)
+1448493933420:seq(from=1, to=10, step=2)
+1448494252293:?warning

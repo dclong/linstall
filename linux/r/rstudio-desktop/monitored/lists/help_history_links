@@ -1,0 +1,15 @@
+help/library/base/html/numeric.html,R: Numeric Vectors
+help/library/base/html/list.html,R: Lists - Generic and Dotted Pairs
+help/library/base/html/double.html,R: Double-Precision Vectors
+help/library/base/html/as.data.frame.html,R: Coerce to a Data Frame
+help/library/base/html/data.frame.html,R: Data Frames
+help/library/base/html/matrix.html,R: Matrices
+help/library/base/html/data.matrix.html,R: Convert a Data Frame to a Numeric Matrix
+help/library/base/html/Extremes.html,R: Maxima and Minima
+help/library/base/html/Trig.html,R: Trigonometric Functions
+help/library/methods/html/S4groupGeneric.html,R: S4 Group Generic Functions
+help/library/base/html/mean.html,R: Arithmetic Mean
+help/library/base/html/colSums.html,R: Form Row and Column Sums and Means
+help/library/base/html/sum.html,R: Sum of Vector Elements
+help/library/utils/html/str.html,R: Compactly Display the Structure of an Arbitrary R Object
+help/library/base/html/warning.html,R: Warning Messages
