@@ -2,7 +2,7 @@
 # See the sshd_config(5) manpage for details
 
 # What ports, IPs and protocols we listen for
-Port 323
+Port 22
 # Use these options to restrict which interfaces/protocols sshd will bind to
 #ListenAddress ::
 #ListenAddress 0.0.0.0
@@ -11,12 +11,13 @@ Protocol 2
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_dsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
 #Privilege Separation is turned on for security
 UsePrivilegeSeparation yes
 
 # Lifetime and size of ephemeral version 1 server key
 KeyRegenerationInterval 3600
-ServerKeyBits 768
+ServerKeyBits 1024
 
 # Logging
 SyslogFacility AUTH
@@ -85,3 +86,4 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 # PAM authentication, then enable this but set PasswordAuthentication
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
+PasswordAuthentication yes
