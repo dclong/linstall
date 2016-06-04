@@ -2,6 +2,8 @@
 
 ## Quick Configuration of Linux Applications
 
+To make it robust, this package has to be in `$HOME/archives/` in order to work well. If you want to place it some other place, just make a symbolic link to `$HOME/archives`.
+
 1. Download this configuration package.
 
 2. Go to the root directory ("config") of this configuration package.
