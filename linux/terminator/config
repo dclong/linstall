@@ -1,75 +1,75 @@
 [global_config]
-  window_state = maximise
   tab_position = bottom
+  window_state = maximise
 [keybindings]
-[profiles]
-  [[default]]
-    use_system_font = False
-    font = Monospace 12
-    background_color = "#300a24"
-    background_image = None
-    foreground_color = "#ffffff"
 [layouts]
   [[default]]
     [[[child1]]]
-      type = Terminal
       parent = window0
       profile = default
+      type = Terminal
     [[[window0]]]
-      type = Window
       parent = ""
+      type = Window
   [[s2]]
     [[[child0]]]
-      position = 0:0
-      type = Window
       order = 0
       parent = ""
+      position = 0:0
       size = 1366, 746
+      type = Window
     [[[child1]]]
-      position = 251
-      type = HPaned
       order = 0
       parent = child0
-    [[[terminal3]]]
-      profile = default
-      type = Terminal
-      order = 1
-      parent = child1
+      position = 251
+      type = HPaned
     [[[terminal2]]]
-      profile = default
-      type = Terminal
       order = 0
       parent = child1
+      profile = default
+      type = Terminal
+    [[[terminal3]]]
+      order = 1
+      parent = child1
+      profile = default
+      type = Terminal
   [[s3]]
     [[[child0]]]
-      position = 0:0
-      type = Window
       order = 0
       parent = ""
+      position = 0:0
       size = 1366, 746
+      type = Window
     [[[child1]]]
-      position = 251
-      type = HPaned
       order = 0
       parent = child0
+      position = 251
+      type = HPaned
     [[[child3]]]
+      order = 1
+      parent = child1
       position = 373
       type = VPaned
-      order = 1
-      parent = child1
     [[[terminal2]]]
-      profile = default
-      type = Terminal
       order = 0
       parent = child1
-    [[[terminal5]]]
       profile = default
       type = Terminal
-      order = 1
-      parent = child3
     [[[terminal4]]]
-      profile = default
-      type = Terminal
       order = 0
       parent = child3
+      profile = default
+      type = Terminal
+    [[[terminal5]]]
+      order = 1
+      parent = child3
+      profile = default
+      type = Terminal
 [plugins]
+[profiles]
+  [[default]]
+    background_color = "#300a24"
+    background_image = None
+    font = Monospace 11
+    foreground_color = "#ffffff"
+    use_system_font = False
