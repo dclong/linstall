@@ -11,4 +11,3 @@
 # If that does not suit your needs, try a systemd drop-in file, as described in:
 #   https://docs.docker.com/v1.11/engine/admin/systemd/#custom-docker-daemon-options
 
-DOCKER_OPTS="--registry-mirror='http://a92c904a.m.daocloud.io'"
