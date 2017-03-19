@@ -1,0 +1,26 @@
+[connection]
+id=Loco VPN - JP 1
+uuid=5588cb8b-215f-4b80-bb00-c4b072a1068c
+type=vpn
+autoconnect=false
+permissions=user:dclong:;
+secondaries=
+
+[vpn]
+gateway=ios.vip.jp.locojsq.org
+require-mppe=yes
+user=longendu@yahoo.com
+password-flags=0
+service-type=org.freedesktop.NetworkManager.pptp
+
+[ipv4]
+dns-search=
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+dns-search=
+method=auto
+
+[vpn-secrets]
+password=kyqxy7408LONG
