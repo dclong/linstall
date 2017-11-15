@@ -13,6 +13,14 @@ SparkleShare.txt
 dependency-reduced-pom.xml
 target
 *.iml
+.idea/
+target/classes
+target/generated-sources
+target/generated-test-sources
+target/test-classes
+target/*.jar
+target/analysis/
+target/maven-archiver/
 # --------------- Java files --------------
 # *.[jJ][aA][rR]
 # ---------------- Eclipse --------------------
