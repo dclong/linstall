@@ -9,6 +9,10 @@
 # python .pyc file
 *.[pP][yY][cC]
 SparkleShare.txt
+# --------------- Scala files --------------
+dependency-reduced-pom.xml
+target
+*.iml
 # --------------- Java files --------------
 # *.[jJ][aA][rR]
 # ---------------- Eclipse --------------------
