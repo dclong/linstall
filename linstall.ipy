@@ -7,6 +7,7 @@ from argparse import ArgumentParser
 from loguru import logger
 
 HOME = os.path.expanduser('~')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ARCHIVES_DIR =  os.path.join(HOME, 'archives')
 PLATFORM = platform.platform().lower() 
 msg_cygwin = 'Installing {pkg} in Cygwin via command line is not supported currently.'
@@ -77,7 +78,8 @@ def git(args):
         elif 'CYGWIN' in PLATFORM:
             pass
     if args.config:
-        pass
+        !cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig
+        !cp '{BASE_DIR}/git/gitignore' $HOME/.gitignore
 
 
 def antlr(args):
