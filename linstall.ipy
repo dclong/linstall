@@ -64,18 +64,20 @@ def _subparse_git(subparsers):
 def git(args):
     yes = '-y' if args.yes else ''
     if args.install:
-        if 'Ubuntu' in PLATFORM:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !wajig install {yes} git
-        elif 'Darwin' in PLATFORM:
+        elif 'darwin' in PLATFORM:
             !brew install git
-        elif 'CYGWIN' in PLATFORM:
+        elif 'centos' in PLATFORM:
+            sudo yum install git
+        elif 'cygwin' in PLATFORM:
             logger.debug(msg_cygwin.format(pkg='Git'))
     if args.uninstall:
-        if 'Ubuntu' in PLATFORM:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !wajig purge {yes} git
-        elif 'Darwin' in PLATFORM:
+        elif 'darwin' in PLATFORM:
             !brew uninstall git
-        elif 'CYGWIN' in PLATFORM:
+        elif 'cygwin' in PLATFORM:
             pass
     if args.config:
         !cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig
@@ -85,18 +87,18 @@ def git(args):
 def antlr(args):
     yes = '-y' if args.yes else ''
     if args.install:
-        if 'Ubuntu' in PLATFORM:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !wajig install {yes} antlr4
-        elif 'Darwin' in PLATFORM:
+        elif 'darwin' in PLATFORM:
             !brew install antlr4
-        elif 'CYGWIN' in PLATFORM:
+        elif 'cygwin' in PLATFORM:
             logger.debug(msg_cygwin.format(pkg='ANTLR'))
     if args.uninstall:
-        if 'Ubuntu' in PLATFORM:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !wajig purge {yes} antlr4
-        elif 'Darwin' in PLATFORM:
+        elif 'darwin' in PLATFORM:
             !brew uninstall antlr4
-        elif 'CYGWIN' in PLATFORM:
+        elif 'cygwin' in PLATFORM:
             pass
     if args.config:
         pass
