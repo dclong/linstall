@@ -1,0 +1,424 @@
+#!/usr/bin/env ipython3
+
+import os
+import shutil
+import platform
+from argparse import ArgumentParser
+from loguru import logger
+
+HOME = os.path.expanduser('~')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ARCHIVES_DIR =  os.path.join(HOME, 'archives')
+PLATFORM = platform.platform().lower() 
+msg_cygwin = 'Installing {pkg} in Cygwin via command line is not supported currently.'
+
+
+def parse_args(args=None, namespace=None):
+    """Parse command-line arguments for the install/configuration util.
+    """
+    parser = ArgumentParser(description='Easy installation and configuration for Unix/Linux')
+    subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
+    _subparse_vim(subparsers)
+    _subparse_neovim(subparsers)
+    _subparse_space_vim(subparsers)
+    _subparse_python3(subparsers)
+    _subparse_proxychains(subparsers)
+    _subparse_completion(subparsers)
+    _subparse_blog(subparsers)
+    _subparse_antlr(subparsers)
+    _subparse_git(subparsers)
+    return parser.parse_args(args=args, namespace=namespace)
+
+
+def _subparse_git(subparsers):
+    subparser_git = subparsers.add_parser(
+        'antlr',
+        help='install and configure Git.')
+    subparser_git.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install Git.')
+    subparser_git.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall Git.')
+    subparser_git.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    subparser_git.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure Git.')
+    subparser_git.set_defaults(func=git)
+
+
+def git(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig install {yes} git
+        elif 'darwin' in PLATFORM:
+            !brew install git
+        elif 'centos' in PLATFORM:
+            sudo yum install git
+        elif 'cygwin' in PLATFORM:
+            logger.debug(msg_cygwin.format(pkg='Git'))
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig purge {yes} git
+        elif 'darwin' in PLATFORM:
+            !brew uninstall git
+        elif 'cygwin' in PLATFORM:
+            pass
+    if args.config:
+        !cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig
+        !cp '{BASE_DIR}/git/gitignore' $HOME/.gitignore
+
+
+def antlr(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig install {yes} antlr4
+        elif 'darwin' in PLATFORM:
+            !brew install antlr4
+        elif 'cygwin' in PLATFORM:
+            logger.debug(msg_cygwin.format(pkg='ANTLR'))
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig purge {yes} antlr4
+        elif 'darwin' in PLATFORM:
+            !brew uninstall antlr4
+        elif 'cygwin' in PLATFORM:
+            pass
+    if args.config:
+        pass
+
+
+def _subparse_antlr(subparsers):
+    subparser_antlr = subparsers.add_parser(
+        'antlr',
+        help='install and configure ANTLR.')
+    subparser_antlr.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install ANTLR.')
+    subparser_antlr.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall ANTLR.')
+    subparser_antlr.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    subparser_antlr.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure ANTLR.')
+    subparser_antlr.set_defaults(func=antlr)
+
+
+def neovim(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig install {yes} neovim
+        elif 'darwin' in PLATFORM:
+            !brew install neovim
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig purge {yes} neovim
+        elif 'darwin' in PLATFORM:
+            !brew uninstall neovim
+    if args.config:
+        pass
+
+
+def _subparse_neovim(subparsers):
+    subparser_neovim = subparsers.add_parser(
+        'neovim',
+        aliases=['nvim'],
+        help='install and configure Neovim.')
+    subparser_neovim.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install Neovim.')
+    subparser_neovim.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall Neovim.')
+    subparser_neovim.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    subparser_neovim.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure Neovim.')
+    subparser_neovim.set_defaults(func=neovim)
+
+
+def vim(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig install {yes} vim vim-nox
+        elif 'darwin' in PLATFORM:
+            pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig purge {yes} vim vim-nox
+        elif 'darwin' in PLATFORM:
+            pass
+    if args.config:
+        pass
+
+
+def _subparse_vim(subparsers):
+    subparser_vim = subparsers.add_parser(
+        'vim',
+        help='install and configure Vim.')
+    subparser_vim.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install Vim.')
+    subparser_vim.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall Vim.')
+    subparser_vim.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    subparser_vim.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure Vim.')
+    subparser_vim.set_defaults(func=vim)
+
+
+def completion(args):
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig install bash-completion
+        elif 'darwin' in PLATFORM:
+            !brew install bash-completion
+    if args.config:
+        pass
+
+
+def _subparse_completion(subparsers):
+    subparser_completion = subparsers.add_parser(
+        'completion',
+        aliases=['comp', 'cp'],
+        help='install and configure bash completions.')
+    subparser_completion.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install bash completion.')
+    subparser_completion.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall bash completion.')
+    subparser_completion.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure bash completion.')
+    subparser_completion.set_defaults(func=proxychains)
+
+
+def proxychains(args):
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig install proxychains
+        elif 'darwin' in PLATFORM:
+            !brew install proxychains-ng
+    if args.config:
+        print('Configuring proxychains ...')
+        des_dir = os.path.join(HOME, '.proxychains')
+        !mkdir -p {des_dir}
+        !cp {ARCHIVES_DIR}/config/linux/proxychains/proxychains.conf {des_dir}/
+
+
+def _subparse_proxychains(subparsers):
+    subparser_proxychains = subparsers.add_parser(
+        'proxychains',
+        aliases=['pchains', 'pc'],
+        help='install and configure tools for ProxyChains.')
+    subparser_proxychains.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install ProxyChains.')
+    subparser_proxychains.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall ProxyChains.')
+    subparser_proxychains.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure ProxyChains.')
+    subparser_proxychains.set_defaults(func=proxychains)
+
+
+def blog(args):
+    if args.install:
+        # python3(args)
+        !pip3 install --user pelican markdown
+    if args.config:
+        pass
+
+
+def _subparse_blog(subparsers):
+    subparser_blog = subparsers.add_parser(
+        'blog',
+        help='install and configure tools for blogging.')
+    subparser_blog.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install tools for blogging.')
+    subparser_blog.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall tools for blogging.')
+    subparser_blog.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure tools for blogging.')
+    subparser_blog.set_defaults(func=blog)
+
+
+def python3(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig install {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+        if 'darwin' in PLATFORM:
+            !brew install python3
+    if args.config:
+        pass
+
+
+def _subparse_python3(subparsers):
+    subparser_py3 = subparsers.add_parser(
+        'python3',
+        aliases=['py3'],
+        help='install and configure Python 3.')
+    subparser_py3.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install Python 3.')
+    subparser_py3.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall Python 3.')
+    subparser_py3.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure Python 3.')
+    subparser_py3.set_defaults(func=python3)
+
+
+def space_vim(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        !curl -sLf https://spacevim.org/install.sh | bash
+        if shutil.which('nvim'):
+            !nvim --headless +'call dein#install()' +qall
+    if args.uninstall:
+        !curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
+    if args.config:
+        pass
+
+
+def _subparse_space_vim(subparsers):
+    subparser_svim = subparsers.add_parser(
+        'space_vim',
+        aliases=['svim'],
+        help='install and configure SpaceVim.')
+    subparser_svim.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install SpaceVim.')
+    subparser_svim.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall SpaceVim.')
+    subparser_svim.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    subparser_svim.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure SpaceVim.')
+    subparser_svim.set_defaults(func=space_vim)
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    args.func(args)
