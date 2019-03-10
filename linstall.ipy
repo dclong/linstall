@@ -9,6 +9,7 @@ from loguru import logger
 HOME = os.path.expanduser('~')
 ARCHIVES_DIR =  os.path.join(HOME, 'archives')
 PLATFORM = platform.platform().lower() 
+msg_cygwin = 'Installing {pkg} in Cygwin via command line is not supported currently.'
 
 
 def parse_args(args=None, namespace=None):
@@ -24,7 +25,59 @@ def parse_args(args=None, namespace=None):
     _subparse_completion(subparsers)
     _subparse_blog(subparsers)
     _subparse_antlr(subparsers)
+    _subparse_git(subparsers)
     return parser.parse_args(args=args, namespace=namespace)
+
+
+def _subparse_git(subparsers):
+    subparser_git = subparsers.add_parser(
+        'antlr',
+        help='install and configure Git.')
+    subparser_git.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install Git.')
+    subparser_git.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall Git.')
+    subparser_git.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    subparser_git.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure Git.')
+    subparser_git.set_defaults(func=git)
+
+
+def git(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'Ubuntu' in PLATFORM:
+            !wajig install {yes} git
+        elif 'Darwin' in PLATFORM:
+            !brew install git
+        elif 'CYGWIN' in PLATFORM:
+            logger.debug(msg_cygwin.format(pkg='Git'))
+    if args.uninstall:
+        if 'Ubuntu' in PLATFORM:
+            !wajig purge {yes} git
+        elif 'Darwin' in PLATFORM:
+            !brew uninstall git
+        elif 'CYGWIN' in PLATFORM:
+            pass
+    if args.config:
+        pass
 
 
 def antlr(args):
@@ -35,7 +88,7 @@ def antlr(args):
         elif 'Darwin' in PLATFORM:
             !brew install antlr4
         elif 'CYGWIN' in PLATFORM:
-            logger.debug('Installing ANTLR in Cygwin via command line is not supported currently.')
+            logger.debug(msg_cygwin.format(pkg='ANTLR'))
     if args.uninstall:
         if 'Ubuntu' in PLATFORM:
             !wajig purge {yes} antlr4
