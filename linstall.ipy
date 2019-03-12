@@ -450,7 +450,7 @@ def _svim_true_color(true_color: bool):
                 if true_color:
                     lines[i] = line.replace('false', 'true')
                 else:
-                    lines[i] = line.replace('true', 'true')
+                    lines[i] = line.replace('true', 'false')
         with open(FILE, 'w') as fout:
             fout.writelines(lines)
 
