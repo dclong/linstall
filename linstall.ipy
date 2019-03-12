@@ -69,7 +69,7 @@ def git(args):
         elif 'darwin' in PLATFORM:
             !brew install git
         elif 'centos' in PLATFORM:
-            sudo yum install git
+            !sudo yum install git
         elif 'cygwin' in PLATFORM:
             logger.debug(msg_cygwin.format(pkg='Git'))
     if args.uninstall:
