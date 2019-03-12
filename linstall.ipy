@@ -316,7 +316,7 @@ def proxychains(args):
         print('Configuring proxychains ...')
         des_dir = os.path.join(HOME, '.proxychains')
         !mkdir -p {des_dir}
-        !cp {ARCHIVES_DIR}/config/linux/proxychains/proxychains.conf {des_dir}/
+        !cp {ARCHIVES_DIR}/config/proxychains/proxychains.conf {des_dir}/
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !wajig purge proxychains
