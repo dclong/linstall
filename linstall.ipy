@@ -10,7 +10,8 @@ HOME = os.path.expanduser('~')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ARCHIVES_DIR =  os.path.join(HOME, 'archives')
 PLATFORM = platform.platform().lower() 
-msg_cygwin = 'Installing {pkg} in Cygwin via command line is not supported currently.'
+msg_cygwin_install = 'Installing {pkg} in Cygwin via command line is not supported currently.'
+msg_cygwin_remove = 'Removing {pkg} in Cygwin via command line is not supported currently.'
 
 
 def parse_args(args=None, namespace=None):
@@ -71,14 +72,16 @@ def git(args):
         elif 'centos' in PLATFORM:
             !sudo yum install git
         elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin.format(pkg='Git'))
+            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !wajig purge {yes} git
         elif 'darwin' in PLATFORM:
             !brew uninstall git
+        elif 'centos' in PLATFORM:
+            !sudo yum remove git
         elif 'cygwin' in PLATFORM:
-            pass
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
     if args.config:
         !cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig
         !cp '{BASE_DIR}/git/gitignore' $HOME/.gitignore
@@ -91,17 +94,21 @@ def antlr(args):
             !wajig install {yes} antlr4
         elif 'darwin' in PLATFORM:
             !brew install antlr4
+        elif 'centos' in PLATFORM:
+            !sudo yum install antlr
         elif 'cygwin' in PLATFORM:
-            logger.debug(msg_cygwin.format(pkg='ANTLR'))
+            logger.debug(msg_cygwin_install.format(pkg='ANTLR'))
+    if args.config:
+        pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !wajig purge {yes} antlr4
         elif 'darwin' in PLATFORM:
             !brew uninstall antlr4
+        elif 'centos' in PLATFORM:
+            !sudo yum remove antlr
         elif 'cygwin' in PLATFORM:
-            pass
-    if args.config:
-        pass
+            logger.debug(msg_cygwin_remove.format(pkg='ANTLR'))
 
 
 def _subparse_antlr(subparsers):
@@ -142,13 +149,19 @@ def neovim(args):
             !wajig install {yes} neovim
         elif 'darwin' in PLATFORM:
             !brew install neovim
+        elif 'centos' in PLATFORM:
+            !sudo yum install neovim
         elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin.format(pkg='Git'))
+            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !wajig purge {yes} neovim
         elif 'darwin' in PLATFORM:
             !brew uninstall neovim
+        elif 'centos' in PLATFORM:
+            !sudo yum remove neovim
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
     if args.config:
         pass
 
@@ -192,13 +205,19 @@ def vim(args):
             !wajig install {yes} vim vim-nox
         elif 'darwin' in PLATFORM:
             !brew install vim
+        elif 'centos' in PLATFORM:
+            !sudo yum install vim
         elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin.format(pkg='Git'))
+            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !wajig purge {yes} vim vim-nox
         elif 'darwin' in PLATFORM:
-            pass
+            !brew uninstall vim
+        elif 'centos' in PLATFORM:
+            !sudo yum remove vim
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
     if args.config:
         pass
 
@@ -240,10 +259,21 @@ def completion(args):
             !wajig install bash-completion
         elif 'darwin' in PLATFORM:
             !brew install bash-completion
+        elif 'centos' in PLATFORM:
+            !sudo yum install bash-completion
         elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin.format(pkg='Git'))
+            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.config:
         pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig purge bash-completion
+        elif 'darwin' in PLATFORM:
+            !brew uninstall bash-completion
+        elif 'centos' in PLATFORM:
+            !sudo yum remove bash-completion
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
 
 
 def _subparse_completion(subparsers):
@@ -278,13 +308,24 @@ def proxychains(args):
             !wajig install proxychains
         elif 'darwin' in PLATFORM:
             !brew install proxychains-ng
+        elif 'centos' in PLATFORM:
+            !sudo yum install proxychains
         elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin.format(pkg='Git'))
+            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.config:
         print('Configuring proxychains ...')
         des_dir = os.path.join(HOME, '.proxychains')
         !mkdir -p {des_dir}
         !cp {ARCHIVES_DIR}/config/linux/proxychains/proxychains.conf {des_dir}/
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig purge proxychains
+        elif 'darwin' in PLATFORM:
+            !brew uninstall proxychains-ng
+        elif 'centos' in PLATFORM:
+            !sudo yum remove proxychains
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
 
 
 def _subparse_proxychains(subparsers):
@@ -319,6 +360,8 @@ def blog(args):
         !pip3 install --user pelican markdown
     if args.config:
         pass
+    if args.uninstall:
+        !pip3 uninstall --user pelican markdown
 
 
 def _subparse_blog(subparsers):
@@ -353,10 +396,21 @@ def python3(args):
             !wajig install {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
         if 'darwin' in PLATFORM:
             !brew install python3
+        if 'centos' in PLATFORM:
+            !yum install python3
         elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin.format(pkg='Git'))
+            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.config:
         pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !wajig purge {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+        if 'darwin' in PLATFORM:
+            !brew uninstall python3
+        if 'centos' in PLATFORM:
+            !yum remove python3
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
 
 
 def _subparse_python3(subparsers):
