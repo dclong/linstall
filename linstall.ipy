@@ -439,6 +439,21 @@ def _subparse_python3(subparsers):
     subparser_py3.set_defaults(func=python3)
 
 
+def _svim_true_color(true_color: bool):
+    FILE = os.path.join(HOME, '.SpaceVim.d/init.toml')
+    if os.path.isfile(FILE):
+        with open(FILE, 'r') as fin:
+            lines = fin.readlines()
+        for i, line in enumerate(lines):
+            if line.strip().startswith('enable_guicolors'):
+                if true_color:
+                    lines[i] = line.replace('false', 'true')
+                else:
+                    lines[i] = line.replace('true', 'true')
+        with open(FILE, 'w') as fout:
+            fout.writelines(lines)
+
+
 def space_vim(args):
     yes = '-y' if args.yes else ''
     if args.install:
@@ -448,7 +463,7 @@ def space_vim(args):
     if args.uninstall:
         !curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
     if args.config:
-        pass
+        _svim_true_color(args.true_color)
 
 
 def _subparse_space_vim(subparsers):
@@ -480,7 +495,35 @@ def _subparse_space_vim(subparsers):
         dest='config',
         action='store_true',
         help='configure SpaceVim.')
+    subparser_svim.add_argument(
+        '-t',
+        '--true-color',
+        dest='true_color',
+        type=to_bool,
+        default=True,
+        help='whether to enable true color for SpaceVim.')
     subparser_svim.set_defaults(func=space_vim)
+
+
+def to_bool(value: Any) -> bool:
+    """Convert an object to a bool value (True or False).
+
+    :param value: any object that can be converted to a bool value.
+    :return: True or False.
+    """
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        if value.lower() in ('t', 'true', 'y', 'yes'):
+            return True
+        if value.isdigit():
+            return int(value) != 0
+        return False
+    if isinstance(value, int) and value != 0:
+        return True
+    if isinstance(value, Sized) and len(value) > 0:
+        return True
+    return False
 
 
 if __name__ == '__main__':
