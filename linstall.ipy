@@ -34,7 +34,7 @@ def parse_args(args=None, namespace=None):
 
 def _subparse_git(subparsers):
     subparser_git = subparsers.add_parser(
-        'antlr',
+        'git',
         help='install and configure Git.')
     subparser_git.add_argument(
         '-i',
