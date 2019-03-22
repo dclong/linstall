@@ -25,18 +25,62 @@ def parse_args(args=None, namespace=None):
     """
     parser = ArgumentParser(description='Easy installation and configuration for Unix/Linux')
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
+    _subparse_shell_utils(subparsers)
+    _subparse_completion(subparsers)
     _subparse_vim(subparsers)
     _subparse_neovim(subparsers)
     _subparse_space_vim(subparsers)
-    _subparse_python3(subparsers)
-    _subparse_proxychains(subparsers)
-    _subparse_completion(subparsers)
-    _subparse_blog(subparsers)
-    _subparse_antlr(subparsers)
     _subparse_git(subparsers)
+    _subparse_python3(subparsers)
+    _subparse_blog(subparsers)
+    _subparse_proxychains(subparsers)
+    _subparse_antlr(subparsers)
     _subparse_beakerx(subparsers)
-    _subparse_shell_utils(subparsers)
+    _subparse_itypescript(subparsers)
     return parser.parse_args(args=args, namespace=namespace)
+
+
+def itypescript(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        !{PREFIX} npm install -g --unsafe-perm itypescript
+        !{PREFIX} its --ts-hide-undefined --install=global
+    if args.uninstall:
+        !{PREFIX} npm uninstall itypescript
+    if args.config:
+        pass
+
+
+def _subparse_itypescript(subparsers):
+    itypescript = subparsers.add_parser(
+        'itypescript',
+        aliases=['its'],
+        help='install and configure iTypeScript.')
+    itypescript.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install iTypeScript.')
+    itypescript.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall iTypeScript.')
+    itypescript.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    itypescript.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure iTypeScript.')
+    itypescript.set_defaults(func=itypescript)
 
 
 def shell_utils(args):
@@ -93,6 +137,7 @@ def _subparse_shell_utils(subparsers):
         action='store_true',
         help='configure shell utils.')
     shutils.set_defaults(func=shell_utils)
+
 
 def _subparse_beakerx(subparsers):
     beakerx = subparsers.add_parser(
