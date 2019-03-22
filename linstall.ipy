@@ -35,8 +35,64 @@ def parse_args(args=None, namespace=None):
     _subparse_antlr(subparsers)
     _subparse_git(subparsers)
     _subparse_beakerx(subparsers)
+    _subparse_shell_utils(subparsers)
     return parser.parse_args(args=args, namespace=namespace)
 
+
+def shell_utils(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get install {yes} bash-completion command-not-found man-db
+        elif 'darwin' in PLATFORM:
+            !brew install bash-completion man-db
+        elif 'centos' in PLATFORM:
+            !sudo yum install bash-completion command-not-found man-db
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_install.format(pkg='Git'))
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} bash-completion command-not-found man-db
+        elif 'darwin' in PLATFORM:
+            !brew uninstall bash-completion man-db
+        elif 'centos' in PLATFORM:
+            !sudo yum remove bash-completion command-not-found man-db
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
+    if args.config:
+        pass
+
+
+def _subparse_shell_utils(subparsers):
+    shutils = subparsers.add_parser(
+        'shell_utils',
+        aliases=['sh_utils', 'shutils', 'shu', 'su'],
+        help='install and configure shell utils.')
+    shutils.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install shell utils.')
+    shutils.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall shell utils.')
+    shutils.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    shutils.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure shell utils.')
+    shutils.set_defaults(func=shell_utils)
 
 def _subparse_beakerx(subparsers):
     beakerx = subparsers.add_parser(
