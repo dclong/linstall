@@ -9,9 +9,9 @@ import getpass
 import grp
 import logging
 
-USER = getpass.getuser()
-GROUP = grp.getgrnam(USER).gr_name
-PREFIX = '' if USER == 'root' else 'sudo'
+USER_ID = os.getuid()
+GROUP_ID = os.getgid()
+PREFIX = '' if USER_ID == 'root' else 'sudo'
 HOME = os.path.expanduser('~')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ARCHIVES_DIR =  os.path.join(HOME, 'archives')
@@ -184,7 +184,7 @@ def beakerx(args):
         !{PREFIX} beakerx uninstall
         !{PREFIX} pip3 uninstall beakerx
     if args.config:
-        !{PREFIX} chown -R {USER}:{GROUP} {HOME}
+        !{PREFIX} chown -R {USER_ID}:{GROUP_ID} {HOME}
 
 
 def _subparse_git(subparsers):
