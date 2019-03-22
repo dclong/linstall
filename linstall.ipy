@@ -5,8 +5,13 @@ import shutil
 import platform
 from typing import Any, List, Sequence
 from argparse import ArgumentParser
+import getpass
+import grp
 import logging
 
+USER = getpass.getuser()
+GROUP = grp.getgrnam(USER).gr_name
+PREFIX = '' if USER == 'root' else 'sudo'
 HOME = os.path.expanduser('~')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ARCHIVES_DIR =  os.path.join(HOME, 'archives')
@@ -29,7 +34,56 @@ def parse_args(args=None, namespace=None):
     _subparse_blog(subparsers)
     _subparse_antlr(subparsers)
     _subparse_git(subparsers)
+    _subparse_beakerx(subparsers)
     return parser.parse_args(args=args, namespace=namespace)
+
+
+def _subparse_beakerx(subparsers):
+    beakerx = subparsers.add_parser(
+        'beakerx',
+        aliases=['bkx', 'bk'],
+        help='install and configure BeakerX.')
+    beakerx.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help='install BeakerX.')
+    beakerx.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help='uninstall BeakerX.')
+    beakerx.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    beakerx.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help='configure BeakerX.')
+    beakerx.set_defaults(func=beakerx)
+
+
+def beakerx(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        !{PREFIX} pip3 install beakerx
+        !{PREFIX} beakerx install
+        !{PREFIX} jupyter labextension install @jupyter-widgets/jupyterlab-manager
+        !{PREFIX} jupyter labextension install beakerx-jupyterlab
+    if args.uninstall:
+        !{PREFIX} jupyter labextension uninstall beakerx-jupyterlab
+        !{PREFIX} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager
+        !{PREFIX} beakerx uninstall
+        !{PREFIX} pip3 uninstall beakerx
+    if args.config:
+        !{PREFIX} chown -R {USER}:{GROUP} {HOME}
 
 
 def _subparse_git(subparsers):
