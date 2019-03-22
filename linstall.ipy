@@ -222,7 +222,7 @@ def git(args):
     yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig install {yes} git
+            !{PREFIX} apt-get install {yes} git
         elif 'darwin' in PLATFORM:
             !brew install git
         elif 'centos' in PLATFORM:
@@ -231,7 +231,7 @@ def git(args):
             logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig purge {yes} git
+            !{PREFIX} apt-get purge {yes} git
         elif 'darwin' in PLATFORM:
             !brew uninstall git
         elif 'centos' in PLATFORM:
@@ -247,7 +247,7 @@ def antlr(args):
     yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig install {yes} antlr4
+            !{PREFIX} apt-get install {yes} antlr4
         elif 'darwin' in PLATFORM:
             !brew install antlr4
         elif 'centos' in PLATFORM:
@@ -258,7 +258,7 @@ def antlr(args):
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig purge {yes} antlr4
+            !{PREFIX} apt-get purge {yes} antlr4
         elif 'darwin' in PLATFORM:
             !brew uninstall antlr4
         elif 'centos' in PLATFORM:
@@ -302,7 +302,7 @@ def neovim(args):
     yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig install {yes} neovim
+            !{PREFIX} apt-get install {yes} neovim
         elif 'darwin' in PLATFORM:
             !brew install neovim
         elif 'centos' in PLATFORM:
@@ -311,7 +311,7 @@ def neovim(args):
             logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig purge {yes} neovim
+            !{PREFIX} apt-get purge {yes} neovim
         elif 'darwin' in PLATFORM:
             !brew uninstall neovim
         elif 'centos' in PLATFORM:
@@ -358,7 +358,7 @@ def vim(args):
     yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig install {yes} vim vim-nox
+            !{PREFIX} apt-get install {yes} vim vim-nox
         elif 'darwin' in PLATFORM:
             !brew install vim
         elif 'centos' in PLATFORM:
@@ -367,7 +367,7 @@ def vim(args):
             logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig purge {yes} vim vim-nox
+            !{PREFIX} apt-get purge {yes} vim vim-nox
         elif 'darwin' in PLATFORM:
             !brew uninstall vim
         elif 'centos' in PLATFORM:
@@ -412,7 +412,7 @@ def _subparse_vim(subparsers):
 def completion(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig install bash-completion
+            !{PREFIX} apt-get install bash-completion
         elif 'darwin' in PLATFORM:
             !brew install bash-completion
         elif 'centos' in PLATFORM:
@@ -423,7 +423,7 @@ def completion(args):
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig purge bash-completion
+            !{PREFIX} apt-get purge bash-completion
         elif 'darwin' in PLATFORM:
             !brew uninstall bash-completion
         elif 'centos' in PLATFORM:
@@ -461,7 +461,7 @@ def _subparse_completion(subparsers):
 def proxychains(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig install proxychains
+            !{PREFIX} apt-get install proxychains
         elif 'darwin' in PLATFORM:
             !brew install proxychains-ng
         elif 'centos' in PLATFORM:
@@ -475,7 +475,7 @@ def proxychains(args):
         !cp {ARCHIVES_DIR}/config/proxychains/proxychains.conf {des_dir}/
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig purge proxychains
+            !{PREFIX} apt-get purge proxychains
         elif 'darwin' in PLATFORM:
             !brew uninstall proxychains-ng
         elif 'centos' in PLATFORM:
@@ -549,7 +549,7 @@ def python3(args):
     yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig install {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+            !{PREFIX} apt-get install {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
         if 'darwin' in PLATFORM:
             !brew install python3
         if 'centos' in PLATFORM:
@@ -560,7 +560,7 @@ def python3(args):
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !wajig purge {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+            !{PREFIX} apt-get purge {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
         if 'darwin' in PLATFORM:
             !brew uninstall python3
         if 'centos' in PLATFORM:
