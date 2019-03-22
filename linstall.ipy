@@ -87,34 +87,34 @@ def beakerx(args):
 
 
 def _subparse_git(subparsers):
-    subparser_git = subparsers.add_parser(
+    git = subparsers.add_parser(
         'git',
         help='install and configure Git.')
-    subparser_git.add_argument(
+    git.add_argument(
         '-i',
         '--install',
         dest='install',
         action='store_true',
         help='install Git.')
-    subparser_git.add_argument(
+    git.add_argument(
         '-u',
         '--uninstall',
         dest='uninstall',
         action='store_true',
         help='uninstall Git.')
-    subparser_git.add_argument(
+    git.add_argument(
         '-y',
         '--yes',
         dest='yes',
         action='store_true',
         help='automatical yes to prompts.')
-    subparser_git.add_argument(
+    git.add_argument(
         '-c',
         '--configure',
         dest='config',
         action='store_true',
         help='configure Git.')
-    subparser_git.set_defaults(func=git)
+    git.set_defaults(func=git)
 
 
 def git(args):
@@ -167,34 +167,34 @@ def antlr(args):
 
 
 def _subparse_antlr(subparsers):
-    subparser_antlr = subparsers.add_parser(
+    antlr = subparsers.add_parser(
         'antlr',
         help='install and configure ANTLR.')
-    subparser_antlr.add_argument(
+    antlr.add_argument(
         '-i',
         '--install',
         dest='install',
         action='store_true',
         help='install ANTLR.')
-    subparser_antlr.add_argument(
+    antlr.add_argument(
         '-u',
         '--uninstall',
         dest='uninstall',
         action='store_true',
         help='uninstall ANTLR.')
-    subparser_antlr.add_argument(
+    antlr.add_argument(
         '-y',
         '--yes',
         dest='yes',
         action='store_true',
         help='automatical yes to prompts.')
-    subparser_antlr.add_argument(
+    antlr.add_argument(
         '-c',
         '--configure',
         dest='config',
         action='store_true',
         help='configure ANTLR.')
-    subparser_antlr.set_defaults(func=antlr)
+    antlr.set_defaults(func=antlr)
 
 
 def neovim(args):
@@ -222,35 +222,35 @@ def neovim(args):
 
 
 def _subparse_neovim(subparsers):
-    subparser_neovim = subparsers.add_parser(
+    neovim = subparsers.add_parser(
         'neovim',
         aliases=['nvim'],
         help='install and configure Neovim.')
-    subparser_neovim.add_argument(
+    neovim.add_argument(
         '-i',
         '--install',
         dest='install',
         action='store_true',
         help='install Neovim.')
-    subparser_neovim.add_argument(
+    neovim.add_argument(
         '-u',
         '--uninstall',
         dest='uninstall',
         action='store_true',
         help='uninstall Neovim.')
-    subparser_neovim.add_argument(
+    neovim.add_argument(
         '-y',
         '--yes',
         dest='yes',
         action='store_true',
         help='automatical yes to prompts.')
-    subparser_neovim.add_argument(
+    neovim.add_argument(
         '-c',
         '--configure',
         dest='config',
         action='store_true',
         help='configure Neovim.')
-    subparser_neovim.set_defaults(func=neovim)
+    neovim.set_defaults(func=neovim)
 
 
 def vim(args):
@@ -278,34 +278,34 @@ def vim(args):
 
 
 def _subparse_vim(subparsers):
-    subparser_vim = subparsers.add_parser(
+    vim = subparsers.add_parser(
         'vim',
         help='install and configure Vim.')
-    subparser_vim.add_argument(
+    vim.add_argument(
         '-i',
         '--install',
         dest='install',
         action='store_true',
         help='install Vim.')
-    subparser_vim.add_argument(
+    vim.add_argument(
         '-u',
         '--uninstall',
         dest='uninstall',
         action='store_true',
         help='uninstall Vim.')
-    subparser_vim.add_argument(
+    vim.add_argument(
         '-y',
         '--yes',
         dest='yes',
         action='store_true',
         help='automatical yes to prompts.')
-    subparser_vim.add_argument(
+    vim.add_argument(
         '-c',
         '--configure',
         dest='config',
         action='store_true',
         help='configure Vim.')
-    subparser_vim.set_defaults(func=vim)
+    vim.set_defaults(func=vim)
 
 
 def completion(args):
@@ -332,29 +332,29 @@ def completion(args):
 
 
 def _subparse_completion(subparsers):
-    subparser_completion = subparsers.add_parser(
+    completion = subparsers.add_parser(
         'completion',
         aliases=['comp', 'cp'],
         help='install and configure bash completions.')
-    subparser_completion.add_argument(
+    completion.add_argument(
         '-i',
         '--install',
         dest='install',
         action='store_true',
         help='install bash completion.')
-    subparser_completion.add_argument(
+    completion.add_argument(
         '-u',
         '--uninstall',
         dest='uninstall',
         action='store_true',
         help='uninstall bash completion.')
-    subparser_completion.add_argument(
+    completion.add_argument(
         '-c',
         '--configure',
         dest='config',
         action='store_true',
         help='configure bash completion.')
-    subparser_completion.set_defaults(func=proxychains)
+    completion.set_defaults(func=proxychains)
 
 
 def proxychains(args):
@@ -384,29 +384,29 @@ def proxychains(args):
 
 
 def _subparse_proxychains(subparsers):
-    subparser_proxychains = subparsers.add_parser(
+    proxychains = subparsers.add_parser(
         'proxychains',
         aliases=['pchains', 'pc'],
         help='install and configure tools for ProxyChains.')
-    subparser_proxychains.add_argument(
+    proxychains.add_argument(
         '-i',
         '--install',
         dest='install',
         action='store_true',
         help='install ProxyChains.')
-    subparser_proxychains.add_argument(
+    proxychains.add_argument(
         '-u',
         '--uninstall',
         dest='uninstall',
         action='store_true',
         help='uninstall ProxyChains.')
-    subparser_proxychains.add_argument(
+    proxychains.add_argument(
         '-c',
         '--configure',
         dest='config',
         action='store_true',
         help='configure ProxyChains.')
-    subparser_proxychains.set_defaults(func=proxychains)
+    proxychains.set_defaults(func=proxychains)
 
 
 def blog(args):
@@ -420,28 +420,28 @@ def blog(args):
 
 
 def _subparse_blog(subparsers):
-    subparser_blog = subparsers.add_parser(
+    blog = subparsers.add_parser(
         'blog',
         help='install and configure tools for blogging.')
-    subparser_blog.add_argument(
+    blog.add_argument(
         '-i',
         '--install',
         dest='install',
         action='store_true',
         help='install tools for blogging.')
-    subparser_blog.add_argument(
+    blog.add_argument(
         '-u',
         '--uninstall',
         dest='uninstall',
         action='store_true',
         help='uninstall tools for blogging.')
-    subparser_blog.add_argument(
+    blog.add_argument(
         '-c',
         '--configure',
         dest='config',
         action='store_true',
         help='configure tools for blogging.')
-    subparser_blog.set_defaults(func=blog)
+    blog.set_defaults(func=blog)
 
 
 def python3(args):
@@ -469,29 +469,29 @@ def python3(args):
 
 
 def _subparse_python3(subparsers):
-    subparser_py3 = subparsers.add_parser(
+    py3 = subparsers.add_parser(
         'python3',
         aliases=['py3'],
         help='install and configure Python 3.')
-    subparser_py3.add_argument(
+    py3.add_argument(
         '-i',
         '--install',
         dest='install',
         action='store_true',
         help='install Python 3.')
-    subparser_py3.add_argument(
+    py3.add_argument(
         '-u',
         '--uninstall',
         dest='uninstall',
         action='store_true',
         help='uninstall Python 3.')
-    subparser_py3.add_argument(
+    py3.add_argument(
         '-c',
         '--configure',
         dest='config',
         action='store_true',
         help='configure Python 3.')
-    subparser_py3.set_defaults(func=python3)
+    py3.set_defaults(func=python3)
 
 
 def _svim_true_color(true_color: bool):
@@ -522,42 +522,42 @@ def space_vim(args):
 
 
 def _subparse_space_vim(subparsers):
-    subparser_svim = subparsers.add_parser(
+    svim = subparsers.add_parser(
         'space_vim',
         aliases=['svim'],
         help='install and configure SpaceVim.')
-    subparser_svim.add_argument(
+    svim.add_argument(
         '-i',
         '--install',
         dest='install',
         action='store_true',
         help='install SpaceVim.')
-    subparser_svim.add_argument(
+    svim.add_argument(
         '-u',
         '--uninstall',
         dest='uninstall',
         action='store_true',
         help='uninstall SpaceVim.')
-    subparser_svim.add_argument(
+    svim.add_argument(
         '-y',
         '--yes',
         dest='yes',
         action='store_true',
         help='automatical yes to prompts.')
-    subparser_svim.add_argument(
+    svim.add_argument(
         '-c',
         '--configure',
         dest='config',
         action='store_true',
         help='configure SpaceVim.')
-    subparser_svim.add_argument(
+    svim.add_argument(
         '-t',
         '--true-color',
         dest='true_color',
         type=to_bool,
         default=True,
         help='whether to enable true color for SpaceVim.')
-    subparser_svim.set_defaults(func=space_vim)
+    svim.set_defaults(func=space_vim)
 
 
 def to_bool(value: Any) -> bool:
