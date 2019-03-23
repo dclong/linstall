@@ -1,12 +1,11 @@
 #!/usr/bin/env ipython3
 
 import os
-import shutil
 import platform
+import shutil
+import re
 from typing import Any, List, Sequence
 from argparse import ArgumentParser
-import getpass
-import grp
 import logging
 
 USER_ID = os.getuid()
@@ -25,64 +24,22 @@ def parse_args(args=None, namespace=None):
     """
     parser = ArgumentParser(description='Easy installation and configuration for Unix/Linux')
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
-    _subparse_shell_utils(subparsers)
-    _subparse_completion(subparsers)
-    _subparse_vim(subparsers)
-    _subparse_neovim(subparsers)
-    _subparse_space_vim(subparsers)
-    _subparse_git(subparsers)
-    _subparse_python3(subparsers)
-    _subparse_blog(subparsers)
-    _subparse_proxychains(subparsers)
-    _subparse_antlr(subparsers)
-    _subparse_beakerx(subparsers)
-    _subparse_itypescript(subparsers)
+    _add_subparser(subparsers, 'shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
+    _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
+    _add_subparser(subparsers, 'Vim')
+    _add_subparser(subparsers, 'NeoVim', aliases=['nvim'])
+    _add_subparser(subparsers, 'SpaceVim', aliases=['svim'])
+    _add_subparser(subparsers, 'Git')
+    _add_subparser(subparsers, 'Python3', aliases=['py3'])
+    _add_subparser(subparsers, 'blogging', aliases=['blog'])
+    _add_subparser(subparsers, 'ProxyChains', aliases=['pchains', 'pc'])
+    _add_subparser(subparsers, 'ANTLR')
+    _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
+    _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
     return parser.parse_args(args=args, namespace=namespace)
 
 
-def itypescript(args):
-    yes = '-y' if args.yes else ''
-    if args.install:
-        !{PREFIX} npm install -g --unsafe-perm itypescript
-        !{PREFIX} its --ts-hide-undefined --install=global
-    if args.uninstall:
-        !{PREFIX} npm uninstall itypescript
-    if args.config:
-        pass
-
-
-def _subparse_itypescript(subparsers):
-    subparser = subparsers.add_parser(
-        'itypescript',
-        aliases=['its'],
-        help='install and configure iTypeScript.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install iTypeScript.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall iTypeScript.')
-    subparser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='automatical yes to prompts.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure iTypeScript.')
-    subparser.set_defaults(func=itypescript)
-
-
+# ------------------------- command-line utils related -------------------------
 def shell_utils(args):
     yes = '-y' if args.yes else ''
     if args.install:
@@ -107,117 +64,105 @@ def shell_utils(args):
         pass
 
 
-def _subparse_shell_utils(subparsers):
-    subparser = subparsers.add_parser(
-        'shell_utils',
-        aliases=['sh_utils', 'shutils', 'shu', 'su'],
-        help='install and configure shell utils.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install shell utils.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall shell utils.')
-    subparser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='automatical yes to prompts.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure shell utils.')
-    subparser.set_defaults(func=shell_utils)
+def completion(args):
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get install bash-completion
+        elif 'darwin' in PLATFORM:
+            !brew install bash-completion
+        elif 'centos' in PLATFORM:
+            !sudo yum install bash-completion
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_install.format(pkg='Git'))
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge bash-completion
+        elif 'darwin' in PLATFORM:
+            !brew uninstall bash-completion
+        elif 'centos' in PLATFORM:
+            !sudo yum remove bash-completion
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
 
-
-def _subparse_beakerx(subparsers):
-    subparser = subparsers.add_parser(
-        'beakerx',
-        aliases=['bkx', 'bk'],
-        help='install and configure BeakerX.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install BeakerX.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall BeakerX.')
-    subparser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='automatical yes to prompts.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure BeakerX.')
-    subparser.set_defaults(func=beakerx)
-
-
-def beakerx(args):
+# ------------------------- vim related -------------------------
+def vim(args):
     yes = '-y' if args.yes else ''
     if args.install:
-        !{PREFIX} pip3 install beakerx
-        !{PREFIX} beakerx install
-        !{PREFIX} jupyter labextension install @jupyter-widgets/jupyterlab-manager
-        !{PREFIX} jupyter labextension install beakerx-jupyterlab
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get install {yes} vim vim-nox
+        elif 'darwin' in PLATFORM:
+            !brew install vim
+        elif 'centos' in PLATFORM:
+            !sudo yum install vim
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
-        !{PREFIX} jupyter labextension uninstall beakerx-jupyterlab
-        !{PREFIX} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager
-        !{PREFIX} beakerx uninstall
-        !{PREFIX} pip3 uninstall beakerx
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} vim vim-nox
+        elif 'darwin' in PLATFORM:
+            !brew uninstall vim
+        elif 'centos' in PLATFORM:
+            !sudo yum remove vim
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
     if args.config:
-        !{PREFIX} chown -R {USER_ID}:{GROUP_ID} {HOME}
+        pass
 
 
-def _subparse_git(subparsers):
-    subparser = subparsers.add_parser(
-        'git',
-        help='install and configure Git.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install Git.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall Git.')
-    subparser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='automatical yes to prompts.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure Git.')
-    subparser.set_defaults(func=git)
+def neovim(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get install {yes} neovim
+        elif 'darwin' in PLATFORM:
+            !brew install neovim
+        elif 'centos' in PLATFORM:
+            !sudo yum install neovim
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_install.format(pkg='Git'))
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} neovim
+        elif 'darwin' in PLATFORM:
+            !brew uninstall neovim
+        elif 'centos' in PLATFORM:
+            !sudo yum remove neovim
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
+    if args.config:
+        pass
 
 
+def _svim_true_color(true_color: bool):
+    FILE = os.path.join(HOME, '.SpaceVim.d/init.toml')
+    if os.path.isfile(FILE):
+        with open(FILE, 'r') as fin:
+            lines = fin.readlines()
+        for i, line in enumerate(lines):
+            if line.strip().startswith('enable_guicolors'):
+                if true_color:
+                    lines[i] = line.replace('false', 'true')
+                else:
+                    lines[i] = line.replace('true', 'false')
+        with open(FILE, 'w') as fout:
+            fout.writelines(lines)
+
+
+def space_vim(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        !curl -sLf https://spacevim.org/install.sh | bash
+        if shutil.which('nvim'):
+            !nvim --headless +'call dein#install()' +qall
+    if args.uninstall:
+        !curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
+    if args.config:
+        _svim_true_color(args.true_color)
+
+
+# ------------------------- coding tools related -------------------------
 def git(args):
     yes = '-y' if args.yes else ''
     if args.install:
@@ -267,197 +212,60 @@ def antlr(args):
             logger.debug(msg_cygwin_remove.format(pkg='ANTLR'))
 
 
-def _subparse_antlr(subparsers):
-    subparser = subparsers.add_parser(
-        'antlr',
-        help='install and configure ANTLR.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install ANTLR.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall ANTLR.')
-    subparser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='automatical yes to prompts.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure ANTLR.')
-    subparser.set_defaults(func=subparser)
-
-
-def neovim(args):
+# ------------------------- programming languages -------------------------
+def python3(args):
     yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} neovim
-        elif 'darwin' in PLATFORM:
-            !brew install neovim
-        elif 'centos' in PLATFORM:
-            !sudo yum install neovim
+            !{PREFIX} apt-get install {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+        if 'darwin' in PLATFORM:
+            !brew install python3
+        if 'centos' in PLATFORM:
+            !yum install python3
         elif 'cygwin' in PLATFORM:
             logging.error(msg_cygwin_install.format(pkg='Git'))
-    if args.uninstall:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} neovim
-        elif 'darwin' in PLATFORM:
-            !brew uninstall neovim
-        elif 'centos' in PLATFORM:
-            !sudo yum remove neovim
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
     if args.config:
         pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+        if 'darwin' in PLATFORM:
+            !brew uninstall python3
+        if 'centos' in PLATFORM:
+            !yum remove python3
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='Git'))
 
 
-def _subparse_neovim(subparsers):
-    subparser = subparsers.add_parser(
-        'neovim',
-        aliases=['nvim'],
-        help='install and configure Neovim.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install Neovim.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall Neovim.')
-    subparser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='automatical yes to prompts.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure Neovim.')
-    subparser.set_defaults(func=neovim)
-
-
-def vim(args):
+# ------------------------- JupyterLab kernels -------------------------
+def itypescript(args):
     yes = '-y' if args.yes else ''
     if args.install:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} vim vim-nox
-        elif 'darwin' in PLATFORM:
-            !brew install vim
-        elif 'centos' in PLATFORM:
-            !sudo yum install vim
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
+        !{PREFIX} npm install -g --unsafe-perm itypescript
+        !{PREFIX} its --ts-hide-undefined --install=global
     if args.uninstall:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} vim vim-nox
-        elif 'darwin' in PLATFORM:
-            !brew uninstall vim
-        elif 'centos' in PLATFORM:
-            !sudo yum remove vim
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
+        !{PREFIX} npm uninstall itypescript
     if args.config:
         pass
 
 
-def _subparse_vim(subparsers):
-    subparser = subparsers.add_parser(
-        'vim',
-        help='install and configure Vim.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install Vim.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall Vim.')
-    subparser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='automatical yes to prompts.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure Vim.')
-    subparser.set_defaults(func=vim)
-
-
-def completion(args):
+def beakerx(args):
+    yes = '-y' if args.yes else ''
     if args.install:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install bash-completion
-        elif 'darwin' in PLATFORM:
-            !brew install bash-completion
-        elif 'centos' in PLATFORM:
-            !sudo yum install bash-completion
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
-    if args.config:
-        pass
+        !{PREFIX} pip3 install beakerx
+        !{PREFIX} beakerx install
+        !{PREFIX} jupyter labextension install @jupyter-widgets/jupyterlab-manager
+        !{PREFIX} jupyter labextension install beakerx-jupyterlab
     if args.uninstall:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge bash-completion
-        elif 'darwin' in PLATFORM:
-            !brew uninstall bash-completion
-        elif 'centos' in PLATFORM:
-            !sudo yum remove bash-completion
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
+        !{PREFIX} jupyter labextension uninstall beakerx-jupyterlab
+        !{PREFIX} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager
+        !{PREFIX} beakerx uninstall
+        !{PREFIX} pip3 uninstall beakerx
+    if args.config:
+        !{PREFIX} chown -R {USER_ID}:{GROUP_ID} {HOME}
 
 
-def _subparse_completion(subparsers):
-    subparser = subparsers.add_parser(
-        'completion',
-        aliases=['comp', 'cp'],
-        help='install and configure bash completions.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install bash completion.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall bash completion.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure bash completion.')
-    subparser.set_defaults(func=proxychains)
-
-
+# ------------------------- web tools -------------------------
 def proxychains(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
@@ -484,32 +292,6 @@ def proxychains(args):
             logging.error(msg_cygwin_remove.format(pkg='Git'))
 
 
-def _subparse_proxychains(subparsers):
-    subparser = subparsers.add_parser(
-        'proxychains',
-        aliases=['pchains', 'pc'],
-        help='install and configure tools for ProxyChains.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install ProxyChains.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall ProxyChains.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure ProxyChains.')
-    subparser.set_defaults(func=proxychains)
-
-
 def blog(args):
     if args.install:
         # python3(args)
@@ -520,147 +302,7 @@ def blog(args):
         !pip3 uninstall --user pelican markdown
 
 
-def _subparse_blog(subparsers):
-    subparser = subparsers.add_parser(
-        'blog',
-        help='install and configure tools for blogging.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install tools for blogging.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall tools for blogging.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure tools for blogging.')
-    subparser.set_defaults(func=blog)
-
-
-def python3(args):
-    yes = '-y' if args.yes else ''
-    if args.install:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
-        if 'darwin' in PLATFORM:
-            !brew install python3
-        if 'centos' in PLATFORM:
-            !yum install python3
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
-    if args.config:
-        pass
-    if args.uninstall:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
-        if 'darwin' in PLATFORM:
-            !brew uninstall python3
-        if 'centos' in PLATFORM:
-            !yum remove python3
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
-
-
-def _subparse_python3(subparsers):
-    subparser = subparsers.add_parser(
-        'python3',
-        aliases=['py3'],
-        help='install and configure Python 3.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install Python 3.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall Python 3.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure Python 3.')
-    subparser.set_defaults(func=python3)
-
-
-def _svim_true_color(true_color: bool):
-    FILE = os.path.join(HOME, '.SpaceVim.d/init.toml')
-    if os.path.isfile(FILE):
-        with open(FILE, 'r') as fin:
-            lines = fin.readlines()
-        for i, line in enumerate(lines):
-            if line.strip().startswith('enable_guicolors'):
-                if true_color:
-                    lines[i] = line.replace('false', 'true')
-                else:
-                    lines[i] = line.replace('true', 'false')
-        with open(FILE, 'w') as fout:
-            fout.writelines(lines)
-
-
-def space_vim(args):
-    yes = '-y' if args.yes else ''
-    if args.install:
-        !curl -sLf https://spacevim.org/install.sh | bash
-        if shutil.which('nvim'):
-            !nvim --headless +'call dein#install()' +qall
-    if args.uninstall:
-        !curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
-    if args.config:
-        _svim_true_color(args.true_color)
-
-
-def _subparse_space_vim(subparsers):
-    subparser = subparsers.add_parser(
-        'space_vim',
-        aliases=['svim'],
-        help='install and configure SpaceVim.')
-    subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help='install SpaceVim.')
-    subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help='uninstall SpaceVim.')
-    subparser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='automatical yes to prompts.')
-    subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help='configure SpaceVim.')
-    subparser.add_argument(
-        '-t',
-        '--true-color',
-        dest='true_color',
-        type=to_bool,
-        default=True,
-        help='whether to enable true color for SpaceVim.')
-    subparser.set_defaults(func=space_vim)
-
-
+# ------------------------- helper functions -------------------------
 def to_bool(value: Any) -> bool:
     """Convert an object to a bool value (True or False).
 
@@ -680,6 +322,42 @@ def to_bool(value: Any) -> bool:
     if isinstance(value, Sized) and len(value) > 0:
         return True
     return False
+
+
+def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: str = ''):
+    sub_cmd = re.sub(r'\s+', '_', name.lower())
+    aliases = [alias for alias in aliases if alias != sub_cmd]
+    func = func if func else sub_cmd
+    subparser = subparsers.add_parser(
+        sub_cmd,
+        aliases=aliases,
+        help=f'install and configure {name}.')
+    subparser.add_argument(
+        '-i',
+        '--install',
+        dest='install',
+        action='store_true',
+        help=f'install {name}.')
+    subparser.add_argument(
+        '-u',
+        '--uninstall',
+        dest='uninstall',
+        action='store_true',
+        help=f'uninstall {name}.')
+    subparser.add_argument(
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='automatical yes to prompts.')
+    subparser.add_argument(
+        '-c',
+        '--configure',
+        dest='config',
+        action='store_true',
+        help=f'configure {name}.')
+    subparser.set_defaults(func=func)
+    return subparser
 
 
 if __name__ == '__main__':
