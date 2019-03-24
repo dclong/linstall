@@ -4,7 +4,7 @@ import os
 import platform
 import shutil
 import re
-from typing import Any, List, Sequence
+from typing import Any, List, Sequence, Callable, Union
 from argparse import ArgumentParser
 import logging
 
@@ -64,7 +64,7 @@ def shell_utils(args):
         pass
 
 
-def completion(args):
+def bash_completion(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get install bash-completion
@@ -150,7 +150,7 @@ def _svim_true_color(true_color: bool):
             fout.writelines(lines)
 
 
-def space_vim(args):
+def spacevim(args):
     yes = '-y' if args.yes else ''
     if args.install:
         !curl -sLf https://spacevim.org/install.sh | bash
@@ -292,7 +292,7 @@ def proxychains(args):
             logging.error(msg_cygwin_remove.format(pkg='Git'))
 
 
-def blog(args):
+def blogging(args):
     if args.install:
         # python3(args)
         !pip3 install --user pelican markdown
@@ -324,10 +324,10 @@ def to_bool(value: Any) -> bool:
     return False
 
 
-def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: str = ''):
+def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Callable, None] = None):
     sub_cmd = re.sub(r'\s+', '_', name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
-    func = func if func else sub_cmd
+    func = func if func else eval(sub_cmd)
     subparser = subparsers.add_parser(
         sub_cmd,
         aliases=aliases,
