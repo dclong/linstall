@@ -12,7 +12,7 @@ USER_ID = os.getuid()
 GROUP_ID = os.getgid()
 PREFIX = '' if USER_ID == 'root' else 'sudo'
 HOME = os.path.expanduser('~')
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.realpath(os.path.abspath(__file__)))
 ARCHIVES_DIR =  os.path.join(HOME, 'archives')
 PLATFORM = platform.platform().lower() 
 msg_cygwin_install = 'Installing {pkg} in Cygwin via command line is not supported currently.'
