@@ -29,7 +29,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
     _add_subparser(subparsers, 'Vim')
     _add_subparser(subparsers, 'NeoVim', aliases=['nvim'])
-    _add_subparser(subparsers, 'SpaceVim', aliases=['svim'])
+    _add_subparser(subparsers, 'SpaceVim', aliases=['svim'], add_argument=spacevim_args)
     _add_subparser(subparsers, 'Git')
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
     _add_subparser(subparsers, 'blogging', aliases=['blog'])
@@ -217,6 +217,16 @@ def spacevim(args):
         _svim_true_color(args.true_color)
 
 
+def spacevim_args(subparser):
+    subparser.add_argument(
+        '-t',
+        '--true-color',
+        dest='true_color',
+        type=to_bool,
+        default=True,
+        help='whether to enable true color (default true) for SpaceVim.')
+
+
 # ------------------------- coding tools related -------------------------
 def git(args):
     yes = '-y' if args.yes else ''
@@ -380,7 +390,7 @@ def to_bool(value: Any) -> bool:
     return False
 
 
-def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Callable, None] = None):
+def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Callable, None] = None, add_argument: Union[Callable, None] = None):
     sub_cmd = re.sub(r'\s+', '_', name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
     func = func if func else eval(sub_cmd)
@@ -412,6 +422,8 @@ def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Ca
         dest='config',
         action='store_true',
         help=f'configure {name}.')
+    if add_argument:
+        add_argument(subparser)
     subparser.set_defaults(func=func)
     return subparser
 
