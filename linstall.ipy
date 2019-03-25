@@ -24,11 +24,12 @@ def parse_args(args=None, namespace=None):
     """
     parser = ArgumentParser(description='Easy installation and configuration for Unix/Linux')
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
-    _add_subparser(subparsers, 'shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
+    _add_subparser(subparsers, 'CoreUtils', aliases=['cu'])
+    _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
     _add_subparser(subparsers, 'Vim')
     _add_subparser(subparsers, 'NeoVim', aliases=['nvim'])
-    _add_subparser(subparsers, 'SpaceVim', aliases=['svim'])
+    _add_subparser(subparsers, 'SpaceVim', aliases=['svim'], add_argument=spacevim_args)
     _add_subparser(subparsers, 'Git')
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
     _add_subparser(subparsers, 'blogging', aliases=['blog'])
@@ -36,7 +37,61 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'ANTLR')
     _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
     _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
+    _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
     return parser.parse_args(args=args, namespace=namespace)
+
+
+def visual_studio_code(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get {yes} install vscode
+        elif 'darwin' in PLATFORM:
+            !brew cask install visual-studio-code
+        elif 'centos' in PLATFORM:
+            !sudo yum install vscode
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_install.format(pkg='coreutils'))
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} vscode
+        elif 'darwin' in PLATFORM:
+            !brew cask uninstall visual-studio-code
+        elif 'centos' in PLATFORM:
+            !sudo yum remove vscode
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='coreutils'))
+    if args.config:
+        srcfile = f'{ARCHIVES_DIR}/config/vscode/settings.json'
+        desdir = f'{HOME}/.config/Code/User/'
+        !mkdir -p {desdir}
+        !ln -svf {srcfile} {desdir}
+
+
+def coreutils(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get {yes} install coreutils
+        elif 'darwin' in PLATFORM:
+            !brew install coreutils
+        elif 'centos' in PLATFORM:
+            !sudo yum install coreutils
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_install.format(pkg='coreutils'))
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} coreutils
+        elif 'darwin' in PLATFORM:
+            !brew uninstall coreutils
+        elif 'centos' in PLATFORM:
+            !sudo yum remove coreutils
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='coreutils'))
+    if args.config:
+        if 'darwin' in PLATFORM:
+            !export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+            !export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
 
 
 # ------------------------- command-line utils related -------------------------
@@ -162,6 +217,16 @@ def spacevim(args):
         _svim_true_color(args.true_color)
 
 
+def spacevim_args(subparser):
+    subparser.add_argument(
+        '-t',
+        '--true-color',
+        dest='true_color',
+        type=to_bool,
+        default=True,
+        help='whether to enable true color (default true) for SpaceVim.')
+
+
 # ------------------------- coding tools related -------------------------
 def git(args):
     yes = '-y' if args.yes else ''
@@ -244,6 +309,7 @@ def itypescript(args):
         !{PREFIX} npm install -g --unsafe-perm itypescript
         !{PREFIX} its --ts-hide-undefined --install=global
     if args.uninstall:
+        !{PREFIX} jupyter kernelspec uninstall typescript
         !{PREFIX} npm uninstall itypescript
     if args.config:
         pass
@@ -324,7 +390,7 @@ def to_bool(value: Any) -> bool:
     return False
 
 
-def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Callable, None] = None):
+def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Callable, None] = None, add_argument: Union[Callable, None] = None):
     sub_cmd = re.sub(r'\s+', '_', name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
     func = func if func else eval(sub_cmd)
@@ -356,6 +422,8 @@ def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Ca
         dest='config',
         action='store_true',
         help=f'configure {name}.')
+    if add_argument:
+        add_argument(subparser)
     subparser.set_defaults(func=func)
     return subparser
 
