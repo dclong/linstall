@@ -37,7 +37,35 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'ANTLR')
     _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
     _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
+    _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
     return parser.parse_args(args=args, namespace=namespace)
+
+
+def visual_studio_code(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get {yes} install vscode
+        elif 'darwin' in PLATFORM:
+            !brew cask install visual-studio-code
+        elif 'centos' in PLATFORM:
+            !sudo yum install vscode
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_install.format(pkg='coreutils'))
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} vscode
+        elif 'darwin' in PLATFORM:
+            !brew cask uninstall visual-studio-code
+        elif 'centos' in PLATFORM:
+            !sudo yum remove vscode
+        elif 'cygwin' in PLATFORM:
+            logging.error(msg_cygwin_remove.format(pkg='coreutils'))
+    if args.config:
+        srcfile = f'{ARCHIVES_DIR}/config/vscode/settings.json'
+        desdir = f'{HOME}/.config/Code/User/'
+        !mkdir -p {desdir}
+        !ln -svf {srcfile} {desdir}
 
 
 def coreutils(args):
