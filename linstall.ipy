@@ -36,6 +36,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'ProxyChains', aliases=['pchains', 'pc'])
     _add_subparser(subparsers, 'ANTLR')
     _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
+    _add_subparser(subparsers, 'Almond', aliases=['al', 'amd'], add_argument=almond_args)
     _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
     _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
     return parser.parse_args(args=args, namespace=namespace)
@@ -329,6 +330,37 @@ def beakerx(args):
         !{PREFIX} pip3 uninstall beakerx
     if args.config:
         !{PREFIX} chown -R {USER_ID}:{GROUP_ID} {HOME}
+
+
+def almond(args):
+    if args.install:
+        coursier = os.path.join(HOME, '.local/bin/coursier')
+        almond = os.path.join(HOME, '.local/bin/almond')
+        !curl -L -o {coursier} https://git.io/coursier
+        !chmod +x {coursier}
+        !{coursier} bootstrap \
+            -i user \
+            -I user:sh.almond:scala-kernel-api_{args.scala_version}:{args.almond_version} \
+            -o {almond} \
+            sh.almond:scala-kernel_{args.scala_version}:{args.almond_version} \
+        !{prefix} {almond} --install --global
+    if args.config:
+        pass
+
+
+def almond_args(subparser):
+    subparser.add_argument(
+        '-a',
+        '--almond-version',
+        dest='almond_version',
+        default='0.1.11',
+        help='the version (0.1.11 by default) of Almond to install.')
+    subparser.add_argument(
+        '-s',
+        '--scala-version',
+        dest='scala_version',
+        default='2.11.12',
+        help='the version (2.11.12 by default) of Scala to install.')
 
 
 # ------------------------- web tools -------------------------
