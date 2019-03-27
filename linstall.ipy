@@ -336,14 +336,13 @@ def almond(args):
     if args.install:
         coursier = os.path.join(HOME, '.local/bin/coursier')
         almond = os.path.join(HOME, '.local/bin/almond')
-        !curl -L -o {coursier} https://git.io/coursier
+        !curl -L -o {coursier} https://git.io/coursier-cli
         !chmod +x {coursier}
-        !{coursier} bootstrap \
-            -i user \
-            -I user:sh.almond:scala-kernel-api_{args.scala_version}:{args.almond_version} \
-            -o {almond} \
-            sh.almond:scala-kernel_{args.scala_version}:{args.almond_version} \
-        !{prefix} {almond} --install --global
+        !{coursier} bootstrap -f -r jitpack -i user \
+                -I user:sh.almond:scala-kernel-api_{args.scala_version}:{args.almond_version} \
+                -o {almond} \
+                sh.almond:scala-kernel_{args.scala_version}:{args.almond_version}
+        !{PREFIX} {almond} --install --global --force
     if args.config:
         pass
 
@@ -353,14 +352,14 @@ def almond_args(subparser):
         '-a',
         '--almond-version',
         dest='almond_version',
-        default='0.1.11',
-        help='the version (0.1.11 by default) of Almond to install.')
+        default='0.4.0',
+        help='the version (0.4.0 by default) of Almond to install.')
     subparser.add_argument(
         '-s',
         '--scala-version',
         dest='scala_version',
-        default='2.11.12',
-        help='the version (2.11.12 by default) of Scala to install.')
+        default='2.12.8',
+        help='the version (2.12.8 by default) of Scala to install.')
 
 
 # ------------------------- web tools -------------------------
