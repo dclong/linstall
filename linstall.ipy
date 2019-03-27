@@ -13,7 +13,6 @@ GROUP_ID = os.getgid()
 PREFIX = '' if USER_ID == 'root' else 'sudo'
 HOME = os.path.expanduser('~')
 BASE_DIR = os.path.dirname(os.path.realpath(os.path.abspath(__file__)))
-ARCHIVES_DIR =  os.path.join(HOME, 'archives')
 PLATFORM = platform.platform().lower() 
 msg_cygwin_install = 'Installing {pkg} in Cygwin via command line is not supported currently.'
 msg_cygwin_remove = 'Removing {pkg} in Cygwin via command line is not supported currently.'
@@ -63,7 +62,7 @@ def visual_studio_code(args):
         elif 'cygwin' in PLATFORM:
             logging.error(msg_cygwin_remove.format(pkg='coreutils'))
     if args.config:
-        srcfile = f'{ARCHIVES_DIR}/config/vscode/settings.json'
+        srcfile = f'{BASE_DIR}/vscode/settings.json'
         desdir = f'{HOME}/.config/Code/User/'
         !mkdir -p {desdir}
         !ln -svf {srcfile} {desdir}
@@ -377,7 +376,7 @@ def proxychains(args):
         print('Configuring proxychains ...')
         des_dir = os.path.join(HOME, '.proxychains')
         !mkdir -p {des_dir}
-        !cp {ARCHIVES_DIR}/config/proxychains/proxychains.conf {des_dir}/
+        !cp {BASE_DIR}/proxychains/proxychains.conf {des_dir}/
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge proxychains
