@@ -214,6 +214,9 @@ def spacevim(args):
     if args.uninstall:
         !curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
     if args.config:
+        des_dir = {HOME}/.SpaceVim.d/
+        !mkdir -p {des_dir}
+        !cp {BASE_DIR}/SpaceVim/init.toml {des_dir}
         _svim_true_color(args.true_color)
 
 
