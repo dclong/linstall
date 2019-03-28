@@ -254,6 +254,8 @@ def git(args):
     if args.config:
         !cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig
         !cp '{BASE_DIR}/git/gitignore' $HOME/.gitignore
+        if 'darwin' in PLATFORM:
+            !cp {BASE_DIR}/git/mac/git_completion {HOME}/.git_completion
 
 
 def antlr(args):
