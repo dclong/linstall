@@ -263,7 +263,8 @@ def python3(args):
         if 'darwin' in PLATFORM:
             !brew install python3
         if 'centos' in PLATFORM:
-            !yum install python3
+            !{PREFIX} yum install {yes} python34 python34-devel python34-pip
+            !{PREFIX} pip3.4 install setuptools
     if args.config:
         pass
     if args.uninstall:
