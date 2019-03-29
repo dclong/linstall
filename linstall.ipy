@@ -14,8 +14,6 @@ PREFIX = '' if USER_ID == 'root' else 'sudo'
 HOME = os.path.expanduser('~')
 BASE_DIR = os.path.dirname(os.path.realpath(os.path.abspath(__file__)))
 PLATFORM = platform.platform().lower() 
-msg_cygwin_install = 'Installing {pkg} in Cygwin via command line is not supported currently.'
-msg_cygwin_remove = 'Removing {pkg} in Cygwin via command line is not supported currently.'
 
 
 def parse_args(args=None, namespace=None):
@@ -29,6 +27,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Vim')
     _add_subparser(subparsers, 'NeoVim', aliases=['nvim'])
     _add_subparser(subparsers, 'SpaceVim', aliases=['svim'], add_argument=spacevim_args)
+    _add_subparser(subparsers, 'IdeaVim', aliases=['ivim'])
     _add_subparser(subparsers, 'Git')
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
     _add_subparser(subparsers, 'blogging', aliases=['blog'])
@@ -50,8 +49,6 @@ def visual_studio_code(args):
             !brew cask install visual-studio-code
         elif 'centos' in PLATFORM:
             !sudo yum install vscode
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='coreutils'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {yes} vscode
@@ -59,8 +56,6 @@ def visual_studio_code(args):
             !brew cask uninstall visual-studio-code
         elif 'centos' in PLATFORM:
             !sudo yum remove vscode
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='coreutils'))
     if args.config:
         srcfile = f'{BASE_DIR}/vscode/settings.json'
         desdir = f'{HOME}/.config/Code/User/'
@@ -77,8 +72,6 @@ def coreutils(args):
             !brew install coreutils
         elif 'centos' in PLATFORM:
             !sudo yum install coreutils
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='coreutils'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {yes} coreutils
@@ -86,8 +79,6 @@ def coreutils(args):
             !brew uninstall coreutils
         elif 'centos' in PLATFORM:
             !sudo yum remove coreutils
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='coreutils'))
     if args.config:
         if 'darwin' in PLATFORM:
             !export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
@@ -104,8 +95,6 @@ def shell_utils(args):
             !brew install bash-completion man-db
         elif 'centos' in PLATFORM:
             !sudo yum install bash-completion command-not-found man-db
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {yes} bash-completion command-not-found man-db
@@ -113,8 +102,6 @@ def shell_utils(args):
             !brew uninstall bash-completion man-db
         elif 'centos' in PLATFORM:
             !sudo yum remove bash-completion command-not-found man-db
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
     if args.config:
         pass
 
@@ -127,8 +114,6 @@ def bash_completion(args):
             !brew install bash-completion
         elif 'centos' in PLATFORM:
             !sudo yum install bash-completion
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.config:
         pass
     if args.uninstall:
@@ -138,8 +123,6 @@ def bash_completion(args):
             !brew uninstall bash-completion
         elif 'centos' in PLATFORM:
             !sudo yum remove bash-completion
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
 
 # ------------------------- vim related -------------------------
 def vim(args):
@@ -150,9 +133,7 @@ def vim(args):
         elif 'darwin' in PLATFORM:
             !brew install vim
         elif 'centos' in PLATFORM:
-            !sudo yum install vim
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
+            !sudo yum install {yes} vim-enhanced
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {yes} vim vim-nox
@@ -160,8 +141,6 @@ def vim(args):
             !brew uninstall vim
         elif 'centos' in PLATFORM:
             !sudo yum remove vim
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
     if args.config:
         pass
 
@@ -175,8 +154,6 @@ def neovim(args):
             !brew install neovim
         elif 'centos' in PLATFORM:
             !sudo yum install neovim
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {yes} neovim
@@ -184,8 +161,6 @@ def neovim(args):
             !brew uninstall neovim
         elif 'centos' in PLATFORM:
             !sudo yum remove neovim
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
     if args.config:
         pass
 
@@ -230,6 +205,11 @@ def spacevim_args(subparser):
         help='whether to enable true color (default true) for SpaceVim.')
 
 
+def ideavim(args):
+    if args.config:
+        !cp {BASE_DIR}/ideavim/ideavimrc $HOME/.ideavimrc
+
+
 # ------------------------- coding tools related -------------------------
 def git(args):
     yes = '-y' if args.yes else ''
@@ -240,8 +220,6 @@ def git(args):
             !brew install git
         elif 'centos' in PLATFORM:
             !sudo yum install git
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {yes} git
@@ -249,8 +227,6 @@ def git(args):
             !brew uninstall git
         elif 'centos' in PLATFORM:
             !sudo yum remove git
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
     if args.config:
         !cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig
         !cp '{BASE_DIR}/git/gitignore' $HOME/.gitignore
@@ -267,8 +243,6 @@ def antlr(args):
             !brew install antlr4
         elif 'centos' in PLATFORM:
             !sudo yum install antlr
-        elif 'cygwin' in PLATFORM:
-            logger.debug(msg_cygwin_install.format(pkg='ANTLR'))
     if args.config:
         pass
     if args.uninstall:
@@ -278,8 +252,6 @@ def antlr(args):
             !brew uninstall antlr4
         elif 'centos' in PLATFORM:
             !sudo yum remove antlr
-        elif 'cygwin' in PLATFORM:
-            logger.debug(msg_cygwin_remove.format(pkg='ANTLR'))
 
 
 # ------------------------- programming languages -------------------------
@@ -292,8 +264,6 @@ def python3(args):
             !brew install python3
         if 'centos' in PLATFORM:
             !yum install python3
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.config:
         pass
     if args.uninstall:
@@ -303,8 +273,6 @@ def python3(args):
             !brew uninstall python3
         if 'centos' in PLATFORM:
             !yum remove python3
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
 
 
 # ------------------------- JupyterLab kernels -------------------------
@@ -375,8 +343,6 @@ def proxychains(args):
             !brew install proxychains-ng
         elif 'centos' in PLATFORM:
             !sudo yum install proxychains
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_install.format(pkg='Git'))
     if args.config:
         print('Configuring proxychains ...')
         des_dir = os.path.join(HOME, '.proxychains')
@@ -389,8 +355,6 @@ def proxychains(args):
             !brew uninstall proxychains-ng
         elif 'centos' in PLATFORM:
             !sudo yum remove proxychains
-        elif 'cygwin' in PLATFORM:
-            logging.error(msg_cygwin_remove.format(pkg='Git'))
 
 
 def blogging(args):
