@@ -22,6 +22,7 @@ def parse_args(args=None, namespace=None):
     parser = ArgumentParser(description='Easy installation and configuration for Unix/Linux')
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
     _add_subparser(subparsers, 'CoreUtils', aliases=['cu'])
+    _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'])
     _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
     _add_subparser(subparsers, 'Vim')
@@ -105,6 +106,22 @@ def shell_utils(args):
         elif 'centos' in PLATFORM:
             !sudo yum remove bash-completion command-not-found man-db
     if args.config:
+        pass
+
+
+def change_shell(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        pass
+    if args.uninstall:
+        pass
+    if args.config:
+        pass
+    if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+        pass
+    elif 'darwin' in PLATFORM:
+        !chsh -s bash
+    elif 'centos' in PLATFORM:
         pass
 
 
