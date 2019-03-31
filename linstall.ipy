@@ -234,16 +234,16 @@ def git(args):
     yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} git
+            !{PREFIX} apt-get install {yes} git git-lfs
         elif 'darwin' in PLATFORM:
-            !brew install git
+            !brew install git git-lfs
         elif 'centos' in PLATFORM:
             !sudo yum install git
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} git
+            !{PREFIX} apt-get purge {yes} git git-lfs
         elif 'darwin' in PLATFORM:
-            !brew uninstall git
+            !brew uninstall git git-lfs
         elif 'centos' in PLATFORM:
             !sudo yum remove git
     if args.config:
