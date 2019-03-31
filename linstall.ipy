@@ -404,7 +404,7 @@ def download_tools(args):
 
 
 # ------------------------- IDE -------------------------
-def intellijj_idea(args):
+def intellij_idea(args):
     yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
