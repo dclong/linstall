@@ -40,30 +40,8 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Almond', aliases=['al', 'amd'], add_argument=almond_args)
     _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
     _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
+    _add_subparser(subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea', 'ii'])
     return parser.parse_args(args=args, namespace=namespace)
-
-
-def visual_studio_code(args):
-    yes = '-y' if args.yes else ''
-    if args.install:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get {yes} install vscode
-        elif 'darwin' in PLATFORM:
-            !brew cask install visual-studio-code
-        elif 'centos' in PLATFORM:
-            !sudo yum install vscode
-    if args.uninstall:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} vscode
-        elif 'darwin' in PLATFORM:
-            !brew cask uninstall visual-studio-code
-        elif 'centos' in PLATFORM:
-            !sudo yum remove vscode
-    if args.config:
-        srcfile = f'{BASE_DIR}/vscode/settings.json'
-        desdir = f'{HOME}/.config/Code/User/'
-        !mkdir -p {desdir}
-        !ln -svf {srcfile} {desdir}
 
 
 def coreutils(args):
@@ -423,6 +401,51 @@ def download_tools(args):
             !brew uninstall wget curl aria2
         elif 'centos' in PLATFORM:
             pass
+
+
+# ------------------------- IDE -------------------------
+def intellijj_idea(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} add-apt-repository ppa:mmk2410/intellij-idea
+            !{PREFIX} apt-get update && apt-get install {yes} intellij-idea-community
+        elif 'darwin' in PLATFORM:
+            !brew cask install intellij-idea-ce
+        elif 'centos' in PLATFORM:
+            pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} intellij-idea-ce
+        elif 'darwin' in PLATFORM:
+            !brew cask uninstall intellij-idea-ce
+        elif 'centos' in PLATFORM:
+            pass
+    if args.config:
+        pass
+
+
+def visual_studio_code(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get {yes} install vscode
+        elif 'darwin' in PLATFORM:
+            !brew cask install visual-studio-code
+        elif 'centos' in PLATFORM:
+            !sudo yum install vscode
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} vscode
+        elif 'darwin' in PLATFORM:
+            !brew cask uninstall visual-studio-code
+        elif 'centos' in PLATFORM:
+            !sudo yum remove vscode
+    if args.config:
+        srcfile = f'{BASE_DIR}/vscode/settings.json'
+        desdir = f'{HOME}/.config/Code/User/'
+        !mkdir -p {desdir}
+        !ln -svf {srcfile} {desdir}
 
 
 # ------------------------- helper functions -------------------------
