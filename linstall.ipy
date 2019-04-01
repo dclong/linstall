@@ -105,19 +105,20 @@ def shell_utils(args):
 
 
 def change_shell(args):
-    yes = '-y' if args.yes else ''
-    if args.install:
-        pass
-    if args.uninstall:
-        pass
-    if args.config:
-        pass
     if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
         pass
     elif 'darwin' in PLATFORM:
-        !chsh -s bash
+        !chsh -s {args.shell}
     elif 'centos' in PLATFORM:
         pass
+
+
+def change_shell_args(subparser):
+    subparser.add_argument(
+        '-s',
+        '--shell',
+        dest='shell',
+        help='the shell to change to.')
 
 
 def bash_completion(args):
