@@ -23,7 +23,7 @@ def parse_args(args=None, namespace=None):
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
     #------------------------- command-line tools ------------------------------
     _add_subparser(subparsers, 'CoreUtils', aliases=['cu'])
-    _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'])
+    _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'], add_argument=change_shell_args)
     _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
     #------------------------- Vim ------------------------------
