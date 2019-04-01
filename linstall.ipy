@@ -35,7 +35,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Git')
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
     _add_subparser(subparsers, 'ANTLR')
-    _add_subparser(subparsers, 'Docker')
+    _add_subparser(subparsers, 'Docker', aliases=['dock', 'dk'])
     #------------------------- web related ------------------------------
     _add_subparser(subparsers, 'SSH server', aliases=['sshs'])
     _add_subparser(subparsers, 'blogging', aliases=['blog'])
