@@ -21,24 +21,31 @@ def parse_args(args=None, namespace=None):
     """
     parser = ArgumentParser(description='Easy installation and configuration for Unix/Linux')
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
+    #------------------------- command-line tools ------------------------------
     _add_subparser(subparsers, 'CoreUtils', aliases=['cu'])
     _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'])
     _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
+    #------------------------- Vim ------------------------------
     _add_subparser(subparsers, 'Vim')
     _add_subparser(subparsers, 'NeoVim', aliases=['nvim'])
     _add_subparser(subparsers, 'SpaceVim', aliases=['svim'], add_argument=spacevim_args)
     _add_subparser(subparsers, 'IdeaVim', aliases=['ivim'])
+    #------------------------- development related  ------------------------------
     _add_subparser(subparsers, 'Git')
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
+    _add_subparser(subparsers, 'ANTLR')
+    _add_subparser(subparsers, 'Docker')
+    #------------------------- web related ------------------------------
     _add_subparser(subparsers, 'SSH server', aliases=['sshs'])
     _add_subparser(subparsers, 'blogging', aliases=['blog'])
     _add_subparser(subparsers, 'ProxyChains', aliases=['pchains', 'pc'])
     _add_subparser(subparsers, 'download tools', aliases=['dl', 'dlt'])
-    _add_subparser(subparsers, 'ANTLR')
+    #------------------------- JupyterLab related ------------------------------
     _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
     _add_subparser(subparsers, 'Almond', aliases=['al', 'amd'], add_argument=almond_args)
     _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
+    #------------------------- IDEs ------------------------------
     _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
     _add_subparser(subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea', 'ii'])
     return parser.parse_args(args=args, namespace=namespace)
@@ -249,6 +256,26 @@ def antlr(args):
             !brew uninstall antlr4
         elif 'centos' in PLATFORM:
             !sudo yum remove antlr
+
+
+def docker(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get install {yes} docker docker-compose
+        elif 'darwin' in PLATFORM:
+            !brew install docker docker-compose
+        elif 'centos' in PLATFORM:
+            !sudo yum install docker docker-compose
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} docker docker-compose
+        elif 'darwin' in PLATFORM:
+            !brew uninstall docker docker-compose
+        elif 'centos' in PLATFORM:
+            !sudo yum remove docker docker-compose
 
 
 # ------------------------- programming languages -------------------------
