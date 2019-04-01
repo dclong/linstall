@@ -48,7 +48,17 @@ def parse_args(args=None, namespace=None):
     #------------------------- IDEs ------------------------------
     _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
     _add_subparser(subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea', 'ii'])
+    #------------------------- misc applications ------------------------------
+    _add_subparser(subparsers, 'VirtualBox', aliases=['vbox'])
+    #--------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)
+
+
+def map_keys(args):
+    # TODO
+    # reset key mappings
+    # setxkbmap -option
+    pass
 
 
 def coreutils(args):
@@ -473,6 +483,26 @@ def visual_studio_code(args):
         desdir = f'{HOME}/.config/Code/User/'
         !mkdir -p {desdir}
         !ln -svf {srcfile} {desdir}
+
+
+def virtualbox(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get {yes} install virtualbox-qt
+        elif 'darwin' in PLATFORM:
+            !brew cask install virtualbox virtualbox-extension-pack
+        elif 'centos' in PLATFORM:
+            pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} virtualbox-qt
+        elif 'darwin' in PLATFORM:
+            !brew cask uninstall virtualbox virtualbox-extension-pack
+        elif 'centos' in PLATFORM:
+            pass
+    if args.config:
+        pass
 
 
 # ------------------------- helper functions -------------------------
