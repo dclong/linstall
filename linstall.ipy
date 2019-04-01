@@ -118,6 +118,7 @@ def change_shell_args(subparser):
         '-s',
         '--shell',
         dest='shell',
+        default='bash',
         help='the shell to change to.')
 
 
