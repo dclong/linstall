@@ -264,7 +264,7 @@ def docker(args):
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get install {yes} docker docker-compose
         elif 'darwin' in PLATFORM:
-            !brew install docker docker-compose
+            !brew install docker docker-completion docker-compose docker-compose-completion
         elif 'centos' in PLATFORM:
             !sudo yum install docker docker-compose
     if args.config:
@@ -273,7 +273,7 @@ def docker(args):
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {yes} docker docker-compose
         elif 'darwin' in PLATFORM:
-            !brew uninstall docker docker-compose
+            !brew uninstall docker docker-completion docker-compose docker-compose-completion
         elif 'centos' in PLATFORM:
             !sudo yum remove docker docker-compose
 
