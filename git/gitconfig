@@ -1,6 +1,6 @@
 [user]
     name = Benjamin Du
-    email = duchuanlong+git@gmail.com
+    email = longendu@yahoo.com
 [core]
     editor = vim
     excludesfile = ~/.gitignore
