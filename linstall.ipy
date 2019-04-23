@@ -36,6 +36,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
     _add_subparser(subparsers, 'ANTLR')
     _add_subparser(subparsers, 'Docker', aliases=['dock', 'dk'])
+    _add_subparser(subparsers, 'Kubernetes', aliases=['k8s'])
     #------------------------- web related ------------------------------
     _add_subparser(subparsers, 'SSH server', aliases=['sshs'])
     _add_subparser(subparsers, 'blogging', aliases=['blog'])
@@ -288,6 +289,29 @@ def docker(args):
             !brew uninstall docker docker-completion docker-compose docker-compose-completion
         elif 'centos' in PLATFORM:
             !sudo yum remove docker docker-compose
+
+
+def kubernetes(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | {PREFIX} apt-key add -
+            !echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | {PREFIX} tee -a /etc/apt/sources.list.d/kubernetes.list
+            !{PREFIX} apt-get update
+            !{PREFIX} apt-get install -y kubectl
+        elif 'darwin' in PLATFORM:
+            !brew install kubernetes-cli
+        elif 'centos' in PLATFORM:
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} kubectl
+        elif 'darwin' in PLATFORM:
+            !brew uninstall kubectl
+        elif 'centos' in PLATFORM:
+            pass
 
 
 # ------------------------- programming languages -------------------------
