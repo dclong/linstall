@@ -25,6 +25,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'CoreUtils', aliases=['cu'])
     _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'], add_argument=change_shell_args)
     _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
+    _add_subparser(subparsers, 'Hyper', aliases=['hp'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
     #------------------------- Vim ------------------------------
     _add_subparser(subparsers, 'Vim')
@@ -123,6 +124,31 @@ def change_shell_args(subparser):
         help='the shell to change to.')
 
 
+def hyper(args):
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            #!{PREFIX} apt-get install hyper
+            pass
+        elif 'darwin' in PLATFORM:
+            !brew cask install hyper
+        elif 'centos' in PLATFORM:
+            #!sudo yum install hyper
+            pass
+    if args.config:
+        !hyper i hypercwd
+        !hyper i hyper-search
+        !hyper i hyper-pane
+        !hyper i hyperpower
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            #!{PREFIX} apt-get purge hyper
+            pass
+        elif 'darwin' in PLATFORM:
+            !brew cask uninstall hyper
+        elif 'centos' in PLATFORM:
+            #!sudo yum remove hyper
+            pass
+
 def bash_completion(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
@@ -140,6 +166,7 @@ def bash_completion(args):
             !brew uninstall bash-completion
         elif 'centos' in PLATFORM:
             !sudo yum remove bash-completion
+
 
 # ------------------------- vim related -------------------------
 def vim(args):
