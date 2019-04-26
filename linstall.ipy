@@ -171,20 +171,20 @@ def bash_completion(args):
 def exa(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} cargo install --root /usr/local/bin/ exa
+            !{PREFIX} cargo install --root /usr/local/ exa
         elif 'darwin' in PLATFORM:
             !brew install exa
         elif 'centos' in PLATFORM:
-            !{PREFIX} cargo install --root /usr/local/bin exa
+            !{PREFIX} cargo install --root /usr/local/ exa
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} cargo uninstall exa
+            !{PREFIX} cargo uninstall --root /usr/local/ exa
         elif 'darwin' in PLATFORM:
             !brew uninstall exa
         elif 'centos' in PLATFORM:
-            !{PREFIX} cargo uninstall exa
+            !{PREFIX} cargo uninstall --root /usr/local/ exa
 
 
 
