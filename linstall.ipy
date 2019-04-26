@@ -26,6 +26,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'], add_argument=change_shell_args)
     _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
+    _add_subparser(subparsers, 'exa')
     #------------------------- Vim ------------------------------
     _add_subparser(subparsers, 'Vim')
     _add_subparser(subparsers, 'NeoVim', aliases=['nvim'])
@@ -139,6 +140,26 @@ def bash_completion(args):
             !brew uninstall bash-completion
         elif 'centos' in PLATFORM:
             !sudo yum remove bash-completion
+
+
+def exa(args):
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} cargo install --root exa
+        elif 'darwin' in PLATFORM:
+            !brew install exa
+        elif 'centos' in PLATFORM:
+            !sudo cargo install --root exa
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} cargo uninstall exa
+        elif 'darwin' in PLATFORM:
+            !brew uninstall exa
+        elif 'centos' in PLATFORM:
+            !sudo cargo uninstall exa
+
 
 # ------------------------- vim related -------------------------
 def vim(args):
