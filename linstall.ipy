@@ -10,7 +10,7 @@ import logging
 
 USER_ID = os.getuid()
 GROUP_ID = os.getgid()
-PREFIX = '' if USER_ID == 'root' else 'sudo'
+PREFIX = '' if USER_ID == 0 else 'sudo'
 HOME = os.path.expanduser('~')
 BASE_DIR = os.path.dirname(os.path.realpath(os.path.abspath(__file__)))
 PLATFORM = platform.platform().lower() 
@@ -34,6 +34,7 @@ def parse_args(args=None, namespace=None):
     #------------------------- development related  ------------------------------
     _add_subparser(subparsers, 'Git')
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
+    _add_subparser(subparsers, 'Cargo', aliases=['cgo'])
     _add_subparser(subparsers, 'ANTLR')
     _add_subparser(subparsers, 'Docker', aliases=['dock', 'dk'])
     _add_subparser(subparsers, 'Kubernetes', aliases=['k8s'])
@@ -315,6 +316,26 @@ def kubernetes(args):
 
 
 # ------------------------- programming languages -------------------------
+def cargo(args):
+    yes = '-y' if args.yes else ''
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get install {yes} cargo
+        if 'darwin' in PLATFORM:
+            !brew install cargo
+        if 'centos' in PLATFORM:
+            !{PREFIX} yum install {yes} cargo
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {yes} cargo
+        if 'darwin' in PLATFORM:
+            !brew uninstall cargo
+        if 'centos' in PLATFORM:
+            !yum remove cargo
+
+
 def python3(args):
     yes = '-y' if args.yes else ''
     if args.install:
