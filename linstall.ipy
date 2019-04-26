@@ -71,14 +71,14 @@ def coreutils(args):
         elif 'darwin' in PLATFORM:
             !brew install coreutils
         elif 'centos' in PLATFORM:
-            !sudo yum install coreutils
+            !{PREFIX} yum install coreutils
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {args.yes} coreutils
         elif 'darwin' in PLATFORM:
             !brew uninstall coreutils
         elif 'centos' in PLATFORM:
-            !sudo yum remove coreutils
+            !{PREFIX} yum remove coreutils
     if args.config:
         if 'darwin' in PLATFORM:
             !export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
@@ -93,14 +93,14 @@ def shell_utils(args):
         elif 'darwin' in PLATFORM:
             !brew install bash-completion man-db
         elif 'centos' in PLATFORM:
-            !sudo yum install bash-completion command-not-found man-db
+            !{PREFIX} yum install bash-completion command-not-found man-db
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {args.yes} bash-completion command-not-found man-db
         elif 'darwin' in PLATFORM:
             !brew uninstall bash-completion man-db
         elif 'centos' in PLATFORM:
-            !sudo yum remove bash-completion command-not-found man-db
+            !{PREFIX} yum remove bash-completion command-not-found man-db
     if args.config:
         pass
 
@@ -130,7 +130,7 @@ def bash_completion(args):
         elif 'darwin' in PLATFORM:
             !brew install bash-completion
         elif 'centos' in PLATFORM:
-            !sudo yum install bash-completion
+            !{PREFIX} yum install bash-completion
     if args.config:
         pass
     if args.uninstall:
@@ -139,7 +139,7 @@ def bash_completion(args):
         elif 'darwin' in PLATFORM:
             !brew uninstall bash-completion
         elif 'centos' in PLATFORM:
-            !sudo yum remove bash-completion
+            !{PREFIX} yum remove bash-completion
 
 
 def exa(args):
@@ -149,7 +149,7 @@ def exa(args):
         elif 'darwin' in PLATFORM:
             !brew install exa
         elif 'centos' in PLATFORM:
-            !sudo cargo install --root exa
+            !{PREFIX} cargo install --root exa
     if args.config:
         pass
     if args.uninstall:
@@ -158,7 +158,7 @@ def exa(args):
         elif 'darwin' in PLATFORM:
             !brew uninstall exa
         elif 'centos' in PLATFORM:
-            !sudo cargo uninstall exa
+            !{PREFIX} cargo uninstall exa
 
 
 # ------------------------- vim related -------------------------
@@ -169,14 +169,14 @@ def vim(args):
         elif 'darwin' in PLATFORM:
             !brew install vim
         elif 'centos' in PLATFORM:
-            !sudo yum install {args.yes} vim-enhanced
+            !{PREFIX} yum install {args.yes} vim-enhanced
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {args.yes} vim vim-nox
         elif 'darwin' in PLATFORM:
             !brew uninstall vim
         elif 'centos' in PLATFORM:
-            !sudo yum remove vim
+            !{PREFIX} yum remove vim
     if args.config:
         pass
 
@@ -188,14 +188,14 @@ def neovim(args):
         elif 'darwin' in PLATFORM:
             !brew install neovim
         elif 'centos' in PLATFORM:
-            !sudo yum install neovim
+            !{PREFIX} yum install neovim
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {args.yes} neovim
         elif 'darwin' in PLATFORM:
             !brew uninstall neovim
         elif 'centos' in PLATFORM:
-            !sudo yum remove neovim
+            !{PREFIX} yum remove neovim
     if args.config:
         pass
 
@@ -252,14 +252,14 @@ def git(args):
         elif 'darwin' in PLATFORM:
             !brew install git git-lfs
         elif 'centos' in PLATFORM:
-            !sudo yum install git
+            !{PREFIX} yum install git
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {args.yes} git git-lfs
         elif 'darwin' in PLATFORM:
             !brew uninstall git git-lfs
         elif 'centos' in PLATFORM:
-            !sudo yum remove git
+            !{PREFIX} yum remove git
     if args.config:
         !cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig
         !cp '{BASE_DIR}/git/gitignore' $HOME/.gitignore
@@ -274,7 +274,7 @@ def antlr(args):
         elif 'darwin' in PLATFORM:
             !brew install antlr4
         elif 'centos' in PLATFORM:
-            !sudo yum install antlr
+            !{PREFIX} yum install antlr
     if args.config:
         pass
     if args.uninstall:
@@ -283,7 +283,7 @@ def antlr(args):
         elif 'darwin' in PLATFORM:
             !brew uninstall antlr4
         elif 'centos' in PLATFORM:
-            !sudo yum remove antlr
+            !{PREFIX} yum remove antlr
 
 
 def docker(args):
@@ -293,7 +293,7 @@ def docker(args):
         elif 'darwin' in PLATFORM:
             !brew install docker docker-completion docker-compose docker-compose-completion
         elif 'centos' in PLATFORM:
-            !sudo yum install docker docker-compose
+            !{PREFIX} yum install docker docker-compose
     if args.config:
         pass
     if args.uninstall:
@@ -302,7 +302,7 @@ def docker(args):
         elif 'darwin' in PLATFORM:
             !brew uninstall docker docker-completion docker-compose docker-compose-completion
         elif 'centos' in PLATFORM:
-            !sudo yum remove docker docker-compose
+            !{PREFIX} yum remove docker docker-compose
 
 
 def kubernetes(args):
@@ -451,7 +451,7 @@ def proxychains(args):
         elif 'darwin' in PLATFORM:
             !brew install proxychains-ng
         elif 'centos' in PLATFORM:
-            !sudo yum install proxychains
+            !{PREFIX} yum install proxychains
     if args.config:
         print('Configuring proxychains ...')
         des_dir = os.path.join(HOME, '.proxychains')
@@ -463,7 +463,7 @@ def proxychains(args):
         elif 'darwin' in PLATFORM:
             !brew uninstall proxychains-ng
         elif 'centos' in PLATFORM:
-            !sudo yum remove proxychains
+            !{PREFIX} yum remove proxychains
 
 
 def blogging(args):
@@ -523,14 +523,14 @@ def visual_studio_code(args):
         elif 'darwin' in PLATFORM:
             !brew cask install visual-studio-code
         elif 'centos' in PLATFORM:
-            !sudo yum install vscode
+            !{PREFIX} yum install vscode
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} apt-get purge {args.yes} vscode
         elif 'darwin' in PLATFORM:
             !brew cask uninstall visual-studio-code
         elif 'centos' in PLATFORM:
-            !sudo yum remove vscode
+            !{PREFIX} yum remove vscode
     if args.config:
         srcfile = f'{BASE_DIR}/vscode/settings.json'
         desdir = f'{HOME}/.config/Code/User/'
