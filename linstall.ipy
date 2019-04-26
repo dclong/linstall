@@ -64,17 +64,16 @@ def map_keys(args):
 
 
 def coreutils(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get {yes} install coreutils
+            !{PREFIX} apt-get {args.yes} install coreutils
         elif 'darwin' in PLATFORM:
             !brew install coreutils
         elif 'centos' in PLATFORM:
             !sudo yum install coreutils
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} coreutils
+            !{PREFIX} apt-get purge {args.yes} coreutils
         elif 'darwin' in PLATFORM:
             !brew uninstall coreutils
         elif 'centos' in PLATFORM:
@@ -87,17 +86,16 @@ def coreutils(args):
 
 # ------------------------- command-line utils related -------------------------
 def shell_utils(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} bash-completion command-not-found man-db
+            !{PREFIX} apt-get install {args.yes} bash-completion command-not-found man-db
         elif 'darwin' in PLATFORM:
             !brew install bash-completion man-db
         elif 'centos' in PLATFORM:
             !sudo yum install bash-completion command-not-found man-db
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} bash-completion command-not-found man-db
+            !{PREFIX} apt-get purge {args.yes} bash-completion command-not-found man-db
         elif 'darwin' in PLATFORM:
             !brew uninstall bash-completion man-db
         elif 'centos' in PLATFORM:
@@ -144,17 +142,16 @@ def bash_completion(args):
 
 # ------------------------- vim related -------------------------
 def vim(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} vim vim-nox
+            !{PREFIX} apt-get install {args.yes} vim vim-nox
         elif 'darwin' in PLATFORM:
             !brew install vim
         elif 'centos' in PLATFORM:
-            !sudo yum install {yes} vim-enhanced
+            !sudo yum install {args.yes} vim-enhanced
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} vim vim-nox
+            !{PREFIX} apt-get purge {args.yes} vim vim-nox
         elif 'darwin' in PLATFORM:
             !brew uninstall vim
         elif 'centos' in PLATFORM:
@@ -164,17 +161,16 @@ def vim(args):
 
 
 def neovim(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} neovim
+            !{PREFIX} apt-get install {args.yes} neovim
         elif 'darwin' in PLATFORM:
             !brew install neovim
         elif 'centos' in PLATFORM:
             !sudo yum install neovim
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} neovim
+            !{PREFIX} apt-get purge {args.yes} neovim
         elif 'darwin' in PLATFORM:
             !brew uninstall neovim
         elif 'centos' in PLATFORM:
@@ -199,7 +195,6 @@ def _svim_true_color(true_color: bool):
 
 
 def spacevim(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         !curl -sLf https://spacevim.org/install.sh | bash
         if shutil.which('nvim'):
@@ -230,17 +225,16 @@ def ideavim(args):
 
 # ------------------------- coding tools related -------------------------
 def git(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} git git-lfs
+            !{PREFIX} apt-get install {args.yes} git git-lfs
         elif 'darwin' in PLATFORM:
             !brew install git git-lfs
         elif 'centos' in PLATFORM:
             !sudo yum install git
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} git git-lfs
+            !{PREFIX} apt-get purge {args.yes} git git-lfs
         elif 'darwin' in PLATFORM:
             !brew uninstall git git-lfs
         elif 'centos' in PLATFORM:
@@ -253,10 +247,9 @@ def git(args):
 
 
 def antlr(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} antlr4
+            !{PREFIX} apt-get install {args.yes} antlr4
         elif 'darwin' in PLATFORM:
             !brew install antlr4
         elif 'centos' in PLATFORM:
@@ -265,7 +258,7 @@ def antlr(args):
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} antlr4
+            !{PREFIX} apt-get purge {args.yes} antlr4
         elif 'darwin' in PLATFORM:
             !brew uninstall antlr4
         elif 'centos' in PLATFORM:
@@ -273,10 +266,9 @@ def antlr(args):
 
 
 def docker(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} docker docker-compose
+            !{PREFIX} apt-get install {args.yes} docker docker-compose
         elif 'darwin' in PLATFORM:
             !brew install docker docker-completion docker-compose docker-compose-completion
         elif 'centos' in PLATFORM:
@@ -285,7 +277,7 @@ def docker(args):
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} docker docker-compose
+            !{PREFIX} apt-get purge {args.yes} docker docker-compose
         elif 'darwin' in PLATFORM:
             !brew uninstall docker docker-completion docker-compose docker-compose-completion
         elif 'centos' in PLATFORM:
@@ -293,7 +285,6 @@ def docker(args):
 
 
 def kubernetes(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | {PREFIX} apt-key add -
@@ -308,7 +299,7 @@ def kubernetes(args):
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} kubectl
+            !{PREFIX} apt-get purge {args.yes} kubectl
         elif 'darwin' in PLATFORM:
             !brew uninstall kubectl
         elif 'centos' in PLATFORM:
@@ -317,19 +308,18 @@ def kubernetes(args):
 
 # ------------------------- programming languages -------------------------
 def cargo(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} cargo
+            !{PREFIX} apt-get install {args.yes} cargo
         if 'darwin' in PLATFORM:
             !brew install cargo
         if 'centos' in PLATFORM:
-            !{PREFIX} yum install {yes} cargo
+            !{PREFIX} yum install {args.yes} cargo
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} cargo
+            !{PREFIX} apt-get purge {args.yes} cargo
         if 'darwin' in PLATFORM:
             !brew uninstall cargo
         if 'centos' in PLATFORM:
@@ -337,20 +327,19 @@ def cargo(args):
 
 
 def python3(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+            !{PREFIX} apt-get install {args.yes} python3 python3-dev python3-setuptools python3-pip python3-venv
         if 'darwin' in PLATFORM:
             !brew install python3
         if 'centos' in PLATFORM:
-            !{PREFIX} yum install {yes} python34 python34-devel python34-pip
+            !{PREFIX} yum install {args.yes} python34 python34-devel python34-pip
             !{PREFIX} pip3.4 install setuptools
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+            !{PREFIX} apt-get purge {args.yes} python3 python3-dev python3-setuptools python3-pip python3-venv
         if 'darwin' in PLATFORM:
             !brew uninstall python3
         if 'centos' in PLATFORM:
@@ -359,7 +348,6 @@ def python3(args):
 
 # ------------------------- JupyterLab kernels -------------------------
 def itypescript(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         !{PREFIX} npm install -g --unsafe-perm itypescript
         !{PREFIX} its --ts-hide-undefined --install=global
@@ -371,7 +359,6 @@ def itypescript(args):
 
 
 def beakerx(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         !{PREFIX} pip3 install beakerx
         !{PREFIX} beakerx install
@@ -420,7 +407,7 @@ def almond_args(subparser):
 def ssh_server(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} openssh-server fail2ban
+            !{PREFIX} apt-get install {args.yes} openssh-server fail2ban
         elif 'darwin' in PLATFORM:
             pass
         elif 'centos' in PLATFORM:
@@ -429,7 +416,7 @@ def ssh_server(args):
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} openssh-server fail2ban
+            !{PREFIX} apt-get purge {args.yes} openssh-server fail2ban
         elif 'darwin' in PLATFORM:
             pass
         elif 'centos' in PLATFORM:
@@ -471,7 +458,7 @@ def blogging(args):
 def download_tools(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get install {yes} wget curl aria2
+            !{PREFIX} apt-get install {args.yes} wget curl aria2
         elif 'darwin' in PLATFORM:
             !brew install wget curl aria2
         elif 'centos' in PLATFORM:
@@ -480,7 +467,7 @@ def download_tools(args):
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} wget curl aria2
+            !{PREFIX} apt-get purge {args.yes} wget curl aria2
         elif 'darwin' in PLATFORM:
             !brew uninstall wget curl aria2
         elif 'centos' in PLATFORM:
@@ -489,18 +476,17 @@ def download_tools(args):
 
 # ------------------------- IDE -------------------------
 def intellij_idea(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             !{PREFIX} add-apt-repository ppa:mmk2410/intellij-idea
-            !{PREFIX} apt-get update && apt-get install {yes} intellij-idea-community
+            !{PREFIX} apt-get update && apt-get install {args.yes} intellij-idea-community
         elif 'darwin' in PLATFORM:
             !brew cask install intellij-idea-ce
         elif 'centos' in PLATFORM:
             pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} intellij-idea-ce
+            !{PREFIX} apt-get purge {args.yes} intellij-idea-ce
         elif 'darwin' in PLATFORM:
             !brew cask uninstall intellij-idea-ce
         elif 'centos' in PLATFORM:
@@ -510,17 +496,16 @@ def intellij_idea(args):
 
 
 def visual_studio_code(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get {yes} install vscode
+            !{PREFIX} apt-get {args.yes} install vscode
         elif 'darwin' in PLATFORM:
             !brew cask install visual-studio-code
         elif 'centos' in PLATFORM:
             !sudo yum install vscode
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} vscode
+            !{PREFIX} apt-get purge {args.yes} vscode
         elif 'darwin' in PLATFORM:
             !brew cask uninstall visual-studio-code
         elif 'centos' in PLATFORM:
@@ -533,17 +518,16 @@ def visual_studio_code(args):
 
 
 def virtualbox(args):
-    yes = '-y' if args.yes else ''
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get {yes} install virtualbox-qt
+            !{PREFIX} apt-get {args.yes} install virtualbox-qt
         elif 'darwin' in PLATFORM:
             !brew cask install virtualbox virtualbox-extension-pack
         elif 'centos' in PLATFORM:
             pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {yes} virtualbox-qt
+            !{PREFIX} apt-get purge {args.yes} virtualbox-qt
         elif 'darwin' in PLATFORM:
             !brew cask uninstall virtualbox virtualbox-extension-pack
         elif 'centos' in PLATFORM:
@@ -598,8 +582,10 @@ def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Ca
         '-y',
         '--yes',
         dest='yes',
-        action='store_true',
-        help='automatical yes to prompts.')
+        action='store_const',
+        const='--yes',
+        default='',
+        help='Automatical yes (default no) to prompts.')
     subparser.add_argument(
         '-c',
         '--configure',
