@@ -27,6 +27,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
     _add_subparser(subparsers, 'Hyper', aliases=['hp'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
+    _add_subparser(subparsers, 'Wajig', aliases=['wj'])
     _add_subparser(subparsers, 'exa')
     #------------------------- Vim ------------------------------
     _add_subparser(subparsers, 'Vim')
@@ -166,6 +167,17 @@ def bash_completion(args):
             !brew uninstall bash-completion
         elif 'centos' in PLATFORM:
             !{PREFIX} yum remove bash-completion
+
+
+def wajig(args):
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get install {args.yes} wajig
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            !{PREFIX} apt-get purge {args.yes} wajig
 
 
 def exa(args):
