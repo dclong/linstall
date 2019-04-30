@@ -21,6 +21,8 @@ def parse_args(args=None, namespace=None):
     """
     parser = ArgumentParser(description='Easy installation and configuration for Unix/Linux')
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
+    #------------------------- linstall itself ------------------------------
+    _add_subparser(subparsers, 'update', aliases=['pull', 'upd', 'pu'])
     #------------------------- command-line tools ------------------------------
     _add_subparser(subparsers, 'CoreUtils', aliases=['cu'])
     _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'], add_argument=change_shell_args)
@@ -65,6 +67,11 @@ def map_keys(args):
     # reset key mappings
     # setxkbmap -option
     pass
+
+
+def update(args):
+    os.chdir(BASE_DIR)
+    !git pull origin master
 
 
 def coreutils(args):
