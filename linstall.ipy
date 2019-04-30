@@ -37,6 +37,7 @@ def parse_args(args=None, namespace=None):
     #------------------------- development related  ------------------------------
     _add_subparser(subparsers, 'Git')
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
+    _add_subparser(subparsers, 'Poetry', aliases=['pt'], add_argument=poetry_args)
     _add_subparser(subparsers, 'Cargo', aliases=['cgo'])
     _add_subparser(subparsers, 'ANTLR')
     _add_subparser(subparsers, 'Docker', aliases=['dock', 'dk'])
@@ -404,6 +405,27 @@ def python3(args):
             !brew uninstall python3
         if 'centos' in PLATFORM:
             !yum remove python3
+
+
+def poetry(args):
+    if args.install:
+        !curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}
+    if args.config:
+        if 'darwin' in PLATFORM:
+            !poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion
+        else:
+            !{PREFIX} poetry completions bash > /etc/bash_completion.d/poetry.bash-completion
+    if args.uninstall:
+        !poetry self:uninstall
+
+
+def poetry_args(subparser):
+    subparser.add_argument(
+        '-p',
+        '--python',
+        dest='python',
+        default='python3',
+        help='The path to the Python interpreter.')
 
 
 # ------------------------- JupyterLab kernels -------------------------
