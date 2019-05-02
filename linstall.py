@@ -45,6 +45,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
     _add_subparser(subparsers, 'Wajig', aliases=['wj'])
     _add_subparser(subparsers, 'exa')
+    _add_subparser(subparsers, 'osquery', aliases=['osq'])
     #------------------------- Vim ------------------------------
     _add_subparser(subparsers, 'Vim')
     _add_subparser(subparsers, 'NeoVim', aliases=['nvim'])
@@ -225,6 +226,24 @@ def exa(args):
         elif 'centos' in PLATFORM:
             os.system(f'{PREFIX} cargo uninstall --root /usr/local/ exa')
 
+
+def osquery(args):
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            os.system(f'{PREFIX} apt-get install {args.yes} osquery')
+        elif 'darwin' in PLATFORM:
+            os.system(f'brew install osquery')
+        elif 'centos' in PLATFORM:
+            os.system(f'{PREFIX} yum install osquery')
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            os.system(f'{PREFIX} apt-get purge {args.yes} osquery')
+        elif 'darwin' in PLATFORM:
+            os.system(f'brew uninstall osquery')
+        elif 'centos' in PLATFORM:
+            os.system(f'{PREFIX} yum remove osquery')
 
 
 # ------------------------- vim related -------------------------
