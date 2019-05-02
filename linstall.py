@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython3
+#!/usr/bin/env python3
 
 import os
 import json
@@ -25,7 +25,7 @@ def _update_apt_source(seconds: float = 3600 * 12):
     time = SETTINGS.get(key, datetime.datetime(2000, 1, 1))
     now = datetime.datetime.now()
     if (now - time).seconds > seconds:
-        !{PREFIX} apt-get update
+        os.system(f'{PREFIX} apt-get update')
         SETTINGS[key] = now
         json.dump(SETTINGS, SETTINGS_FILE)
 
@@ -85,29 +85,29 @@ def map_keys(args):
 
 def update(args):
     os.chdir(BASE_DIR)
-    !git pull origin master
+    os.system(f'git pull origin master')
 
 
 def coreutils(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} coreutils
+            os.system(f'{PREFIX} apt-get install {args.yes} coreutils')
         elif 'darwin' in PLATFORM:
-            !brew install coreutils
+            os.system(f'brew install coreutils')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install coreutils
+            os.system(f'{PREFIX} yum install coreutils')
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} coreutils
+            os.system(f'{PREFIX} apt-get purge {args.yes} coreutils')
         elif 'darwin' in PLATFORM:
-            !brew uninstall coreutils
+            os.system(f'brew uninstall coreutils')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove coreutils
+            os.system(f'{PREFIX} yum remove coreutils')
     if args.config:
         if 'darwin' in PLATFORM:
-            !export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
-            !export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
+            os.system(f'export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"')
+            os.system(f'export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"')
 
 
 # ------------------------- command-line utils related -------------------------
@@ -115,18 +115,18 @@ def shell_utils(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} bash-completion command-not-found man-db
+            os.system(f'{PREFIX} apt-get install {args.yes} bash-completion command-not-found man-db')
         elif 'darwin' in PLATFORM:
-            !brew install bash-completion man-db
+            os.system(f'brew install bash-completion man-db')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install bash-completion command-not-found man-db
+            os.system(f'{PREFIX} yum install bash-completion command-not-found man-db')
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} bash-completion command-not-found man-db
+            os.system(f'{PREFIX} apt-get purge {args.yes} bash-completion command-not-found man-db')
         elif 'darwin' in PLATFORM:
-            !brew uninstall bash-completion man-db
+            os.system(f'brew uninstall bash-completion man-db')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove bash-completion command-not-found man-db
+            os.system(f'{PREFIX} yum remove bash-completion command-not-found man-db')
     if args.config:
         pass
 
@@ -135,7 +135,7 @@ def change_shell(args):
     if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
         pass
     elif 'darwin' in PLATFORM:
-        !chsh -s {args.shell}
+        os.system(f'chsh -s {args.shell}')
     elif 'centos' in PLATFORM:
         pass
 
@@ -156,21 +156,21 @@ def hyper(args):
             #!{PREFIX} apt-get install {args.yes} hyper
             pass
         elif 'darwin' in PLATFORM:
-            !brew cask install hyper
+            os.system(f'brew cask install hyper')
         elif 'centos' in PLATFORM:
             #!sudo yum install hyper
             pass
     if args.config:
-        !hyper i hypercwd
-        !hyper i hyper-search
-        !hyper i hyper-pane
-        !hyper i hyperpower
+        os.system(f'hyper i hypercwd')
+        os.system(f'hyper i hyper-search')
+        os.system(f'hyper i hyper-pane')
+        os.system(f'hyper i hyperpower')
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             #!{PREFIX} apt-get purge hyper
             pass
         elif 'darwin' in PLATFORM:
-            !brew cask uninstall hyper
+            os.system(f'brew cask uninstall hyper')
         elif 'centos' in PLATFORM:
             #!sudo yum remove hyper
             pass
@@ -179,51 +179,51 @@ def bash_completion(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} bash-completion
+            os.system(f'{PREFIX} apt-get install {args.yes} bash-completion')
         elif 'darwin' in PLATFORM:
-            !brew install bash-completion
+            os.system(f'brew install bash-completion')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install bash-completion
+            os.system(f'{PREFIX} yum install bash-completion')
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge bash-completion
+            os.system(f'{PREFIX} apt-get purge bash-completion')
         elif 'darwin' in PLATFORM:
-            !brew uninstall bash-completion
+            os.system(f'brew uninstall bash-completion')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove bash-completion
+            os.system(f'{PREFIX} yum remove bash-completion')
 
 
 def wajig(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} wajig
+            os.system(f'{PREFIX} apt-get install {args.yes} wajig')
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} wajig
+            os.system(f'{PREFIX} apt-get purge {args.yes} wajig')
 
 
 def exa(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} cargo install --root /usr/local/ exa
+            os.system(f'{PREFIX} cargo install --root /usr/local/ exa')
         elif 'darwin' in PLATFORM:
-            !brew install exa
+            os.system(f'brew install exa')
         elif 'centos' in PLATFORM:
-            !{PREFIX} cargo install --root /usr/local/ exa
+            os.system(f'{PREFIX} cargo install --root /usr/local/ exa')
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} cargo uninstall --root /usr/local/ exa
+            os.system(f'{PREFIX} cargo uninstall --root /usr/local/ exa')
         elif 'darwin' in PLATFORM:
-            !brew uninstall exa
+            os.system(f'brew uninstall exa')
         elif 'centos' in PLATFORM:
-            !{PREFIX} cargo uninstall --root /usr/local/ exa
+            os.system(f'{PREFIX} cargo uninstall --root /usr/local/ exa')
 
 
 
@@ -232,18 +232,18 @@ def vim(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} vim vim-nox
+            os.system(f'{PREFIX} apt-get install {args.yes} vim vim-nox')
         elif 'darwin' in PLATFORM:
-            !brew install vim
+            os.system(f'brew install vim')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install {args.yes} vim-enhanced
+            os.system(f'{PREFIX} yum install {args.yes} vim-enhanced')
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} vim vim-nox
+            os.system(f'{PREFIX} apt-get purge {args.yes} vim vim-nox')
         elif 'darwin' in PLATFORM:
-            !brew uninstall vim
+            os.system(f'brew uninstall vim')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove vim
+            os.system(f'{PREFIX} yum remove vim')
     if args.config:
         pass
 
@@ -252,18 +252,18 @@ def neovim(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} neovim
+            os.system(f'{PREFIX} apt-get install {args.yes} neovim')
         elif 'darwin' in PLATFORM:
-            !brew install neovim
+            os.system(f'brew install neovim')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install neovim
+            os.system(f'{PREFIX} yum install neovim')
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} neovim
+            os.system(f'{PREFIX} apt-get purge {args.yes} neovim')
         elif 'darwin' in PLATFORM:
-            !brew uninstall neovim
+            os.system(f'brew uninstall neovim')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove neovim
+            os.system(f'{PREFIX} yum remove neovim')
     if args.config:
         pass
 
@@ -285,15 +285,15 @@ def _svim_true_color(true_color: bool):
 
 def spacevim(args):
     if args.install:
-        !curl -sLf https://spacevim.org/install.sh | bash
+        os.system(f'curl -sLf https://spacevim.org/install.sh | bash')
         if shutil.which('nvim'):
-            !nvim --headless +'call dein#install()' +qall
+            os.system(f'nvim --headless +'call dein#install()' +qall')
     if args.uninstall:
-        !curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
+        os.system(f'curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall')
     if args.config:
         des_dir = os.path.join(HOME, '.SpaceVim.d')
-        !mkdir -p {des_dir}
-        !cp {BASE_DIR}/SpaceVim/init.toml {des_dir}
+        os.system(f'mkdir -p {des_dir}')
+        os.system(f'cp {BASE_DIR}/SpaceVim/init.toml {des_dir}')
         _svim_true_color(args.true_color)
 
 
@@ -309,7 +309,7 @@ def spacevim_args(subparser):
 
 def ideavim(args):
     if args.config:
-        !cp {BASE_DIR}/ideavim/ideavimrc $HOME/.ideavimrc
+        os.system(f'cp {BASE_DIR}/ideavim/ideavimrc $HOME/.ideavimrc')
 
 
 # ------------------------- coding tools related -------------------------
@@ -317,83 +317,83 @@ def git(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} git git-lfs
+            os.system(f'{PREFIX} apt-get install {args.yes} git git-lfs')
         elif 'darwin' in PLATFORM:
-            !brew install git git-lfs
+            os.system(f'brew install git git-lfs')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install git
+            os.system(f'{PREFIX} yum install git')
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} git git-lfs
+            os.system(f'{PREFIX} apt-get purge {args.yes} git git-lfs')
         elif 'darwin' in PLATFORM:
-            !brew uninstall git git-lfs
+            os.system(f'brew uninstall git git-lfs')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove git
+            os.system(f'{PREFIX} yum remove git')
     if args.config:
-        !cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig
-        !cp '{BASE_DIR}/git/gitignore' $HOME/.gitignore
+        os.system(f'cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig')
+        os.system(f'cp '{BASE_DIR}/git/gitignore' $HOME/.gitignore')
         if 'darwin' in PLATFORM:
-            !cp {BASE_DIR}/git/mac/git_completion {HOME}/.git_completion
+            os.system(f'cp {BASE_DIR}/git/mac/git_completion {HOME}/.git_completion')
 
 
 def antlr(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} antlr4
+            os.system(f'{PREFIX} apt-get install {args.yes} antlr4')
         elif 'darwin' in PLATFORM:
-            !brew install antlr4
+            os.system(f'brew install antlr4')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install antlr
+            os.system(f'{PREFIX} yum install antlr')
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} antlr4
+            os.system(f'{PREFIX} apt-get purge {args.yes} antlr4')
         elif 'darwin' in PLATFORM:
-            !brew uninstall antlr4
+            os.system(f'brew uninstall antlr4')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove antlr
+            os.system(f'{PREFIX} yum remove antlr')
 
 
 def docker(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} docker docker-compose
+            os.system(f'{PREFIX} apt-get install {args.yes} docker docker-compose')
         elif 'darwin' in PLATFORM:
-            !brew install docker docker-completion docker-compose docker-compose-completion
+            os.system(f'brew install docker docker-completion docker-compose docker-compose-completion')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install docker docker-compose
+            os.system(f'{PREFIX} yum install docker docker-compose')
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} docker docker-compose
+            os.system(f'{PREFIX} apt-get purge {args.yes} docker docker-compose')
         elif 'darwin' in PLATFORM:
-            !brew uninstall docker docker-completion docker-compose docker-compose-completion
+            os.system(f'brew uninstall docker docker-completion docker-compose docker-compose-completion')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove docker docker-compose
+            os.system(f'{PREFIX} yum remove docker docker-compose')
 
 
 def kubernetes(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | {PREFIX} apt-key add -
-            !echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | {PREFIX} tee -a /etc/apt/sources.list.d/kubernetes.list
+            os.system(f'curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | {PREFIX} apt-key add -')
+            os.system(f'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | {PREFIX} tee -a /etc/apt/sources.list.d/kubernetes.list')
             _update_apt_source(seconds=-1E10)
-            !{PREFIX} apt-get install {args.yes} kubectl
+            os.system(f'{PREFIX} apt-get install {args.yes} kubectl')
         elif 'darwin' in PLATFORM:
-            !brew install kubernetes-cli
+            os.system(f'brew install kubernetes-cli')
         elif 'centos' in PLATFORM:
             pass
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} kubectl
+            os.system(f'{PREFIX} apt-get purge {args.yes} kubectl')
         elif 'darwin' in PLATFORM:
-            !brew uninstall kubectl
+            os.system(f'brew uninstall kubectl')
         elif 'centos' in PLATFORM:
             pass
 
@@ -403,53 +403,53 @@ def cargo(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} cargo
+            os.system(f'{PREFIX} apt-get install {args.yes} cargo')
         if 'darwin' in PLATFORM:
-            !brew install cargo
+            os.system(f'brew install cargo')
         if 'centos' in PLATFORM:
-            !{PREFIX} yum install {args.yes} cargo
+            os.system(f'{PREFIX} yum install {args.yes} cargo')
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} cargo
+            os.system(f'{PREFIX} apt-get purge {args.yes} cargo')
         if 'darwin' in PLATFORM:
-            !brew uninstall cargo
+            os.system(f'brew uninstall cargo')
         if 'centos' in PLATFORM:
-            !yum remove cargo
+            os.system(f'yum remove cargo')
 
 
 def python3(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+            os.system(f'{PREFIX} apt-get install {args.yes} python3 python3-dev python3-setuptools python3-pip python3-venv')
         if 'darwin' in PLATFORM:
-            !brew install python3
+            os.system(f'brew install python3')
         if 'centos' in PLATFORM:
-            !{PREFIX} yum install {args.yes} python34 python34-devel python34-pip
-            !{PREFIX} pip3.4 install setuptools
+            os.system(f'{PREFIX} yum install {args.yes} python34 python34-devel python34-pip')
+            os.system(f'{PREFIX} pip3.4 install setuptools')
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} python3 python3-dev python3-setuptools python3-pip python3-venv
+            os.system(f'{PREFIX} apt-get purge {args.yes} python3 python3-dev python3-setuptools python3-pip python3-venv')
         if 'darwin' in PLATFORM:
-            !brew uninstall python3
+            os.system(f'brew uninstall python3')
         if 'centos' in PLATFORM:
-            !yum remove python3
+            os.system(f'yum remove python3')
 
 
 def poetry(args):
     if args.install:
-        !curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}
+        os.system(f'curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}')
     if args.config:
         if 'darwin' in PLATFORM:
-            !$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion
+            os.system(f'$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion')
         else:
-            !{PREFIX} $HOME/.poetry/bin/poetry completions bash > /etc/bash_completion.d/poetry.bash-completion
+            os.system(f'{PREFIX} $HOME/.poetry/bin/poetry completions bash > /etc/bash_completion.d/poetry.bash-completion')
     if args.uninstall:
-        !poetry self:uninstall
+        os.system(f'poetry self:uninstall')
 
 
 def poetry_args(subparser):
@@ -464,41 +464,41 @@ def poetry_args(subparser):
 # ------------------------- JupyterLab kernels -------------------------
 def itypescript(args):
     if args.install:
-        !{PREFIX} npm install -g --unsafe-perm itypescript
-        !{PREFIX} its --ts-hide-undefined --install=global
+        os.system(f'{PREFIX} npm install -g --unsafe-perm itypescript')
+        os.system(f'{PREFIX} its --ts-hide-undefined --install=global')
     if args.uninstall:
-        !{PREFIX} jupyter kernelspec uninstall typescript
-        !{PREFIX} npm uninstall itypescript
+        os.system(f'{PREFIX} jupyter kernelspec uninstall typescript')
+        os.system(f'{PREFIX} npm uninstall itypescript')
     if args.config:
         pass
 
 
 def beakerx(args):
     if args.install:
-        !{PREFIX} pip3 install beakerx
-        !{PREFIX} beakerx install
-        !{PREFIX} jupyter labextension install @jupyter-widgets/jupyterlab-manager
-        !{PREFIX} jupyter labextension install beakerx-jupyterlab
+        os.system(f'{PREFIX} pip3 install beakerx')
+        os.system(f'{PREFIX} beakerx install')
+        os.system(f'{PREFIX} jupyter labextension install @jupyter-widgets/jupyterlab-manager')
+        os.system(f'{PREFIX} jupyter labextension install beakerx-jupyterlab')
     if args.uninstall:
-        !{PREFIX} jupyter labextension uninstall beakerx-jupyterlab
-        !{PREFIX} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager
-        !{PREFIX} beakerx uninstall
-        !{PREFIX} pip3 uninstall beakerx
+        os.system(f'{PREFIX} jupyter labextension uninstall beakerx-jupyterlab')
+        os.system(f'{PREFIX} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager')
+        os.system(f'{PREFIX} beakerx uninstall')
+        os.system(f'{PREFIX} pip3 uninstall beakerx')
     if args.config:
-        !{PREFIX} chown -R {USER_ID}:{GROUP_ID} {HOME}
+        os.system(f'{PREFIX} chown -R {USER_ID}:{GROUP_ID} {HOME}')
 
 
 def almond(args):
     if args.install:
         coursier = os.path.join(HOME, '.local/bin/coursier')
         almond = os.path.join(HOME, '.local/bin/almond')
-        !curl -L -o {coursier} https://git.io/coursier-cli
-        !chmod +x {coursier}
-        !{coursier} bootstrap -f -r jitpack -i user \
+        os.system(f'curl -L -o {coursier} https://git.io/coursier-cli')
+        os.system(f'chmod +x {coursier}')
+        os.system(f'''{coursier} bootstrap -f -r jitpack -i user \
                 -I user:sh.almond:scala-kernel-api_{args.scala_version}:{args.almond_version} \
                 -o {almond} \
-                sh.almond:scala-kernel_{args.scala_version}:{args.almond_version}
-        !{PREFIX} {almond} --install --global --force
+                sh.almond:scala-kernel_{args.scala_version}:{args.almond_version}''')
+        os.system(f'{PREFIX} {almond} --install --global --force')
     if args.config:
         pass
 
@@ -523,7 +523,7 @@ def ssh_server(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} openssh-server fail2ban
+            os.system(f'{PREFIX} apt-get install {args.yes} openssh-server fail2ban')
         elif 'darwin' in PLATFORM:
             pass
         elif 'centos' in PLATFORM:
@@ -532,7 +532,7 @@ def ssh_server(args):
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} openssh-server fail2ban
+            os.system(f'{PREFIX} apt-get purge {args.yes} openssh-server fail2ban')
         elif 'darwin' in PLATFORM:
             pass
         elif 'centos' in PLATFORM:
@@ -543,51 +543,51 @@ def proxychains(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} proxychains
+            os.system(f'{PREFIX} apt-get install {args.yes} proxychains')
         elif 'darwin' in PLATFORM:
-            !brew install proxychains-ng
+            os.system(f'brew install proxychains-ng')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install proxychains
+            os.system(f'{PREFIX} yum install proxychains')
     if args.config:
         print('Configuring proxychains ...')
         des_dir = os.path.join(HOME, '.proxychains')
-        !mkdir -p {des_dir}
-        !cp {BASE_DIR}/proxychains/proxychains.conf {des_dir}/
+        os.system(f'mkdir -p {des_dir}')
+        os.system(f'cp {BASE_DIR}/proxychains/proxychains.conf {des_dir}/')
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge proxychains
+            os.system(f'{PREFIX} apt-get purge proxychains')
         elif 'darwin' in PLATFORM:
-            !brew uninstall proxychains-ng
+            os.system(f'brew uninstall proxychains-ng')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove proxychains
+            os.system(f'{PREFIX} yum remove proxychains')
 
 
 def blogging(args):
     if args.install:
         # python3(args)
-        !pip3 install --user pelican markdown
+        os.system(f'pip3 install --user pelican markdown')
     if args.config:
         pass
     if args.uninstall:
-        !pip3 uninstall --user pelican markdown
+        os.system(f'pip3 uninstall --user pelican markdown')
 
 
 def download_tools(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} wget curl aria2
+            os.system(f'{PREFIX} apt-get install {args.yes} wget curl aria2')
         elif 'darwin' in PLATFORM:
-            !brew install wget curl aria2
+            os.system(f'brew install wget curl aria2')
         elif 'centos' in PLATFORM:
             pass
     if args.config:
         pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} wget curl aria2
+            os.system(f'{PREFIX} apt-get purge {args.yes} wget curl aria2')
         elif 'darwin' in PLATFORM:
-            !brew uninstall wget curl aria2
+            os.system(f'brew uninstall wget curl aria2')
         elif 'centos' in PLATFORM:
             pass
 
@@ -596,18 +596,18 @@ def download_tools(args):
 def intellij_idea(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} add-apt-repository ppa:mmk2410/intellij-idea
+            os.system(f'{PREFIX} add-apt-repository ppa:mmk2410/intellij-idea')
             _update_apt_source(seconds=-1E10)
-            !{PREFIX} apt-get install {args.yes} intellij-idea-community
+            os.system(f'{PREFIX} apt-get install {args.yes} intellij-idea-community')
         elif 'darwin' in PLATFORM:
-            !brew cask install intellij-idea-ce
+            os.system(f'brew cask install intellij-idea-ce')
         elif 'centos' in PLATFORM:
             pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} intellij-idea-ce
+            os.system(f'{PREFIX} apt-get purge {args.yes} intellij-idea-ce')
         elif 'darwin' in PLATFORM:
-            !brew cask uninstall intellij-idea-ce
+            os.system(f'brew cask uninstall intellij-idea-ce')
         elif 'centos' in PLATFORM:
             pass
     if args.config:
@@ -618,39 +618,39 @@ def visual_studio_code(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} vscode
+            os.system(f'{PREFIX} apt-get install {args.yes} vscode')
         elif 'darwin' in PLATFORM:
-            !brew cask install visual-studio-code
+            os.system(f'brew cask install visual-studio-code')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum install vscode
+            os.system(f'{PREFIX} yum install vscode')
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} vscode
+            os.system(f'{PREFIX} apt-get purge {args.yes} vscode')
         elif 'darwin' in PLATFORM:
-            !brew cask uninstall visual-studio-code
+            os.system(f'brew cask uninstall visual-studio-code')
         elif 'centos' in PLATFORM:
-            !{PREFIX} yum remove vscode
+            os.system(f'{PREFIX} yum remove vscode')
     if args.config:
         srcfile = f'{BASE_DIR}/vscode/settings.json'
         desdir = f'{HOME}/.config/Code/User/'
-        !mkdir -p {desdir}
-        !ln -svf {srcfile} {desdir}
+        os.system(f'mkdir -p {desdir}')
+        os.system(f'ln -svf {srcfile} {desdir}')
 
 
 def virtualbox(args):
     if args.install:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             _update_apt_source()
-            !{PREFIX} apt-get install {args.yes} virtualbox-qt
+            os.system(f'{PREFIX} apt-get install {args.yes} virtualbox-qt')
         elif 'darwin' in PLATFORM:
-            !brew cask install virtualbox virtualbox-extension-pack
+            os.system(f'brew cask install virtualbox virtualbox-extension-pack')
         elif 'centos' in PLATFORM:
             pass
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
-            !{PREFIX} apt-get purge {args.yes} virtualbox-qt
+            os.system(f'{PREFIX} apt-get purge {args.yes} virtualbox-qt')
         elif 'darwin' in PLATFORM:
-            !brew cask uninstall virtualbox virtualbox-extension-pack
+            os.system(f'brew cask uninstall virtualbox virtualbox-extension-pack')
         elif 'centos' in PLATFORM:
             pass
     if args.config:
