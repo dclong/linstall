@@ -41,6 +41,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'CoreUtils', aliases=['cu'])
     _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'], add_argument=change_shell_args)
     _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
+    _add_subparser(subparsers, 'Bash-it', aliases=['shit', 'bit'])
     _add_subparser(subparsers, 'Hyper', aliases=['hp'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
     _add_subparser(subparsers, 'Wajig', aliases=['wj'])
@@ -175,6 +176,22 @@ def hyper(args):
         elif 'centos' in PLATFORM:
             #!sudo yum remove hyper
             pass
+
+
+def bash_it(args):
+    """Install Bash-it, a community Bash framework.
+
+    https://github.com/Bash-it/bash-it#installation
+    """
+    if args.install:
+        os.system('git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it')
+        os.system('~/.bash_it/install.sh --silent')
+    if args.config:
+        pass
+    if args.uninstall:
+        os.system('~/.bash_it/uninstall.sh')
+        shutil.rmtree(os.path.join(HOME, '.bash_it'))
+
 
 def bash_completion(args):
     if args.install:
@@ -699,7 +716,7 @@ def to_bool(value: Any) -> bool:
 
 
 def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Callable, None] = None, add_argument: Union[Callable, None] = None):
-    sub_cmd = re.sub(r'\s+', '_', name.lower())
+    sub_cmd = re.sub(r'(\s+)|-', '_', name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
     func = func if func else eval(sub_cmd)
     subparser = subparsers.add_parser(
