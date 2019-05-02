@@ -22,7 +22,7 @@ SETTINGS = json.load(SETTINGS_FILE) if os.path.isfile(SETTINGS_FILE) else {}
 
 def _update_apt_source(seconds: float = 3600 * 12):
     key = 'apt_source_update_time'
-    time = settings.get(key, datetime.datetime(2000, 1, 1))
+    time = SETTINGS.get(key, datetime.datetime(2000, 1, 1))
     now = datetime.datetime.now()
     if (now - time).seconds > seconds:
         !{PREFIX} apt-get update
