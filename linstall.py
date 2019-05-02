@@ -311,8 +311,8 @@ def spacevim(args):
         os.system(f'curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall')
     if args.config:
         des_dir = os.path.join(HOME, '.SpaceVim.d')
-        os.system(f'mkdir -p {des_dir}')
-        os.system(f'cp {BASE_DIR}/SpaceVim/init.toml {des_dir}')
+        os.makedirs(des_dir, exist_ok=True)
+        shutil.copy2(os.path.join(BASE_DIR, 'SpaceVim/init.toml'), des_dir)
         _svim_true_color(args.true_color)
 
 
@@ -328,7 +328,7 @@ def spacevim_args(subparser):
 
 def ideavim(args):
     if args.config:
-        os.system(f'cp {BASE_DIR}/ideavim/ideavimrc $HOME/.ideavimrc')
+        shutil.copy2(os.path.join(BASE_DIR, 'ideavim/ideavimrc'), os.path.join(HOME, '.ideavimrc'))
 
 
 # ------------------------- coding tools related -------------------------
@@ -349,10 +349,10 @@ def git(args):
         elif 'centos' in PLATFORM:
             os.system(f'{PREFIX} yum remove git')
     if args.config:
-        os.system(f'cp "{BASE_DIR}/git/gitconfig" $HOME/.gitconfig')
-        os.system(f'cp "{BASE_DIR}/git/gitignore" $HOME/.gitignore')
+        shutil.copy2(os.path.join(BASE_DIR, 'git/gitconfig'), os.path.join(HOME, '.gitconfig'))
+        shutil.copy2(os.path.join(BASE_DIR, 'git/gitignore'), os.path.join(HOME, '.gitignore'))
         if 'darwin' in PLATFORM:
-            os.system(f'cp {BASE_DIR}/git/mac/git_completion {HOME}/.git_completion')
+            shutil.copy2(os.path.join(BASE_DIR, 'git/mac/git_completion'), os.path.join(HOME, '.git_completion'))
 
 
 def antlr(args):
@@ -570,8 +570,8 @@ def proxychains(args):
     if args.config:
         print('Configuring proxychains ...')
         des_dir = os.path.join(HOME, '.proxychains')
-        os.system(f'mkdir -p {des_dir}')
-        os.system(f'cp {BASE_DIR}/proxychains/proxychains.conf {des_dir}/')
+        os.makedirs(des_dir, exist_ok=True)
+        shutil.copy2(os.path.join(BASE_DIR, 'proxychains/proxychains.conf'), des_dir)
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             os.system(f'{PREFIX} apt-get purge proxychains')
@@ -652,7 +652,7 @@ def visual_studio_code(args):
     if args.config:
         srcfile = f'{BASE_DIR}/vscode/settings.json'
         desdir = f'{HOME}/.config/Code/User/'
-        os.system(f'mkdir -p {desdir}')
+        os.makedirs(des_dir, exist_ok=True)
         os.system(f'ln -svf {srcfile} {desdir}')
 
 
