@@ -287,7 +287,7 @@ def spacevim(args):
     if args.install:
         os.system(f'curl -sLf https://spacevim.org/install.sh | bash')
         if shutil.which('nvim'):
-            os.system(f'nvim --headless +'call dein#install()' +qall')
+            os.system(f'nvim --headless +"call dein#install()" +qall')
     if args.uninstall:
         os.system(f'curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall')
     if args.config:
@@ -330,8 +330,8 @@ def git(args):
         elif 'centos' in PLATFORM:
             os.system(f'{PREFIX} yum remove git')
     if args.config:
-        os.system(f'cp '{BASE_DIR}/git/gitconfig' $HOME/.gitconfig')
-        os.system(f'cp '{BASE_DIR}/git/gitignore' $HOME/.gitignore')
+        os.system(f'cp "{BASE_DIR}/git/gitconfig" $HOME/.gitconfig')
+        os.system(f'cp "{BASE_DIR}/git/gitignore" $HOME/.gitignore')
         if 'darwin' in PLATFORM:
             os.system(f'cp {BASE_DIR}/git/mac/git_completion {HOME}/.git_completion')
 
