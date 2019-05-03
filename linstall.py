@@ -199,7 +199,7 @@ def bash_completion(args):
             _update_apt_source()
             os.system(f'{PREFIX} apt-get install {args.yes} bash-completion')
         elif 'darwin' in PLATFORM:
-            os.system(f'brew install bash-completion')
+            os.system(f'brew install bash-completion@2')
         elif 'centos' in PLATFORM:
             os.system(f'{PREFIX} yum install bash-completion')
     if args.config:
