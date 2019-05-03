@@ -398,7 +398,7 @@ def docker(args):
             _update_apt_source()
             os.system(f'{PREFIX} apt-get install {args.yes} docker docker-compose')
         elif 'darwin' in PLATFORM:
-            os.system(f'brew install docker docker-completion docker-compose docker-compose-completion')
+            os.system(f'brew install docker docker-compose bash-complete docker-completion docker-compose-completion')
         elif 'centos' in PLATFORM:
             os.system(f'{PREFIX} yum install docker docker-compose')
     if args.config:
