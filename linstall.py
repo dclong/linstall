@@ -60,6 +60,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'ANTLR')
     _add_subparser(subparsers, 'Docker', aliases=['dock', 'dk'])
     _add_subparser(subparsers, 'Kubernetes', aliases=['k8s'])
+    _add_subparser(subparsers, 'Minikube', aliases=['mkb'])
     #------------------------- web related ------------------------------
     _add_subparser(subparsers, 'SSH server', aliases=['sshs'])
     _add_subparser(subparsers, 'blogging', aliases=['blog'])
@@ -432,6 +433,37 @@ def kubernetes(args):
             os.system(f'brew uninstall kubectl')
         elif 'centos' in PLATFORM:
             pass
+
+
+def _minikube_linux():
+    os.system(f'''curl -L https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -o /tmp/minikube-linux-amd64 \
+            && {PREFIX} apt-get install /tmp/minikube-linux-amd64 /usr/local/bin/minikube''')
+    print('VT-x/AMD-v virtualization must be enabled in BIOS.')
+
+
+def minikube(args):
+    virtualbox(args)
+    kubernetes(args)
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            _update_apt_source(seconds=-1E10)
+            _minikube_linux()
+        elif 'darwin' in PLATFORM:
+            os.system(f'brew cask install minikube')
+        elif 'centos' in PLATFORM:
+            _minikube_linux()
+        elif 'win32' in PLATFORM:
+            os.system(f'choco install minikube')
+            print('VT-x/AMD-v virtualization must be enabled in BIOS.')
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            os.system(f'{PREFIX} rm /usr/local/bin/minikube')
+        elif 'darwin' in PLATFORM:
+            os.system(f'brew cask uninstall minikube')
+        elif 'centos' in PLATFORM:
+            os.system(f'{PREFIX} rm /usr/local/bin/minikube')
 
 
 # ------------------------- programming languages -------------------------
