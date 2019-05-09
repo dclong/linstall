@@ -70,6 +70,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
     _add_subparser(subparsers, 'Almond', aliases=['al', 'amd'], add_argument=almond_args)
     _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
+    _add_subparser(subparsers, 'nbdime', aliases=['nbd'])
     #------------------------- IDEs ------------------------------
     _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
     _add_subparser(subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea', 'ii'])
@@ -530,6 +531,15 @@ def poetry_args(subparser):
 
 
 # ------------------------- JupyterLab kernels -------------------------
+def nbdime(args):
+    if args.install:
+        os.system(f'{PREFIX} pip3 install nbdime')
+    if args.uninstall:
+        os.system(f'{PREFIX} pip3 uninstall nbdime')
+    if args.config:
+        os.system(f'nbdime config-git --enable --global')
+
+
 def itypescript(args):
     if args.install:
         os.system(f'{PREFIX} npm install -g --unsafe-perm itypescript')
