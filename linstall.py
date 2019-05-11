@@ -10,12 +10,12 @@ from argparse import ArgumentParser
 import datetime
 import logging
 
+PLATFORM = platform.platform().lower() 
 USER_ID = os.getuid()
 GROUP_ID = os.getgid()
-PREFIX = '' if USER_ID == 0 else 'sudo'
+PREFIX = '' if USER_ID == 0 or 'darwin' in PLATFORM else 'sudo'
 HOME = os.path.expanduser('~')
 BASE_DIR = os.path.dirname(os.path.realpath(os.path.abspath(__file__)))
-PLATFORM = platform.platform().lower() 
 SETTINGS_FILE = os.path.join(HOME, '.linstall.json')
 SETTINGS = json.load(SETTINGS_FILE) if os.path.isfile(SETTINGS_FILE) else {}
 
