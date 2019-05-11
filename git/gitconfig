@@ -16,15 +16,15 @@
     process = git-lfs filter-process
     required = true
 [diff "jupyternotebook"]
-    command = git-nbdiffdriver diff
+	command = git-nbdiffdriver diff
 [merge "jupyternotebook"]
-    driver = git-nbmergedriver merge %O %A %B %L %P
-    name = jupyter notebook merge driver
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
 [difftool "nbdime"]
-    cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
 [difftool]
-    prompt = false
+	prompt = false
 [mergetool "nbdime"]
-    cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [mergetool]
-    prompt = false
+	prompt = false
