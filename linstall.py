@@ -42,6 +42,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'], add_argument=change_shell_args)
     _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
     _add_subparser(subparsers, 'Bash-it', aliases=['shit', 'bit'])
+    _add_subparser(subparsers, 'Homebrew', aliases=['brew'])
     _add_subparser(subparsers, 'Hyper', aliases=['hp'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
     _add_subparser(subparsers, 'Wajig', aliases=['wj'])
@@ -151,6 +152,31 @@ def change_shell_args(subparser):
         dest='shell',
         default='/bin/bash',
         help='the shell to change to.')
+
+
+def homebrew(args):
+    if args.install:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            _update_apt_source()
+            os.system(f'{PREFIX} apt-get install {args.yes} build-essential curl file git')
+            os.system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"')
+        elif 'darwin' in PLATFORM:
+            os.system(f'brew cask install hyper')
+        elif 'centos' in PLATFORM or 'redhat' in PLATFORM or 'fedora' in PLATFORM:
+            os.system(f'{PREFIX} yum groupinstall "Development Tools"')
+            os.system(f'{PREFIX} yum install curl file git')
+            if 'fedora' in PLATFORM:
+                os.system(f'{PREFIX} yum install libxcrypt-compat')
+            os.system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"')
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+            pass
+        elif 'darwin' in PLATFORM:
+            pass
+        elif 'centos' in PLATFORM or 'redhat' in PLATFORM or 'fedora' in PLATFORM:
+            pass
 
 
 def hyper(args):
