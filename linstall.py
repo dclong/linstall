@@ -539,8 +539,8 @@ def poetry(args):
     if args.install:
         os.system(f'curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}')
     if args.config:
-        if any(if kwd in PLATFORM for kwd in ('ubuntu', 'debian', 'centos', 'redhat', 'fedoral')):
-            os.system(f'{PREFIX} $HOME/.poetry/bin/poetry completions bash > /etc/bash_completion.d/poetry.bash-completion')
+        if any(kwd in PLATFORM for kwd in ('ubuntu', 'debian', 'centos', 'redhat', 'fedoral')):
+            os.system(f'{PREFIX} {HOME}/.poetry/bin/poetry completions bash > /etc/bash_completion.d/poetry.bash-completion')
         elif 'darwin' in PLATFORM:
             os.system(f'$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion')
     if args.uninstall:
