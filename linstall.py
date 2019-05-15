@@ -20,16 +20,6 @@ SETTINGS_FILE = os.path.join(HOME, '.linstall.json')
 SETTINGS = json.load(SETTINGS_FILE) if os.path.isfile(SETTINGS_FILE) else {}
 
 
-def _update_apt_source(seconds: float = 3600 * 12):
-    key = 'apt_source_update_time'
-    time = SETTINGS.get(key, datetime.datetime(2000, 1, 1))
-    now = datetime.datetime.now()
-    if (now - time).seconds > seconds:
-        os.system(f'{PREFIX} apt-get update')
-        SETTINGS[key] = now
-        json.dump(SETTINGS, SETTINGS_FILE)
-
-
 def parse_args(args=None, namespace=None):
     """Parse command-line arguments for the install/configuration util.
     """
@@ -540,7 +530,8 @@ def poetry(args):
         os.system(f'curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}')
     if args.config:
         if any(kwd in PLATFORM for kwd in ('ubuntu', 'debian', 'centos', 'redhat', 'fedoral')):
-            os.system(f'{PREFIX} {HOME}/.poetry/bin/poetry completions bash > /etc/bash_completion.d/poetry.bash-completion')
+            cmd = f'{PREFIX} {HOME}/.poetry/bin/poetry completions bash > /etc/bash_completion.d/poetry.bash-completion'
+            _run(cmd, args.log)
         elif 'darwin' in PLATFORM:
             os.system(f'$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion')
     if args.uninstall:
@@ -817,10 +808,32 @@ def _add_subparser(subparsers, name: str, aliases: Sequence = (), func: Union[Ca
         dest='config',
         action='store_true',
         help=f'configure {name}.')
+    subparser.add_argument(
+        '-l',
+        '--log',
+        dest='log',
+        action='store_true',
+        help=f'Print the command to run.')
     if add_argument:
         add_argument(subparser)
     subparser.set_defaults(func=func)
     return subparser
+
+
+def _update_apt_source(seconds: float = 3600 * 12):
+    key = 'apt_source_update_time'
+    time = SETTINGS.get(key, datetime.datetime(2000, 1, 1))
+    now = datetime.datetime.now()
+    if (now - time).seconds > seconds:
+        os.system(f'{PREFIX} apt-get update')
+        SETTINGS[key] = now
+        json.dump(SETTINGS, SETTINGS_FILE)
+
+
+def _run(cmd: str, log: bool) -> None:
+    if log:
+        print(cmd)
+    os.system(cmd)
 
 
 if __name__ == '__main__':
