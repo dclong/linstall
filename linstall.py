@@ -834,7 +834,7 @@ def _update_apt_source(seconds: float = 3600 * 12):
 
 def _run(cmd: str, log: bool) -> None:
     if log:
-        print(cmd)
+        print('\n', cmd)
     os.system(cmd)
 
 
