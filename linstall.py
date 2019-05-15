@@ -530,6 +530,10 @@ def poetry(args):
         cmd = f'curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}'
         _run(cmd, args.log)
     if args.config:
+        desdir = f'{HOME}/.local/bin/'
+        if os.path.exists(desdir):
+            srcfile = f'{HOME}/.poetry/bin/poetry'
+            os.symlink(srcfile, os.path.join(desdir, 'poetry'))
         if any(kwd in PLATFORM for kwd in ('ubuntu', 'debian', 'centos', 'redhat', 'fedoral')):
             cmd = f'{HOME}/.poetry/bin/poetry completions bash | {PREFIX} tee /etc/bash_completion.d/poetry.bash-completion > /dev/null'
             _run(cmd, args.log)
