@@ -531,7 +531,7 @@ def poetry(args):
         _run(cmd, args.log)
     if args.config:
         if any(kwd in PLATFORM for kwd in ('ubuntu', 'debian', 'centos', 'redhat', 'fedoral')):
-            cmd = f'{PREFIX} {HOME}/.poetry/bin/poetry completions bash > /etc/bash_completion.d/poetry.bash-completion'
+            cmd = f'{HOME}/.poetry/bin/poetry completions bash | {PREFIX} tee /etc/bash_completion.d/poetry.bash-completion > /dev/null'
             _run(cmd, args.log)
         elif 'darwin' in PLATFORM:
              cm = f'$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion'
@@ -834,7 +834,7 @@ def _update_apt_source(seconds: float = 3600 * 12):
 
 def _run(cmd: str, log: bool) -> None:
     if log:
-        print('\n', cmd)
+        print('\n', cmd, sep='')
     os.system(cmd)
 
 
