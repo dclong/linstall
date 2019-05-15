@@ -527,15 +527,17 @@ def python3(args):
 
 def poetry(args):
     if args.install:
-        os.system(f'curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}')
+        cmd = f'curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}'
+        _run(cmd, args.log)
     if args.config:
         if any(kwd in PLATFORM for kwd in ('ubuntu', 'debian', 'centos', 'redhat', 'fedoral')):
             cmd = f'{PREFIX} {HOME}/.poetry/bin/poetry completions bash > /etc/bash_completion.d/poetry.bash-completion'
             _run(cmd, args.log)
         elif 'darwin' in PLATFORM:
-            os.system(f'$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion')
+             cm = f'$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion'
+             _run(cmd, args.log)
     if args.uninstall:
-        os.system(f'poetry self:uninstall')
+        _run(f'poetry self:uninstall')
 
 
 def poetry_args(subparser):
