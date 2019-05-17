@@ -34,6 +34,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Bash-it', aliases=['shit', 'bit'])
     _add_subparser(subparsers, 'Homebrew', aliases=['brew'])
     _add_subparser(subparsers, 'Hyper', aliases=['hp'])
+    _add_subparser(subparsers, 'OpenInTerminal', aliases=['oit'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
     _add_subparser(subparsers, 'Wajig', aliases=['wj'])
     _add_subparser(subparsers, 'exa')
@@ -194,6 +195,17 @@ def hyper(args):
         elif 'centos' in PLATFORM:
             #!sudo yum remove hyper
             pass
+
+
+def openinterminal(args):
+    if args.install:
+        if 'darwin' in PLATFORM:
+            os.system(f'brew cask install openinterminal')
+    if args.config:
+        pass
+    if args.uninstall:
+        if 'darwin' in PLATFORM:
+            os.system(f'brew cask uninstall openinterminal')
 
 
 def bash_it(args):
