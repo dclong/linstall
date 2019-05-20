@@ -365,12 +365,16 @@ def spacevim(args):
 
 def spacevim_args(subparser):
     subparser.add_argument(
-        '-t',
-        '--true-color',
+        '--enable-true-color',
         dest='true_color',
-        type=to_bool,
-        default=True,
-        help='whether to enable true color (default true) for SpaceVim.')
+        action='store_true',
+        default='true',
+        help='enable true color (default true) for SpaceVim.')
+    subparser.add_argument(
+        '---disable-true-color',
+        dest='true_color',
+        action='store_false',
+        help='disable true color (default true) for SpaceVim.')
 
 
 def ideavim(args):
