@@ -32,7 +32,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'change shell', aliases=['chsh', 'cs'], add_argument=change_shell_args)
     _add_subparser(subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su'])
     _add_subparser(subparsers, 'Bash-it', aliases=['shit', 'bit'])
-    _add_subparser(subparsers, 'Homebrew', aliases=['brew'])
+    _add_subparser(subparsers, 'Homebrew', aliases=['brew'], add_argument=homebrew_args)
     _add_subparser(subparsers, 'Hyper', aliases=['hp'])
     _add_subparser(subparsers, 'OpenInTerminal', aliases=['oit'])
     _add_subparser(subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp'])
@@ -145,22 +145,42 @@ def change_shell_args(subparser):
         help='the shell to change to.')
 
 
+def homebrew_args(subparser):
+    subparser.add_argument(
+        '-d',
+        '--install-deps',
+        dest='dep',
+        action='store_true',
+        help='Whether to install dependencies.')
+
+
 def homebrew(args):
     if args.install:
-        if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
+        if any(kwd in PLATFORM for kwd in ('ubuntu', 'debian')):
             _update_apt_source()
-            os.system(f'{PREFIX} apt-get install {args.yes} build-essential curl file git')
+            if args.dep:
+                os.system(f'{PREFIX} apt-get install {args.yes} build-essential curl file git')
             os.system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"')
         elif 'darwin' in PLATFORM:
             os.system(f'brew cask install hyper')
-        elif 'centos' in PLATFORM or 'redhat' in PLATFORM or 'fedora' in PLATFORM:
-            os.system(f'{PREFIX} yum groupinstall "Development Tools"')
-            os.system(f'{PREFIX} yum install curl file git')
-            if 'fedora' in PLATFORM:
-                os.system(f'{PREFIX} yum install libxcrypt-compat')
+        elif any(kwd in PLATFORM for kwd in ('centos', 'redhat', 'fedora')):
+            if args.dep:
+                os.system(f'{PREFIX} yum groupinstall "Development Tools"')
+                os.system(f'{PREFIX} yum install curl file git')
+                if 'fedora' in PLATFORM:
+                    os.system(f'{PREFIX} yum install libxcrypt-compat')
             os.system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"')
     if args.config:
-        pass
+        if any(kwd in PLATFORM for kwd in ('ubuntu', 'debian', 'centos', 'redhat', 'fedoral')):
+            dirs = ['{HOME}/.linuxbrew', '/home/linuxbrew/.linuxbrew']
+            paths = [f'{dir_}/bin/brew' for dir_ in dirs if os.path.isdir(dir_)]
+            if paths:
+                brew = paths[-1]
+                profiles = [f'{HOME}/.bash_profile', '{HOME}/.profile']
+                for profile in profiles:
+                    os.system(f'{brew} shellenv >> {profile}')
+            else:
+                sys.exit('Homebrew is not installed!')
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             pass
