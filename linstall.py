@@ -391,7 +391,7 @@ def spacevim_args(subparser):
         default='true',
         help='enable true color (default true) for SpaceVim.')
     subparser.add_argument(
-        '---disable-true-color',
+        '--disable-true-color',
         dest='true_color',
         action='store_false',
         help='disable true color (default true) for SpaceVim.')
