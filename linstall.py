@@ -206,6 +206,11 @@ def hyper(args):
         os.system(f'hyper i hyper-search')
         os.system(f'hyper i hyper-pane')
         os.system(f'hyper i hyperpower')
+        path = f'{HOME}/.hyper.js'
+        #if os.path.exists(path):
+        #    os.remove(path)
+        shutil.copy2(os.path.join(BASE_DIR, 'hyper/hyper.js'), path)
+
     if args.uninstall:
         if 'ubuntu' in PLATFORM or 'debian' in PLATFORM:
             #!{PREFIX} apt-get purge hyper
