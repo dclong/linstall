@@ -574,12 +574,15 @@ def poetry(args):
         desdir = f'{HOME}/.local/bin/'
         if os.path.exists(desdir):
             srcfile = f'{HOME}/.poetry/bin/poetry'
-            os.symlink(srcfile, os.path.join(desdir, 'poetry'))
+            desfile = os.path.join(desdir, 'poetry')
+            if os.path.exists(desfile):
+                os.remove(desfile)
+            os.symlink(srcfile, desfile)
         if any(kwd in PLATFORM for kwd in ('ubuntu', 'debian', 'centos', 'redhat', 'fedoral')):
             cmd = f'{HOME}/.poetry/bin/poetry completions bash | {PREFIX} tee /etc/bash_completion.d/poetry.bash-completion > /dev/null'
             _run(cmd, args.log)
         elif 'darwin' in PLATFORM:
-             cm = f'$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion'
+             cmd = f'$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion'
              _run(cmd, args.log)
     if args.uninstall:
         _run(f'poetry self:uninstall')
