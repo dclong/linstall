@@ -45,7 +45,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'SpaceVim', aliases=['svim'], add_argument=spacevim_args)
     _add_subparser(subparsers, 'IdeaVim', aliases=['ivim'])
     #------------------------- development related  ------------------------------
-    _add_subparser(subparsers, 'Git')
+    _add_subparser(subparsers, 'Git', add_argument=git_args)
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
     _add_subparser(subparsers, 'Poetry', aliases=['pt'], add_argument=poetry_args)
     _add_subparser(subparsers, 'Cargo', aliases=['cgo'])
@@ -430,8 +430,8 @@ def git(args):
         if 'darwin' in PLATFORM:
             shutil.copy2(os.path.join(BASE_DIR, 'git/mac/git_completion'), os.path.join(HOME, '.git_completion'))
     if args.proxy:
-        git config --global http.proxy http://username:password@proxy_ip:port
-        git config --global https.proxy https://username:password@proxy_ip:port
+        os.system(f'git config --global http.proxy http://username:password@proxy_ip:port')
+        os.system(f'git config --global https.proxy https://username:password@proxy_ip:port')
 
 
 def git_args(subparser):
