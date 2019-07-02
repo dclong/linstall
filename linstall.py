@@ -429,6 +429,18 @@ def git(args):
         shutil.copy2(os.path.join(BASE_DIR, 'git/gitignore'), os.path.join(HOME, '.gitignore'))
         if 'darwin' in PLATFORM:
             shutil.copy2(os.path.join(BASE_DIR, 'git/mac/git_completion'), os.path.join(HOME, '.git_completion'))
+    if args.proxy:
+        git config --global http.proxy http://username:password@proxy_ip:port
+        git config --global https.proxy https://username:password@proxy_ip:port
+
+
+def git_args(subparser):
+    subparser.add_argument(
+        '-p',
+        '--proxy',
+        dest='proxy',
+        action='store_true',
+        help='configure proxy for git.')
 
 
 def antlr(args):
@@ -877,7 +889,7 @@ def _update_apt_source(seconds: float = 3600 * 12):
     if (now - time).seconds > seconds:
         os.system(f'{PREFIX} apt-get update')
         SETTINGS[key] = now
-        json.dump(SETTINGS, SETTINGS_FILE)
+        json.dumps(SETTINGS, SETTINGS_FILE)
 
 
 def _run(cmd: str, log: bool) -> None:
