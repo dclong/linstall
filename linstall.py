@@ -430,8 +430,8 @@ def git(args):
         if 'darwin' in PLATFORM:
             shutil.copy2(os.path.join(BASE_DIR, 'git/mac/git_completion'), os.path.join(HOME, '.git_completion'))
     if args.proxy:
-        os.system(f'git config --global http.proxy http://username:password@proxy_ip:port')
-        os.system(f'git config --global https.proxy https://username:password@proxy_ip:port')
+        proxy = input('provide proxy url (http://username:password@proxy_ip:port): ')
+        os.system(f'git config --global http.proxy {proxy}')
 
 
 def git_args(subparser):
@@ -888,8 +888,9 @@ def _update_apt_source(seconds: float = 3600 * 12):
     now = datetime.datetime.now()
     if (now - time).seconds > seconds:
         os.system(f'{PREFIX} apt-get update')
-        SETTINGS[key] = now
-        json.dumps(SETTINGS, SETTINGS_FILE)
+        SETTINGS[key] = now.strftime(FORMAT)
+        with open(SETTINGS_FILE, 'w') as fout:
+            json.dump(SETTINGS, fout)
 
 
 def _run(cmd: str, log: bool) -> None:
