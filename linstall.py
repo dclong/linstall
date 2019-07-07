@@ -430,16 +430,15 @@ def git(args):
         if 'darwin' in PLATFORM:
             shutil.copy2(os.path.join(BASE_DIR, 'git/mac/git_completion'), os.path.join(HOME, '.git_completion'))
     if args.proxy:
-        proxy = input('provide proxy url (http://username:password@proxy_ip:port): ')
-        os.system(f'git config --global http.proxy {proxy}')
-
+        os.system(f'git config --global http.proxy {args.proxy}')
+        os.system(f'git config --global https.proxy {args.proxy}')
 
 def git_args(subparser):
     subparser.add_argument(
         '-p',
         '--proxy',
         dest='proxy',
-        action='store_true',
+        default='',
         help='configure proxy for git.')
 
 
