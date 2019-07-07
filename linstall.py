@@ -433,6 +433,7 @@ def git(args):
         os.system(f'git config --global http.proxy {args.proxy}')
         os.system(f'git config --global https.proxy {args.proxy}')
 
+
 def git_args(subparser):
     subparser.add_argument(
         '-p',
