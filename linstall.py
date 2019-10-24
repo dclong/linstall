@@ -11,7 +11,7 @@ import subprocess as sp
 from typing import Any, List, Sequence, Callable, Union
 from argparse import ArgumentParser
 import datetime
-from loguru import logger
+import logging
 
 PLATFORM = platform.platform().lower()
 USER_ID = os.getuid()
@@ -143,7 +143,7 @@ def map_keys(args):
 
 def run_cmd(cmd, shell):
     proc = sp.run(cmd, shell=shell, check=True)
-    logger.debug(proc.args)
+    logging.info(proc.args)
 
 
 def update(args):
