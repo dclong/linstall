@@ -30,8 +30,10 @@ BIN_DIR = HOME / '.local/bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
 # create symbolic link of script at $HOME/.local/bin/linstall
 LINSTALL = BIN_DIR / 'linstall'
-if LINSTALL.exists():
+try:
     LINSTALL.unlink()
+except FileNotFoundError:
+    pass
 LINSTALL.symlink_to(FILE)
 
 
