@@ -50,6 +50,13 @@ def parse_args(args=None, namespace=None):
         const='sudo',
         help='Run commands using sudo.'
     )
+    parser.add_argument(
+        '--no-sudo',
+        dest='prefix',
+        action='store_const',
+        const='',
+        help='Run commands without using sudo.'
+    )
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
     # ------------------------ linstall itself ------------------------------
     _add_subparser(subparsers, 'update', aliases=['pull', 'upd', 'pu'])
