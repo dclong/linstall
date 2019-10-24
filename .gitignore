@@ -1,0 +1,5 @@
+# .gitignore itself should be track
+
+.DS_Store
+.directory
+.ipynb_checkpoints

@@ -1,0 +1,6 @@
+{
+    "editor.fontSize": 14,
+    "editor.detectIndentation": false,
+    "keyboard.dispatch": "keyCode",
+    "workbench.startupEditor": "newUntitledFile"
+}

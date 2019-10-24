@@ -1,0 +1,95 @@
+# -------------- Linux/Unix ---------------
+*~
+.directory
+*.[sS][wW][pP]
+.DS_Store
+# -------------- Python -------------------
+*.[pP][yY][cC]
+__pycache__/
+.ipynb_checkpoints/
+venv/
+.coverage
+.mypy
+.mypy_cache
+*.crc
+*.egg-info/
+# --------------- Scala files --------------
+dependency-reduced-pom.xml
+# --------------- Java files --------------
+*.[jJ][aA][rR]
+*.class
+## BlueJ files
+*.ctxt
+## Mobile Tools for Java (J2ME)
+.mtj.tmp/
+## Package Files
+*.war
+*.ear
+# Gradle 
+.gradle
+/build/
+/out/
+## Ignore Gradle GUI config
+gradle-app.setting
+## Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+## Cache of project
+.gradletasknamecache
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+# ------------------ IDE -------------------
+.idea/
+*.iml
+# ------------ Latex -------------------------
+# latex .aux file
+# *.[aA][uU][xX]
+# latex .bbl file
+# *.[bB][bB][lL]
+# latex .blg file
+# *.[bB][lL][gG]
+# latex .dvi file
+# *.[dD][vV][iI]
+# latex .log file
+# *.[lL][oO][gG]
+# texstudio .synctex.gz file
+# *.[sS][yY][nN][cC][tT][eE][xX].[gG][zZ]
+# -------------- R ---------------------------
+# R hitory file
+# *.[rR][hH][iI][sS][tT][oO][rR][yY]
+# R image file
+# *.[rR][Dd][aA][tT][aA]
+# R documentation file
+#*.[rR][dD]
+# ------------ Matlab ---------------------
+# *.[mM][aA][tT]
+# *.[aA][sS][vV]
+# *.[fF][iI][gG]
+# ------------ Documents -------------------
+# pdf file 
+# *.[pP][dD][fF]
+# eps file
+# *.[eE][pP][sS]
+# word .doc
+# *.[dD][oO][cC]
+# *.[dD][oO][cC][xX]
+# excel
+# *.[xX][lL][sS]
+# *.[xX][lL][sS][xX]
+# *.[pP][pP][tT]
+# ----------- Image -------------------
+# image .png
+# *.[pP][nN][gG]
+# image .jpg
+# *.[jJ][pP][gG]
+# image .jpeg
+# *.[jJ][pP][eE][gG]
+# ---------- GCC --------------------
+# gcc binary output
+# *.[oO][uU][tT]
+# --------- binary data ------------
+# *.[bB][iI][nN]
+# ------- compressed files ---------
+# *.[zZ][iI][pP]
+# *.[tT][aA][rR].[gG][zZ]
+# *.7[zZ][iI][pP]
+
