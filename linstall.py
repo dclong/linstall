@@ -702,7 +702,9 @@ def git(args) -> None:
             brew_install_safe(['git', 'git-lfs', 'bash-completion@2'])
         elif _is_centos_series():
             run_cmd(f'{args.prefix} yum install git', shell=True)
+        run_cmd('git lfs install', check=True)
     if args.uninstall:
+        run_cmd('git lfs uninstall', check=True)
         if _is_ubuntu_debian():
             run_cmd(
                 f'{args.prefix} apt-get purge {args.yes} git git-lfs',
