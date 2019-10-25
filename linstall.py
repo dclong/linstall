@@ -37,6 +37,22 @@ except FileNotFoundError:
 LINSTALL.symlink_to(FILE)
 
 
+def run_cmd(cmd, shell):
+    proc = sp.run(cmd, shell=shell, check=True)
+    logging.info(proc.args)
+
+
+def brew_install_safe(pkgs: Union[str, List]) -> None:
+    if isinstance(pkgs, list):
+        for pkg in pkgs:
+            brew_install_safe(pkg)
+        return
+    proc = sp.run(f'brew ls --versions {pkgs}', shell=True, stdout=sp.PIPE)
+    if not proc.stdout:
+        run_cmd(f'brew install {pkgs}', shell=True)
+    run_cmd(f'brew link {pkgs}', shell=True)
+
+
 def parse_args(args=None, namespace=None):
     """Parse command-line arguments for the install/configuration util.
     """
@@ -143,11 +159,6 @@ def map_keys(args):
     pass
 
 
-def run_cmd(cmd, shell):
-    proc = sp.run(cmd, shell=shell, check=True)
-    logging.info(proc.args)
-
-
 def update(args):
     os.chdir(BASE_DIR)
     run_cmd(f'git pull origin master', shell=True)
@@ -191,7 +202,7 @@ def coreutils(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(f'brew install coreutils', shell=True)
+            brew_install_safe('coreutils')
         elif _is_centos_series():
             run_cmd(f'{args.prefix} yum install coreutils', shell=True)
     if args.uninstall:
@@ -222,8 +233,7 @@ def shell_utils(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(
-                f'brew install bash-completion man-db', shell=True)
+            brew_install_safe(['bash-completion@2', 'man-db'])
         elif _is_centos_series():
             run_cmd(
                 f'{args.prefix} yum install bash-completion command-not-found man-db',
@@ -428,7 +438,7 @@ def bash_completion(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(f'brew install bash-completion@2', shell=True)
+            brew_install_safe(['bash-completion@2'])
         elif _is_centos_series():
             run_cmd(
                 f'{args.prefix} yum install bash-completion', shell=True
@@ -486,7 +496,7 @@ def exa(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(f'brew install exa', shell=True)
+            brew_install_safe(['exa'])
         elif _is_centos_series():
             run_cmd(
                 f'{args.prefix} cargo install --root /usr/local/ exa',
@@ -519,7 +529,7 @@ def osquery(args):
                 '''
             run_cmd(cmd, shell=True)
         elif _is_macos():
-            run_cmd(f'brew install osquery', shell=True)
+            brew_install_safe(['osquery'])
         elif _is_centos_series():
             run_cmd(f'{args.prefix} yum install osquery', shell=True)
     if args.config:
@@ -546,7 +556,7 @@ def vim(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(f'brew install vim', shell=True)
+            brew_install_safe(['vim'])
         elif _is_centos_series():
             run_cmd(
                 f'{args.prefix} yum install {args.yes} vim-enhanced',
@@ -581,7 +591,7 @@ def neovim(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(f'brew install neovim', shell=True)
+            brew_install_safe(['neovim'])
         elif _is_centos_series():
             run_cmd(f'{args.prefix} yum install neovim', shell=True)
     if args.uninstall:
@@ -689,10 +699,7 @@ def git(args) -> None:
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(
-                f'brew install git git-lfs bash-completion',
-                shell=True,
-            )
+            brew_install_safe(['git', 'git-lfs', 'bash-completion@2'])
         elif _is_centos_series():
             run_cmd(f'{args.prefix} yum install git', shell=True)
     if args.uninstall:
@@ -743,7 +750,7 @@ def antlr(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(f'brew install antlr4', shell=True)
+            brew_install_safe(['antlr4'])
         elif _is_centos_series():
             run_cmd(f'{args.prefix} yum install antlr', shell=True)
     if args.config:
@@ -769,10 +776,7 @@ def docker(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(
-                f'brew install docker docker-compose bash-completion@2 docker-completion docker-compose-completion',
-                shell=True,
-            )
+            brew_install_safe(['docker', 'docker-compose', 'bash-completion@2', 'docker-completion', 'docker-compose-completion'])
         elif _is_centos_series():
             run_cmd(
                 f'{args.prefix} yum install docker docker-compose',
@@ -816,7 +820,7 @@ def kubernetes(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(f'brew install kubernetes-cli', shell=True)
+            brew_install_safe(['kubernetes-cli'])
         elif _is_centos_series():
             pass
     if args.config:
@@ -881,7 +885,7 @@ def cargo(args):
                 shell=True,
             )
         if _is_macos():
-            run_cmd(f'brew install cargo', shell=True)
+            brew_install_safe(['cargo'])
         if _is_centos_series():
             run_cmd(
                 f'{args.prefix} yum install {args.yes} cargo',
@@ -958,7 +962,7 @@ def nodejs(args):
             cmd = f'''{args.prefix} apt-get install {args.yes} nodejs npm'''
             run_cmd(cmd, shell=True)
         if _is_macos():
-            run_cmd(f'brew install nodejs', shell=True)
+            brew_install_safe(['nodejs'])
         if _is_centos_series():
             run_cmd(
                 f'{args.prefix} yum install {args.yes} nodejs',
@@ -1001,7 +1005,7 @@ def python3(args):
                     '''
             run_cmd(cmd, shell=True)
         if _is_macos():
-            run_cmd(f'brew install python3', shell=True)
+            brew_install_safe(['python3'])
         if _is_centos_series():
             run_cmd(
                 f'{args.prefix} yum install {args.yes} python34 python34-devel python34-pip',
@@ -1225,7 +1229,7 @@ def proxychains(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(f'brew install proxychains-ng', shell=True)
+            brew_install_safe(['proxychains-ng'])
         elif _is_centos_series():
             run_cmd(f'{args.prefix} yum install proxychains', shell=True)
     if args.config:
@@ -1298,7 +1302,7 @@ def download_tools(args):
                 shell=True,
             )
         elif _is_macos():
-            run_cmd(f'brew install wget curl aria2', shell=True)
+            brew_install_safe(['wget', 'curl', 'aria2'])
         elif _is_centos_series():
             pass
     if args.config:
