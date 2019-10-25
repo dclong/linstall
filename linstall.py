@@ -680,16 +680,12 @@ def ideavim(args):
 
 
 # ------------------------- coding tools related -------------------------
-def git(args):
-    _git(install=args.install, config=args.config, uninstall=args.uninstall, proxy=args.proxy)
-
-
-def _git(install: bool = False, config: bool = False, uninstall: bool = False, proxy: str = '', prefix: str = '', yes: bool = False) -> None:
-    if install:
+def git(args) -> None:
+    if args.install:
         if _is_ubuntu_debian():
             _update_apt_source()
             run_cmd(
-                f'{prefix} apt-get install {yes} git git-lfs',
+                f'{args.prefix} apt-get install {args.yes} git git-lfs',
                 shell=True,
             )
         elif _is_macos():
@@ -698,18 +694,18 @@ def _git(install: bool = False, config: bool = False, uninstall: bool = False, p
                 shell=True,
             )
         elif _is_centos_series():
-            run_cmd(f'{prefix} yum install git', shell=True)
-    if uninstall:
+            run_cmd(f'{args.prefix} yum install git', shell=True)
+    if args.uninstall:
         if _is_ubuntu_debian():
             run_cmd(
-                f'{prefix} apt-get purge {yes} git git-lfs',
+                f'{args.prefix} apt-get purge {args.yes} git git-lfs',
                 shell=True,
             )
         elif _is_macos():
             run_cmd(f'brew uninstall git git-lfs', shell=True)
         elif _is_centos_series():
-            run_cmd(f'{prefix} yum remove git', shell=True)
-    if config:
+            run_cmd(f'{args.prefix} yum remove git', shell=True)
+    if args.config:
         shutil.copy2(BASE_DIR / 'git/gitconfig', HOME / '.gitconfig')
         shutil.copy2(BASE_DIR / 'git/gitignore', HOME / '.gitignore')
         if _is_macos():
@@ -717,7 +713,7 @@ def _git(install: bool = False, config: bool = False, uninstall: bool = False, p
             bashrc = f'\n# Git completion\n[ -f {file} ] &&  . {file}'
             with (HOME / '.bash_profile').open('a') as fout:
                 fout.write(bashrc)
-    if proxy:
+    if 'proxy' in args and args.proxy:
         run_cmd(
             f'git config --global http.proxy {proxy}',
             shell=True,
