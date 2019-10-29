@@ -30,11 +30,16 @@ BIN_DIR = HOME / '.local/bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
 # create symbolic link of script at $HOME/.local/bin/linstall
 LINSTALL = BIN_DIR / 'linstall'
-try:
-    LINSTALL.unlink()
-except FileNotFoundError:
-    pass
-LINSTALL.symlink_to(FILE)
+
+
+def remove_file_safe(path: Path) -> None:
+    """Remove a file or sybmolic link.
+    :param path: The path to the file or symbolic link.
+    """
+    try:
+        path.unlink()
+    except FileNotFoundError:
+        pass
 
 
 def run_cmd(cmd, shell):
@@ -715,8 +720,13 @@ def git(args) -> None:
         elif _is_centos_series():
             run_cmd(f'{args.prefix} yum remove git', shell=True)
     if args.config:
-        shutil.copy2(BASE_DIR / 'git/gitconfig', HOME / '.gitconfig')
-        shutil.copy2(BASE_DIR / 'git/gitignore', HOME / '.gitignore')
+        gitconfig = HOME / '.gitconfig'
+        # try to remove the file to avoid dead symbolic link problem
+        remove_file_safe(gitconfig)
+        shutil.copy2(BASE_DIR / 'git/gitconfig', gitconfig)
+        gitignore = HOME / '.gitignore'
+        remove_file_safe(gitignore)
+        shutil.copy2(BASE_DIR / 'git/gitignore', gitignore)
         if _is_macos():
             file = '/usr/local/etc/bash_completion.d/git-completion.bash'
             bashrc = f'\n# Git completion\n[ -f {file} ] &&  . {file}'
@@ -1514,5 +1524,7 @@ def _update_apt_source(seconds: float = 3600 * 12):
 
 
 if __name__ == '__main__':
+    remove_file_safe(LINSTALL)
+    LINSTALL.symlink_to(FILE)
     args = parse_args()
     args.func(args)
