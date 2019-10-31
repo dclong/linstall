@@ -969,7 +969,7 @@ def dsutil(args):
         version = dsutil_version()
         url = f'https://github.com/dclong/dsutil/releases/download/{version}/dsutil-{version}-py3-none-any.whl'
         run_cmd(
-            f'pip3 install --user {args.yes} {url}',
+            f'pip3 install --user --upgrade {args.yes} {url}',
             shell=True,
         )
     if args.config:
