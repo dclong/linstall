@@ -1,1 +1,3 @@
 image: dclong/gitpod-py3
+tasks:
+  - command: nvim --headless +"call dein#install()" +qall
