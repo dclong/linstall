@@ -32,32 +32,6 @@ BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
 LINSTALL = BIN_DIR / 'linstall'
 
 
-def remove_file_safe(path: Path) -> None:
-    """Remove a file or sybmolic link.
-    :param path: The path to the file or symbolic link.
-    """
-    try:
-        path.unlink()
-    except FileNotFoundError:
-        pass
-
-
-def run_cmd(cmd, shell):
-    proc = sp.run(cmd, shell=shell, check=True)
-    logging.info(proc.args)
-
-
-def brew_install_safe(pkgs: Union[str, List]) -> None:
-    if isinstance(pkgs, list):
-        for pkg in pkgs:
-            brew_install_safe(pkg)
-        return
-    proc = sp.run(f'brew ls --versions {pkgs}', shell=True, stdout=sp.PIPE)
-    if not proc.stdout:
-        run_cmd(f'brew install {pkgs}', shell=True)
-    run_cmd(f'brew link {pkgs}', shell=True)
-
-
 def parse_args(args=None, namespace=None):
     """Parse command-line arguments for the install/configuration util.
     """
@@ -123,6 +97,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
     _add_subparser(subparsers, 'IPython3', aliases=['ipy3'])
     _add_subparser(subparsers, 'yapf', aliases=[])
+    _add_subparser(subparsers, 'dsutil', aliases=[])
     _add_subparser(subparsers, 'OpenJDK8', aliases=['jdk8'])
     _add_subparser(
         subparsers, 'Poetry', aliases=['pt'], add_argument=poetry_args
@@ -155,6 +130,32 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'VirtualBox', aliases=['vbox'])
     #--------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)
+
+
+def remove_file_safe(path: Path) -> None:
+    """Remove a file or sybmolic link.
+    :param path: The path to the file or symbolic link.
+    """
+    try:
+        path.unlink()
+    except FileNotFoundError:
+        pass
+
+
+def run_cmd(cmd, shell):
+    proc = sp.run(cmd, shell=shell, check=True)
+    logging.info(proc.args)
+
+
+def brew_install_safe(pkgs: Union[str, List]) -> None:
+    if isinstance(pkgs, list):
+        for pkg in pkgs:
+            brew_install_safe(pkg)
+        return
+    proc = sp.run(f'brew ls --versions {pkgs}', shell=True, stdout=sp.PIPE)
+    if not proc.stdout:
+        run_cmd(f'brew install {pkgs}', shell=True)
+    run_cmd(f'brew link {pkgs}', shell=True)
 
 
 def map_keys(args):
@@ -954,6 +955,20 @@ def yapf(args):
     if args.uninstall:
         run_cmd(
             f'pip3 uninstall {args.yes} yapf',
+            shell=True,
+        )
+
+def dsutil(args):
+    if args.install:
+        run_cmd(
+            f'pip3 install --user {args.yes} dsutil',
+            shell=True,
+        )
+    if args.config:
+        pass
+    if args.uninstall:
+        run_cmd(
+            f'pip3 uninstall {args.yes} dsutil',
             shell=True,
         )
 
