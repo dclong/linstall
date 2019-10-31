@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
+from typing import Any, List, Sequence, Callable, Union
 import json
 import platform
 import shutil
@@ -8,7 +9,7 @@ import tempfile
 from pathlib import Path
 import re
 import subprocess as sp
-from typing import Any, List, Sequence, Callable, Union
+import requests
 from argparse import ArgumentParser
 import datetime
 import logging
@@ -958,10 +959,17 @@ def yapf(args):
             shell=True,
         )
 
+def dsutil_version() -> str:
+    url = 'https://github.com/dclong/dsutil/releases/latest'
+    resp = requests.get(url)
+    return Path(resp.url).name
+
 def dsutil(args):
     if args.install:
+        version = dsutil_version()
+        url = f'https://github.com/dclong/dsutil/releases/download/{version}/dsutil-{version}-py3-none-any.whl'
         run_cmd(
-            f'pip3 install --user {args.yes} dsutil',
+            f'pip3 install --user {args.yes} {url}',
             shell=True,
         )
     if args.config:
