@@ -9,11 +9,7 @@ import tempfile
 from pathlib import Path
 import re
 import subprocess as sp
-try:
-    import requests
-except ImportError:
-    sp.run('python3 -m pip install --user requests', shell=True)
-    import requests
+import urllib
 from argparse import ArgumentParser
 import datetime
 import logging
@@ -965,8 +961,8 @@ def yapf(args):
 
 def dsutil_version() -> str:
     url = 'https://github.com/dclong/dsutil/releases/latest'
-    resp = requests.get(url)
-    return Path(resp.url).name
+    req = urllib.request.urlopen(url)
+    return Path(req.url).name
 
 def dsutil(args):
     if args.install:
