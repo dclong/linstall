@@ -9,7 +9,11 @@ import tempfile
 from pathlib import Path
 import re
 import subprocess as sp
-import requests
+try:
+    import requests
+except ImportError:
+    sp.run('python3 -m pip install --user requests', shell=True)
+    import requests
 from argparse import ArgumentParser
 import datetime
 import logging
