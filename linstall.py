@@ -101,6 +101,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'yapf', aliases=[])
     _add_subparser(subparsers, 'dsutil', aliases=[])
     _add_subparser(subparsers, 'OpenJDK8', aliases=['jdk8'])
+    _add_subparser(subparsers, 'sdkman', aliases=[])
     _add_subparser(
         subparsers, 'Poetry', aliases=['pt'], add_argument=poetry_args
     )
@@ -945,6 +946,20 @@ def openjdk8(args):
             run_cmd(f'brew cask uninstall adoptopenjdk8', shell=True)
         if _is_centos_series():
             pass
+
+def sdkman(args):
+    """ Install sdkman.
+    https://sdkman.io/install
+    """
+    if args.install:
+        run_cmd(
+            f'''curl -s https://get.sdkman.io | bash''',
+            shell=True,
+        )
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
 
 def yapf(args):
     if args.install:
