@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
+"""Easy installation and configuration of Linux/Mac/Windows apps.
+"""
 import sys
 import os
 from typing import Any, List, Sequence, Callable, Union
 import json
 import platform
 import shutil
-import tempfile
 from pathlib import Path
 import re
 import subprocess as sp
-import urllib
+import urllib.request
 from argparse import ArgumentParser
 import datetime
 import logging
