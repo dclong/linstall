@@ -119,6 +119,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'download tools', aliases=['dl', 'dlt'])
     #------------------------- JupyterLab related ------------------------------
     _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
+    _add_subparser(subparsers, 'jupyterlab-lsp', aliases=['jlab-lsp', 'jlab_lsp'])
     _add_subparser(
         subparsers, 'Almond', aliases=['al', 'amd'], add_argument=almond_args
     )
@@ -1150,6 +1151,18 @@ def itypescript(args):
         )
         run_cmd(f'{args.prefix} npm uninstall itypescript', shell=True)
     if args.config:
+        pass
+
+
+def jupyterlab_lsp(args):
+    if args.install:
+        cmd = '''sudo pip3 install --pre jupyter-lsp \
+                && sudo jupyter labextension install @krassowski/jupyterlab-lsp \
+                && sudo pip3 install python-language-server[all]'''
+        run_cmd(cmd, shell=True)
+    if args.config:
+        pass
+    if args.uninstall:
         pass
 
 
