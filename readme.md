@@ -4,10 +4,10 @@
 
 1. Clone this repository to your machine.
 
-        git clone https://github.com/dclong/config.git
+        git clone https://github.com/dclong/linstall.git
 
-2. Run `config/linstall.py -h` for the help doc.
+2. Run `linstall/linstall.py -h` for the help doc.
 
 3. Below is an example of install SpaceVim and configure it.
 
-        config/linstall.py svim -ic
+        linstall/linstall.py svim -ic
