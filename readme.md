@@ -1,4 +1,4 @@
-# Easy Cross-platform Configuration
+# Easy Cross-platform Installation and Configuration of Apps
 
 ## Usage
 
