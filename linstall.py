@@ -1289,7 +1289,7 @@ def proxychains(args):
         if _is_ubuntu_debian():
             _update_apt_source()
             run_cmd(
-                f'{args.prefix} apt-get install {args.yes} proxychains',
+                f'{args.prefix} apt-get install {args.yes} proxychains4',
                 shell=True,
             )
         elif _is_macos():
