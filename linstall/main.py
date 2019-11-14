@@ -2,7 +2,7 @@ from typing import Sequence, Union, Callable
 from argparse import ArgumentParser
 import re
 from .utils import is_macos
-from .linstall import USER_ID
+import linstall
 
 
 def wajig_args(subparser):
@@ -124,7 +124,7 @@ def _add_subparser(
 ):
     sub_cmd = re.sub(r'(\s+)|-', '_', name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
-    func = func if func else eval(sub_cmd)
+    func = func if func else eval('linstall.{sub_cmd}')
     subparser = subparsers.add_parser(
         sub_cmd, aliases=aliases, help=f'install and configure {name}.'
     )
@@ -181,7 +181,7 @@ def parse_args(args=None, namespace=None):
         '-s',
         '--sudo',
         dest='prefix',
-        default='' if USER_ID == 0 or is_macos() else 'sudo',
+        default='' if linstall.USER_ID == 0 or is_macos() else 'sudo',
         action='store_const',
         const='sudo',
         help='Run commands using sudo.'
