@@ -1575,8 +1575,12 @@ def _update_apt_source(seconds: float = 3600 * 12):
             json.dump(SETTINGS, fout)
 
 
-if __name__ == '__main__':
+def main():
     remove_file_safe(LINSTALL)
     LINSTALL.symlink_to(FILE)
     args = parse_args()
     args.func(args)
+
+
+if __name__ == '__main__':
+    main()
