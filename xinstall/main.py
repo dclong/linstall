@@ -145,10 +145,8 @@ def _add_subparser(
         '-y',
         '--yes',
         dest='yes',
-        action='store_const',
-        const='--yes',
-        default='',
-        help='Automatical yes (default no) to prompts.'
+        action='store_true',
+        help='Automatical yes (default no) to prompt questions.'
     )
     subparser.add_argument(
         '-c',
