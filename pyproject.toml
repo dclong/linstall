@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "linstall"
+name = "xinstall"
 version = "0.0.2"
 description = ""
 authors = ["Benjamin Du <longendu@yahoo.com>"]
