@@ -1,7 +1,5 @@
 import platform
 from pathlib import Path
-BASE_DIR = Path(__file__).resolve().parent
-
 PLATFORM = platform.platform().lower()
 c = get_config()
 c.AliasManager.user_aliases = [
@@ -11,7 +9,6 @@ c.AliasManager.user_aliases = [
     ('hdfs.count', 'hdfs dfs -count -q -v'),
     ('hdfs.ls', 'hdfs dfs -ls'),
     ('blog', 'python3 $HOME/archives/blog/main.py'),
-    ('linstall', f'python3 {next(BASE_DIR.parent.glob("*.py"))}'),
     # du
     ('du.0', 'du -hd 0'),
     ('du.1', 'du -hd 1'),
