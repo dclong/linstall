@@ -125,7 +125,9 @@ def update_apt_source(sudo: bool, yes: bool = True, seconds: float = 3600 * 12):
     )
     now = datetime.datetime.now()
     if (now - time).seconds > seconds:
-        run_cmd(f"{'sudo ' if sudo else ''}apt-get update {yes}", shell=True)
+        prefix = "sudo" if sudo else ""
+        yes = "--yes" if yes else ""
+        run_cmd(f"{prefix} apt-get update {yes}", shell=True)
         SETTINGS[key] = now.strftime(fmt)
         with open(SETTINGS_FILE, 'w') as fout:
             json.dump(SETTINGS, fout)
