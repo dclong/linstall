@@ -1,6 +1,7 @@
 # Easy Cross-platform Installation and Configuration of Apps
 
 ## Installation
+Note: linstall should always be installed into your local user directory instead of a system-wide location.
 ```
 pip3 install --user -U https://github.com/dclong/linstall/releases/download/v0.0.1/linstall-0.0.1-py3-none-any.whl
 ```
