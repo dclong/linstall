@@ -4,7 +4,7 @@
 Note: `xinstall` should always be installed into your local user directory instead of a system-wide location.
 You can download a copy of the latest release and install it using pip.
 ```
-pip3 install --user -U xinstall-0.0.6-py3-none-any.whl
+pip3 install --user -U xinstall-0.0.7-py3-none-any.whl
 ```
 Or you can use the following script to download and install the latest version automatically.
 ```
