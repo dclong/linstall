@@ -25,7 +25,7 @@ from .utils import (
 USER_ID = os.getuid()
 GROUP_ID = os.getgid()
 FILE = Path(__file__).resolve()
-BASE_DIR = FILE.parent
+BASE_DIR = FILE.parent / 'data'
 BIN_DIR = HOME / '.local/bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
 

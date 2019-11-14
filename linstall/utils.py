@@ -17,6 +17,7 @@ if os.path.isfile(SETTINGS_FILE):
     with open(SETTINGS_FILE) as fin:
         SETTINGS = json.load(fin)
 
+
 def remove_file_safe(path: Path) -> None:
     """Remove a file or sybmolic link.
     :param path: The path to the file or symbolic link.
