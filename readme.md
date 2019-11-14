@@ -4,7 +4,7 @@
 Note: `linstall` should always be installed into your local user directory instead of a system-wide location.
 You can download a copy of the latest release and install it using pip.
 ```
-pip3 install --user -U linstall-0.0.1-py3-none-any.whl
+pip3 install --user -U linstall-0.0.2-py3-none-any.whl
 ```
 Or you can use the following script to download and install the latest version automatically.
 ```
