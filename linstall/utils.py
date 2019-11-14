@@ -6,6 +6,7 @@ import platform
 import json
 from pathlib import Path
 import shutil
+import re
 import datetime
 import subprocess as sp
 import logging
@@ -125,3 +126,19 @@ def update_apt_source(sudo: bool, yes: bool = True, seconds: float = 3600 * 12):
         SETTINGS[key] = now.strftime(fmt)
         with open(SETTINGS_FILE, 'w') as fout:
             json.dump(SETTINGS, fout)
+
+
+def _github_version(url) -> str:
+    url = f'{url}/releases/latest'
+    req = urllib.request.urlopen(url)
+    return Path(req.url).name
+
+
+def install_py_github(url: str, yes: bool = False) -> None:
+    version = _github_version(url)
+    url = f"{url}/releases/download/{version}/{Path(url).name}-{re.sub('[a-zA-Z]', '', version)}-py3-none-any.whl"
+    yes = '-y' if yes else ''
+    run_cmd(
+        f'pip3 install --user --upgrade {yes} {url}',
+        shell=True,
+    )

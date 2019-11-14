@@ -15,6 +15,7 @@ from .utils import (
     update_apt_source,
     brew_install_safe,
     remove_file_safe,
+    install_py_github,
     is_win,
     is_linux,
     is_ubuntu_debian,
@@ -48,6 +49,7 @@ def update(**kwargs):
 def coreutils(**kwargs):
     args = Namespace(**kwargs)
     prefix = 'sudo' if args.sudo else ''
+    yes = '-y' if args.yes else ''
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(sudo=args.sudo)
@@ -803,12 +805,8 @@ def dsutil(**kwargs):
     args = Namespace(**kwargs)
     prefix = 'sudo' if args.sudo else ''
     if args.install:
-        version = _dsutil_version()
-        url = f'https://github.com/dclong/dsutil/releases/download/{version}/dsutil-{version}-py3-none-any.whl'
-        run_cmd(
-            f'pip3 install --user --upgrade {args.yes} {url}',
-            shell=True,
-        )
+        url = 'https://github.com/dclong/dsutil'
+        install_py_github(url=url, yes=args.yes)
     if args.config:
         pass
     if args.uninstall:
