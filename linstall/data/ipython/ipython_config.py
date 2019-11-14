@@ -33,11 +33,17 @@ c.AliasManager.user_aliases = [
     ('find.dylib', 'find . -type f -iname "*.dylib"'),
     ('find.dat', 'find . -type f -iname "*.dat"'),
     ('find.deb', 'find . -name "*.deb"'),
-    ('find.data', 'find . -type f -iname "*.xls" -o -iname "*.xlsx" -o -iname "*.csv" -o -iname "*.tsv"'),
+    (
+        'find.data',
+        'find . -type f -iname "*.xls" -o -iname "*.xlsx" -o -iname "*.csv" -o -iname "*.tsv"'
+    ),
     ('find.dvi', 'find . -type f -iname "*.dvi"'),
     ('find.dir', 'find . -type d'),
     ('find.eps', 'find . -type f -iname "*.eps"'),
-    ('find.excel', 'find . -type f -iname "*.xls" -o -iname "*.xlsx" -o -iname "*.xlsm"'),
+    (
+        'find.excel',
+        'find . -type f -iname "*.xls" -o -iname "*.xlsx" -o -iname "*.xlsm"'
+    ),
     ('find.file', 'find . -type f'),
     ('find.folder', 'find.dir'),
     ('find.gz', 'find . -name "*.gz"'),
@@ -69,7 +75,10 @@ c.AliasManager.user_aliases = [
     ('find.markdown', 'find . -type f -iname "*.markdown" -o -iname "*.md"'),
     ('find.md', 'find.markdown'),
     ('find.movie', 'find.video'),
-    ('find.media', 'find . -type f -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.avi" -o -iname "*.png" -o -iname "*.wmv" -o -iname "*.mp3" -o -iname "*.mp4" -o -iname "*.mkv"'),
+    (
+        'find.media',
+        'find . -type f -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.avi" -o -iname "*.png" -o -iname "*.wmv" -o -iname "*.mp3" -o -iname "*.mp4" -o -iname "*.mkv"'
+    ),
     ('find.pig', 'find . -type f -iname "*.pig"'),
     ('find.pdf', 'find . -type f -iname "*.pdf"'),
     ('find.png', 'find . -iname "*.png"'),
@@ -92,40 +101,78 @@ c.AliasManager.user_aliases = [
     ('find.swp', 'find . -name "*.swp"'),
     ('find.sys', 'find . -name "*.sys"'),
     ('find.sync', 'find . -name "*.!sync"'),
-    ('find.spreadsheet', 'find . -type f -iname "*.xls" -o -iname "*.xlsx" -o -iname "*.csv"'),
+    (
+        'find.spreadsheet',
+        'find . -type f -iname "*.xls" -o -iname "*.xlsx" -o -iname "*.csv"'
+    ),
     ('find.txt', 'find . -type f -iname "*.txt"'),
-    ('find.textemp', 'find . -type f -iname "*.dvi" -o -iname "*.log" -o -iname "*.aux" -o -iname "*.lof" -o -iname "*.log" -o -iname "*.toc" -o -iname "*.bbl" -o -iname "*.blg" -o -iname "*.synctex.gz" -o -iname "*.nav" -o -iname "*.snm" -o -iname "*.vrb" -o -iname "*.out"'),
+    (
+        'find.textemp',
+        'find . -type f -iname "*.dvi" -o -iname "*.log" -o -iname "*.aux" -o -iname "*.lof" -o -iname "*.log" -o -iname "*.toc" -o -iname "*.bbl" -o -iname "*.blg" -o -iname "*.synctex.gz" -o -iname "*.nav" -o -iname "*.snm" -o -iname "*.vrb" -o -iname "*.out"'
+    ),
     ('find.tar.gz', 'find . -name "*.tar.gz"'),
     ('find.tsv', 'find . -type f -iname "*.tsv"'),
     ('find.tex', 'find . -type f -iname "*.tex"'),
     ('find.tilde', 'find . -name "*~"'),
-    ('find.video', 'find . -type f -iname "*.mkv" -o -iname "*.avi" -o -iname "*.wmv" -o -iname "*.mp4"'),
+    (
+        'find.video',
+        'find . -type f -iname "*.mkv" -o -iname "*.avi" -o -iname "*.wmv" -o -iname "*.mp4"'
+    ),
     ('find.word', 'find . -type f -iname "*.doc" -o -iname "*.docx" -o iname'),
     ('find.word', 'find . -type f -iname "*.doc" -o -iname "*.docx"'),
     ('find.xml', 'find . -type f -iname "*.xml"'),
     # mount
-    ('mount.ntfs.sdb1', 'sudo mount -o uid=$(whoami),gid=$(whoami),fmask=0137,dmask=0027 /dev/sdb1'),
+    (
+        'mount.ntfs.sdb1',
+        'sudo mount -o uid=$(whoami),gid=$(whoami),fmask=0137,dmask=0027 /dev/sdb1'
+    ),
     ('mount.sdb1', 'sudo mount /dev/sdb1'),
     ('umount.sdb1', 'sudo umount /dev/sdb1'),
-    ('mount.ntfs.sdc1', 'sudo mount -o uid=$(whoami),gid=$(whoami),fmask=0137,dmask=0027 /dev/sdc1'),
+    (
+        'mount.ntfs.sdc1',
+        'sudo mount -o uid=$(whoami),gid=$(whoami),fmask=0137,dmask=0027 /dev/sdc1'
+    ),
     ('mount.sdc1', 'sudo mount /dev/sdc1'),
     ('umount.sdc1', 'sudo umount /dev/sdc1'),
     ('mount.cd', 'sudo mount -t iso9660 -o ro /dev/cdrom'),
     ('mount.sr0', 'sudo mount -t iso9660 -o ro /dev/sr0'),
-    ('mount.downloads', 'sudo mount -t nfs -o nfsvers=3 192.168.0.8:$HOME/downloads mnt/nfsshare/'),
-    ('mount.vboxsf', 'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077'),
-    ('mount.vboxsf.hh', 'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 host_home'),
-    ('mount.vboxsf.cdrive', 'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 cdrive ${HOME}/cdrive'),
-    ('mount.vboxsf.ddrive', 'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 ddrive ${HOME}/ddrive'),
-    ('mount.vboxsf.edrive', 'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 edrive ${HOME}/edrive'),
-    ('mount.vboxsf.fdrive', 'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 fdrive ${HOME}/fdrive'),
-    ('mount.vboxsf.gdrive', 'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 gdrive ${HOME}/gdrive'),
+    (
+        'mount.downloads',
+        'sudo mount -t nfs -o nfsvers=3 192.168.0.8:$HOME/downloads mnt/nfsshare/'
+    ),
+    (
+        'mount.vboxsf',
+        'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077'
+    ),
+    (
+        'mount.vboxsf.hh',
+        'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 host_home'
+    ),
+    (
+        'mount.vboxsf.cdrive',
+        'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 cdrive ${HOME}/cdrive'
+    ),
+    (
+        'mount.vboxsf.ddrive',
+        'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 ddrive ${HOME}/ddrive'
+    ),
+    (
+        'mount.vboxsf.edrive',
+        'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 edrive ${HOME}/edrive'
+    ),
+    (
+        'mount.vboxsf.fdrive',
+        'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 fdrive ${HOME}/fdrive'
+    ),
+    (
+        'mount.vboxsf.gdrive',
+        'sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 gdrive ${HOME}/gdrive'
+    ),
 ]
 if 'darwin' in PLATFORM:
     c.AliasManager.user_aliases.extend([
         ('md5sum', 'md5 -r'),
     ])
 else:
-    c.AliasManager.user_aliases.extend([
-    ])
+    c.AliasManager.user_aliases.extend([])
 c.IPCompleter.use_jedi = False

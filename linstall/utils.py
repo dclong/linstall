@@ -5,6 +5,7 @@ import os
 import platform
 import json
 from pathlib import Path
+import urllib.request
 import shutil
 import re
 import datetime
@@ -39,7 +40,9 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
         for pkg in pkgs:
             brew_install_safe(pkg)
         return
-    proc = sp.run(f'brew ls --versions {pkgs}', shell=True, check=False, stdout=sp.PIPE)
+    proc = sp.run(
+        f'brew ls --versions {pkgs}', shell=True, check=False, stdout=sp.PIPE
+    )
     if not proc.stdout:
         run_cmd(f'brew install {pkgs}', shell=True)
     run_cmd(f'brew link {pkgs}', shell=True)
