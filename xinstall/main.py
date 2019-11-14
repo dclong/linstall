@@ -2,7 +2,7 @@ from typing import Sequence, Union, Callable
 from argparse import ArgumentParser
 import re
 from .utils import is_macos
-from . import linstall
+from . import xinstall
 
 
 def wajig_args(subparser):
