@@ -123,7 +123,7 @@ def _add_subparser(
 ):
     sub_cmd = re.sub(r'(\s+)|-', '_', name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
-    func = func if func else eval(f'linstall.{sub_cmd}')
+    func = func if func else eval(f'xinstall.{sub_cmd}')
     subparser = subparsers.add_parser(
         sub_cmd, aliases=aliases, help=f'install and configure {name}.'
     )
