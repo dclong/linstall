@@ -5,6 +5,9 @@ Note: linstall should always be installed into your local user directory instead
 ```
 pip3 install --user -U https://github.com/dclong/linstall/releases/download/v0.0.1/linstall-0.0.1-py3-none-any.whl
 ```
+```
+curl -sSL www.legendu.net/media/install_python_pkg_github.py | python3 - https://github.com/dclong/linstall
+```
 ## Usage
 
 1. Run `linstall -h` for the help doc.
