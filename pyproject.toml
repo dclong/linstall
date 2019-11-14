@@ -5,7 +5,7 @@ description = ""
 authors = ["Benjamin Du <longendu@yahoo.com>"]
 
 [tool.poetry.scripts]
-#linstall = 'linstall:main.main'
+linstall = 'linstall:linstall.main'
 
 [tool.poetry.dependencies]
 python = ">=3.6"
