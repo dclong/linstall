@@ -15,6 +15,7 @@ try:
     from dsutil.const import *
 except:
     pass
+HOME = Path.home()
 PLATFORM = platform.platform().lower()
 
 
@@ -118,5 +119,9 @@ def trash(line: str):
 #else:
 #    %alias cs cd %l && ls -G
 # -------------------------------------------------------------------------
-os.environ['PATH'] = f'{Path.home() / ".local/bin"}:/apache/hadoop/bin:{os.environ["PATH"]}'
+os.environ['PATH'] = ":".join([HOME / ".local/bin"] + 
+    list(HOME.glob("Library/Python/3.*/bin")) +
+    list(Path("/").glob("apache/hadoop/bin")) +
+    [os.environ["PATH"]]
+)
 %rehashx
