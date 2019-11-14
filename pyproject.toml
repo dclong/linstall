@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "xinstall"
-version = "0.0.4"
+version = "0.0.5"
 description = ""
 authors = ["Benjamin Du <longendu@yahoo.com>"]
 
 [tool.poetry.scripts]
-linstall = 'linstall:main.main'
+xinstall = 'xinstall:main.main'
 
 [tool.poetry.dependencies]
 python = ">=3.6"
