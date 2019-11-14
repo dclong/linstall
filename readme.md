@@ -1,12 +1,14 @@
 # Easy Cross-platform Installation and Configuration of Apps
 
 ## Installation
-Note: linstall should always be installed into your local user directory instead of a system-wide location.
+Note: `linstall` should always be installed into your local user directory instead of a system-wide location.
+You can download a copy of the latest release and install it using pip.
 ```
-pip3 install --user -U https://github.com/dclong/linstall/releases/download/v0.0.1/linstall-0.0.1-py3-none-any.whl
+pip3 install --user -U linstall-0.0.1-py3-none-any.whl
 ```
+Or you can use the following script to download and install the latest version automatically.
 ```
-curl -sSL www.legendu.net/media/install_python_pkg_github.py | python3 - https://github.com/dclong/linstall
+curl -sSL www.legendu.net/media/install_py_github.py | python3 - https://github.com/dclong/linstall
 ```
 ## Usage
 
