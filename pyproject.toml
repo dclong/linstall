@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "linstall"
+version = "0.0.1"
+description = ""
+authors = ["Benjamin Du <longendu@yahoo.com>"]
+
+[tool.poetry.scripts]
+linstall = 'linstall:main.main'
+
+[tool.poetry.dependencies]
+python = ">=3.6"
+
+[tool.poetry.dev-dependencies]
+pytest = ">=3.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
