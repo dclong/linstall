@@ -15,6 +15,7 @@ from .utils import (
     update_apt_source,
     brew_install_safe,
     remove_file_safe,
+    install_py_github,
     is_win,
     is_linux,
     is_ubuntu_debian,
@@ -48,6 +49,7 @@ def update(**kwargs):
 def coreutils(**kwargs):
     args = Namespace(**kwargs)
     prefix = 'sudo' if args.sudo else ''
+    yes = '-y' if args.yes else ''
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(sudo=args.sudo)
@@ -147,9 +149,7 @@ def homebrew(**kwargs):
                 f'{prefix} yum groupinstall "Development Tools"',
                 shell=True,
             )
-            run_cmd(
-                f'{prefix} yum install curl file git', shell=True
-            )
+            run_cmd(f'{prefix} yum install curl file git', shell=True)
             if is_fedora():
                 run_cmd(
                     f'{prefix} yum install libxcrypt-compat',
@@ -166,9 +166,7 @@ def homebrew(**kwargs):
                 brew = paths[-1]
                 profiles = [f'{HOME}/.bash_profile', f'{HOME}/.profile']
                 for profile in profiles:
-                    run_cmd(
-                        f'{brew} shellenv >> {profile}', shell=True
-                    )
+                    run_cmd(f'{brew} shellenv >> {profile}', shell=True)
             else:
                 sys.exit('Homebrew is not installed!')
     if args.uninstall:
@@ -223,8 +221,7 @@ def openinterminal(**kwargs):
         pass
     if args.uninstall:
         if is_macos():
-            run_cmd(
-                f'brew cask uninstall openinterminal', shell=True)
+            run_cmd(f'brew cask uninstall openinterminal', shell=True)
 
 
 def xonsh(**kwargs):
@@ -277,9 +274,7 @@ def bash_completion(**kwargs):
         elif is_macos():
             brew_install_safe(['bash-completion@2'])
         elif is_centos_series():
-            run_cmd(
-                f'{prefix} yum install bash-completion', shell=True
-            )
+            run_cmd(f'{prefix} yum install bash-completion', shell=True)
     if args.config:
         pass
     if args.uninstall:
@@ -291,9 +286,7 @@ def bash_completion(**kwargs):
         elif is_macos():
             run_cmd(f'brew uninstall bash-completion', shell=True)
         elif is_centos_series():
-            run_cmd(
-                f'{prefix} yum remove bash-completion', shell=True
-            )
+            run_cmd(f'{prefix} yum remove bash-completion', shell=True)
 
 
 def wajig(**kwargs) -> None:
@@ -313,8 +306,7 @@ def wajig(**kwargs) -> None:
         cmd = f'''echo '\nAcquire::http::Proxy "{args.proxy}";\nAcquire::https::Proxy "{args.proxy}";' | {prefix} tee -a /etc/apt/apt.conf'''
         run_cmd(cmd, shell=True)
     if args.uninstall:
-        run_cmd(
-            f'{prefix} apt-get purge {args.yes} wajig', shell=True)
+        run_cmd(f'{prefix} apt-get purge {args.yes} wajig', shell=True)
 
 
 def exa(**kwargs):
@@ -446,7 +438,7 @@ def neovim(**kwargs):
 
 
 def _svim_true_color(true_color: Union[bool, None]) -> None:
-    # TODO: use the toml module to help you parse the file?? 
+    # TODO: use the toml module to help you parse the file??
     # I'm not sure whether it is feasible ...
     if true_color is None:
         return
@@ -595,7 +587,12 @@ def docker(**kwargs):
                 shell=True,
             )
         elif is_macos():
-            brew_install_safe(['docker', 'docker-compose', 'bash-completion@2', 'docker-completion', 'docker-compose-completion'])
+            brew_install_safe(
+                [
+                    'docker', 'docker-compose', 'bash-completion@2',
+                    'docker-completion', 'docker-compose-completion'
+                ]
+            )
         elif is_centos_series():
             run_cmd(
                 f'{prefix} yum install docker docker-compose',
@@ -603,7 +600,9 @@ def docker(**kwargs):
             )
     if args.config:
         run_cmd('gpasswd -a $(id -un) docker', shell=True)
-        logging.warning('Please logout and then login to make the group "docker" effective!')
+        logging.warning(
+            'Please logout and then login to make the group "docker" effective!'
+        )
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
@@ -687,15 +686,11 @@ def minikube(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f'{prefix} rm /usr/local/bin/minikube', shell=True
-            )
+            run_cmd(f'{prefix} rm /usr/local/bin/minikube', shell=True)
         elif is_macos():
             run_cmd(f'brew cask uninstall minikube', shell=True)
         elif is_centos_series():
-            run_cmd(
-                f'{prefix} rm /usr/local/bin/minikube', shell=True
-            )
+            run_cmd(f'{prefix} rm /usr/local/bin/minikube', shell=True)
 
 
 # ------------------------- programming languages -------------------------
@@ -785,7 +780,10 @@ def yapf(**kwargs):
             shell=True,
         )
     if args.config:
-        shutil.copy2(os.path.join(BASE_DIR, 'yapf/style.yapf'), os.path.join(args.dst_dir, '.style.yapf'))
+        shutil.copy2(
+            os.path.join(BASE_DIR, 'yapf/style.yapf'),
+            os.path.join(args.dst_dir, '.style.yapf')
+        )
     if args.uninstall:
         run_cmd(
             f'pip3 uninstall {args.yes} yapf',
@@ -803,12 +801,8 @@ def dsutil(**kwargs):
     args = Namespace(**kwargs)
     prefix = 'sudo' if args.sudo else ''
     if args.install:
-        version = _dsutil_version()
-        url = f'https://github.com/dclong/dsutil/releases/download/{version}/dsutil-{version}-py3-none-any.whl'
-        run_cmd(
-            f'pip3 install --user --upgrade {args.yes} {url}',
-            shell=True,
-        )
+        url = 'https://github.com/dclong/dsutil'
+        install_py_github(url=url, yes=args.yes)
     if args.config:
         pass
     if args.uninstall:
@@ -880,8 +874,7 @@ def python3(**kwargs):
                 f'{prefix} yum install {args.yes} python34 python34-devel python34-pip',
                 shell=True,
             )
-            run_cmd(
-                f'pip3.4 install --user setuptools', shell=True)
+            run_cmd(f'pip3.4 install --user setuptools', shell=True)
     if args.config:
         pass
     if args.uninstall:
@@ -1106,8 +1099,7 @@ def proxychains(**kwargs):
         )
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f'{prefix} apt-get purge proxychains', shell=True)
+            run_cmd(f'{prefix} apt-get purge proxychains', shell=True)
         elif is_macos():
             run_cmd(f'brew uninstall proxychains-ng', shell=True)
         elif is_centos_series():
@@ -1150,7 +1142,10 @@ def blogging(**kwargs):
         if blog.is_dir():
             run_cmd(f'git -C {blog} pull origin master', shell=True)
         else:
-            run_cmd(f'git clone git@github.com:dclong/blog.git {archives}', shell=True)
+            run_cmd(
+                f'git clone git@github.com:dclong/blog.git {archives}',
+                shell=True
+            )
         cmd = f'''git -C {blog} submodule init && \
                 git -C {blog} submodule update --recursive --remote
                 '''
@@ -1158,8 +1153,7 @@ def blogging(**kwargs):
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(
-            f'pip3 uninstall pelican markdown', shell=True)
+        run_cmd(f'pip3 uninstall pelican markdown', shell=True)
 
 
 def download_tools(**kwargs):
@@ -1206,8 +1200,7 @@ def intellij_idea(**kwargs):
                 shell=True,
             )
         elif is_macos():
-            run_cmd(
-                f'brew cask install intellij-idea-ce', shell=True)
+            run_cmd(f'brew cask install intellij-idea-ce', shell=True)
         elif is_centos_series():
             pass
     if args.uninstall:
@@ -1217,8 +1210,7 @@ def intellij_idea(**kwargs):
                 shell=True,
             )
         elif is_macos():
-            run_cmd(
-                f'brew cask uninstall intellij-idea-ce', shell=True)
+            run_cmd(f'brew cask uninstall intellij-idea-ce', shell=True)
         elif is_centos_series():
             pass
     if args.config:
@@ -1236,8 +1228,7 @@ def visual_studio_code(**kwargs):
                 shell=True,
             )
         elif is_macos():
-            run_cmd(
-                f'brew cask install visual-studio-code', shell=True)
+            run_cmd(f'brew cask install visual-studio-code', shell=True)
         elif is_centos_series():
             run_cmd(f'{prefix} yum install vscode', shell=True)
     if args.uninstall:

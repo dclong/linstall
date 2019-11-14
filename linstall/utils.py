@@ -5,7 +5,9 @@ import os
 import platform
 import json
 from pathlib import Path
+import urllib.request
 import shutil
+import re
 import datetime
 import subprocess as sp
 import logging
@@ -38,7 +40,9 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
         for pkg in pkgs:
             brew_install_safe(pkg)
         return
-    proc = sp.run(f'brew ls --versions {pkgs}', shell=True, check=False, stdout=sp.PIPE)
+    proc = sp.run(
+        f'brew ls --versions {pkgs}', shell=True, check=False, stdout=sp.PIPE
+    )
     if not proc.stdout:
         run_cmd(f'brew install {pkgs}', shell=True)
     run_cmd(f'brew link {pkgs}', shell=True)
@@ -125,3 +129,19 @@ def update_apt_source(sudo: bool, yes: bool = True, seconds: float = 3600 * 12):
         SETTINGS[key] = now.strftime(fmt)
         with open(SETTINGS_FILE, 'w') as fout:
             json.dump(SETTINGS, fout)
+
+
+def _github_version(url) -> str:
+    url = f'{url}/releases/latest'
+    req = urllib.request.urlopen(url)
+    return Path(req.url).name
+
+
+def install_py_github(url: str, yes: bool = False) -> None:
+    version = _github_version(url)
+    url = f"{url}/releases/download/{version}/{Path(url).name}-{re.sub('[a-zA-Z]', '', version)}-py3-none-any.whl"
+    yes = '-y' if yes else ''
+    run_cmd(
+        f'pip3 install --user --upgrade {yes} {url}',
+        shell=True,
+    )

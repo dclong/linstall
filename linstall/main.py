@@ -97,7 +97,6 @@ def poetry_args(subparser):
     )
 
 
-
 def almond_args(subparser):
     subparser.add_argument(
         '-a',
@@ -254,7 +253,9 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'download tools', aliases=['dl', 'dlt'])
     #------------------------- JupyterLab related ------------------------------
     _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
-    _add_subparser(subparsers, 'jupyterlab-lsp', aliases=['jlab-lsp', 'jlab_lsp'])
+    _add_subparser(
+        subparsers, 'jupyterlab-lsp', aliases=['jlab-lsp', 'jlab_lsp']
+    )
     _add_subparser(
         subparsers, 'Almond', aliases=['al', 'amd'], add_argument=almond_args
     )
