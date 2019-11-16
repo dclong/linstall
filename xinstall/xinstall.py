@@ -3,7 +3,7 @@
 """
 import sys
 import os
-from typing import Union
+from typing import Union, Dict
 import shutil
 from pathlib import Path
 import urllib.request
@@ -31,7 +31,7 @@ BIN_DIR = HOME / '.local/bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
 
 
-def _namespace(dic: Dict) -> Namepsace:
+def _namespace(dic: Dict) -> Namespace:
     dic['sudo'] = 'sudo' if dic['sudo'] else ''
     dic['yes'] = '--yes' if dic['yes'] else ''
     return Namespace(**dic)
