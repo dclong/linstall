@@ -189,8 +189,6 @@ def parse_args(args=None, namespace=None):
         help='Run commands without using sudo.'
     )
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
-    # ------------------------ linstall itself ------------------------------
-    _add_subparser(subparsers, 'update', aliases=['pull', 'upd', 'pu'])
     # ------------------------ command-line tools ----------------------------
     _add_subparser(subparsers, 'CoreUtils', aliases=['cu'])
     _add_subparser(
