@@ -457,9 +457,8 @@ def spacevim(**kwargs):
                 f'nvim --headless +"call dein#install()" +qall',
                 shell=True,
             )
-        cmd = f'''pip3 install --user python-language-server \
-                && {args.prefix} npm install -g bash-language-server javascript-typescript-langserver
-            '''
+        cmd = f'''pip3 install --user python-language-server'''
+        # {args.prefix} npm install -g bash-language-server javascript-typescript-langserver
         run_cmd(cmd, shell=True)
     if args.uninstall:
         run_cmd(
