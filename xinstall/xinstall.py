@@ -38,14 +38,14 @@ def _namespace(dic: Dict) -> Namespace:
 
 
 def map_keys(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     # TODO
     # reset key mappings
     # setxkbmap -option
 
 
 def coreutils(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(sudo=args.sudo)
@@ -77,7 +77,7 @@ def coreutils(**kwargs):
 
 # ------------------------- command-line utils related -------------------------
 def shell_utils(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -113,13 +113,13 @@ def shell_utils(**kwargs):
 
 
 def proxy_env(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     cmd = 'export http_proxy=http://10.135.227.47:80 && export https_proxy=http://10.135.227.47:80'
     run_cmd(cmd, shell=True)
 
 
 def change_shell(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if is_linux():
         pass
     elif is_macos():
@@ -127,7 +127,7 @@ def change_shell(**kwargs):
 
 
 def homebrew(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.dep:
         args.install = True
         if is_ubuntu_debian():
@@ -171,7 +171,7 @@ def homebrew(**kwargs):
 
 
 def hyper(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -203,7 +203,7 @@ def hyper(**kwargs):
 
 
 def openinterminal(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_macos():
             run_cmd(f'brew cask install openinterminal', shell=True)
@@ -217,7 +217,7 @@ def openinterminal(**kwargs):
 def xonsh(**kwargs):
     """Install xonsh, a Python based shell.
     """
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         run_cmd(f'pip3 install --user xonsh', shell=True)
     if args.config:
@@ -234,7 +234,7 @@ def bash_it(**kwargs):
     """Install Bash-it, a community Bash framework.
     For more details, please refer to https://github.com/Bash-it/bash-it#installation.
     """
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         cmd = f'''git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it && \
                 ~/.bash_it/install.sh --silent
@@ -250,7 +250,7 @@ def bash_it(**kwargs):
 
 
 def bash_completion(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -277,7 +277,7 @@ def bash_completion(**kwargs):
 
 
 def wajig(**kwargs) -> None:
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if not is_ubuntu_debian():
         return
     if args.install:
@@ -296,7 +296,7 @@ def wajig(**kwargs) -> None:
 
 
 def exa(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             run_cmd(
@@ -328,7 +328,7 @@ def exa(**kwargs):
 
 
 def osquery(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             cmd = f'''{args.prefix} apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
@@ -357,7 +357,7 @@ def osquery(**kwargs):
 
 # ------------------------- vim related -------------------------
 def vim(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -387,7 +387,7 @@ def vim(**kwargs):
 
 
 def neovim(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.ppa and is_ubuntu_debian():
         args.install = True
         run_cmd(
@@ -446,7 +446,7 @@ def _svim_gen_config():
 
 
 def spacevim(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         run_cmd(
             f'curl -sLf https://spacevim.org/install.sh | bash',
@@ -471,14 +471,14 @@ def spacevim(**kwargs):
 
 
 def ideavim(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.config:
         shutil.copy2(BASE_DIR / 'ideavim/ideavimrc', HOME / '.ideavimrc')
 
 
 # ------------------------- coding tools related -------------------------
 def git(**kwargs) -> None:
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -527,7 +527,7 @@ def git(**kwargs) -> None:
 
 
 def antlr(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -554,7 +554,7 @@ def antlr(**kwargs):
 
 
 def docker(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -598,7 +598,7 @@ def docker(**kwargs):
 
 
 def kubernetes(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             run_cmd(
@@ -642,7 +642,7 @@ def _minikube_linux(sudo: bool, yes: bool = True):
 
 
 def minikube(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     virtualbox(**kwargs)
     kubernetes(**kwargs)
     if args.install:
@@ -669,7 +669,7 @@ def minikube(**kwargs):
 
 # ------------------------- programming languages -------------------------
 def cargo(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -699,7 +699,7 @@ def cargo(**kwargs):
 
 
 def openjdk8(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -730,7 +730,7 @@ def sdkman(**kwargs):
     """ Install sdkman.
     https://sdkman.io/install
     """
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         run_cmd(
             f'''curl -s https://get.sdkman.io | bash''',
@@ -743,7 +743,7 @@ def sdkman(**kwargs):
 
 
 def yapf(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         run_cmd(
             f'pip3 install --user {args.yes} yapf',
@@ -768,7 +768,7 @@ def _dsutil_version() -> str:
 
 
 def dsutil(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         url = 'https://github.com/dclong/dsutil'
         install_py_github(url=url, yes=args.yes)
@@ -782,7 +782,7 @@ def dsutil(**kwargs):
 
 
 def nodejs(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -810,7 +810,7 @@ def nodejs(**kwargs):
 
 
 def ipython3(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         cmd = f'pip3 install --user {args.yes} ipython'
         run_cmd(cmd, shell=True)
@@ -825,7 +825,7 @@ def ipython3(**kwargs):
 
 
 def python3(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -856,7 +856,7 @@ def python3(**kwargs):
 
 
 def poetry(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.python is None:
         args.python = 'python3'
     else:
@@ -886,7 +886,7 @@ def poetry(**kwargs):
 
 # ------------------------- JupyterLab kernels -------------------------
 def nbdime(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         run_cmd(f'pip3 install --user nbdime', shell=True)
     if args.uninstall:
@@ -896,7 +896,7 @@ def nbdime(**kwargs):
 
 
 def itypescript(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         run_cmd(
             f'{args.prefix} npm install -g --unsafe-perm itypescript',
@@ -917,7 +917,7 @@ def itypescript(**kwargs):
 
 
 def jupyterlab_lsp(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         cmd = '''sudo pip3 install --pre jupyter-lsp \
                 && sudo jupyter labextension install @krassowski/jupyterlab-lsp \
@@ -932,7 +932,7 @@ def jupyterlab_lsp(**kwargs):
 def beakerx(**kwargs):
     """Install/uninstall/configure the BeakerX kernels.
     """
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         run_cmd(f'pip3 install --user beakerx', shell=True)
         run_cmd(f'{args.prefix} beakerx install', shell=True)
@@ -965,7 +965,7 @@ def beakerx(**kwargs):
 def almond(**kwargs):
     """Install/uninstall/configure the Almond Scala kernel.
     """
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.almond_version is None:
         args.almond_version = '0.4.0'
     else:
@@ -999,7 +999,7 @@ def almond(**kwargs):
 
 # ------------------------- web tools -------------------------
 def ssh_server(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -1026,7 +1026,7 @@ def ssh_server(**kwargs):
 
 
 def ssh_client(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.config:
         src = BASE_DIR / 'ssh/client/config'
         des = HOME / '.ssh/config'
@@ -1035,7 +1035,7 @@ def ssh_client(**kwargs):
 
 
 def proxychains(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -1064,7 +1064,7 @@ def proxychains(**kwargs):
 
 
 def dryscrape(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -1088,7 +1088,7 @@ def dryscrape(**kwargs):
 
 
 def blogging(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         run_cmd(f'pip3 install --user pelican markdown', shell=True)
         archives = HOME / 'archives'
@@ -1112,7 +1112,7 @@ def blogging(**kwargs):
 
 
 def download_tools(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
@@ -1140,7 +1140,7 @@ def download_tools(**kwargs):
 
 # ------------------------- IDE -------------------------
 def intellij_idea(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             run_cmd(
@@ -1171,7 +1171,7 @@ def intellij_idea(**kwargs):
 
 
 def visual_studio_code(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(sudo=args.sudo)
@@ -1207,7 +1207,7 @@ def visual_studio_code(**kwargs):
 
 
 def virtualbox(**kwargs):
-    args = _namespace(**kwargs)
+    args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(sudo=args.sudo)
