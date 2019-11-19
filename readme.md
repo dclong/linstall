@@ -1,14 +1,14 @@
 # Easy Cross-platform Installation and Configuration of Apps
 
 ## Installation
-Note: `xinstall` should always be installed into your local user directory instead of a system-wide location.
+Note: It is best to install `xinstall` into a system-wide location rather than users' local directories.
 You can download a copy of the latest release and install it using pip.
 ```
-pip3 install --user -U xinstall-0.1.3-py3-none-any.whl
+sudo pip3 install -U xinstall-0.1.2-py3-none-any.whl
 ```
 Or you can use the following script to download and install the latest version automatically.
 ```
-curl -sSL www.legendu.net/media/install_py_github.py | python3 - https://github.com/dclong/xinstall
+curl -sSL www.legendu.net/media/install_py_github.py | python3 - https://github.com/dclong/xinstall --sudo --sys
 ```
 ## Usage
 
