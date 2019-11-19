@@ -1040,7 +1040,8 @@ def ssh_client(**kwargs) -> None:
                 shutil.rmtree(HOME / ".ssh")
             except FileNotFoundError:
                 pass
-            shutil.copy2(ssh, HOME)
+            shutil.copytree(ssh, HOME)
+        (HOME / ".ssh").mkdir(exist_ok=True)
         src = BASE_DIR / 'ssh/client/config'
         des = HOME / '.ssh/config'
         shutil.copy2(src, des)
