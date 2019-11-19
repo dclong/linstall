@@ -8,6 +8,7 @@ import shutil
 from pathlib import Path
 import urllib.request
 from argparse import Namespace
+import getpass
 import logging
 from .utils import (
     HOME,
@@ -23,6 +24,7 @@ from .utils import (
     is_fedora,
     is_centos_series,
 )
+USER = getpass.getuser()
 USER_ID = os.getuid()
 GROUP_ID = os.getgid()
 FILE = Path(__file__).resolve()
@@ -1025,16 +1027,30 @@ def ssh_server(**kwargs):
             pass
 
 
-def ssh_client(**kwargs):
+def ssh_client(**kwargs) -> None:
+    """Configure SSH client.
+    :param kwargs: Keyword arguments.
+    """
     args = _namespace(kwargs)
     if args.config:
+        ssh = Path(f"/home_host/{USER}/.ssh")
+        if ssh.is_dir():
+            # inside a Docker container, use .ssh from host
+            try:
+                shutil.rmtree(HOME / ".ssh")
+            except FileNotFoundError:
+                pass
+            shutil.copy2(ssh, HOME)
         src = BASE_DIR / 'ssh/client/config'
         des = HOME / '.ssh/config'
         shutil.copy2(src, des)
         des.chmod(0o600)
 
 
-def proxychains(**kwargs):
+def proxychains(**kwargs) -> None:
+    """Install and configure ProxyChains.
+    :param kwargs: Keyword arguments.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
