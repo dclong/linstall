@@ -1033,15 +1033,16 @@ def ssh_client(**kwargs) -> None:
     """
     args = _namespace(kwargs)
     if args.config:
-        ssh = Path(f"/home_host/{USER}/.ssh")
-        if ssh.is_dir():
+        ssh_src = Path(f"/home_host/{USER}/.ssh")
+        ssh_dst = HOME / ".ssh"
+        if ssh_src.is_dir():
             # inside a Docker container, use .ssh from host
             try:
-                shutil.rmtree(HOME / ".ssh")
+                shutil.rmtree(ssh_dst)
             except FileNotFoundError:
                 pass
-            shutil.copytree(ssh, HOME)
-        (HOME / ".ssh").mkdir(exist_ok=True)
+            shutil.copytree(ssh_src, ssh_dst)
+        ssh_dst.mkdir(exist_ok=True)
         src = BASE_DIR / 'ssh/client/config'
         des = HOME / '.ssh/config'
         shutil.copy2(src, des)
