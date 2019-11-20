@@ -33,7 +33,9 @@ def copy_if_exists(src: Union[Path, str], dst: Path = HOME) -> bool:
         return False
 
 
-def link_if_exists(src: Union[Path, str], dst: Path = HOME, target_is_directory: bool = True) -> bool:
+def link_if_exists(
+    src: Union[Path, str], dst: Path = HOME, target_is_directory: bool = True
+) -> bool:
     """Make a symbolic link of a file.
     No exception is thrown if the source file does not exist.
     :param src: The path of the source file.
@@ -204,7 +206,4 @@ def install_py_github(url: str, yes: bool = False) -> None:
     version = _github_version(url)
     url = f"{url}/releases/download/{version}/{Path(url).name}-{re.sub('[a-zA-Z]', '', version)}-py3-none-any.whl"
     yes = '-y' if yes else ''
-    run_cmd(
-        f'pip3 install --user --upgrade {yes} {url}',
-        shell=True,
-    )
+    run_cmd(f'pip3 install --user --upgrade {yes} {url}', )
