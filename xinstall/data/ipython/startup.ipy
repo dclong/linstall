@@ -12,7 +12,11 @@ from IPython.terminal.prompts import Prompts, Token
 from IPython.core.magic import (register_line_magic, register_cell_magic, register_line_cell_magic)
 try:
     import dsutil
-    from dsutil.const import *
+except:
+    pass
+try:
+    import pybay
+    from pybay.const import *
 except:
     pass
 HOME = Path.home()
