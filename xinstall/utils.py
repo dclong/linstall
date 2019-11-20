@@ -20,6 +20,38 @@ if os.path.isfile(SETTINGS_FILE):
         SETTINGS = json.load(fin)
 
 
+def copy_if_exists(src: Union[Path, str], dst: Path = HOME) -> bool:
+    """Copy a file.
+    No exception is thrown if the source file does not exist.
+    :param src: The path of the source file.
+    :param dst: The path of the destination file.
+    """
+    try:
+        shutil.copy2(src, dst)
+        return True
+    except FileNotFoundError:
+        return False
+
+
+def link_if_exists(
+    src: Union[Path, str], dst: Path = HOME, target_is_directory: bool = True
+) -> bool:
+    """Make a symbolic link of a file.
+    No exception is thrown if the source file does not exist.
+    :param src: The path of the source file.
+    :param dst: The path of the destination file.
+    """
+    try:
+        Path(dst).unlink()
+    except FileNotFoundError:
+        pass
+    try:
+        os.symlink(src, dst, target_is_directory=target_is_directory)
+        return True
+    except FileNotFoundError:
+        return False
+
+
 def remove_file_safe(path: Path) -> None:
     """Remove a file or sybmolic link.
     :param path: The path to the file or symbolic link.
@@ -30,12 +62,18 @@ def remove_file_safe(path: Path) -> None:
         pass
 
 
-def run_cmd(cmd, shell):
-    proc = sp.run(cmd, shell=shell, check=True)
+def run_cmd(cmd: Union[List, str]) -> None:
+    """Run a shell command.
+    :param cmd: The command to run.
+    """
+    proc = sp.run(cmd, shell=isinstance(cmd, str), check=True)
     logging.info(proc.args)
 
 
 def brew_install_safe(pkgs: Union[str, List]) -> None:
+    """Using Homebrew to install without throwing exceptions if a package to install already exists.
+    :param pkgs: A (list of) package(s) to install using Homebrew.
+    """
     if isinstance(pkgs, list):
         for pkg in pkgs:
             brew_install_safe(pkg)
@@ -44,8 +82,8 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
         f'brew ls --versions {pkgs}', shell=True, check=False, stdout=sp.PIPE
     )
     if not proc.stdout:
-        run_cmd(f'brew install {pkgs}', shell=True)
-    run_cmd(f'brew link {pkgs}', shell=True)
+        run_cmd(f'brew install {pkgs}')
+    run_cmd(f'brew link {pkgs}')
 
 
 def _any_in_platform(keywords):
@@ -53,36 +91,52 @@ def _any_in_platform(keywords):
 
 
 def is_ubuntu_debian():
+    """Check whehter the current OS is Ubuntu/Debian. 
+    """
     dists = ('ubuntu', 'debian')
     return _any_in_platform(dists)
 
 
 def is_linux():
+    """Check whehter the current OS is Linux. 
+    """
     dists = ('ubuntu', 'debian', 'centos', 'redhat', 'fedora')
     return _any_in_platform(dists)
 
 
 def is_centos_series():
+    """Check whehter the current OS belongs to the CentOS series (CentOS, RedHat or Fedora).
+    """
     dists = ('centos', 'redhat', 'fedora')
     return _any_in_platform(dists)
 
 
 def is_fedora():
+    """Check whehter the current OS is Fedora.
+    """
     dists = ('fedora', )
     return _any_in_platform(dists)
 
 
 def is_macos():
+    """Check whehter the current OS is macOS.
+    """
     dists = ('darwin', )
     return _any_in_platform(dists)
 
 
 def is_win():
+    """Check whehter the current OS is Windows.
+    """
     dists = ('win32', )
     return _any_in_platform(dists)
 
 
 def copy_file(srcfile, dstfile):
+    """Copy file without throwing exceptions when a broken symbolic link already exists at the destination.
+    :param srcfile: The source file to copy from.
+    :param dstfile: The destination file to copy to.
+    """
     _remove_file(dstfile)
     shutil.copy2(srcfile, dstfile)
 
@@ -118,6 +172,11 @@ def to_bool(value: Any) -> bool:
 
 
 def update_apt_source(sudo: bool, yes: bool = True, seconds: float = 3600 * 12):
+    """Run apt-get update if necessary.
+    :param sudo: If True, run using sudo.
+    :param yes: If True, automatically yes to prompt questions.
+    :param seconds: Do not run if this function has already been run `seconds` seconds ago.
+    """
     fmt = '%Y-%m-%d %H:%M:%S.%f'
     key = 'apt_source_update_time'
     time = datetime.datetime.strptime(
@@ -127,7 +186,7 @@ def update_apt_source(sudo: bool, yes: bool = True, seconds: float = 3600 * 12):
     if (now - time).seconds > seconds:
         prefix = "sudo" if sudo else ""
         yes = "--yes" if yes else ""
-        run_cmd(f"{prefix} apt-get update {yes}", shell=True)
+        run_cmd(f"{prefix} apt-get update {yes}")
         SETTINGS[key] = now.strftime(fmt)
         with open(SETTINGS_FILE, 'w') as fout:
             json.dump(SETTINGS, fout)
@@ -140,10 +199,11 @@ def _github_version(url) -> str:
 
 
 def install_py_github(url: str, yes: bool = False) -> None:
+    """Automatically install the latest version of a Python package from its GitHub repository.
+    :param url: The root URL of the GitHub repository.
+    :param yes: If True, automatically yes to prompt questions.
+    """
     version = _github_version(url)
     url = f"{url}/releases/download/{version}/{Path(url).name}-{re.sub('[a-zA-Z]', '', version)}-py3-none-any.whl"
     yes = '-y' if yes else ''
-    run_cmd(
-        f'pip3 install --user --upgrade {yes} {url}',
-        shell=True,
-    )
+    run_cmd(f'pip3 install --user --upgrade {yes} {url}', )
