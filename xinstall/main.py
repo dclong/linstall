@@ -230,6 +230,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'IPython3', aliases=['ipy3'])
     _add_subparser(subparsers, 'yapf', aliases=[])
     _add_subparser(subparsers, 'dsutil', aliases=[])
+    _add_subparser(subparsers, 'xinstall', aliases=[])
     _add_subparser(subparsers, 'OpenJDK8', aliases=['jdk8'])
     _add_subparser(subparsers, 'sdkman', aliases=[])
     _add_subparser(
