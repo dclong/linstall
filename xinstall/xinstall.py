@@ -34,8 +34,9 @@ BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
 
 
 def _namespace(dic: Dict) -> Namespace:
-    dic['sudo'] = 'sudo' if dic['sudo'] else ''
-    dic['yes'] = '--yes' if dic['yes'] else ''
+    dic['sudo_s'] = 'sudo' if dic['sudo'] else ''
+    dic['_sudo_s'] = '--sudo' if dic['sudo'] else ''
+    dic['_yes_s'] = '--yes' if dic['yes'] else ''
     return Namespace(**dic)
 
 
@@ -51,18 +52,18 @@ def coreutils(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(sudo=args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} coreutils', )
+            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} coreutils')
         elif is_macos():
             brew_install_safe('coreutils')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install coreutils')
+            run_cmd(f'{args.sudo_s} yum install coreutils')
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} coreutils', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} coreutils')
         elif is_macos():
             run_cmd(f'brew uninstall coreutils')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove coreutils')
+            run_cmd(f'{args.sudo_s} yum remove coreutils')
     if args.config:
         if is_macos():
             cmd = f'''export PATH=/usr/local/opt/findutils/libexec/gnubin:"$PATH" \
@@ -78,24 +79,24 @@ def shell_utils(**kwargs):
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
             run_cmd(
-                f'{args.sudo} apt-get install {args.yes} bash-completion command-not-found man-db',
+                f'{args.sudo_s} apt-get install {args._yes_s} bash-completion command-not-found man-db',
             )
         elif is_macos():
             brew_install_safe(['bash-completion@2', 'man-db'])
         elif is_centos_series():
             run_cmd(
-                f'{args.sudo} yum install bash-completion command-not-found man-db',
+                f'{args.sudo_s} yum install bash-completion command-not-found man-db',
             )
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo} apt-get purge {args.yes} bash-completion command-not-found man-db',
+                f'{args.sudo_s} apt-get purge {args._yes_s} bash-completion command-not-found man-db',
             )
         elif is_macos():
-            run_cmd(f'brew uninstall bash-completion man-db', )
+            run_cmd(f'brew uninstall bash-completion man-db')
         elif is_centos_series():
             run_cmd(
-                f'{args.sudo} yum remove bash-completion command-not-found man-db',
+                f'{args.sudo_s} yum remove bash-completion command-not-found man-db',
             )
     if args.config:
         pass
@@ -122,13 +123,13 @@ def homebrew(**kwargs):
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
             run_cmd(
-                f'{args.sudo} apt-get install {args.yes} build-essential curl file git',
+                f'{args.sudo_s} apt-get install {args._yes_s} build-essential curl file git',
             )
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum groupinstall "Development Tools"', )
-            run_cmd(f'{args.sudo} yum install curl file git')
+            run_cmd(f'{args.sudo_s} yum groupinstall "Development Tools"')
+            run_cmd(f'{args.sudo_s} yum install curl file git')
             if is_fedora():
-                run_cmd(f'{args.sudo} yum install libxcrypt-compat', )
+                run_cmd(f'{args.sudo_s} yum install libxcrypt-compat')
     cmd_brew = 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'
     if args.install:
         run_cmd(cmd_brew)
@@ -157,7 +158,7 @@ def hyper(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            #!{args.sudo} apt-get install {args.yes} hyper
+            #!{args.sudo_s} apt-get install {args._yes_s} hyper
         elif is_macos():
             run_cmd(f'brew cask install hyper')
         elif is_centos_series():
@@ -175,7 +176,7 @@ def hyper(**kwargs):
 
     if args.uninstall:
         if is_ubuntu_debian():
-            #!{args.sudo} apt-get purge hyper
+            #!{args.sudo_s} apt-get purge hyper
             pass
         elif is_macos():
             run_cmd(f'brew cask uninstall hyper')
@@ -236,20 +237,22 @@ def bash_completion(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} bash-completion', )
+            run_cmd(
+                f'{args.sudo_s} apt-get install {args._yes_s} bash-completion',
+            )
         elif is_macos():
             brew_install_safe(['bash-completion@2'])
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install bash-completion')
+            run_cmd(f'{args.sudo_s} yum install bash-completion')
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge bash-completion', )
+            run_cmd(f'{args.sudo_s} apt-get purge bash-completion')
         elif is_macos():
             run_cmd(f'brew uninstall bash-completion')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove bash-completion')
+            run_cmd(f'{args.sudo_s} yum remove bash-completion')
 
 
 def wajig(**kwargs) -> None:
@@ -258,59 +261,59 @@ def wajig(**kwargs) -> None:
         return
     if args.install:
         update_apt_source(args.sudo)
-        run_cmd(f'{args.sudo} apt-get install {args.yes} wajig', )
+        run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} wajig')
     if args.config:
         pass
     if args.proxy:
-        cmd = f'''echo '\nAcquire::http::Proxy "{args.proxy}";\nAcquire::https::Proxy "{args.proxy}";' | {args.sudo} tee -a /etc/apt/apt.conf'''
+        cmd = f'''echo '\nAcquire::http::Proxy "{args.proxy}";\nAcquire::https::Proxy "{args.proxy}";' | {args.sudo_s} tee -a /etc/apt/apt.conf'''
         run_cmd(cmd)
     if args.uninstall:
-        run_cmd(f'{args.sudo} apt-get purge {args.yes} wajig')
+        run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} wajig')
 
 
 def exa(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} cargo install --root /usr/local/ exa', )
+            run_cmd(f'{args.sudo_s} cargo install --root /usr/local/ exa')
         elif is_macos():
             brew_install_safe(['exa'])
         elif is_centos_series():
-            run_cmd(f'{args.sudo} cargo install --root /usr/local/ exa', )
+            run_cmd(f'{args.sudo_s} cargo install --root /usr/local/ exa')
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} cargo uninstall --root /usr/local/ exa', )
+            run_cmd(f'{args.sudo_s} cargo uninstall --root /usr/local/ exa')
         elif is_macos():
             run_cmd(f'brew uninstall exa')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} cargo uninstall --root /usr/local/ exa', )
+            run_cmd(f'{args.sudo_s} cargo uninstall --root /usr/local/ exa')
 
 
 def osquery(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            cmd = f'''{args.sudo} apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
-                    && {args.sudo} add-apt-repository 'deb [arch=amd64] https://pkg.osquery.io/deb deb main' \
-                    && {args.sudo} apt-get update {args.yes} \
-                    && {args.sudo} apt-get {args.yes} install osquery
+            cmd = f'''{args.sudo_s} apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
+                    && {args.sudo_s} add-apt-repository 'deb [arch=amd64] https://pkg.osquery.io/deb deb main' \
+                    && {args.sudo_s} apt-get update {args._yes_s} \
+                    && {args.sudo_s} apt-get {args._yes_s} install osquery
                 '''
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(['osquery'])
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install osquery')
+            run_cmd(f'{args.sudo_s} yum install osquery')
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} osquery', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} osquery')
         elif is_macos():
             run_cmd(f'brew uninstall osquery')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove osquery')
+            run_cmd(f'{args.sudo_s} yum remove osquery')
 
 
 # ------------------------- vim related -------------------------
@@ -319,18 +322,20 @@ def vim(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} vim vim-nox', )
+            run_cmd(
+                f'{args.sudo_s} apt-get install {args._yes_s} vim vim-nox',
+            )
         elif is_macos():
             brew_install_safe(['vim'])
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install {args.yes} vim-enhanced', )
+            run_cmd(f'{args.sudo_s} yum install {args._yes_s} vim-enhanced')
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} vim vim-nox', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} vim vim-nox')
         elif is_macos():
             run_cmd(f'brew uninstall vim')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove vim')
+            run_cmd(f'{args.sudo_s} yum remove vim')
     if args.config:
         pass
 
@@ -339,22 +344,22 @@ def neovim(**kwargs):
     args = _namespace(kwargs)
     if args.ppa and is_ubuntu_debian():
         args.install = True
-        run_cmd(f'{args.sudo} add-apt-repository -y ppa:neovim-ppa/stable', )
+        run_cmd(f'{args.sudo_s} add-apt-repository -y ppa:neovim-ppa/stable')
         update_apt_source(args.sudo)
     if args.install:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get install {args.yes} neovim', )
+            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} neovim')
         elif is_macos():
             brew_install_safe(['neovim'])
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install neovim')
+            run_cmd(f'{args.sudo_s} yum install neovim')
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} neovim', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} neovim')
         elif is_macos():
             run_cmd(f'brew uninstall neovim')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove neovim')
+            run_cmd(f'{args.sudo_s} yum remove neovim')
     if args.config:
         pass
 
@@ -388,11 +393,11 @@ def _svim_gen_config():
 def spacevim(**kwargs):
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'curl -sLf https://spacevim.org/install.sh | bash', )
+        run_cmd(f'curl -sLf https://spacevim.org/install.sh | bash')
         if shutil.which('nvim'):
-            run_cmd(f'nvim --headless +"call dein#install()" +qall', )
+            run_cmd(f'nvim --headless +"call dein#install()" +qall')
         cmd = f'''pip3 install --user python-language-server'''
-        # {args.sudo} npm install -g bash-language-server javascript-typescript-langserver
+        # {args.sudo_s} npm install -g bash-language-server javascript-typescript-langserver
         run_cmd(cmd)
     if args.uninstall:
         run_cmd(
@@ -415,20 +420,22 @@ def git(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} git git-lfs', )
+            run_cmd(
+                f'{args.sudo_s} apt-get install {args._yes_s} git git-lfs',
+            )
         elif is_macos():
             brew_install_safe(['git', 'git-lfs', 'bash-completion@2'])
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install git')
+            run_cmd(f'{args.sudo_s} yum install git')
         run_cmd('git lfs install')
     if args.uninstall:
         run_cmd('git lfs uninstall')
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} git git-lfs', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} git git-lfs')
         elif is_macos():
             run_cmd(f'brew uninstall git git-lfs')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove git')
+            run_cmd(f'{args.sudo_s} yum remove git')
     if args.config:
         gitconfig = HOME / '.gitconfig'
         # try to remove the file to avoid dead symbolic link problem
@@ -443,8 +450,8 @@ def git(**kwargs) -> None:
             with (HOME / '.bash_profile').open('a') as fout:
                 fout.write(bashrc)
     if 'proxy' in kwargs and args.proxy:
-        run_cmd(f'git config --global http.proxy {args.proxy}', )
-        run_cmd(f'git config --global https.proxy {args.proxy}', )
+        run_cmd(f'git config --global http.proxy {args.proxy}')
+        run_cmd(f'git config --global https.proxy {args.proxy}')
 
 
 def antlr(**kwargs):
@@ -452,20 +459,20 @@ def antlr(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} antlr4', )
+            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} antlr4')
         elif is_macos():
             brew_install_safe(['antlr4'])
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install antlr')
+            run_cmd(f'{args.sudo_s} yum install antlr')
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} antlr4', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} antlr4')
         elif is_macos():
             run_cmd(f'brew uninstall antlr4')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove antlr')
+            run_cmd(f'{args.sudo_s} yum remove antlr')
 
 
 def docker(**kwargs):
@@ -474,7 +481,7 @@ def docker(**kwargs):
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
             run_cmd(
-                f'{args.sudo} apt-get install {args.yes} docker.io docker-compose',
+                f'{args.sudo_s} apt-get install {args._yes_s} docker.io docker-compose',
             )
         elif is_macos():
             brew_install_safe(
@@ -484,7 +491,7 @@ def docker(**kwargs):
                 ]
             )
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install docker docker-compose', )
+            run_cmd(f'{args.sudo_s} yum install docker docker-compose')
     if args.config:
         run_cmd('gpasswd -a $(id -un) docker')
         logging.warning(
@@ -493,14 +500,14 @@ def docker(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo} apt-get purge {args.yes} docker docker-compose',
+                f'{args.sudo_s} apt-get purge {args._yes_s} docker docker-compose',
             )
         elif is_macos():
             run_cmd(
                 f'brew uninstall docker docker-completion docker-compose docker-compose-completion',
             )
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove docker docker-compose', )
+            run_cmd(f'{args.sudo_s} yum remove docker docker-compose')
 
 
 def kubernetes(**kwargs):
@@ -508,13 +515,13 @@ def kubernetes(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             run_cmd(
-                f'curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | {args.sudo} apt-key add -',
+                f'curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | {args.sudo_s} apt-key add -',
             )
             run_cmd(
-                f'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | {args.sudo} tee -a /etc/apt/sources.list.d/kubernetes.list',
+                f'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | {args.sudo_s} tee -a /etc/apt/sources.list.d/kubernetes.list',
             )
             update_apt_source(sudo=args.sudo, seconds=-1E10)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} kubectl', )
+            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} kubectl')
         elif is_macos():
             brew_install_safe(['kubernetes-cli'])
         elif is_centos_series():
@@ -523,7 +530,7 @@ def kubernetes(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} kubectl', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} kubectl')
         elif is_macos():
             run_cmd(f'brew uninstall kubectl')
         elif is_centos_series():
@@ -557,11 +564,11 @@ def minikube(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} rm /usr/local/bin/minikube')
+            run_cmd(f'{args.sudo_s} rm /usr/local/bin/minikube')
         elif is_macos():
             run_cmd(f'brew cask uninstall minikube')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} rm /usr/local/bin/minikube')
+            run_cmd(f'{args.sudo_s} rm /usr/local/bin/minikube')
 
 
 # ------------------------- programming languages -------------------------
@@ -570,16 +577,16 @@ def cargo(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} cargo', )
+            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} cargo')
         if is_macos():
             brew_install_safe(['cargo'])
         if is_centos_series():
-            run_cmd(f'{args.sudo} yum install {args.yes} cargo', )
+            run_cmd(f'{args.sudo_s} yum install {args._yes_s} cargo')
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} cargo', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} cargo')
         if is_macos():
             run_cmd(f'brew uninstall cargo')
         if is_centos_series():
@@ -592,7 +599,7 @@ def openjdk8(**kwargs):
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
             run_cmd(
-                f'{args.sudo} apt-get install {args.yes} openjdk-jdk-8 maven gradle',
+                f'{args.sudo_s} apt-get install {args._yes_s} openjdk-jdk-8 maven gradle',
             )
         if is_macos():
             cmd = 'brew tap AdoptOpenJDK/openjdk && brew cask install adoptopenjdk8'
@@ -604,7 +611,7 @@ def openjdk8(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo} apt-get purge {args.yes} openjdk-jdk-8 maven gradle',
+                f'{args.sudo_s} apt-get purge {args._yes_s} openjdk-jdk-8 maven gradle',
             )
         if is_macos():
             run_cmd(f'brew cask uninstall adoptopenjdk8')
@@ -618,7 +625,7 @@ def sdkman(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'''curl -s https://get.sdkman.io | bash''', )
+        run_cmd(f'''curl -s https://get.sdkman.io | bash''')
     if args.config:
         pass
     if args.uninstall:
@@ -628,20 +635,33 @@ def sdkman(**kwargs):
 def yapf(**kwargs):
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'pip3 install --user {args.yes} yapf', )
+        run_cmd(f'pip3 install --user {args._yes_s} yapf')
     if args.config:
         shutil.copy2(
             os.path.join(BASE_DIR, 'yapf/style.yapf'),
             os.path.join(args.dst_dir, '.style.yapf')
         )
     if args.uninstall:
-        run_cmd(f'pip3 uninstall {args.yes} yapf', )
+        run_cmd(f'pip3 uninstall {args._yes_s} yapf')
 
 
 def _dsutil_version() -> str:
     url = 'https://github.com/dclong/dsutil/releases/latest'
     req = urllib.request.urlopen(url)
     return Path(req.url).name
+
+
+def xinstall(**kwargs):
+    """Install xonsh, a Python based shell.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        url = 'https://github.com/dclong/dsutil'
+        install_py_github(url=url, sudo=args.sudo, sys=args.sys, yes=args.yes)
+    if args.config:
+        pass
+    if args.uninstall:
+        run_cmd(f"{args.sudo_s} pip3 uninstall xinstall")
 
 
 def dsutil(**kwargs):
@@ -652,7 +672,7 @@ def dsutil(**kwargs):
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f'pip3 uninstall {args.yes} dsutil', )
+        run_cmd(f'pip3 uninstall {args._yes_s} dsutil')
 
 
 def nodejs(**kwargs):
@@ -660,17 +680,17 @@ def nodejs(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            cmd = f'''{args.sudo} apt-get install {args.yes} nodejs npm'''
+            cmd = f'''{args.sudo_s} apt-get install {args._yes_s} nodejs npm'''
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(['nodejs'])
         if is_centos_series():
-            run_cmd(f'{args.sudo} yum install {args.yes} nodejs', )
+            run_cmd(f'{args.sudo_s} yum install {args._yes_s} nodejs')
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} nodejs', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} nodejs')
         if is_macos():
             run_cmd(f'brew uninstall nodejs')
         if is_centos_series():
@@ -680,7 +700,7 @@ def nodejs(**kwargs):
 def ipython3(**kwargs):
     args = _namespace(kwargs)
     if args.install:
-        cmd = f'pip3 install --user {args.yes} ipython'
+        cmd = f'pip3 install --user {args._yes_s} ipython'
         run_cmd(cmd)
     if args.config:
         run_cmd('ipython3 profile create')
@@ -697,15 +717,15 @@ def python3(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            cmd = f'''{args.sudo} apt-get install {args.yes} python3.7 python3-pip python3-setuptools && \
-                    {args.sudo} ln -svf /usr/bin/python3.7 /usr/bin/python3
+            cmd = f'''{args.sudo_s} apt-get install {args._yes_s} python3.7 python3-pip python3-setuptools && \
+                    {args.sudo_s} ln -svf /usr/bin/python3.7 /usr/bin/python3
                     '''
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(['python3'])
         if is_centos_series():
             run_cmd(
-                f'{args.sudo} yum install {args.yes} python34 python34-devel python34-pip',
+                f'{args.sudo_s} yum install {args._yes_s} python34 python34-devel python34-pip',
             )
             run_cmd(f'pip3.4 install --user setuptools')
     if args.config:
@@ -713,7 +733,7 @@ def python3(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo} apt-get purge {args.yes} python3 python3-dev python3-setuptools python3-pip python3-venv',
+                f'{args.sudo_s} apt-get purge {args._yes_s} python3 python3-dev python3-setuptools python3-pip python3-venv',
             )
         if is_macos():
             run_cmd(f'brew uninstall python3')
@@ -740,7 +760,7 @@ def poetry(**kwargs):
         desfile.symlink_to(srcfile)
         if args.bash_completion:
             if is_linux():
-                cmd = f'{HOME}/.poetry/bin/poetry completions bash | {args.sudo} tee /etc/bash_completion.d/poetry.bash-completion > /dev/null'
+                cmd = f'{HOME}/.poetry/bin/poetry completions bash | {args.sudo_s} tee /etc/bash_completion.d/poetry.bash-completion > /dev/null'
                 run_cmd(cmd)
                 return
             if is_macos():
@@ -764,11 +784,11 @@ def nbdime(**kwargs):
 def itypescript(**kwargs):
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'{args.sudo} npm install -g --unsafe-perm itypescript', )
-        run_cmd(f'{args.sudo} its --ts-hide-undefined --install=global', )
+        run_cmd(f'{args.sudo_s} npm install -g --unsafe-perm itypescript')
+        run_cmd(f'{args.sudo_s} its --ts-hide-undefined --install=global')
     if args.uninstall:
-        run_cmd(f'{args.sudo} jupyter kernelspec uninstall typescript', )
-        run_cmd(f'{args.sudo} npm uninstall itypescript')
+        run_cmd(f'{args.sudo_s} jupyter kernelspec uninstall typescript')
+        run_cmd(f'{args.sudo_s} npm uninstall itypescript')
     if args.config:
         pass
 
@@ -792,24 +812,24 @@ def beakerx(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         run_cmd(f'pip3 install --user beakerx')
-        run_cmd(f'{args.sudo} beakerx install')
+        run_cmd(f'{args.sudo_s} beakerx install')
         run_cmd(
-            f'{args.sudo} jupyter labextension install @jupyter-widgets/jupyterlab-manager',
+            f'{args.sudo_s} jupyter labextension install @jupyter-widgets/jupyterlab-manager',
         )
         run_cmd(
-            f'{args.sudo} jupyter labextension install beakerx-jupyterlab',
+            f'{args.sudo_s} jupyter labextension install beakerx-jupyterlab',
         )
     if args.uninstall:
         run_cmd(
-            f'{args.sudo} jupyter labextension uninstall beakerx-jupyterlab',
+            f'{args.sudo_s} jupyter labextension uninstall beakerx-jupyterlab',
         )
         run_cmd(
-            f'{args.sudo} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager',
+            f'{args.sudo_s} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager',
         )
-        run_cmd(f'{args.sudo} beakerx uninstall')
+        run_cmd(f'{args.sudo_s} beakerx uninstall')
         run_cmd(f'pip3 uninstall beakerx')
     if args.config:
-        run_cmd(f'{args.sudo} chown -R {USER_ID}:{GROUP_ID} {HOME}', )
+        run_cmd(f'{args.sudo_s} chown -R {USER_ID}:{GROUP_ID} {HOME}')
 
 
 def almond(**kwargs):
@@ -827,7 +847,7 @@ def almond(**kwargs):
     if args.install:
         coursier = os.path.join(BIN_DIR, 'coursier')
         almond = os.path.join(BIN_DIR, 'almond')
-        run_cmd(f'curl -L -o {coursier} https://git.io/coursier-cli', )
+        run_cmd(f'curl -L -o {coursier} https://git.io/coursier-cli')
         run_cmd(f'chmod +x {coursier}')
         run_cmd(
             f'''{coursier} bootstrap -f -r jitpack -i user \
@@ -835,7 +855,7 @@ def almond(**kwargs):
                 -o {almond} \
                 sh.almond:scala-kernel_{args.scala_version}:{args.almond_version}''',
         )
-        run_cmd(f'{args.sudo} {almond} --install --global --force', )
+        run_cmd(f'{args.sudo_s} {almond} --install --global --force')
     if args.config:
         pass
 
@@ -847,7 +867,7 @@ def ssh_server(**kwargs):
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
             run_cmd(
-                f'{args.sudo} apt-get install {args.yes} openssh-server fail2ban',
+                f'{args.sudo_s} apt-get install {args._yes_s} openssh-server fail2ban',
             )
         elif is_macos():
             pass
@@ -858,7 +878,7 @@ def ssh_server(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo} apt-get purge {args.yes} openssh-server fail2ban',
+                f'{args.sudo_s} apt-get purge {args._yes_s} openssh-server fail2ban',
             )
         elif is_macos():
             pass
@@ -896,11 +916,13 @@ def proxychains(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} proxychains4', )
+            run_cmd(
+                f'{args.sudo_s} apt-get install {args._yes_s} proxychains4',
+            )
         elif is_macos():
             brew_install_safe(['proxychains-ng'])
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install proxychains')
+            run_cmd(f'{args.sudo_s} yum install proxychains')
     if args.config:
         print('Configuring proxychains ...')
         des_dir = os.path.join(HOME, '.proxychains')
@@ -910,11 +932,11 @@ def proxychains(**kwargs) -> None:
         )
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge proxychains')
+            run_cmd(f'{args.sudo_s} apt-get purge proxychains')
         elif is_macos():
             run_cmd(f'brew uninstall proxychains-ng')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove proxychains')
+            run_cmd(f'{args.sudo_s} yum remove proxychains')
 
 
 def dryscrape(**kwargs):
@@ -922,7 +944,7 @@ def dryscrape(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            cmd = f'''{args.sudo} apt-get install {args.yes} qt5-default libqt5webkit5-dev build-essential xvfb \
+            cmd = f'''{args.sudo_s} apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
                 && pip3 install --user dryscrape
                 '''
             run_cmd(cmd)
@@ -951,7 +973,7 @@ def blogging(**kwargs):
         if blog.is_dir():
             run_cmd(f'git -C {blog} pull origin master')
         else:
-            run_cmd(f'git clone git@github.com:dclong/blog.git {archives}', )
+            run_cmd(f'git clone git@github.com:dclong/blog.git {archives}')
         cmd = f'''git -C {blog} submodule init && \
                 git -C {blog} submodule update --recursive --remote
                 '''
@@ -967,7 +989,9 @@ def download_tools(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} wget curl aria2', )
+            run_cmd(
+                f'{args.sudo_s} apt-get install {args._yes_s} wget curl aria2',
+            )
         elif is_macos():
             brew_install_safe(['wget', 'curl', 'aria2'])
         elif is_centos_series():
@@ -976,7 +1000,9 @@ def download_tools(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} wget curl aria2', )
+            run_cmd(
+                f'{args.sudo_s} apt-get purge {args._yes_s} wget curl aria2',
+            )
         elif is_macos():
             run_cmd(f'brew uninstall wget curl aria2')
         elif is_centos_series():
@@ -989,11 +1015,11 @@ def intellij_idea(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo} add-apt-repository ppa:mmk2410/intellij-idea',
+                f'{args.sudo_s} add-apt-repository ppa:mmk2410/intellij-idea',
             )
             update_apt_source(sudo=args.sudo, seconds=-1E10)
             run_cmd(
-                f'{args.sudo} apt-get install {args.yes} intellij-idea-community',
+                f'{args.sudo_s} apt-get install {args._yes_s} intellij-idea-community',
             )
         elif is_macos():
             run_cmd(f'brew cask install intellij-idea-ce')
@@ -1001,7 +1027,9 @@ def intellij_idea(**kwargs):
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} intellij-idea-ce', )
+            run_cmd(
+                f'{args.sudo_s} apt-get purge {args._yes_s} intellij-idea-ce',
+            )
         elif is_macos():
             run_cmd(f'brew cask uninstall intellij-idea-ce')
         elif is_centos_series():
@@ -1015,18 +1043,18 @@ def visual_studio_code(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(sudo=args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} vscode', )
+            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} vscode')
         elif is_macos():
             run_cmd(f'brew cask install visual-studio-code')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum install vscode')
+            run_cmd(f'{args.sudo_s} yum install vscode')
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} vscode', )
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} vscode')
         elif is_macos():
-            run_cmd(f'brew cask uninstall visual-studio-code', )
+            run_cmd(f'brew cask uninstall visual-studio-code')
         elif is_centos_series():
-            run_cmd(f'{args.sudo} yum remove vscode')
+            run_cmd(f'{args.sudo_s} yum remove vscode')
     if args.config:
         src_file = f'{BASE_DIR}/vscode/settings.json'
         dst_dir = f'{HOME}/.config/Code/User/'
@@ -1042,14 +1070,18 @@ def virtualbox(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(sudo=args.sudo)
-            run_cmd(f'{args.sudo} apt-get install {args.yes} virtualbox-qt', )
+            run_cmd(
+                f'{args.sudo_s} apt-get install {args._yes_s} virtualbox-qt',
+            )
         elif is_macos():
-            run_cmd(f'brew cask install virtualbox virtualbox-extension-pack', )
+            run_cmd(f'brew cask install virtualbox virtualbox-extension-pack')
         elif is_centos_series():
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo} apt-get purge {args.yes} virtualbox-qt', )
+            run_cmd(
+                f'{args.sudo_s} apt-get purge {args._yes_s} virtualbox-qt',
+            )
         elif is_macos():
             run_cmd(
                 f'brew cask uninstall virtualbox virtualbox-extension-pack',
