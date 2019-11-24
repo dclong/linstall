@@ -198,15 +198,12 @@ def _github_version(url) -> str:
     return Path(req.url).name
 
 
-def install_py_github(
-    url: str, sudo: bool = False, sys: bool = False, yes: bool = False
-) -> None:
+def install_py_github(url: str, sudo: bool = False, sys: bool = False) -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
     :param url: The root URL of the GitHub repository.
     :param yes: If True, automatically yes to prompt questions.
     """
     version = _github_version(url)
     url = f"{url}/releases/download/{version}/{Path(url).name}-{re.sub('[a-zA-Z]', '', version)}-py3-none-any.whl"
-    yes = '-y' if yes else ''
-    cmd = f"{'sudo' if sudo else ''} pip3 install {'--sys' if sys else '--user'} --upgrade {yes} {url}"
+    cmd = f"{'sudo' if sudo else ''} pip3 install {'--sys' if sys else '--user'} --upgrade {url}"
     run_cmd(cmd)

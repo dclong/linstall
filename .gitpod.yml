@@ -1,6 +1,5 @@
-image: dclong/jupyterhub-ds
+image: dclong/gitpod
+ports:
+  - port: 8888
 tasks:
-  - command: xinstall ipy3 -c
   - command: nvim --headless +"call dein#install()" +qall
-  - command: xinstall svim -ic
-  - command: xinstall pt -ic

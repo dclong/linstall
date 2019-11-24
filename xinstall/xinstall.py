@@ -10,13 +10,13 @@ import urllib.request
 from argparse import Namespace
 import getpass
 import logging
+from . import utils
 from .utils import (
     HOME,
     run_cmd,
     update_apt_source,
     brew_install_safe,
     remove_file_safe,
-    install_py_github,
     is_win,
     is_linux,
     is_ubuntu_debian,
@@ -657,7 +657,7 @@ def xinstall(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         url = 'https://github.com/dclong/dsutil'
-        install_py_github(url=url, sudo=args.sudo, sys=args.sys, yes=args.yes)
+        utils.install_py_github(url=url, sudo=args.sudo, sys=args.sys)
     if args.config:
         pass
     if args.uninstall:
@@ -668,7 +668,7 @@ def dsutil(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         url = 'https://github.com/dclong/dsutil'
-        install_py_github(url=url, yes=args.yes)
+        utils.install_py_github(url=url)
     if args.config:
         pass
     if args.uninstall:
@@ -1063,6 +1063,11 @@ def visual_studio_code(**kwargs):
         os.makedirs(dst_dir, exist_ok=True)
         os.symlink(src_file, dst_dir, target_is_directory=True)
         run_cmd(f'ln -svf {src_file} {dst_dir}')
+
+
+def install_py_github(**kwargs):
+    args = _namespace(kwargs)
+    utils.install_py_github(url=args.url, sudo=args.sudo, sys=args.sys)
 
 
 def virtualbox(**kwargs):
