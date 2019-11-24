@@ -1,11 +1,13 @@
+"""The command-line interface for xinstall.
+"""
 from typing import Sequence, Union, Callable
 from argparse import ArgumentParser
 import re
-from .utils import is_macos
+from .utils import install_py_github
 from . import xinstall
 
 
-def wajig_args(subparser):
+def _wajig_args(subparser):
     subparser.add_argument(
         '-p',
         '--proxy',
@@ -15,7 +17,7 @@ def wajig_args(subparser):
     )
 
 
-def change_shell_args(subparser):
+def _change_shell_args(subparser):
     subparser.add_argument(
         '-s',
         '--shell',
@@ -25,7 +27,7 @@ def change_shell_args(subparser):
     )
 
 
-def homebrew_args(subparser):
+def _homebrew_args(subparser):
     subparser.add_argument(
         '-d',
         '--install-deps',
@@ -35,7 +37,7 @@ def homebrew_args(subparser):
     )
 
 
-def neovim_args(subparser):
+def _neovim_args(subparser):
     subparser.add_argument(
         '--ppa',
         dest='ppa',
@@ -44,7 +46,7 @@ def neovim_args(subparser):
     )
 
 
-def spacevim_args(subparser):
+def _spacevim_args(subparser):
     subparser.add_argument(
         '--enable-true-colors',
         dest='true_colors',
@@ -60,7 +62,7 @@ def spacevim_args(subparser):
     )
 
 
-def git_args(subparser):
+def _git_args(subparser):
     subparser.add_argument(
         '-p',
         '--proxy',
@@ -70,7 +72,7 @@ def git_args(subparser):
     )
 
 
-def yapf_args(subparser):
+def _yapf_args(subparser):
     subparser.add_argument(
         '-d',
         '--dest-dir',
@@ -80,7 +82,7 @@ def yapf_args(subparser):
     )
 
 
-def poetry_args(subparser):
+def _poetry_args(subparser):
     subparser.add_argument(
         '-p',
         '--python',
@@ -97,7 +99,7 @@ def poetry_args(subparser):
     )
 
 
-def almond_args(subparser):
+def _almond_args(subparser):
     subparser.add_argument(
         '-a',
         '--almond-version',
@@ -114,19 +116,38 @@ def almond_args(subparser):
     )
 
 
+def _add_subparser_install_py_github(subparsers):
+    subparser = subparsers.add_parser(
+        "install_py_github",
+        aliases=["inpygit", "pygit", "ipg"],
+        help="Install the latest version of a Python package from GitHub."
+    )
+    subparser.add_argument(
+        dest='url', help=f"The URL of the Python package's GitHub repository."
+    )
+    subparser.add_argument(
+        '--sys',
+        dest='sys',
+        action="store_true",
+        help=f"Install to a system-wide location."
+    )
+    subparser.set_defaults(func=xinstall.install_py_github)
+    return subparser
+
+
 def _add_subparser(
     subparsers,
     name: str,
     aliases: Sequence = (),
     func: Union[Callable, None] = None,
+    help_: Union[str, None] = None,
     add_argument: Union[Callable, None] = None
 ):
     sub_cmd = re.sub(r'(\s+)|-', '_', name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
     func = func if func else eval(f'xinstall.{sub_cmd}')
-    subparser = subparsers.add_parser(
-        sub_cmd, aliases=aliases, help=f'install and configure {name}.'
-    )
+    help_ = help_ if help_ else f"Install and configure {name}."
+    subparser = subparsers.add_parser(sub_cmd, aliases=aliases, help=help_)
     subparser.add_argument(
         '-i',
         '--install',
@@ -140,13 +161,6 @@ def _add_subparser(
         dest='uninstall',
         action='store_true',
         help=f'uninstall {name}.'
-    )
-    subparser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='Automatical yes (default no) to prompt questions.'
     )
     subparser.add_argument(
         '-c',
@@ -182,11 +196,11 @@ def parse_args(args=None, namespace=None):
         help='Run commands using sudo.'
     )
     parser.add_argument(
-        '--no-sudo',
-        dest='prefix',
-        action='store_const',
-        const='',
-        help='Run commands without using sudo.'
+        '-y',
+        '--yes',
+        dest='yes',
+        action='store_true',
+        help='Automatical yes (default no) to prompt questions.'
     )
     subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
     # ------------------------ command-line tools ----------------------------
@@ -195,7 +209,7 @@ def parse_args(args=None, namespace=None):
         subparsers,
         'change shell',
         aliases=['chsh', 'cs'],
-        add_argument=change_shell_args
+        add_argument=_change_shell_args
     )
     _add_subparser(subparsers, 'proxy env', aliases=['proxy', 'penv', 'pe'])
     _add_subparser(
@@ -204,27 +218,29 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Bash-it', aliases=['shit', 'bit'])
     _add_subparser(subparsers, 'xonsh')
     _add_subparser(
-        subparsers, 'Homebrew', aliases=['brew'], add_argument=homebrew_args
+        subparsers, 'Homebrew', aliases=['brew'], add_argument=_homebrew_args
     )
     _add_subparser(subparsers, 'Hyper', aliases=['hp'])
     _add_subparser(subparsers, 'OpenInTerminal', aliases=['oit'])
     _add_subparser(
         subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp']
     )
-    _add_subparser(subparsers, 'Wajig', aliases=['wj'], add_argument=wajig_args)
+    _add_subparser(
+        subparsers, 'Wajig', aliases=['wj'], add_argument=_wajig_args
+    )
     _add_subparser(subparsers, 'exa')
     _add_subparser(subparsers, 'osquery', aliases=['osq'])
     # ------------------------ Vim ------------------------------
     _add_subparser(subparsers, 'Vim')
     _add_subparser(
-        subparsers, 'NeoVim', aliases=['nvim'], add_argument=neovim_args
+        subparsers, 'NeoVim', aliases=['nvim'], add_argument=_neovim_args
     )
     _add_subparser(
-        subparsers, 'SpaceVim', aliases=['svim'], add_argument=spacevim_args
+        subparsers, 'SpaceVim', aliases=['svim'], add_argument=_spacevim_args
     )
     _add_subparser(subparsers, 'IdeaVim', aliases=['ivim'])
     #------------------------- development related  ------------------------------
-    _add_subparser(subparsers, 'Git', add_argument=git_args)
+    _add_subparser(subparsers, 'Git', add_argument=_git_args)
     _add_subparser(subparsers, 'NodeJS', aliases=['node'])
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
     _add_subparser(subparsers, 'IPython3', aliases=['ipy3'])
@@ -234,7 +250,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'OpenJDK8', aliases=['jdk8'])
     _add_subparser(subparsers, 'sdkman', aliases=[])
     _add_subparser(
-        subparsers, 'Poetry', aliases=['pt'], add_argument=poetry_args
+        subparsers, 'Poetry', aliases=['pt'], add_argument=_poetry_args
     )
     _add_subparser(subparsers, 'Cargo', aliases=['cgo'])
     _add_subparser(subparsers, 'ANTLR')
@@ -248,13 +264,14 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'ProxyChains', aliases=['pchains', 'pc'])
     _add_subparser(subparsers, 'dryscrape', aliases=[])
     _add_subparser(subparsers, 'download tools', aliases=['dl', 'dlt'])
+    _add_subparser_install_py_github(subparsers)
     #------------------------- JupyterLab related ------------------------------
     _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
     _add_subparser(
         subparsers, 'jupyterlab-lsp', aliases=['jlab-lsp', 'jlab_lsp']
     )
     _add_subparser(
-        subparsers, 'Almond', aliases=['al', 'amd'], add_argument=almond_args
+        subparsers, 'Almond', aliases=['al', 'amd'], add_argument=_almond_args
     )
     _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
     _add_subparser(subparsers, 'nbdime', aliases=['nbd'])
@@ -270,6 +287,8 @@ def parse_args(args=None, namespace=None):
 
 
 def main():
+    """Run xinstall command-line interface.
+    """
     args = parse_args()
     args.func(**vars(args))
 

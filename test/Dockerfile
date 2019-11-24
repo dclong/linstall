@@ -1,5 +1,6 @@
-FROM dclong/ubuntu_b
+FROM dclong/python
 
-RUN apt-get update \
-    && apt-get install -y python3-pip \
-    && curl -sSL www.legendu.net/media/install_py_github.py | python3 - https://github.com/dclong/xinstall --sys
+COPY dist/xinstall-*.whl /scripts/
+
+RUN pip3 install -U /scripts/xinstall-*.whl \
+    && rm /scripts/xinstall-*.whl
