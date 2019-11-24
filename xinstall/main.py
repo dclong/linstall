@@ -3,7 +3,6 @@
 from typing import Sequence, Union, Callable
 from argparse import ArgumentParser
 import re
-from .utils import install_py_github
 from . import xinstall
 
 
