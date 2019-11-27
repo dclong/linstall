@@ -645,18 +645,12 @@ def yapf(**kwargs):
         run_cmd(f'pip3 uninstall {args._yes_s} yapf')
 
 
-def _dsutil_version() -> str:
-    url = 'https://github.com/dclong/dsutil/releases/latest'
-    req = urllib.request.urlopen(url)
-    return Path(req.url).name
-
-
 def xinstall(**kwargs):
     """Install xonsh, a Python based shell.
     """
     args = _namespace(kwargs)
     if args.install:
-        url = 'https://github.com/dclong/dsutil'
+        url = 'https://github.com/dclong/xinstall'
         utils.install_py_github(url=url, sudo=args.sudo, sys=args.sys)
     if args.config:
         pass
