@@ -10,7 +10,7 @@ import urllib.request
 from argparse import Namespace
 import getpass
 import logging
-from . import utils, __version__
+from . import utils
 from .utils import (
     HOME,
     run_cmd,
