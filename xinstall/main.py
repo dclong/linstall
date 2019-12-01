@@ -133,6 +133,16 @@ def _xinstall_args(subparser):
     _option_sys(subparser)
 
 
+def _add_subparser_version(subparsers):
+    subparser = subparsers.add_parser(
+        "version",
+        aliases=["ver", "v"],
+        help="Print version of the xinstall package."
+    )
+    subparser.set_defaults(func=xinstall.version)
+    return subparser
+
+
 def _add_subparser_install_py_github(subparsers):
     subparser = subparsers.add_parser(
         "install_py_github",

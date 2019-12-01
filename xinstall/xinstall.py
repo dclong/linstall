@@ -10,7 +10,7 @@ import urllib.request
 from argparse import Namespace
 import getpass
 import logging
-from . import utils
+from . import utils, __version__
 from .utils import (
     HOME,
     run_cmd,
@@ -1089,3 +1089,8 @@ def virtualbox(**kwargs):
             pass
     if args.config:
         pass
+
+
+def version(**kwargs):
+    args = _namespace(kwargs)
+    print(__version__)
