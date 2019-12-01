@@ -123,10 +123,10 @@ def trash(line: str):
 #else:
 #    %alias cs cd %l && ls -G
 # -------------------------------------------------------------------------
-os.environ['PATH'] = ":".join(str(path) for path in (
+os.environ['PATH'] = ":".join({str(path): None for path in (
     [HOME / ".local/bin"] + 
     list(HOME.glob("Library/Python/3.*/bin")) +
     list(Path("/").glob("apache/hadoop/bin")) +
-    [os.environ["PATH"]]
-))
+    os.environ["PATH"].split(":")
+)})
 %rehashx
