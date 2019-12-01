@@ -31,6 +31,7 @@ FILE = Path(__file__).resolve()
 BASE_DIR = FILE.parent / 'data'
 BIN_DIR = HOME / '.local/bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
+__version__ = "0.2.7"
 
 
 def _namespace(dic: Dict) -> Namespace:
@@ -40,14 +41,9 @@ def _namespace(dic: Dict) -> Namespace:
     return Namespace(**dic)
 
 
-def map_keys(**kwargs):
-    args = _namespace(kwargs)
-    # TODO
-    # reset key mappings
-    # setxkbmap -option
-
-
 def coreutils(**kwargs):
+    """Install CoreUtils.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -74,6 +70,8 @@ def coreutils(**kwargs):
 
 # ------------------------- command-line utils related -------------------------
 def shell_utils(**kwargs):
+    """Install Shell-related utils.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -102,13 +100,9 @@ def shell_utils(**kwargs):
         pass
 
 
-def proxy_env(**kwargs):
-    args = _namespace(kwargs)
-    cmd = 'export http_proxy=http://10.135.227.47:80 && export https_proxy=http://10.135.227.47:80'
-    run_cmd(cmd)
-
-
 def change_shell(**kwargs):
+    """Change the default shell.
+    """
     args = _namespace(kwargs)
     if is_linux():
         pass
@@ -117,6 +111,8 @@ def change_shell(**kwargs):
 
 
 def homebrew(**kwargs):
+    """Install Homebrew.
+    """
     args = _namespace(kwargs)
     if args.dep:
         args.install = True
@@ -154,6 +150,8 @@ def homebrew(**kwargs):
 
 
 def hyper(**kwargs):
+    """Install the hyper.js terminal.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -186,6 +184,8 @@ def hyper(**kwargs):
 
 
 def openinterminal(**kwargs):
+    """Install openinterminal.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_macos():
