@@ -238,7 +238,6 @@ def parse_args(args=None, namespace=None):
         aliases=['chsh', 'cs'],
         add_argument=_change_shell_args
     )
-    _add_subparser(subparsers, 'proxy env', aliases=['proxy', 'penv', 'pe'])
     _add_subparser(
         subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su']
     )
