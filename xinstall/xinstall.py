@@ -1089,3 +1089,7 @@ def virtualbox(**kwargs):
             pass
     if args.config:
         pass
+
+def version(**kwargs):
+    args = _namespace(kwargs)
+    print(__version__)
