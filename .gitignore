@@ -4,6 +4,7 @@
 .directory
 __pycache__/
 .ipynb_checkpoints/
+.vscode/
 venv/
 target/
 dist/
