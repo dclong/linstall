@@ -8,6 +8,13 @@ CMD = f"docker build -t dclong/xinstall-test -f test/Dockerfile {DIR_TEST.parent
 sp.run(CMD, shell=True, check=True)
 
 
+def test_version():
+    """Test the version command.
+    """
+    cmd = "docker run dclong/xinstall-test xinstall version"
+    sp.run(cmd, shell=True, check=True)
+
+
 def test_wajig():
     """Test the wajig command.
     """
