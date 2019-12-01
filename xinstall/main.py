@@ -115,6 +115,24 @@ def _almond_args(subparser):
     )
 
 
+def _option_sys(subparser):
+    subparser.add_argument(
+        '--sys',
+        dest='sys',
+        action='store_true',
+        help=
+        "Install the Python package to a system-wide location (default to install to user's local directory.)"
+    )
+
+
+def _dsutil_args(subparser):
+    _option_sys(subparser)
+
+
+def _xinstall_args(subparser):
+    _option_sys(subparser)
+
+
 def _add_subparser_install_py_github(subparsers):
     subparser = subparsers.add_parser(
         "install_py_github",
@@ -244,8 +262,10 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
     _add_subparser(subparsers, 'IPython3', aliases=['ipy3'])
     _add_subparser(subparsers, 'yapf', aliases=[])
-    _add_subparser(subparsers, 'dsutil', aliases=[])
-    _add_subparser(subparsers, 'xinstall', aliases=[])
+    _add_subparser(subparsers, 'dsutil', aliases=[], add_argument=_dsutil_args)
+    _add_subparser(
+        subparsers, 'xinstall', aliases=[], add_argument=_xinstall_args
+    )
     _add_subparser(subparsers, 'OpenJDK8', aliases=['jdk8'])
     _add_subparser(subparsers, 'sdkman', aliases=[])
     _add_subparser(

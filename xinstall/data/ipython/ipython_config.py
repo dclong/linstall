@@ -5,7 +5,7 @@ c = get_config()
 c.AliasManager.user_aliases = [
     ('mvi', 'mv -i'),
     ('cpi', 'cp -i'),
-    ('rsync.progress', 'rsyn -avh --progress'),
+    ('rsync.progress', 'rsync -avh --progress'),
     ('hdfs.count', 'hdfs dfs -count -q -v'),
     ('hdfs.ls', 'hdfs dfs -ls'),
     ('blog', 'python3 $HOME/archives/blog/main.py'),

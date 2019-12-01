@@ -4,6 +4,7 @@ import shutil
 from typing import List
 from pathlib import Path
 import datetime
+import re
 import subprocess
 import getpass
 import socket
@@ -21,6 +22,8 @@ except:
     pass
 HOME = Path.home()
 PLATFORM = platform.platform().lower()
+USER = getpass.getuser()
+HOST = re.sub("\.local$", "", socket.gethostname())
 
 
 # ------------------------------- Command Prompt -----------------------------------
@@ -86,10 +89,6 @@ class MyPrompt(Prompts):
         return [line.strip().decode() for line in proc.stdout.splitlines() if line.strip() != b'']
 
     def in_prompt_tokens(self, cli=None):
-        user = getpass.getuser()
-        host = socket.gethostname()
-        if host.endswith('.local'):
-            host = host[:-6]
         remotes = ''
         branch = ''
         # if Path('.git').is_dir():
@@ -98,7 +97,7 @@ class MyPrompt(Prompts):
             branch = '[' + self._git_branch() + f'{"*" if self._git_changed() else ""}]'
         cwd = Path.cwd()
         return [
-            (Token, f'{user}@{host} {cwd} {remotes} {branch}'),
+            (Token, f'{USER}@{HOST} {cwd} {remotes} {branch}'),
             (Token.Prompt, '\n    >>> ')
         ]
 
