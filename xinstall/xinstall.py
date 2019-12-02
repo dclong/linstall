@@ -1094,3 +1094,26 @@ def virtualbox(**kwargs):
 def version(**kwargs):
     args = _namespace(kwargs)
     print(__version__)
+
+
+def intellij_idea_plugin(version: str, url: str):
+    """Install the specified plugin for IntelliJ IDEA Community Edition.
+    :param version: The version of IntelliJ IDEA.
+    :param url: The download URL of the plugin to install.
+    """
+    plugins_dir = f".IdeaIC{version}/config/plugins"
+    if is_macos():
+        plugins_dir = f"Library/Application\ Support/IdeaIC{version}"
+    plugins_dir = Path.home() / plugins
+    plugins_dir.mkdir(mode=0o750, parents=True, exist_ok=True)
+    fd, file = tempfile.mkstemp(suffix=".zip")
+    os.close(fd)
+    cmd = f"curl -sSL {url} -O {file} && unzip {file} -d {plugins_dir}"
+    run_cmd(cmd)
+
+
+def intellij_idea_scala(**kwargs):
+    """Install the Scala plugin for IntelliJ IDEA Community Edition.
+    """
+    url = "http://plugins.jetbrains.com/files/1347/73157/scala-intellij-bin-2019.3.17.zip"
+    intellij_idea_plugin(version=args.version, url=url)
