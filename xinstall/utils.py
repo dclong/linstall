@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import urllib.request
 import shutil
+import tempfile
 import re
 import datetime
 import subprocess as sp
@@ -206,4 +207,20 @@ def install_py_github(url: str, sudo: bool = False, sys: bool = False) -> None:
     version = _github_version(url)
     url = f"{url}/releases/download/{version}/{Path(url).name}-{re.sub('[a-zA-Z]', '', version)}-py3-none-any.whl"
     cmd = f"{'sudo' if sudo else ''} pip3 install {'--sys' if sys else '--user'} --upgrade {url}"
+    run_cmd(cmd)
+
+
+def intellij_idea_plugin(version: str, url: str):
+    """Install the specified plugin for IntelliJ IDEA Community Edition.
+    :param version: The version of IntelliJ IDEA.
+    :param url: The download URL of the plugin to install.
+    """
+    plugins_dir = f".IdeaIC{version}/config/plugins"
+    if is_macos():
+        plugins_dir = f"Library/Application Support/IdeaIC{version}"
+    plugins_dir = Path.home() / plugins_dir
+    plugins_dir.mkdir(mode=0o750, parents=True, exist_ok=True)
+    fd, file = tempfile.mkstemp(suffix=".zip")
+    os.close(fd)
+    cmd = f"curl -sSL {url} -O {file} && unzip {file} -d {plugins_dir}"
     run_cmd(cmd)

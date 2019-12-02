@@ -209,6 +209,16 @@ def _add_subparser(
     return subparser
 
 
+def _nomachine_args(subparser):
+    subparser.add_argument(
+        '-v',
+        '--version',
+        dest='version',
+        default='6.8.1_1',
+        help='The version of NoMachine to install.'
+    )
+
+
 def parse_args(args=None, namespace=None):
     """Parse command-line arguments for the install/configuration util.
     """
@@ -265,7 +275,7 @@ def parse_args(args=None, namespace=None):
         subparsers, 'SpaceVim', aliases=['svim'], add_argument=_spacevim_args
     )
     _add_subparser(subparsers, 'IdeaVim', aliases=['ivim'])
-    #------------------------- development related  ------------------------------
+    # ------------------------- development related  ------------------------------
     _add_subparser(subparsers, 'Git', add_argument=_git_args)
     _add_subparser(subparsers, 'NodeJS', aliases=['node'])
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
@@ -285,7 +295,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Docker', aliases=['dock', 'dk'])
     _add_subparser(subparsers, 'Kubernetes', aliases=['k8s'])
     _add_subparser(subparsers, 'Minikube', aliases=['mkb'])
-    #------------------------- web related ------------------------------
+    # ------------------------- web related ------------------------------
     _add_subparser(subparsers, 'SSH server', aliases=['sshs'])
     _add_subparser(subparsers, 'SSH client', aliases=['sshc'])
     _add_subparser(subparsers, 'blogging', aliases=['blog'])
@@ -294,7 +304,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'download tools', aliases=['dl', 'dlt'])
     _add_subparser_install_py_github(subparsers)
     _add_subparser_version(subparsers)
-    #------------------------- JupyterLab related ------------------------------
+    # ------------------------- JupyterLab related ------------------------------
     _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
     _add_subparser(
         subparsers, 'jupyterlab-lsp', aliases=['jlab-lsp', 'jlab_lsp']
@@ -304,14 +314,15 @@ def parse_args(args=None, namespace=None):
     )
     _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
     _add_subparser(subparsers, 'nbdime', aliases=['nbd'])
-    #------------------------- IDEs ------------------------------
+    # ------------------------- IDEs ------------------------------
     _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
     _add_subparser(
         subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea', 'ii']
     )
-    #------------------------- misc applications ------------------------------
+    # ------------------------- misc applications ------------------------------
+    _add_subparser(subparsers, 'NoMachine', aliases=['nm', 'nx'])
     _add_subparser(subparsers, 'VirtualBox', aliases=['vbox'])
-    #--------------------------------------------------------
+    # --------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)
 
 
