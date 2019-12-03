@@ -27,3 +27,10 @@ def test_install_py_github():
     """
     cmd = "docker run dclong/xinstall-test xinstall install_py_github https://github.com/dclong/dsutil --sys"
     sp.run(cmd, shell=True, check=True)
+
+
+def test_nomachine():
+    """Test installing NoMachine.
+    """
+    cmd = "docker run dclong/xinstall-test xinstall nomachine"
+    sp.run(cmd, shell=True, check=True)

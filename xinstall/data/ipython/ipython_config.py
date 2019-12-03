@@ -4,7 +4,7 @@ PLATFORM = platform.platform().lower()
 c = get_config()
 c.AliasManager.user_aliases = [
     ('mvi', 'mv -i'),
-    ('cpi', 'cp -i'),
+    ('cpi', 'cp -ir'),
     ('rsync.progress', 'rsync -avh --progress'),
     ('hdfs.count', 'hdfs dfs -count -q -v'),
     ('hdfs.ls', 'hdfs dfs -ls'),
