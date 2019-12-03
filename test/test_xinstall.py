@@ -34,3 +34,10 @@ def test_nomachine():
     """
     cmd = "docker run dclong/xinstall-test xinstall nomachine"
     sp.run(cmd, shell=True, check=True)
+
+
+def test_intellij_idea():
+    """Test installing IntelliJ Idea.
+    """
+    cmd = "docker run dclong/xinstall-test xinstall intellij"
+    sp.run(cmd, shell=True, check=True)

@@ -279,7 +279,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Git', add_argument=_git_args)
     _add_subparser(subparsers, 'NodeJS', aliases=['node'])
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
-    _add_subparser(subparsers, 'IPython3', aliases=['ipy3'])
+    _add_subparser(subparsers, 'IPython3', aliases=['ipy3', 'ipy'])
     _add_subparser(subparsers, 'yapf', aliases=[])
     _add_subparser(subparsers, 'dsutil', aliases=[], add_argument=_dsutil_args)
     _add_subparser(
@@ -316,11 +316,14 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'nbdime', aliases=['nbd'])
     # ------------------------- IDEs ------------------------------
     _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
-    _add_subparser(
-        subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea', 'ii']
-    )
+    _add_subparser(subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea'])
     # ------------------------- misc applications ------------------------------
-    _add_subparser(subparsers, 'NoMachine', aliases=['nm', 'nx'])
+    _add_subparser(
+        subparsers,
+        'NoMachine',
+        aliases=['nm', 'nx'],
+        add_argument=_nomachine_args
+    )
     _add_subparser(subparsers, 'VirtualBox', aliases=['vbox'])
     # --------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)

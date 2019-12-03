@@ -8,10 +8,10 @@ import shutil
 import tempfile
 from pathlib import Path
 from argparse import Namespace
-import getpass
 import logging
 from . import utils
 from .utils import (
+    USER,
     HOME,
     run_cmd,
     update_apt_source,
@@ -25,14 +25,14 @@ from .utils import (
     is_centos_series,
     intellij_idea_plugin,
 )
-USER = getpass.getuser()
 USER_ID = os.getuid()
 GROUP_ID = os.getgid()
 FILE = Path(__file__).resolve()
 BASE_DIR = FILE.parent / 'data'
-BIN_DIR = HOME / '.local/bin'
+LOCAL_DIR = HOME / '.local'
+BIN_DIR = LOCAL_DIR / 'bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
-__version__ = "0.2.8"
+__version__ = "0.2.9"
 
 
 def _namespace(dic: Dict) -> Namespace:
@@ -48,7 +48,7 @@ def coreutils(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(sudo=args.sudo)
+            update_apt_source()
             run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} coreutils')
         elif is_macos():
             brew_install_safe('coreutils')
@@ -76,7 +76,7 @@ def shell_utils(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} bash-completion command-not-found man-db',
             )
@@ -118,7 +118,7 @@ def homebrew(**kwargs):
     if args.dep:
         args.install = True
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} build-essential curl file git',
             )
@@ -156,7 +156,7 @@ def hyper(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             #!{args.sudo_s} apt-get install {args._yes_s} hyper
         elif is_macos():
             run_cmd(f'brew cask install hyper')
@@ -237,7 +237,7 @@ def bash_completion(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} bash-completion',
             )
@@ -261,7 +261,7 @@ def wajig(**kwargs) -> None:
     if not is_ubuntu_debian():
         return
     if args.install:
-        update_apt_source(args.sudo)
+        update_apt_source()
         run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} wajig')
     if args.config:
         pass
@@ -322,7 +322,7 @@ def vim(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} vim vim-nox',
             )
@@ -346,7 +346,7 @@ def neovim(**kwargs):
     if args.ppa and is_ubuntu_debian():
         args.install = True
         run_cmd(f'{args.sudo_s} add-apt-repository -y ppa:neovim-ppa/stable')
-        update_apt_source(args.sudo)
+        update_apt_source()
     if args.install:
         if is_ubuntu_debian():
             run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} neovim')
@@ -420,7 +420,7 @@ def git(**kwargs) -> None:
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} git git-lfs',
             )
@@ -459,7 +459,7 @@ def antlr(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} antlr4')
         elif is_macos():
             brew_install_safe(['antlr4'])
@@ -480,7 +480,7 @@ def docker(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} docker.io docker-compose',
             )
@@ -521,7 +521,7 @@ def kubernetes(**kwargs):
             run_cmd(
                 f'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | {args.sudo_s} tee -a /etc/apt/sources.list.d/kubernetes.list',
             )
-            update_apt_source(sudo=args.sudo, seconds=-1E10)
+            update_apt_source(seconds=-1E10)
             run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} kubectl')
         elif is_macos():
             brew_install_safe(['kubernetes-cli'])
@@ -552,7 +552,7 @@ def minikube(**kwargs):
     kubernetes(**kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(sudo=args.sudo, seconds=-1E10)
+            update_apt_source(seconds=-1E10)
             _minikube_linux(sudo=args.sudo, yes=args.yes)
         elif is_macos():
             run_cmd(f'brew cask install minikube')
@@ -577,7 +577,7 @@ def cargo(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} cargo')
         if is_macos():
             brew_install_safe(['cargo'])
@@ -598,7 +598,7 @@ def openjdk8(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} openjdk-jdk-8 maven gradle',
             )
@@ -674,7 +674,7 @@ def nodejs(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             cmd = f'''{args.sudo_s} apt-get install {args._yes_s} nodejs npm'''
             run_cmd(cmd)
         if is_macos():
@@ -711,7 +711,7 @@ def python3(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             cmd = f'''{args.sudo_s} apt-get install {args._yes_s} python3.7 python3-pip python3-setuptools && \
                     {args.sudo_s} ln -svf /usr/bin/python3.7 /usr/bin/python3
                     '''
@@ -860,7 +860,7 @@ def ssh_server(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} openssh-server fail2ban',
             )
@@ -910,7 +910,7 @@ def proxychains(**kwargs) -> None:
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} proxychains4',
             )
@@ -938,7 +938,7 @@ def dryscrape(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             cmd = f'''{args.sudo_s} apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
                 && pip3 install --user dryscrape
                 '''
@@ -983,7 +983,7 @@ def download_tools(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} wget curl aria2',
             )
@@ -1009,13 +1009,16 @@ def intellij_idea(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            run_cmd(
-                f'{args.sudo_s} add-apt-repository ppa:mmk2410/intellij-idea',
-            )
-            update_apt_source(sudo=args.sudo, seconds=-1E10)
-            run_cmd(
-                f'{args.sudo_s} apt-get install {args._yes_s} intellij-idea-community',
-            )
+            update_apt_source()
+            des_dir = f"{LOCAL_DIR}/share/ide/idea"
+            executable = f"{BIN_DIR}/idea"
+            if USER == "root":
+                des_dir = "/opt/idea"
+                executable = "/opt/idea/bin/idea.sh"
+            cmd = f"""{args.sudo_s} apt-get install -y ubuntu-make \
+                && umake ide idea {des_dir} \
+                && ln -s {des_dir}/bin/idea.sh {executable}"""
+            run_cmd(cmd)
         elif is_macos():
             run_cmd(f'brew cask install intellij-idea-ce')
         elif is_centos_series():
@@ -1037,7 +1040,7 @@ def visual_studio_code(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(sudo=args.sudo)
+            update_apt_source()
             run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} vscode')
         elif is_macos():
             run_cmd(f'brew cask install visual-studio-code')
@@ -1069,7 +1072,7 @@ def virtualbox(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(sudo=args.sudo)
+            update_apt_source()
             run_cmd(
                 f'{args.sudo_s} apt-get install {args._yes_s} virtualbox-qt',
             )
