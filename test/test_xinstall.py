@@ -46,5 +46,5 @@ def test_intellij_idea():
 def test_git():
     """Test installing IntelliJ Idea.
     """
-    cmd = "docker run dclong/xinstall-test xinstall --sudo git -ic"
+    cmd = "docker run dclong/xinstall-test xinstall --sudo -y git -ic"
     sp.run(cmd, shell=True, check=True)
