@@ -36,7 +36,9 @@ def copy_if_exists(src: Union[Path, str], dst: Path = HOME) -> bool:
 
 
 def link_if_exists(
-    src: Union[Path, str], dst: Path = HOME, target_is_directory: bool = True
+    src: Union[Path, str],
+    dst: Path = HOME,
+    target_is_directory: bool = True
 ) -> bool:
     """Make a symbolic link of a file.
     No exception is thrown if the source file does not exist.
