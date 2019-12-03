@@ -12,6 +12,7 @@ import datetime
 import subprocess as sp
 import logging
 HOME = Path.home()
+USER = HOME.name
 PLATFORM = platform.platform().lower()
 SETTINGS_FILE = HOME / '.linstall.json'
 SETTINGS = {}
@@ -171,7 +172,7 @@ def to_bool(value: Any) -> bool:
     return False
 
 
-def update_apt_source(sudo: bool, yes: bool = True, seconds: float = 3600 * 12):
+def update_apt_source(yes: bool = True, seconds: float = 3600 * 12):
     """Run apt-get update if necessary.
     :param sudo: If True, run using sudo.
     :param yes: If True, automatically yes to prompt questions.
@@ -184,9 +185,9 @@ def update_apt_source(sudo: bool, yes: bool = True, seconds: float = 3600 * 12):
     )
     now = datetime.datetime.now()
     if (now - time).seconds > seconds:
-        prefix = "sudo" if sudo else ""
+        sudo = '' if USER == 'root' else 'sudo'
         yes = "--yes" if yes else ""
-        run_cmd(f"{prefix} apt-get update {yes}")
+        run_cmd(f"{sudo} apt-get update {yes}")
         SETTINGS[key] = now.strftime(fmt)
         with open(SETTINGS_FILE, 'w') as fout:
             json.dump(SETTINGS, fout)

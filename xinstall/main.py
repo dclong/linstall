@@ -269,7 +269,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, 'Git', add_argument=_git_args)
     _add_subparser(subparsers, 'NodeJS', aliases=['node'])
     _add_subparser(subparsers, 'Python3', aliases=['py3'])
-    _add_subparser(subparsers, 'IPython3', aliases=['ipy3'])
+    _add_subparser(subparsers, 'IPython3', aliases=['ipy3', 'ipy'])
     _add_subparser(subparsers, 'yapf', aliases=[])
     _add_subparser(subparsers, 'dsutil', aliases=[], add_argument=_dsutil_args)
     _add_subparser(
