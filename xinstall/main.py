@@ -317,7 +317,7 @@ def parse_args(args=None, namespace=None):
     # ------------------------- IDEs ------------------------------
     _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
     _add_subparser(
-        subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea', 'ii']
+        subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea']
     )
     # ------------------------- misc applications ------------------------------
     _add_subparser(subparsers, 'NoMachine', aliases=['nm', 'nx'], add_argument=_nomachine_args)

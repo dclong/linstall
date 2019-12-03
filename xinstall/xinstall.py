@@ -1009,13 +1009,15 @@ def intellij_idea(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            cmd = """{args.sudo_s} apt-get install -y ubuntu-make \
-                && umake ide idea \
-                && ln -s {LOCAL_DIR}/share/ide/idea/bin/idea.sh {BIN_DIR}/idea"""
+            update_apt_source()
+            des_dir = f"{LOCAL_DIR}/share/ide/idea"
+            executable = f"{BIN_DIR}/idea"
             if USER == "root":
-                cmd = f"""apt-get install -y ubuntu-make \
-                    && umake ide idea /opt/idea \
-                    && ln -s /opt/idea/bin/idea.sh /usr/local/bin/idea"""
+                des_dir = "/opt/idea"
+                executable = "/opt/idea/bin/idea.sh"
+            cmd = f"""{args.sudo_s} apt-get install -y ubuntu-make \
+                && umake ide idea {des_dir} \
+                && ln -s {des_dir}/bin/idea.sh {executable}"""
             run_cmd(cmd)
         elif is_macos():
             run_cmd(f'brew cask install intellij-idea-ce')
