@@ -320,7 +320,7 @@ def parse_args(args=None, namespace=None):
         subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea', 'ii']
     )
     # ------------------------- misc applications ------------------------------
-    _add_subparser(subparsers, 'NoMachine', aliases=['nm', 'nx'])
+    _add_subparser(subparsers, 'NoMachine', aliases=['nm', 'nx'], add_argument=_nomachine_args)
     _add_subparser(subparsers, 'VirtualBox', aliases=['vbox'])
     # --------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)
