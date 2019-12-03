@@ -36,6 +36,8 @@ __version__ = "0.3.0"
 
 
 def _namespace(dic: Dict) -> Namespace:
+    dic.setdefault('sudo', False)
+    dic.setdefault('yes', False)
     dic['sudo_s'] = 'sudo' if dic['sudo'] else ''
     dic['_sudo_s'] = '--sudo' if dic['sudo'] else ''
     dic['_yes_s'] = '--yes' if dic['yes'] else ''
