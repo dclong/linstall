@@ -1114,9 +1114,28 @@ def nomachine(**kwargs):
     """Install NoMachine.
     """
     args = _namespace(kwargs)
-    ver = args.version[:args.version.rindex(".")]
-    url = f"https://download.nomachine.com/download/{ver}/Linux/nomachine_{args.version}_amd64.deb"
-    with tempfile.TemporaryDirectory() as tempdir:
-        file = Path(tempdir) / "nomachine.deb"
-        cmd = f"curl -sSL {url} -o {file} && dpkg -i {file}"
+    if args.install:
+        ver = args.version[:args.version.rindex(".")]
+        if is_ubuntu_debian():
+            url = f"https://download.nomachine.com/download/{ver}/Linux/nomachine_{args.version}_amd64.deb"
+            with tempfile.TemporaryDirectory() as tempdir:
+                file = Path(tempdir) / "nomachine.deb"
+                cmd = f"curl -sSL {url} -o {file} && dpkg -i {file}"
+                run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def pyjnius(**kwargs):
+    """Install pyjnius for calling Java from Python.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        cmd = """pip3 install --user Cython pyjnius"""
         run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass

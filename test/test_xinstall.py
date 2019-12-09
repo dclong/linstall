@@ -48,3 +48,10 @@ def test_git():
     """
     cmd = "docker run dclong/xinstall-test xinstall --sudo -y git -ic"
     sp.run(cmd, shell=True, check=True)
+
+
+def test_pyjnius():
+    """Test installing pyjnius.
+    """
+    cmd = "docker run dclong/xinstall-test xinstall pyjnius -ic"
+    sp.run(cmd, shell=True, check=True)
