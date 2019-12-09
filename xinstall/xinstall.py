@@ -32,7 +32,7 @@ BASE_DIR = FILE.parent / 'data'
 LOCAL_DIR = HOME / '.local'
 BIN_DIR = LOCAL_DIR / 'bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 
 def _namespace(dic: Dict) -> Namespace:
