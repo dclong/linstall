@@ -4,7 +4,7 @@ import subprocess as sp
 from pathlib import Path
 
 DIR_TEST = Path(__file__).resolve().parent
-CMD = f"docker build --no-cache -t dclong/xinstall-test -f test/Dockerfile {DIR_TEST.parent}"
+CMD = f"docker build -t dclong/xinstall-test -f test/Dockerfile {DIR_TEST.parent}"
 sp.run(CMD, shell=True, check=True)
 
 
