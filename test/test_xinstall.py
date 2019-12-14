@@ -57,10 +57,15 @@ def test_pyjnius():
     sp.run(cmd, shell=True, check=True)
 
 
-def test_bash_lsp():
-    """Test installing Bash Language Server.
+def test_nodejs():
+    """Test installing nodejs.
     """
     cmd = "docker run dclong/xinstall-test xinstall -y nodejs -ic"
     sp.run(cmd, shell=True, check=True)
-    cmd = "docker run dclong/xinstall-test xinstall bash_lsp -ic"
+
+
+def test_bash_lsp():
+    """Test installing Bash Language Server.
+    """
+    cmd = "docker run dclong/xinstall-test xinstall bash_lsp -c"
     sp.run(cmd, shell=True, check=True)
