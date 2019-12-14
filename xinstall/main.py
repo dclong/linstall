@@ -8,118 +8,118 @@ from . import xinstall
 
 def _wajig_args(subparser):
     subparser.add_argument(
-        '-p',
-        '--proxy',
-        dest='proxy',
-        default='',
-        help='Configure apt to use the specified proxy.'
+        "-p",
+        "--proxy",
+        dest="proxy",
+        default="",
+        help="Configure apt to use the specified proxy."
     )
 
 
 def _change_shell_args(subparser):
     subparser.add_argument(
-        '-s',
-        '--shell',
-        dest='shell',
-        default='/bin/bash',
-        help='the shell to change to.'
+        "-s",
+        "--shell",
+        dest="shell",
+        default="/bin/bash",
+        help="the shell to change to."
     )
 
 
 def _homebrew_args(subparser):
     subparser.add_argument(
-        '-d',
-        '--install-deps',
-        dest='dep',
-        action='store_true',
-        help='Whether to install dependencies.'
+        "-d",
+        "--install-deps",
+        dest="dep",
+        action="store_true",
+        help="Whether to install dependencies."
     )
 
 
 def _neovim_args(subparser):
     subparser.add_argument(
-        '--ppa',
-        dest='ppa',
-        action='store_true',
-        help='Install the latest version of NeoVim from PPA.'
+        "--ppa",
+        dest="ppa",
+        action="store_true",
+        help="Install the latest version of NeoVim from PPA."
     )
 
 
 def _spacevim_args(subparser):
     subparser.add_argument(
-        '--enable-true-colors',
-        dest='true_colors',
-        action='store_true',
+        "--enable-true-colors",
+        dest="true_colors",
+        action="store_true",
         default=None,
-        help='enable true color (default true) for SpaceVim.'
+        help="enable true color (default true) for SpaceVim."
     )
     subparser.add_argument(
-        '--disable-true-colors',
-        dest='true_colors',
-        action='store_false',
-        help='disable true color (default true) for SpaceVim.'
+        "--disable-true-colors",
+        dest="true_colors",
+        action="store_false",
+        help="disable true color (default true) for SpaceVim."
     )
 
 
 def _git_args(subparser):
     subparser.add_argument(
-        '-p',
-        '--proxy',
-        dest='proxy',
-        default='',
-        help='Configure Git to use the specified proxy.'
+        "-p",
+        "--proxy",
+        dest="proxy",
+        default="",
+        help="Configure Git to use the specified proxy."
     )
 
 
 def _yapf_args(subparser):
     subparser.add_argument(
-        '-d',
-        '--dest-dir',
-        dest='dst_dir',
+        "-d",
+        "--dest-dir",
+        dest="dst_dir",
         requested=True,
-        help='The destination directory to copy the YAPF configuration file to.'
+        help="The destination directory to copy the YAPF configuration file to."
     )
 
 
 def _poetry_args(subparser):
     subparser.add_argument(
-        '-p',
-        '--python',
-        dest='python',
+        "-p",
+        "--python",
+        dest="python",
         default=None,
-        help='The path to the Python interpreter.'
+        help="The path to the Python interpreter."
     )
     subparser.add_argument(
-        '-b',
-        '--bash-completion',
-        dest='bash_completion',
-        action='store_true',
-        help='Configure Bash completion for poetry as well.'
+        "-b",
+        "--bash-completion",
+        dest="bash_completion",
+        action="store_true",
+        help="Configure Bash completion for poetry as well."
     )
 
 
 def _almond_args(subparser):
     subparser.add_argument(
-        '-a',
-        '--almond-version',
-        dest='almond_version',
+        "-a",
+        "--almond-version",
+        dest="almond_version",
         default=None,
-        help='the version (0.4.0 by default) of Almond to install.'
+        help="the version (0.4.0 by default) of Almond to install."
     )
     subparser.add_argument(
-        '-s',
-        '--scala-version',
-        dest='scala_version',
+        "-s",
+        "--scala-version",
+        dest="scala_version",
         default=None,
-        help='the version (2.12.8 by default) of Scala to install.'
+        help="the version (2.12.8 by default) of Scala to install."
     )
 
 
 def _option_sys(subparser):
     subparser.add_argument(
-        '--sys',
-        dest='sys',
-        action='store_true',
+        "--sys",
+        dest="sys",
+        action="store_true",
         help=
         "Install the Python package to a system-wide location (default to install to user's local directory.)"
     )
@@ -150,11 +150,11 @@ def _add_subparser_install_py_github(subparsers):
         help="Install the latest version of a Python package from GitHub."
     )
     subparser.add_argument(
-        dest='url', help=f"The URL of the Python package's GitHub repository."
+        dest="url", help=f"The URL of the Python package's GitHub repository."
     )
     subparser.add_argument(
-        '--sys',
-        dest='sys',
+        "--sys",
+        dest="sys",
         action="store_true",
         help=f"Install to a system-wide location."
     )
@@ -170,38 +170,38 @@ def _add_subparser(
     help_: Union[str, None] = None,
     add_argument: Union[Callable, None] = None
 ):
-    sub_cmd = re.sub(r'(\s+)|-', '_', name.lower())
+    sub_cmd = re.sub(r"(\s+)|-", "_", name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
-    func = func if func else eval(f'xinstall.{sub_cmd}')
+    func = func if func else eval(f"xinstall.{sub_cmd}")
     help_ = help_ if help_ else f"Install and configure {name}."
     subparser = subparsers.add_parser(sub_cmd, aliases=aliases, help=help_)
     subparser.add_argument(
-        '-i',
-        '--install',
-        dest='install',
-        action='store_true',
-        help=f'install {name}.'
+        "-i",
+        "--install",
+        dest="install",
+        action="store_true",
+        help=f"install {name}."
     )
     subparser.add_argument(
-        '-u',
-        '--uninstall',
-        dest='uninstall',
-        action='store_true',
-        help=f'uninstall {name}.'
+        "-u",
+        "--uninstall",
+        dest="uninstall",
+        action="store_true",
+        help=f"uninstall {name}."
     )
     subparser.add_argument(
-        '-c',
-        '--configure',
-        dest='config',
-        action='store_true',
-        help=f'configure {name}.'
+        "-c",
+        "--configure",
+        dest="config",
+        action="store_true",
+        help=f"configure {name}."
     )
     subparser.add_argument(
-        '-l',
-        '--log',
-        dest='log',
-        action='store_true',
-        help=f'Print the command to run.'
+        "-l",
+        "--log",
+        dest="log",
+        action="store_true",
+        help=f"Print the command to run."
     )
     if add_argument:
         add_argument(subparser)
@@ -211,11 +211,11 @@ def _add_subparser(
 
 def _nomachine_args(subparser):
     subparser.add_argument(
-        '-v',
-        '--version',
-        dest='version',
-        default='6.8.1_1',
-        help='The version of NoMachine to install.'
+        "-v",
+        "--version",
+        dest="version",
+        default="6.8.1_1",
+        help="The version of NoMachine to install."
     )
 
 
@@ -223,108 +223,109 @@ def parse_args(args=None, namespace=None):
     """Parse command-line arguments for the install/configuration util.
     """
     parser = ArgumentParser(
-        description='Easy installation and configuration for Unix/Linux'
+        description="Easy installation and configuration for Unix/Linux"
     )
     parser.add_argument(
-        '-s',
-        '--sudo',
-        dest='sudo',
-        action='store_true',
-        help='Run commands using sudo.'
+        "-s",
+        "--sudo",
+        dest="sudo",
+        action="store_true",
+        help="Run commands using sudo."
     )
     parser.add_argument(
-        '-y',
-        '--yes',
-        dest='yes',
-        action='store_true',
-        help='Automatical yes (default no) to prompt questions.'
+        "-y",
+        "--yes",
+        dest="yes",
+        action="store_true",
+        help="Automatical yes (default no) to prompt questions."
     )
-    subparsers = parser.add_subparsers(dest='sub_cmd', help='Sub commands.')
+    subparsers = parser.add_subparsers(dest="sub_cmd", help="Sub commands.")
     # ------------------------ command-line tools ----------------------------
-    _add_subparser(subparsers, 'CoreUtils', aliases=['cu'])
+    _add_subparser(subparsers, "CoreUtils", aliases=["cu"])
     _add_subparser(
         subparsers,
-        'change shell',
-        aliases=['chsh', 'cs'],
+        "change shell",
+        aliases=["chsh", "cs"],
         add_argument=_change_shell_args
     )
     _add_subparser(
-        subparsers, 'Shell utils', aliases=['sh_utils', 'shutils', 'shu', 'su']
+        subparsers, "Shell utils", aliases=["sh_utils", "shutils", "shu", "su"]
     )
-    _add_subparser(subparsers, 'Bash-it', aliases=['shit', 'bit'])
-    _add_subparser(subparsers, 'xonsh')
+    _add_subparser(subparsers, "Bash-it", aliases=["shit", "bit"])
+    _add_subparser(subparsers, "xonsh")
     _add_subparser(
-        subparsers, 'Homebrew', aliases=['brew'], add_argument=_homebrew_args
+        subparsers, "Homebrew", aliases=["brew"], add_argument=_homebrew_args
     )
-    _add_subparser(subparsers, 'Hyper', aliases=['hp'])
-    _add_subparser(subparsers, 'OpenInTerminal', aliases=['oit'])
+    _add_subparser(subparsers, "Hyper", aliases=["hp"])
+    _add_subparser(subparsers, "OpenInTerminal", aliases=["oit"])
     _add_subparser(
-        subparsers, 'Bash completion', aliases=['completion', 'comp', 'cp']
-    )
-    _add_subparser(
-        subparsers, 'Wajig', aliases=['wj'], add_argument=_wajig_args
-    )
-    _add_subparser(subparsers, 'exa')
-    _add_subparser(subparsers, 'osquery', aliases=['osq'])
-    # ------------------------ Vim ------------------------------
-    _add_subparser(subparsers, 'Vim')
-    _add_subparser(
-        subparsers, 'NeoVim', aliases=['nvim'], add_argument=_neovim_args
+        subparsers, "Bash completion", aliases=["completion", "comp", "cp"]
     )
     _add_subparser(
-        subparsers, 'SpaceVim', aliases=['svim'], add_argument=_spacevim_args
+        subparsers, "Wajig", aliases=["wj"], add_argument=_wajig_args
     )
-    _add_subparser(subparsers, 'IdeaVim', aliases=['ivim'])
+    _add_subparser(subparsers, "exa")
+    _add_subparser(subparsers, "osquery", aliases=["osq"])
+    # ------------------------ Vim & Other IDEs ----------------------
+    _add_subparser(subparsers, "Vim")
+    _add_subparser(
+        subparsers, "NeoVim", aliases=["nvim"], add_argument=_neovim_args
+    )
+    _add_subparser(
+        subparsers, "SpaceVim", aliases=["svim"], add_argument=_spacevim_args
+    )
+    _add_subparser(subparsers, "IdeaVim", aliases=["ivim"])
+    _add_subparser(subparsers, "Visual Studio Code", aliases=["vscode", "code"])
+    _add_subparser(subparsers, "IntelliJ IDEA", aliases=["intellij", "idea"])
+    _add_subparser(subparsers, "Bash LSP", aliases=["blsp"])
     # ------------------------- development related  ------------------------------
-    _add_subparser(subparsers, 'Git', add_argument=_git_args)
-    _add_subparser(subparsers, 'NodeJS', aliases=['node'])
-    _add_subparser(subparsers, 'Python3', aliases=['py3'])
-    _add_subparser(subparsers, 'IPython3', aliases=['ipy3', 'ipy'])
-    _add_subparser(subparsers, 'yapf', aliases=[])
-    _add_subparser(subparsers, 'dsutil', aliases=[], add_argument=_dsutil_args)
+    _add_subparser(subparsers, "Git", add_argument=_git_args)
+    _add_subparser(subparsers, "NodeJS", aliases=["node"])
+    _add_subparser(subparsers, "Python3", aliases=["py3"])
+    _add_subparser(subparsers, "pyjnius", aliases=["pyj"])
+    _add_subparser(subparsers, "IPython3", aliases=["ipy3", "ipy"])
+    _add_subparser(subparsers, "yapf", aliases=[])
+    _add_subparser(subparsers, "dsutil", aliases=[], add_argument=_dsutil_args)
     _add_subparser(
-        subparsers, 'xinstall', aliases=[], add_argument=_xinstall_args
+        subparsers, "xinstall", aliases=[], add_argument=_xinstall_args
     )
-    _add_subparser(subparsers, 'OpenJDK8', aliases=['jdk8'])
-    _add_subparser(subparsers, 'sdkman', aliases=[])
+    _add_subparser(subparsers, "OpenJDK8", aliases=["jdk8"])
+    _add_subparser(subparsers, "sdkman", aliases=[])
     _add_subparser(
-        subparsers, 'Poetry', aliases=['pt'], add_argument=_poetry_args
+        subparsers, "Poetry", aliases=["pt"], add_argument=_poetry_args
     )
-    _add_subparser(subparsers, 'Cargo', aliases=['cgo'])
-    _add_subparser(subparsers, 'ANTLR')
-    _add_subparser(subparsers, 'Docker', aliases=['dock', 'dk'])
-    _add_subparser(subparsers, 'Kubernetes', aliases=['k8s'])
-    _add_subparser(subparsers, 'Minikube', aliases=['mkb'])
+    _add_subparser(subparsers, "Cargo", aliases=["cgo"])
+    _add_subparser(subparsers, "ANTLR")
+    _add_subparser(subparsers, "Docker", aliases=["dock", "dk"])
+    _add_subparser(subparsers, "Kubernetes", aliases=["k8s"])
+    _add_subparser(subparsers, "Minikube", aliases=["mkb"])
     # ------------------------- web related ------------------------------
-    _add_subparser(subparsers, 'SSH server', aliases=['sshs'])
-    _add_subparser(subparsers, 'SSH client', aliases=['sshc'])
-    _add_subparser(subparsers, 'blogging', aliases=['blog'])
-    _add_subparser(subparsers, 'ProxyChains', aliases=['pchains', 'pc'])
-    _add_subparser(subparsers, 'dryscrape', aliases=[])
-    _add_subparser(subparsers, 'download tools', aliases=['dl', 'dlt'])
+    _add_subparser(subparsers, "SSH server", aliases=["sshs"])
+    _add_subparser(subparsers, "SSH client", aliases=["sshc"])
+    _add_subparser(subparsers, "blogging", aliases=["blog"])
+    _add_subparser(subparsers, "ProxyChains", aliases=["pchains", "pc"])
+    _add_subparser(subparsers, "dryscrape", aliases=[])
+    _add_subparser(subparsers, "download tools", aliases=["dl", "dlt"])
     _add_subparser_install_py_github(subparsers)
     _add_subparser_version(subparsers)
     # ------------------------- JupyterLab related ------------------------------
-    _add_subparser(subparsers, 'BeakerX', aliases=['bkx', 'bk'])
+    _add_subparser(subparsers, "BeakerX", aliases=["bkx", "bk"])
     _add_subparser(
-        subparsers, 'jupyterlab-lsp', aliases=['jlab-lsp', 'jlab_lsp']
+        subparsers, "jupyterlab-lsp", aliases=["jlab-lsp", "jlab_lsp"]
     )
     _add_subparser(
-        subparsers, 'Almond', aliases=['al', 'amd'], add_argument=_almond_args
+        subparsers, "Almond", aliases=["al", "amd"], add_argument=_almond_args
     )
-    _add_subparser(subparsers, 'iTypeScript', aliases=['its'])
-    _add_subparser(subparsers, 'nbdime', aliases=['nbd'])
-    # ------------------------- IDEs ------------------------------
-    _add_subparser(subparsers, 'Visual Studio Code', aliases=['vscode', 'code'])
-    _add_subparser(subparsers, 'IntelliJ IDEA', aliases=['intellij', 'idea'])
+    _add_subparser(subparsers, "iTypeScript", aliases=["its"])
+    _add_subparser(subparsers, "nbdime", aliases=["nbd"])
     # ------------------------- misc applications ------------------------------
     _add_subparser(
         subparsers,
-        'NoMachine',
-        aliases=['nm', 'nx'],
+        "NoMachine",
+        aliases=["nm", "nx"],
         add_argument=_nomachine_args
     )
-    _add_subparser(subparsers, 'VirtualBox', aliases=['vbox'])
+    _add_subparser(subparsers, "VirtualBox", aliases=["vbox"])
     # --------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)
 
@@ -336,5 +337,5 @@ def main():
     args.func(**vars(args))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

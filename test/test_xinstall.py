@@ -30,21 +30,42 @@ def test_install_py_github():
 
 
 def test_nomachine():
-    """Test installing NoMachine.
+    """Test installing and configuring NoMachine.
     """
     cmd = "docker run dclong/xinstall-test xinstall nomachine"
     sp.run(cmd, shell=True, check=True)
 
 
 def test_intellij_idea():
-    """Test installing IntelliJ Idea.
+    """Test installing and configuring IntelliJ Idea.
     """
     cmd = "docker run dclong/xinstall-test xinstall intellij"
     sp.run(cmd, shell=True, check=True)
 
 
 def test_git():
-    """Test installing IntelliJ Idea.
+    """Test installing and configuring Git.
     """
-    cmd = "docker run dclong/xinstall-test xinstall --sudo -y git -ic"
+    cmd = "docker run dclong/xinstall-test xinstall -y git -ic"
+    sp.run(cmd, shell=True, check=True)
+
+
+def test_pyjnius():
+    """Test installing and configuring pyjnius.
+    """
+    cmd = "docker run dclong/xinstall-test xinstall pyjnius -ic"
+    sp.run(cmd, shell=True, check=True)
+
+
+def test_nodejs():
+    """Test installing nodejs.
+    """
+    cmd = "docker run dclong/xinstall-test xinstall -y nodejs -ic"
+    sp.run(cmd, shell=True, check=True)
+
+
+def test_bash_lsp():
+    """Test installing Bash Language Server.
+    """
+    cmd = "docker run dclong/xinstall-test xinstall bash_lsp -c"
     sp.run(cmd, shell=True, check=True)
