@@ -4,7 +4,7 @@ import subprocess as sp
 from pathlib import Path
 
 DIR_TEST = Path(__file__).resolve().parent
-CMD = f"docker build -t dclong/xinstall-test -f test/Dockerfile {DIR_TEST.parent}"
+CMD = f"docker build --no-cache -t dclong/xinstall-test -f test/Dockerfile {DIR_TEST.parent}"
 sp.run(CMD, shell=True, check=True)
 
 
@@ -30,28 +30,37 @@ def test_install_py_github():
 
 
 def test_nomachine():
-    """Test installing NoMachine.
+    """Test installing and configuring NoMachine.
     """
     cmd = "docker run dclong/xinstall-test xinstall nomachine"
     sp.run(cmd, shell=True, check=True)
 
 
 def test_intellij_idea():
-    """Test installing IntelliJ Idea.
+    """Test installing and configuring IntelliJ Idea.
     """
     cmd = "docker run dclong/xinstall-test xinstall intellij"
     sp.run(cmd, shell=True, check=True)
 
 
 def test_git():
-    """Test installing IntelliJ Idea.
+    """Test installing and configuring Git.
     """
-    cmd = "docker run dclong/xinstall-test xinstall --sudo -y git -ic"
+    cmd = "docker run dclong/xinstall-test xinstall -y git -ic"
     sp.run(cmd, shell=True, check=True)
 
 
 def test_pyjnius():
-    """Test installing pyjnius.
+    """Test installing and configuring pyjnius.
     """
     cmd = "docker run dclong/xinstall-test xinstall pyjnius -ic"
+    sp.run(cmd, shell=True, check=True)
+
+
+def test_bash_lsp():
+    """Test installing Bash Language Server.
+    """
+    cmd = "docker run dclong/xinstall-test xinstall -y nodejs -ic"
+    sp.run(cmd, shell=True, check=True)
+    cmd = "docker run dclong/xinstall-test xinstall bash_lsp -ic"
     sp.run(cmd, shell=True, check=True)

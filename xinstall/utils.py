@@ -15,7 +15,7 @@ import logging
 HOME = Path.home()
 USER = HOME.name
 PLATFORM = platform.platform().lower()
-SETTINGS_FILE = HOME / '.linstall.json'
+SETTINGS_FILE = HOME / ".linstall.json"
 SETTINGS = {}
 if os.path.isfile(SETTINGS_FILE):
     with open(SETTINGS_FILE) as fin:
@@ -36,9 +36,7 @@ def copy_if_exists(src: Union[Path, str], dst: Path = HOME) -> bool:
 
 
 def link_if_exists(
-    src: Union[Path, str],
-    dst: Path = HOME,
-    target_is_directory: bool = True
+    src: Union[Path, str], dst: Path = HOME, target_is_directory: bool = True
 ) -> bool:
     """Make a symbolic link of a file.
     No exception is thrown if the source file does not exist.
@@ -83,11 +81,11 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
             brew_install_safe(pkg)
         return
     proc = sp.run(
-        f'brew ls --versions {pkgs}', shell=True, check=False, stdout=sp.PIPE
+        f"brew ls --versions {pkgs}", shell=True, check=False, stdout=sp.PIPE
     )
     if not proc.stdout:
-        run_cmd(f'brew install {pkgs}')
-    run_cmd(f'brew link {pkgs}')
+        run_cmd(f"brew install {pkgs}")
+    run_cmd(f"brew link {pkgs}")
 
 
 def _any_in_platform(keywords):
@@ -97,42 +95,42 @@ def _any_in_platform(keywords):
 def is_ubuntu_debian():
     """Check whehter the current OS is Ubuntu/Debian. 
     """
-    dists = ('ubuntu', 'debian')
+    dists = ("ubuntu", "debian")
     return _any_in_platform(dists)
 
 
 def is_linux():
     """Check whehter the current OS is Linux. 
     """
-    dists = ('ubuntu', 'debian', 'centos', 'redhat', 'fedora')
+    dists = ("ubuntu", "debian", "centos", "redhat", "fedora")
     return _any_in_platform(dists)
 
 
 def is_centos_series():
     """Check whehter the current OS belongs to the CentOS series (CentOS, RedHat or Fedora).
     """
-    dists = ('centos', 'redhat', 'fedora')
+    dists = ("centos", "redhat", "fedora")
     return _any_in_platform(dists)
 
 
 def is_fedora():
     """Check whehter the current OS is Fedora.
     """
-    dists = ('fedora', )
+    dists = ("fedora", )
     return _any_in_platform(dists)
 
 
 def is_macos():
     """Check whehter the current OS is macOS.
     """
-    dists = ('darwin', )
+    dists = ("darwin", )
     return _any_in_platform(dists)
 
 
 def is_win():
     """Check whehter the current OS is Windows.
     """
-    dists = ('win32', )
+    dists = ("win32", )
     return _any_in_platform(dists)
 
 
@@ -163,7 +161,7 @@ def to_bool(value: Any) -> bool:
     if isinstance(value, bool):
         return value
     if isinstance(value, str):
-        if value.lower() in ('t', 'true', 'y', 'yes'):
+        if value.lower() in ("t", "true", "y", "yes"):
             return True
         if value.isdigit():
             return int(value) != 0
@@ -181,23 +179,23 @@ def update_apt_source(yes: bool = True, seconds: float = 3600 * 12):
     :param yes: If True, automatically yes to prompt questions.
     :param seconds: Do not run if this function has already been run `seconds` seconds ago.
     """
-    fmt = '%Y-%m-%d %H:%M:%S.%f'
-    key = 'apt_source_update_time'
+    fmt = "%Y-%m-%d %H:%M:%S.%f"
+    key = "apt_source_update_time"
     time = datetime.datetime.strptime(
-        SETTINGS.get(key, '2000-01-01 00:00:00.000000'), fmt
+        SETTINGS.get(key, "2000-01-01 00:00:00.000000"), fmt
     )
     now = datetime.datetime.now()
     if (now - time).seconds > seconds:
-        sudo = '' if USER == 'root' else 'sudo'
+        sudo = "" if USER == "root" else "sudo"
         yes = "--yes" if yes else ""
         run_cmd(f"{sudo} apt-get update {yes}")
         SETTINGS[key] = now.strftime(fmt)
-        with open(SETTINGS_FILE, 'w') as fout:
+        with open(SETTINGS_FILE, "w") as fout:
             json.dump(SETTINGS, fout)
 
 
 def _github_version(url) -> str:
-    url = f'{url}/releases/latest'
+    url = f"{url}/releases/latest"
     req = urllib.request.urlopen(url)
     return Path(req.url).name
 

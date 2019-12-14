@@ -7,6 +7,7 @@ from typing import Union, Dict
 import shutil
 import tempfile
 from pathlib import Path
+import re
 from argparse import Namespace
 import logging
 from . import utils
@@ -368,43 +369,50 @@ def neovim(**kwargs):
 
 
 def _svim_true_color(true_color: Union[bool, None]) -> None:
+    """Enable/disable true color for SpaceVim.
     # TODO: use the toml module to help you parse the file??
     # I'm not sure whether it is feasible ...
+    """
     if true_color is None:
         return
-    file = HOME / '.SpaceVim.d/init.toml'
+    file = HOME / ".SpaceVim.d/init.toml"
     if not file.is_file():
         _svim_gen_config()
     with file.open() as fin:
         lines = fin.readlines()
     for idx, line in enumerate(lines):
-        if line.strip().startswith('enable_guicolors'):
+        if line.strip().startswith("enable_guicolors"):
             if true_color:
-                lines[idx] = line.replace('false', 'true')
+                lines[idx] = line.replace("false", "true")
             else:
-                lines[idx] = line.replace('true', 'false')
-    with file.open('w') as fout:
+                lines[idx] = line.replace("true", "false")
+    with file.open("w") as fout:
         fout.writelines(lines)
 
 
 def _svim_gen_config():
-    des_dir = HOME / '.SpaceVim.d'
+    """Generate init.toml for SpaceVim if it does not exist.
+    """
+    des_dir = HOME / ".SpaceVim.d"
     os.makedirs(des_dir, exist_ok=True)
-    shutil.copy2(os.path.join(BASE_DIR, 'SpaceVim/init.toml'), des_dir)
+    if not (des_dir / "init.toml").is_file():
+        shutil.copy2(BASE_DIR / "SpaceVim/init.toml", des_dir)
 
 
 def spacevim(**kwargs):
+    """Install and configure SpaceVim.
+    """
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'curl -sLf https://spacevim.org/install.sh | bash')
-        if shutil.which('nvim'):
+        run_cmd(f"curl -sLf https://spacevim.org/install.sh | bash")
+        if shutil.which("nvim"):
             run_cmd(f'nvim --headless +"call dein#install()" +qall')
-        cmd = f'''pip3 install --user python-language-server'''
+        cmd = f"pip3 install --user python-language-server"
         # {args.sudo_s} npm install -g bash-language-server javascript-typescript-langserver
         run_cmd(cmd)
     if args.uninstall:
         run_cmd(
-            f'curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall',
+            f"curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall",
         )
     if args.config:
         _svim_gen_config()
@@ -695,81 +703,114 @@ def nodejs(**kwargs):
             run_cmd(f'yum remove nodejs')
 
 
-def ipython3(**kwargs):
+def bash_lsp(**kwargs):
+    """Install Bash Language Server.
+    """
     args = _namespace(kwargs)
     if args.install:
-        cmd = f'pip3 install --user {args._yes_s} ipython'
+        cmd = f"{args.sudo_s} npm install -g bash-language-server"
         run_cmd(cmd)
     if args.config:
-        run_cmd('ipython3 profile create')
-        src_dir = BASE_DIR / 'ipython'
-        dst_dir = HOME / '.ipython/profile_default'
-        shutil.copy2(src_dir / 'ipython_config.py', dst_dir)
-        shutil.copy2(src_dir / 'startup.ipy', dst_dir / 'startup')
+        _svim_gen_config()
+        toml = HOME / ".SpaceVim.d/init.toml"
+        with toml.open("r") as fin:
+            lines = [
+                '  "sh",'
+                if re.search(r"^\s*#\s*(\"|')sh(\"|'),\s*$", line) else line
+                for line in fin
+            ]
+        with toml.open("w") as fout:
+            fout.writelines(lines)
+    if args.uninstall:
+        cmd = f"{args.sudo_s} npm uninstall bash-language-server"
+        run_cmd(cmd)
+
+
+def ipython3(**kwargs):
+    """Install IPython for Python 3.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        cmd = f"pip3 install --user {args._yes_s} ipython"
+        run_cmd(cmd)
+    if args.config:
+        run_cmd("ipython3 profile create")
+        src_dir = BASE_DIR / "ipython"
+        dst_dir = HOME / ".ipython/profile_default"
+        shutil.copy2(src_dir / "ipython_config.py", dst_dir)
+        shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
     if args.uninstall:
         pass
 
 
 def python3(**kwargs):
+    """Install and configure Python 3.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f'''{args.sudo_s} apt-get install {args._yes_s} python3.7 python3-pip python3-setuptools && \
+            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} python3.7 python3-pip python3-setuptools && \
                     {args.sudo_s} ln -svf /usr/bin/python3.7 /usr/bin/python3
-                    '''
+                    """
             run_cmd(cmd)
         if is_macos():
-            brew_install_safe(['python3'])
+            brew_install_safe(["python3"])
         if is_centos_series():
             run_cmd(
-                f'{args.sudo_s} yum install {args._yes_s} python34 python34-devel python34-pip',
+                f"{args.sudo_s} yum install {args._yes_s} python34 python34-devel python34-pip",
             )
-            run_cmd(f'pip3.4 install --user setuptools')
+            run_cmd(f"pip3.4 install --user setuptools")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo_s} apt-get purge {args._yes_s} python3 python3-dev python3-setuptools python3-pip python3-venv',
+                f"{args.sudo_s} apt-get purge {args._yes_s} python3 python3-dev python3-setuptools python3-pip python3-venv",
             )
         if is_macos():
-            run_cmd(f'brew uninstall python3')
+            run_cmd(f"brew uninstall python3")
         if is_centos_series():
-            run_cmd(f'yum remove python3')
+            run_cmd(f"yum remove python3")
 
 
 def poetry(**kwargs):
+    """Install and configure Python poetry.
+    """
     args = _namespace(kwargs)
     if args.python is None:
-        args.python = 'python3'
+        args.python = "python3"
     else:
         args.install = True
     if args.install:
-        cmd = f'''curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python} && \
-                {HOME / '.poetry/bin/poetry'} self:update --preview
-                '''
+        cmd = f"curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}"
         run_cmd(cmd)
+    poetry_bin = HOME / ".poetry/bin/poetry"
     if args.config:
-        srcfile = HOME / '.poetry/bin/poetry'
-        desfile = BIN_DIR / 'poetry'
+        # symbolic link
+        desfile = BIN_DIR / "poetry"
         if desfile.exists():
             desfile.unlink()
-        desfile.symlink_to(srcfile)
+        desfile.symlink_to(poetry_bin)
+        # make poetry always create virtual environment in the root directory of the project
+        run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
+        # bash completion
         if args.bash_completion:
             if is_linux():
-                cmd = f'{HOME}/.poetry/bin/poetry completions bash | {args.sudo_s} tee /etc/bash_completion.d/poetry.bash-completion > /dev/null'
+                cmd = f"{poetry_bin} completions bash | {args.sudo_s} tee /etc/bash_completion.d/poetry.bash-completion > /dev/null"
                 run_cmd(cmd)
                 return
             if is_macos():
-                cmd = f'$HOME/.poetry/bin/poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion'
+                cmd = f"{poetry_bin} completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion"
                 run_cmd(cmd)
     if args.uninstall:
-        run_cmd(f'poetry self:uninstall')
+        run_cmd(f"{poetry_bin} self:uninstall")
 
 
 # ------------------------- JupyterLab kernels -------------------------
 def nbdime(**kwargs):
+    """Install and configure nbdime for comparing difference of notebooks.
+    """
     args = _namespace(kwargs)
     if args.install:
         run_cmd(f'pip3 install --user nbdime')
@@ -780,6 +821,8 @@ def nbdime(**kwargs):
 
 
 def itypescript(**kwargs):
+    """Install and configure the ITypeScript kernel.
+    """
     args = _namespace(kwargs)
     if args.install:
         run_cmd(f'{args.sudo_s} npm install -g --unsafe-perm itypescript')
