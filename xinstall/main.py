@@ -162,6 +162,23 @@ def _add_subparser_install_py_github(subparsers):
     return subparser
 
 
+def _spark_args(subparser):
+    subparser.add_argument(
+        "-m",
+        "--mirror",
+        dest="mirror",
+        default="http://us.mirrors.quenda.co/apache/spark/",
+        help=f"The mirror of Spark to use."
+    )
+    subparser.add_argument(
+        "-v",
+        "--version",
+        dest="version",
+        default="2.4.4",
+        help=f"The version of Spark to install."
+    )
+
+
 def _add_subparser(
     subparsers,
     name: str,
@@ -297,6 +314,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, "Cargo", aliases=["cgo"])
     _add_subparser(subparsers, "ANTLR")
     _add_subparser(subparsers, "Docker", aliases=["dock", "dk"])
+    _add_subparser(subparsers, "Spark", add_argument=_spark_args)
     _add_subparser(subparsers, "Kubernetes", aliases=["k8s"])
     _add_subparser(subparsers, "Minikube", aliases=["mkb"])
     # ------------------------- web related ------------------------------
