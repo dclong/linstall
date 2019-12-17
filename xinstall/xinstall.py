@@ -33,7 +33,7 @@ BASE_DIR = FILE.parent / 'data'
 LOCAL_DIR = HOME / '.local'
 BIN_DIR = LOCAL_DIR / 'bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 
 def _namespace(dic: Dict) -> Namespace:
@@ -1182,3 +1182,24 @@ def pyjnius(**kwargs):
         pass
     if args.uninstall:
         pass
+
+
+def spark(**kwargs):
+    """Install Spark into /opt/spark.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        spark_hdp = f"spark-{args.version}-bin-hadoop2.7"
+        url = f"{args.mirror}/spark-{args.version}/{spark_hdp}.tgz"
+        cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
+                && {args.sudo_s} tar -zxvf /tmp/{spark_hdp}.tgz -C /opt/ \
+                && {args.sudo_s} ln -svf /opt/{spark_hdp} /opt/spark \
+                && rm /tmp/{spark_hdp}.tgz
+            """
+        run_cmd(cmd)
+    if args.config:
+        cmd = "export SPARK_HOME=/opt/spark"
+        run_cmd(cmd)
+    if args.uninstall:
+        cmd = f"{args.sudo_s} rm -rf /opt/spark*"
+        run_cmd(cmd)
