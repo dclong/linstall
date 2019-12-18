@@ -33,7 +33,7 @@ BASE_DIR = FILE.parent / 'data'
 LOCAL_DIR = HOME / '.local'
 BIN_DIR = LOCAL_DIR / 'bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
-__version__ = "0.3.2"
+__version__ = "0.3.3"
 
 
 def _namespace(dic: Dict) -> Namespace:
@@ -1202,4 +1202,18 @@ def spark(**kwargs):
         run_cmd(cmd)
     if args.uninstall:
         cmd = f"{args.sudo_s} rm -rf /opt/spark*"
+        run_cmd(cmd)
+
+
+def pyspark(**kwargs):
+    """Install PySpark.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        cmd = "pip3 install pyspark findspark optimuspyspark"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = "pip3 uninstall pyspark findspark optimuspyspark"
         run_cmd(cmd)

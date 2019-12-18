@@ -315,6 +315,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, "ANTLR")
     _add_subparser(subparsers, "Docker", aliases=["dock", "dk"])
     _add_subparser(subparsers, "Spark", add_argument=_spark_args)
+    _add_subparser(subparsers, "PySpark")
     _add_subparser(subparsers, "Kubernetes", aliases=["k8s"])
     _add_subparser(subparsers, "Minikube", aliases=["mkb"])
     # ------------------------- web related ------------------------------
