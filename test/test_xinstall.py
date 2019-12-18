@@ -72,3 +72,10 @@ def test_spark():
     """
     cmd = "xinstall --sudo spark -ic"
     sp.run(cmd, shell=True, check=True)
+
+
+def test_pyspark():
+    """Test installing PySpark.
+    """
+    cmd = "xinstall pyspark -ic"
+    sp.run(cmd, shell=True, check=True)

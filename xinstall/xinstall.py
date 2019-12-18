@@ -1203,3 +1203,17 @@ def spark(**kwargs):
     if args.uninstall:
         cmd = f"{args.sudo_s} rm -rf /opt/spark*"
         run_cmd(cmd)
+
+
+def pyspark(**kwargs):
+    """Install PySpark.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        cmd = "pip3 install pyspark findspark optimuspyspark"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = "pip3 uninstall pyspark findspark optimuspyspark"
+        run_cmd(cmd)
