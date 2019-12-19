@@ -17,3 +17,12 @@ curl -sSL www.legendu.net/media/install_py_github.py | python3 - https://github.
 2. Below is an example of install SpaceVim and configure it.
 
         xinstall svim -ic
+
+## Proxy
+
+Some tools used by xinstall respect environment variables `http_proxy` and `https_proxy`.
+Exporting those 2 evironment variable will make most part of xinstall work if proxy is required. 
+```
+export http_proxy=http://10.135.227.47:80
+export https_proxy=http://10.135.227.47:80
+```
