@@ -129,4 +129,3 @@ os.environ['PATH'] = ":".join({str(path): None for path in (
     os.environ["PATH"].split(":")
 )})
 %rehashx
-%autocall 1
