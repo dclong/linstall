@@ -407,7 +407,7 @@ def spacevim(**kwargs):
         run_cmd(f"curl -sLf https://spacevim.org/install.sh | bash")
         if shutil.which("nvim"):
             run_cmd(f'nvim --headless +"call dein#install()" +qall')
-        cmd = f"pip3 install --user python-language-server"
+        cmd = f"pip3 install --user python-language-server[all] pyls-mypy"
         # {args.sudo_s} npm install -g bash-language-server javascript-typescript-langserver
         run_cmd(cmd)
     if args.uninstall:
@@ -839,7 +839,7 @@ def jupyterlab_lsp(**kwargs):
     if args.install:
         cmd = '''sudo pip3 install --pre jupyter-lsp \
                 && sudo jupyter labextension install @krassowski/jupyterlab-lsp \
-                && sudo pip3 install python-language-server[all]'''
+                && sudo pip3 install python-language-server[all] pyls-mypy'''
         run_cmd(cmd)
     if args.config:
         pass
