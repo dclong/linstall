@@ -353,6 +353,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, "dryscrape", aliases=[])
     _add_subparser(subparsers, "download tools", aliases=["dl", "dlt"])
     _add_subparser_install_py_github(subparsers)
+    _add_subparser_git_ignore(subparsers)
     _add_subparser_version(subparsers)
     # ------------------------- JupyterLab related ------------------------------
     _add_subparser(subparsers, "BeakerX", aliases=["bkx", "bk"])
