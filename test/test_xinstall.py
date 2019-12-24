@@ -79,3 +79,17 @@ def test_pyspark():
     """
     cmd = "xinstall pyspark -ic"
     sp.run(cmd, shell=True, check=True)
+
+
+def test_evcxr():
+    """Test installing evcxr Jupyter/Lab kernel.
+    """
+    cmd = "xinstall --sudo -y evcxr -ic"
+    sp.run(cmd, shell=True, check=True)
+
+
+def test_rust():
+    """Test installing the Rust programming language.
+    """
+    cmd = "xinstall --sudo -y rust -ic"
+    sp.run(cmd, shell=True, check=True)

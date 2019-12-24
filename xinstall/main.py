@@ -162,6 +162,31 @@ def _add_subparser_install_py_github(subparsers):
     return subparser
 
 
+def _add_subparser_git_ignore(subparsers):
+    subparser = subparsers.add_parser(
+        "git_ignore",
+        aliases=["gig", "gignore"],
+        help="Append patterns to ignore into .gitignore in the current directory."
+    )
+    subparser.add_argument(
+        "-p",
+        "--py",
+        "--python",
+        dest="python",
+        action="store_true",
+        help=f"Gitignore patterns for Python developing."
+    )
+    subparser.add_argument(
+        "-j",
+        "--java",
+        dest="java",
+        action="store_true",
+        help=f"Gitignore patterns for Java developing."
+    )
+    subparser.set_defaults(func=xinstall.git_ignore)
+    return subparser
+
+
 def _spark_args(subparser):
     subparser.add_argument(
         "-m",
@@ -298,6 +323,8 @@ def parse_args(args=None, namespace=None):
     # ------------------------- development related  ------------------------------
     _add_subparser(subparsers, "Git", add_argument=_git_args)
     _add_subparser(subparsers, "NodeJS", aliases=["node"])
+    _add_subparser(subparsers, "rust")
+    _add_subparser(subparsers, "evcxr_jupyter", aliases=["evcxr"])
     _add_subparser(subparsers, "Python3", aliases=["py3"])
     _add_subparser(subparsers, "pyjnius", aliases=["pyj"])
     _add_subparser(subparsers, "IPython3", aliases=["ipy3", "ipy"])
@@ -326,6 +353,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, "dryscrape", aliases=[])
     _add_subparser(subparsers, "download tools", aliases=["dl", "dlt"])
     _add_subparser_install_py_github(subparsers)
+    _add_subparser_git_ignore(subparsers)
     _add_subparser_version(subparsers)
     # ------------------------- JupyterLab related ------------------------------
     _add_subparser(subparsers, "BeakerX", aliases=["bkx", "bk"])

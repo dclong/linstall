@@ -33,7 +33,7 @@ BASE_DIR = FILE.parent / 'data'
 LOCAL_DIR = HOME / '.local'
 BIN_DIR = LOCAL_DIR / 'bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
-__version__ = "0.3.4"
+__version__ = "0.3.5"
 
 
 def _namespace(dic: Dict) -> Namespace:
@@ -407,7 +407,7 @@ def spacevim(**kwargs):
         run_cmd(f"curl -sLf https://spacevim.org/install.sh | bash")
         if shutil.which("nvim"):
             run_cmd(f'nvim --headless +"call dein#install()" +qall')
-        cmd = f"pip3 install --user python-language-server"
+        cmd = f"pip3 install --user python-language-server[all] pyls-mypy"
         # {args.sudo_s} npm install -g bash-language-server javascript-typescript-langserver
         run_cmd(cmd)
     if args.uninstall:
@@ -839,7 +839,7 @@ def jupyterlab_lsp(**kwargs):
     if args.install:
         cmd = '''sudo pip3 install --pre jupyter-lsp \
                 && sudo jupyter labextension install @krassowski/jupyterlab-lsp \
-                && sudo pip3 install python-language-server[all]'''
+                && sudo pip3 install python-language-server[all] pyls-mypy'''
         run_cmd(cmd)
     if args.config:
         pass
@@ -1217,3 +1217,99 @@ def pyspark(**kwargs):
     if args.uninstall:
         cmd = "pip3 uninstall pyspark findspark optimuspyspark"
         run_cmd(cmd)
+
+
+def evcxr_jupyter(**kwargs):
+    """Install the evcxr Rust kernel for Jupyter/Lab server.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        cmd = f"""{args.sudo_s} apt-get install {args._yes_s} cmake cargo \
+            && cargo install --force evcxr_jupyter \
+            && {HOME}/.cargo/bin/evcxr_jupyter --install
+            """
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"""{HOME}/.cargo/bin/evcxr_jupyter --uninstall \
+            && cargo uninstall evcxr_jupyter
+            """
+        run_cmd(cmd)
+
+
+def rust(**kwargs):
+    """Install the Rust programming language.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        cmd = f"{args.sudo_s} apt-get install {args._yes_s} cmake cargo"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.sudo_s} apt-get purge {args._yes_s} cargo"
+        run_cmd(cmd)
+
+
+def git_ignore(**kwargs):
+    """Insert patterns to ingore into .gitignore in the current directory.
+    """
+    args = _namespace(kwargs)
+    if args.python:
+        lines = [
+            ".DS_Store",
+            ".idea/",
+            "*.ipr",
+            "*.iws",
+            ".ipynb_checkpoints/",
+            ".coverage",
+            ".mypy",
+            ".mypy_cache",
+            "*.crc",
+            "__pycache__/",
+            "venv/",
+            ".venv/",
+            "target/",
+            "dist/",
+            "*.egg-info/",
+        ]
+        with Path(".gitignore").open("a") as fout:
+            fout.writelines(lines)
+    if args.java:
+        lines = [
+            "# Java",
+            "*.class",
+            "## BlueJ files",
+            "*.ctxt",
+            "## Mobile Tools for Java (J2ME)",
+            ".mtj.tmp/",
+            "## Package Files",
+            "*.jar",
+            "*.war",
+            "*.ear",
+            "# Gradle",
+            ".gradle",
+            "/build/",
+            "/out/",
+            "## Ignore Gradle GUI config",
+            "gradle-app.setting",
+            "## Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)",
+            "!gradle-wrapper.jar",
+            "## Cache of project",
+            ".gradletasknamecache",
+            "# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml",
+            "hs_err_pid*",
+            "# Mac",
+            ".DS_Store",
+            "# IDE",
+            ".idea/",
+            "*.ipr",
+            "*.iws",
+            "# Misc",
+            "core",
+            "*.log",
+            "deprecated",
+        ]
+        with Path(".gitignore").open("a") as fout:
+            fout.writelines(lines)
