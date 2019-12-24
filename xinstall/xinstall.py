@@ -1274,6 +1274,7 @@ def git_ignore(**kwargs):
             "dist/",
             "*.egg-info/",
         ]
+        lines = [line.strip() + "\n" for line in lines]
         with Path(".gitignore").open("a") as fout:
             fout.writelines(lines)
     if args.java:
@@ -1311,5 +1312,6 @@ def git_ignore(**kwargs):
             "*.log",
             "deprecated",
         ]
+        lines = [line.strip() + "\n" for line in lines]
         with Path(".gitignore").open("a") as fout:
             fout.writelines(lines)
