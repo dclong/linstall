@@ -1225,7 +1225,7 @@ def evcxr_jupyter(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         cmd = f"""{args.sudo_s} apt-get install {args._yes_s} cmake cargo \
-            && cargo install evcxr_jupyter \
+            && cargo install --force evcxr_jupyter \
             && {HOME}/.cargo/bin/evcxr_jupyter --install
             """
         run_cmd(cmd)
