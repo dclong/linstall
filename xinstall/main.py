@@ -172,14 +172,14 @@ def _add_subparser_git_ignore(subparsers):
         "-p",
         "--py",
         "--python",
-        dest="python", 
+        dest="python",
         action="store_true",
         help=f"Gitignore patterns for Python developing."
     )
     subparser.add_argument(
         "-j",
         "--java",
-        dest="java", 
+        dest="java",
         action="store_true",
         help=f"Gitignore patterns for Java developing."
     )
