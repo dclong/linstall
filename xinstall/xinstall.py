@@ -1333,3 +1333,16 @@ def kaggle(**kwargs):
             kaggle_home.mkdir(exist_ok=True)
     if args.uninstall:
         pass
+
+
+def lightgbm(**kwargs):
+    """Insert the Python package kaggle.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        cmd = "{args.pip} install --user lightgmb graphviz"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass

@@ -358,6 +358,7 @@ def parse_args(args=None, namespace=None):
         subparsers, "xinstall", aliases=[], add_argument=_xinstall_args
     )
     _add_subparser(subparsers, "kaggle", aliases=[])
+    _add_subparser(subparsers, "lightgbm", aliases=[])
     _add_subparser(subparsers, "OpenJDK8", aliases=["jdk8"])
     _add_subparser(subparsers, "sdkman", aliases=[])
     _add_subparser(
