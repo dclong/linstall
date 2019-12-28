@@ -138,10 +138,7 @@ def _option_ipython(subparser):
 
 def _option_pip(subparser):
     subparser.add_argument(
-        "--pip",
-        dest="pip",
-        default="pip3",
-        help=f"Path to the pip command."
+        "--pip", dest="pip", default="pip3", help=f"Path to the pip command."
     )
 
 
@@ -152,6 +149,7 @@ def _option_jupyter(subparser):
         default="jupyter",
         help=f"Path to the jupyter command."
     )
+
 
 def _dsutil_args(subparser):
     _option_sys(subparser)

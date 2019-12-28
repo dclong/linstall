@@ -663,7 +663,9 @@ def xinstall(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         url = 'https://github.com/dclong/xinstall'
-        utils.install_py_github(url=url, sudo=args.sudo, sys=args.sys, pip=args.pip)
+        utils.install_py_github(
+            url=url, sudo=args.sudo, sys=args.sys, pip=args.pip
+        )
     if args.config:
         pass
     if args.uninstall:
@@ -1105,7 +1107,9 @@ def visual_studio_code(**kwargs):
 
 def install_py_github(**kwargs):
     args = _namespace(kwargs)
-    utils.install_py_github(url=args.url, sudo=args.sudo, sys=args.sys, pip=args.pip)
+    utils.install_py_github(
+        url=args.url, sudo=args.sudo, sys=args.sys, pip=args.pip
+    )
 
 
 def virtualbox(**kwargs):
