@@ -93,3 +93,17 @@ def test_rust():
     """
     cmd = "xinstall --sudo -y rust -ic"
     sp.run(cmd, shell=True, check=True)
+
+
+def test_kaggle():
+    """Test installing the Python package kaggle.
+    """
+    cmd = "xinstall kaggle -ic"
+    sp.run(cmd, shell=True, check=True)
+
+
+def test_blogging():
+    """Test installing the blogging tools.
+    """
+    cmd = "xinstall blog -ic"
+    sp.run(cmd, shell=True, check=True)

@@ -33,7 +33,7 @@ BASE_DIR = FILE.parent / 'data'
 LOCAL_DIR = HOME / '.local'
 BIN_DIR = LOCAL_DIR / 'bin'
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
-__version__ = "0.3.5"
+__version__ = "0.3.6"
 
 
 def _namespace(dic: Dict) -> Namespace:
@@ -193,12 +193,12 @@ def openinterminal(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         if is_macos():
-            run_cmd(f'brew cask install openinterminal')
+            run_cmd(f"brew cask install openinterminal")
     if args.config:
         pass
     if args.uninstall:
         if is_macos():
-            run_cmd(f'brew cask uninstall openinterminal')
+            run_cmd(f"brew cask uninstall openinterminal")
 
 
 def xonsh(**kwargs):
@@ -206,15 +206,15 @@ def xonsh(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'pip3 install --user xonsh')
+        run_cmd(f"{args.pip} install --user xonsh")
     if args.config:
-        src = f'{BASE_DIR}/xonsh/xonshrc'
-        dst = HOME / '.xonshrc'
+        src = f"{BASE_DIR}/xonsh/xonshrc"
+        dst = HOME / ".xonshrc"
         if dst.exists():
             dst.unlink()
         shutil.copy2(src, dst)
     if args.uninstall:
-        run_cmd(f'pip3 uninstall xonsh')
+        run_cmd(f"{args.pip} uninstall xonsh")
 
 
 def bash_it(**kwargs):
@@ -276,6 +276,8 @@ def wajig(**kwargs) -> None:
 
 
 def exa(**kwargs):
+    """Install exa which is an Rust-implemented alternative to ls.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -296,6 +298,8 @@ def exa(**kwargs):
 
 
 def osquery(**kwargs):
+    """Install osquery for Linux admin.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -322,6 +326,8 @@ def osquery(**kwargs):
 
 # ------------------------- vim related -------------------------
 def vim(**kwargs):
+    """Install Vim.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -345,6 +351,8 @@ def vim(**kwargs):
 
 
 def neovim(**kwargs):
+    """Install NeoVim.
+    """
     args = _namespace(kwargs)
     if args.ppa and is_ubuntu_debian():
         args.install = True
@@ -370,8 +378,6 @@ def neovim(**kwargs):
 
 def _svim_true_color(true_color: Union[bool, None]) -> None:
     """Enable/disable true color for SpaceVim.
-    # TODO: use the toml module to help you parse the file??
-    # I'm not sure whether it is feasible ...
     """
     if true_color is None:
         return
@@ -407,7 +413,7 @@ def spacevim(**kwargs):
         run_cmd(f"curl -sLf https://spacevim.org/install.sh | bash")
         if shutil.which("nvim"):
             run_cmd(f'nvim --headless +"call dein#install()" +qall')
-        cmd = f"pip3 install --user python-language-server[all] pyls-mypy"
+        cmd = f"{args.pip} install --user python-language-server[all] pyls-mypy"
         # {args.sudo_s} npm install -g bash-language-server javascript-typescript-langserver
         run_cmd(cmd)
     if args.uninstall:
@@ -420,6 +426,8 @@ def spacevim(**kwargs):
 
 
 def ideavim(**kwargs):
+    """Install IdeaVim for IntelliJ.
+    """
     args = _namespace(kwargs)
     if args.config:
         shutil.copy2(BASE_DIR / 'ideavim/ideavimrc', HOME / '.ideavimrc')
@@ -427,6 +435,8 @@ def ideavim(**kwargs):
 
 # ------------------------- coding tools related -------------------------
 def git(**kwargs) -> None:
+    """Install and configure Git.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -467,6 +477,8 @@ def git(**kwargs) -> None:
 
 
 def antlr(**kwargs):
+    """Install and configure Antrl4.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -488,6 +500,8 @@ def antlr(**kwargs):
 
 
 def docker(**kwargs):
+    """Install and configure Docker container.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -523,6 +537,8 @@ def docker(**kwargs):
 
 
 def kubernetes(**kwargs):
+    """Install and configure kubernetes command-line interface.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -647,14 +663,14 @@ def sdkman(**kwargs):
 def yapf(**kwargs):
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'pip3 install --user {args._yes_s} yapf')
+        run_cmd(f'{args.pip} install --user {args._yes_s} yapf')
     if args.config:
         shutil.copy2(
             os.path.join(BASE_DIR, 'yapf/style.yapf'),
             os.path.join(args.dst_dir, '.style.yapf')
         )
     if args.uninstall:
-        run_cmd(f'pip3 uninstall {args._yes_s} yapf')
+        run_cmd(f'{args.pip} uninstall {args._yes_s} yapf')
 
 
 def xinstall(**kwargs):
@@ -663,22 +679,24 @@ def xinstall(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         url = 'https://github.com/dclong/xinstall'
-        utils.install_py_github(url=url, sudo=args.sudo, sys=args.sys)
+        utils.install_py_github(
+            url=url, sudo=args.sudo, sys=args.sys, pip=args.pip
+        )
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f"{args.sudo_s} pip3 uninstall xinstall")
+        run_cmd(f"{args.sudo_s} {args.pip} uninstall xinstall")
 
 
 def dsutil(**kwargs):
     args = _namespace(kwargs)
     if args.install:
         url = 'https://github.com/dclong/dsutil'
-        utils.install_py_github(url=url)
+        utils.install_py_github(url=url, pip=args.pip)
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f'pip3 uninstall {args._yes_s} dsutil')
+        run_cmd(f'{args.pip} uninstall {args._yes_s} dsutil')
 
 
 def nodejs(**kwargs):
@@ -731,10 +749,10 @@ def ipython3(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        cmd = f"pip3 install --user {args._yes_s} ipython"
+        cmd = f"{args.pip} install --user {args._yes_s} ipython"
         run_cmd(cmd)
     if args.config:
-        run_cmd("ipython3 profile create")
+        run_cmd("{args.ipython} profile create")
         src_dir = BASE_DIR / "ipython"
         dst_dir = HOME / ".ipython/profile_default"
         shutil.copy2(src_dir / "ipython_config.py", dst_dir)
@@ -750,9 +768,7 @@ def python3(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} python3.7 python3-pip python3-setuptools && \
-                    {args.sudo_s} ln -svf /usr/bin/python3.7 /usr/bin/python3
-                    """
+            cmd = f"{args.sudo_s} apt-get install {args._yes_s} python3 python3-pip python3-setuptools"
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["python3"])
@@ -760,7 +776,7 @@ def python3(**kwargs):
             run_cmd(
                 f"{args.sudo_s} yum install {args._yes_s} python34 python34-devel python34-pip",
             )
-            run_cmd(f"pip3.4 install --user setuptools")
+            run_cmd(f"{args.pip} install --user setuptools")
     if args.config:
         pass
     if args.uninstall:
@@ -778,10 +794,6 @@ def poetry(**kwargs):
     """Install and configure Python poetry.
     """
     args = _namespace(kwargs)
-    if args.python is None:
-        args.python = "python3"
-    else:
-        args.install = True
     if args.install:
         cmd = f"curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}"
         run_cmd(cmd)
@@ -813,9 +825,9 @@ def nbdime(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'pip3 install --user nbdime')
+        run_cmd(f'{args.pip} install --user nbdime')
     if args.uninstall:
-        run_cmd(f'pip3 uninstall nbdime')
+        run_cmd(f'{args.pip} uninstall nbdime')
     if args.config:
         run_cmd(f'nbdime config-git --enable --global')
 
@@ -837,9 +849,9 @@ def itypescript(**kwargs):
 def jupyterlab_lsp(**kwargs):
     args = _namespace(kwargs)
     if args.install:
-        cmd = '''sudo pip3 install --pre jupyter-lsp \
-                && sudo jupyter labextension install @krassowski/jupyterlab-lsp \
-                && sudo pip3 install python-language-server[all] pyls-mypy'''
+        cmd = '''{args.sudo_s} {args.pip} install --pre jupyter-lsp \
+                && {args.sudo_s} {args.jupyter} labextension install @krassowski/jupyterlab-lsp \
+                && {args.sudo_s} {args.pip} install python-language-server[all] pyls-mypy'''
         run_cmd(cmd)
     if args.config:
         pass
@@ -852,7 +864,7 @@ def beakerx(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'pip3 install --user beakerx')
+        run_cmd(f'{args.pip} install --user beakerx')
         run_cmd(f'{args.sudo_s} beakerx install')
         run_cmd(
             f'{args.sudo_s} jupyter labextension install @jupyter-widgets/jupyterlab-manager',
@@ -868,7 +880,7 @@ def beakerx(**kwargs):
             f'{args.sudo_s} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager',
         )
         run_cmd(f'{args.sudo_s} beakerx uninstall')
-        run_cmd(f'pip3 uninstall beakerx')
+        run_cmd(f'{args.pip} uninstall beakerx')
     if args.config:
         run_cmd(f'{args.sudo_s} chown -R {USER_ID}:{GROUP_ID} {HOME}')
 
@@ -981,12 +993,14 @@ def proxychains(**kwargs) -> None:
 
 
 def dryscrape(**kwargs):
+    """Install and configure dryscrape.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
             cmd = f'''{args.sudo_s} apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
-                && pip3 install --user dryscrape
+                && {args.pip} install --user dryscrape
                 '''
             run_cmd(cmd)
         elif is_macos():
@@ -1005,24 +1019,26 @@ def dryscrape(**kwargs):
 
 
 def blogging(**kwargs):
+    """Install blogging tools.
+    """
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'pip3 install --user pelican markdown')
-        archives = HOME / 'archives'
+        run_cmd(f"{args.pip} install --user pelican markdown")
+        archives = HOME / "archives"
         archives.mkdir(0o700, exist_ok=True)
-        blog = archives / 'blog'
+        blog = archives / "blog"
         if blog.is_dir():
-            run_cmd(f'git -C {blog} pull origin master')
+            run_cmd(f"git -C {blog} pull origin master")
         else:
-            run_cmd(f'git clone git@github.com:dclong/blog.git {archives}')
-        cmd = f'''git -C {blog} submodule init && \
+            run_cmd(f"git clone git@github.com:dclong/blog.git {blog}")
+        cmd = f"""git -C {blog} submodule init && \
                 git -C {blog} submodule update --recursive --remote
-                '''
+                """
         run_cmd(cmd)
     if args.config:
-        pass
+        (BIN_DIR / "blog").symlink_to(archives / "blog/main.py")
     if args.uninstall:
-        run_cmd(f'pip3 uninstall pelican markdown')
+        run_cmd(f"{args.pip} uninstall pelican markdown")
 
 
 def download_tools(**kwargs):
@@ -1111,7 +1127,9 @@ def visual_studio_code(**kwargs):
 
 def install_py_github(**kwargs):
     args = _namespace(kwargs)
-    utils.install_py_github(url=args.url, sudo=args.sudo, sys=args.sys)
+    utils.install_py_github(
+        url=args.url, sudo=args.sudo, sys=args.sys, pip=args.pip
+    )
 
 
 def virtualbox(**kwargs):
@@ -1176,7 +1194,7 @@ def pyjnius(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        cmd = """pip3 install --user Cython pyjnius"""
+        cmd = f"{args.pip} install --user Cython pyjnius"
         run_cmd(cmd)
     if args.config:
         pass
@@ -1210,12 +1228,12 @@ def pyspark(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        cmd = "pip3 install pyspark findspark optimuspyspark"
+        cmd = f"{args.pip} install pyspark findspark optimuspyspark"
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = "pip3 uninstall pyspark findspark optimuspyspark"
+        cmd = f"{args.pip} uninstall pyspark findspark optimuspyspark"
         run_cmd(cmd)
 
 
@@ -1256,7 +1274,7 @@ def git_ignore(**kwargs):
     """Insert patterns to ingore into .gitignore in the current directory.
     """
     args = _namespace(kwargs)
-    if args.python:
+    if args.python_pattern:
         lines = [
             ".DS_Store",
             ".idea/",
@@ -1277,7 +1295,7 @@ def git_ignore(**kwargs):
         lines = [line.strip() + "\n" for line in lines]
         with Path(".gitignore").open("a") as fout:
             fout.writelines(lines)
-    if args.java:
+    if args.java_pattern:
         lines = [
             "# Java",
             "*.class",
@@ -1315,3 +1333,36 @@ def git_ignore(**kwargs):
         lines = [line.strip() + "\n" for line in lines]
         with Path(".gitignore").open("a") as fout:
             fout.writelines(lines)
+
+
+def kaggle(**kwargs):
+    """Insert the Python package kaggle.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        cmd = f"{args.pip} install --user kaggle"
+        run_cmd(cmd)
+    if args.config:
+        home_host = Path("/home_host/dclong/")
+        kaggle_home_host = home_host / ".kaggele"
+        kaggle_home = HOME / ".kaggele"
+        if home_host.is_dir():
+            kaggle_home_host.mkdir(exist_ok=True)
+            kaggle_home.symlink_to(kaggle_home_host)
+        else:
+            kaggle_home.mkdir(exist_ok=True)
+    if args.uninstall:
+        pass
+
+
+def lightgbm(**kwargs):
+    """Insert the Python package kaggle.
+    """
+    args = _namespace(kwargs)
+    if args.install:
+        cmd = f"{args.pip} install --user lightgmb graphviz"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass

@@ -83,13 +83,6 @@ def _yapf_args(subparser):
 
 def _poetry_args(subparser):
     subparser.add_argument(
-        "-p",
-        "--python",
-        dest="python",
-        default=None,
-        help="The path to the Python interpreter."
-    )
-    subparser.add_argument(
         "-b",
         "--bash-completion",
         dest="bash_completion",
@@ -125,6 +118,39 @@ def _option_sys(subparser):
     )
 
 
+def _option_python(subparser):
+    subparser.add_argument(
+        "--python",
+        dest="python",
+        default="python3",
+        help=f"Path to the python3 command."
+    )
+
+
+def _option_ipython(subparser):
+    subparser.add_argument(
+        "--ipython",
+        dest="ipython",
+        default="ipython3",
+        help=f"Path to the python3 command."
+    )
+
+
+def _option_pip(subparser):
+    subparser.add_argument(
+        "--pip", dest="pip", default="pip3", help=f"Path to the pip command."
+    )
+
+
+def _option_jupyter(subparser):
+    subparser.add_argument(
+        "--jupyter",
+        dest="jupyter",
+        default="jupyter",
+        help=f"Path to the jupyter command."
+    )
+
+
 def _dsutil_args(subparser):
     _option_sys(subparser)
 
@@ -152,12 +178,9 @@ def _add_subparser_install_py_github(subparsers):
     subparser.add_argument(
         dest="url", help=f"The URL of the Python package's GitHub repository."
     )
-    subparser.add_argument(
-        "--sys",
-        dest="sys",
-        action="store_true",
-        help=f"Install to a system-wide location."
-    )
+    _option_sys(subparser)
+    _option_python(subparser)
+    _option_pip(subparser)
     subparser.set_defaults(func=xinstall.install_py_github)
     return subparser
 
@@ -170,16 +193,15 @@ def _add_subparser_git_ignore(subparsers):
     )
     subparser.add_argument(
         "-p",
-        "--py",
-        "--python",
-        dest="python",
+        "--python-pattern",
+        dest="python_pattern",
         action="store_true",
         help=f"Gitignore patterns for Python developing."
     )
     subparser.add_argument(
         "-j",
-        "--java",
-        dest="java",
+        "--java-pattern",
+        dest="java_pattern",
         action="store_true",
         help=f"Gitignore patterns for Java developing."
     )
@@ -245,6 +267,8 @@ def _add_subparser(
         action="store_true",
         help=f"Print the command to run."
     )
+    _option_python(subparser)
+    _option_pip(subparser)
     if add_argument:
         add_argument(subparser)
     subparser.set_defaults(func=func)
@@ -333,6 +357,8 @@ def parse_args(args=None, namespace=None):
     _add_subparser(
         subparsers, "xinstall", aliases=[], add_argument=_xinstall_args
     )
+    _add_subparser(subparsers, "kaggle", aliases=[])
+    _add_subparser(subparsers, "lightgbm", aliases=[])
     _add_subparser(subparsers, "OpenJDK8", aliases=["jdk8"])
     _add_subparser(subparsers, "sdkman", aliases=[])
     _add_subparser(
