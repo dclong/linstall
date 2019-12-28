@@ -993,6 +993,8 @@ def proxychains(**kwargs) -> None:
 
 
 def dryscrape(**kwargs):
+    """Install and configure dryscrape.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
