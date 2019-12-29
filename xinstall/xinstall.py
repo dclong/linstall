@@ -1340,7 +1340,7 @@ def lightgbm(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        cmd = "{args.pip} install --user lightgmb graphviz"
+        cmd = "{args.pip} install --user lightgmb scikit-learn pandas matplotlib scipy graphviz"
         run_cmd(cmd)
     if args.config:
         pass
