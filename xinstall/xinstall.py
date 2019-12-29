@@ -276,6 +276,8 @@ def wajig(**kwargs) -> None:
 
 
 def exa(**kwargs):
+    """Install exa which is an Rust-implemented alternative to ls.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -296,6 +298,8 @@ def exa(**kwargs):
 
 
 def osquery(**kwargs):
+    """Install osquery for Linux admin.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -322,6 +326,8 @@ def osquery(**kwargs):
 
 # ------------------------- vim related -------------------------
 def vim(**kwargs):
+    """Install Vim.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -345,6 +351,8 @@ def vim(**kwargs):
 
 
 def neovim(**kwargs):
+    """Install NeoVim.
+    """
     args = _namespace(kwargs)
     if args.ppa and is_ubuntu_debian():
         args.install = True
@@ -370,8 +378,6 @@ def neovim(**kwargs):
 
 def _svim_true_color(true_color: Union[bool, None]) -> None:
     """Enable/disable true color for SpaceVim.
-    # TODO: use the toml module to help you parse the file??
-    # I'm not sure whether it is feasible ...
     """
     if true_color is None:
         return
@@ -420,6 +426,8 @@ def spacevim(**kwargs):
 
 
 def ideavim(**kwargs):
+    """Install IdeaVim for IntelliJ.
+    """
     args = _namespace(kwargs)
     if args.config:
         shutil.copy2(BASE_DIR / 'ideavim/ideavimrc', HOME / '.ideavimrc')
@@ -427,6 +435,8 @@ def ideavim(**kwargs):
 
 # ------------------------- coding tools related -------------------------
 def git(**kwargs) -> None:
+    """Install and configure Git.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -467,6 +477,8 @@ def git(**kwargs) -> None:
 
 
 def antlr(**kwargs):
+    """Install and configure Antrl4.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -488,6 +500,8 @@ def antlr(**kwargs):
 
 
 def docker(**kwargs):
+    """Install and configure Docker container.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -523,6 +537,8 @@ def docker(**kwargs):
 
 
 def kubernetes(**kwargs):
+    """Install and configure kubernetes command-line interface.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -977,6 +993,8 @@ def proxychains(**kwargs) -> None:
 
 
 def dryscrape(**kwargs):
+    """Install and configure dryscrape.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -1001,24 +1019,26 @@ def dryscrape(**kwargs):
 
 
 def blogging(**kwargs):
+    """Install blogging tools.
+    """
     args = _namespace(kwargs)
     if args.install:
-        run_cmd(f'{args.pip} install --user pelican markdown')
-        archives = HOME / 'archives'
+        run_cmd(f"{args.pip} install --user pelican markdown")
+        archives = HOME / "archives"
         archives.mkdir(0o700, exist_ok=True)
-        blog = archives / 'blog'
+        blog = archives / "blog"
         if blog.is_dir():
-            run_cmd(f'git -C {blog} pull origin master')
+            run_cmd(f"git -C {blog} pull origin master")
         else:
-            run_cmd(f'git clone git@github.com:dclong/blog.git {archives}')
-        cmd = f'''git -C {blog} submodule init && \
+            run_cmd(f"git clone git@github.com:dclong/blog.git {blog}")
+        cmd = f"""git -C {blog} submodule init && \
                 git -C {blog} submodule update --recursive --remote
-                '''
+                """
         run_cmd(cmd)
     if args.config:
         (BIN_DIR / "blog").symlink_to(archives / "blog/main.py")
     if args.uninstall:
-        run_cmd(f'{args.pip} uninstall pelican markdown')
+        run_cmd(f"{args.pip} uninstall pelican markdown")
 
 
 def download_tools(**kwargs):
@@ -1174,7 +1194,7 @@ def pyjnius(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        cmd = """{args.pip} install --user Cython pyjnius"""
+        cmd = f"{args.pip} install --user Cython pyjnius"
         run_cmd(cmd)
     if args.config:
         pass
@@ -1208,12 +1228,12 @@ def pyspark(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        cmd = "{args.pip} install pyspark findspark optimuspyspark"
+        cmd = f"{args.pip} install pyspark findspark optimuspyspark"
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = "{args.pip} uninstall pyspark findspark optimuspyspark"
+        cmd = f"{args.pip} uninstall pyspark findspark optimuspyspark"
         run_cmd(cmd)
 
 
@@ -1320,7 +1340,7 @@ def kaggle(**kwargs):
     """
     args = _namespace(kwargs)
     if args.install:
-        cmd = "{args.pip} install --user kaggle"
+        cmd = f"{args.pip} install --user kaggle"
         run_cmd(cmd)
     if args.config:
         home_host = Path("/home_host/dclong/")
