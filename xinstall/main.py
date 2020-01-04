@@ -155,6 +155,16 @@ def _dsutil_args(subparser):
     _option_sys(subparser)
 
 
+def _add_subparser_update(subparsers):
+    subparser = subparsers.add_parser(
+        "update",
+        aliases=["upd", "up"],
+        help="Update xinstall itself."
+    )
+    subparser.set_defaults(func=lambda: xinstall.update(install=True, config=True))
+    return subparser
+
+
 def _xinstall_args(subparser):
     _option_sys(subparser)
 
@@ -381,6 +391,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_install_py_github(subparsers)
     _add_subparser_git_ignore(subparsers)
     _add_subparser_version(subparsers)
+    _add_subparser_update(subparsers)
     # ------------------------- JupyterLab related ------------------------------
     _add_subparser(subparsers, "BeakerX", aliases=["bkx", "bk"])
     _add_subparser(
