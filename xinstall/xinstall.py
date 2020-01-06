@@ -689,6 +689,8 @@ def xinstall(**kwargs):
 
 
 def dsutil(**kwargs):
+    """Install the Python package dsutil.
+    """
     args = _namespace(kwargs)
     if args.install:
         url = 'https://github.com/dclong/dsutil'
@@ -700,6 +702,8 @@ def dsutil(**kwargs):
 
 
 def nodejs(**kwargs):
+    """Install nodejs and npm.
+    """
     args = _namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -1036,7 +1040,10 @@ def blogging(**kwargs):
                 """
         run_cmd(cmd)
     if args.config:
-        (BIN_DIR / "blog").symlink_to(archives / "blog/main.py")
+        try:
+            (BIN_DIR / "blog").symlink_to(archives / "blog/main.py")
+        except FileExistsError:
+            pass
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall pelican markdown")
 
@@ -1348,7 +1355,10 @@ def kaggle(**kwargs):
         kaggle_home = HOME / ".kaggele"
         if home_host.is_dir():
             kaggle_home_host.mkdir(exist_ok=True)
-            kaggle_home.symlink_to(kaggle_home_host)
+            try:
+                kaggle_home.symlink_to(kaggle_home_host)
+            except FileExistsError:
+                pass
         else:
             kaggle_home.mkdir(exist_ok=True)
     if args.uninstall:
