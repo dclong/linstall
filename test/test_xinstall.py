@@ -109,8 +109,8 @@ def test_blogging():
     sp.run(cmd, shell=True, check=True)
 
 
-def test_update():
-    """Test the update command.
+def test_lightgbm():
+    """Test installing and configuring LightGBM.
     """
-    cmd = "xinstall update"
+    cmd = "xinstall lightgbm -ic"
     sp.run(cmd, shell=True, check=True)
