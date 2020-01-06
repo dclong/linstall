@@ -748,7 +748,7 @@ def bash_lsp(**kwargs):
         run_cmd(cmd)
 
 
-def ipython3(**kwargs):
+def ipython(**kwargs):
     """Install IPython for Python 3.
     """
     args = _namespace(kwargs)
@@ -756,7 +756,7 @@ def ipython3(**kwargs):
         cmd = f"{args.pip} install --user {args._yes_s} ipython"
         run_cmd(cmd)
     if args.config:
-        run_cmd("{args.ipython} profile create")
+        run_cmd(f"{args.ipython} profile create")
         src_dir = BASE_DIR / "ipython"
         dst_dir = HOME / ".ipython/profile_default"
         shutil.copy2(src_dir / "ipython_config.py", dst_dir)

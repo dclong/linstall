@@ -114,3 +114,10 @@ def test_lightgbm():
     """
     cmd = "xinstall lightgbm -ic"
     sp.run(cmd, shell=True, check=True)
+
+
+def test_ipython():
+    """Test installing and configuring LightGBM.
+    """
+    cmd = "xinstall ipython -ic"
+    sp.run(cmd, shell=True, check=True)
