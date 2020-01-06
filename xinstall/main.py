@@ -132,7 +132,7 @@ def _option_ipython(subparser):
         "--ipython",
         dest="ipython",
         default="ipython3",
-        help=f"Path to the python3 command."
+        help=f"Path to the ipython3 command."
     )
 
 
@@ -351,7 +351,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser(subparsers, "evcxr_jupyter", aliases=["evcxr"])
     _add_subparser(subparsers, "Python3", aliases=["py3"])
     _add_subparser(subparsers, "pyjnius", aliases=["pyj"])
-    _add_subparser(subparsers, "IPython3", aliases=["ipy3", "ipy"])
+    _add_subparser(subparsers, "IPython", aliases=["ipy"])
     _add_subparser(subparsers, "yapf", aliases=[])
     _add_subparser(subparsers, "dsutil", aliases=[], add_argument=_dsutil_args)
     _add_subparser(
