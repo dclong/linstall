@@ -268,6 +268,7 @@ def _add_subparser(
         help=f"Print the command to run."
     )
     _option_python(subparser)
+    _option_ipython(subparser)
     _option_pip(subparser)
     if add_argument:
         add_argument(subparser)
