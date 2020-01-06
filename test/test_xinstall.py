@@ -107,3 +107,10 @@ def test_blogging():
     """
     cmd = "xinstall blog -ic"
     sp.run(cmd, shell=True, check=True)
+
+
+def test_update():
+    """Test the update command.
+    """
+    cmd = "xinstall update"
+    sp.run(cmd, shell=True, check=True)

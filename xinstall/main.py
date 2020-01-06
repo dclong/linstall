@@ -157,11 +157,11 @@ def _dsutil_args(subparser):
 
 def _add_subparser_update(subparsers):
     subparser = subparsers.add_parser(
-        "update",
-        aliases=["upd", "up"],
-        help="Update xinstall itself."
+        "update", aliases=["upd", "up"], help="Update xinstall itself."
     )
-    subparser.set_defaults(func=lambda: xinstall.update(install=True, config=True))
+    subparser.set_defaults(
+        func=lambda: xinstall.xinstall(install=True, config=True)
+    )
     return subparser
 
 
