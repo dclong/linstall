@@ -1,6 +1,7 @@
 """Helper functions.
 """
-from typing import Union, List, Any, Sized
+from typing import Union, List, Sequence, Any, Sized, Dict, Callable
+from argparse import Namespace
 import os
 import platform
 import json
@@ -229,3 +230,105 @@ def intellij_idea_plugin(version: str, url: str):
     os.close(fd)
     cmd = f"curl -sSL {url} -O {file} && unzip {file} -d {plugins_dir}"
     run_cmd(cmd)
+
+
+def namespace(dic: Dict) -> Namespace:
+    dic.setdefault('sudo', False)
+    dic.setdefault('yes', False)
+    dic['sudo_s'] = 'sudo' if dic['sudo'] else ''
+    dic['_sudo_s'] = '--sudo' if dic['sudo'] else ''
+    dic['_yes_s'] = '--yes' if dic['yes'] else ''
+    return Namespace(**dic)
+
+
+def option_sys(subparser):
+    subparser.add_argument(
+        "--sys",
+        dest="sys",
+        action="store_true",
+        help=
+        "Install the Python package to a system-wide location (default to install to user's local directory.)"
+    )
+
+
+def option_python(subparser):
+    subparser.add_argument(
+        "--python",
+        dest="python",
+        default="python3",
+        help=f"Path to the python3 command."
+    )
+
+
+def option_ipython(subparser):
+    subparser.add_argument(
+        "--ipython",
+        dest="ipython",
+        default="ipython3",
+        help=f"Path to the ipython3 command."
+    )
+
+
+def option_pip(subparser):
+    subparser.add_argument(
+        "--pip", dest="pip", default="pip3", help=f"Path to the pip command."
+    )
+
+
+def option_jupyter(subparser):
+    subparser.add_argument(
+        "--jupyter",
+        dest="jupyter",
+        default="jupyter",
+        help=f"Path to the jupyter command."
+    )
+
+
+def add_subparser(
+    subparsers,
+    name: str,
+    aliases: Sequence = (),
+    func: Union[Callable, None] = None,
+    help_: Union[str, None] = None,
+    add_argument: Union[Callable, None] = None
+):
+    sub_cmd = re.sub(r"(\s+)|-", "_", name.lower())
+    aliases = [alias for alias in aliases if alias != sub_cmd]
+    func = func if func else eval(f"xinstall.{sub_cmd}")
+    help_ = help_ if help_ else f"Install and configure {name}."
+    subparser = subparsers.add_parser(sub_cmd, aliases=aliases, help=help_)
+    subparser.add_argument(
+        "-i",
+        "--install",
+        dest="install",
+        action="store_true",
+        help=f"install {name}."
+    )
+    subparser.add_argument(
+        "-u",
+        "--uninstall",
+        dest="uninstall",
+        action="store_true",
+        help=f"uninstall {name}."
+    )
+    subparser.add_argument(
+        "-c",
+        "--configure",
+        dest="config",
+        action="store_true",
+        help=f"configure {name}."
+    )
+    subparser.add_argument(
+        "-l",
+        "--log",
+        dest="log",
+        action="store_true",
+        help=f"Print the command to run."
+    )
+    option_python(subparser)
+    option_ipython(subparser)
+    option_pip(subparser)
+    if add_argument:
+        add_argument(subparser)
+    subparser.set_defaults(func=func)
+    return subparser
