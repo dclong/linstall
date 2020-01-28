@@ -1,3 +1,5 @@
+"""Install IDE related tools.
+"""
 from typing import Union
 import os
 import shutil

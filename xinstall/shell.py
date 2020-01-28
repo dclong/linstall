@@ -4,6 +4,33 @@ import os
 from .utils import HOME, BASE_DIR, BIN_DIR, is_ubuntu_debian, is_centos_series, is_linux, is_fedora, update_apt_source, brew_install_safe, is_macos, run_cmd, namespace, add_subparser
 
 
+def coreutils(**kwargs):
+    """Install CoreUtils.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        if is_ubuntu_debian():
+            update_apt_source()
+            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} coreutils')
+        elif is_macos():
+            brew_install_safe('coreutils')
+        elif is_centos_series():
+            run_cmd(f'{args.sudo_s} yum install coreutils')
+    if args.uninstall:
+        if is_ubuntu_debian():
+            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} coreutils')
+        elif is_macos():
+            run_cmd(f'brew uninstall coreutils')
+        elif is_centos_series():
+            run_cmd(f'{args.sudo_s} yum remove coreutils')
+    if args.config:
+        if is_macos():
+            cmd = f'''export PATH=/usr/local/opt/findutils/libexec/gnubin:"$PATH" \
+                && export MANPATH=/usr/local/opt/findutils/libexec/gnuman:"$MANPATH"
+                '''
+            run_cmd(cmd)
+
+
 def shell_utils(**kwargs):
     """Install Shell-related utils.
     """

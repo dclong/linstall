@@ -1,3 +1,21 @@
+import os
+from .utils import (
+    USER, 
+    HOME, 
+    BASE_DIR, 
+    BIN_DIR, 
+    LOCAL_DIR, 
+    USER_ID, 
+    GROUP_ID, 
+    is_ubuntu_debian, 
+    is_centos_series, 
+    is_linux, 
+    is_fedora, 
+    update_apt_source, 
+    brew_install_safe, is_macos, run_cmd, namespace, add_subparser, intellij_idea_plugin
+)
+
+
 def nbdime(**kwargs):
     """Install and configure nbdime for comparing difference of notebooks.
     """
@@ -89,6 +107,29 @@ def almond(**kwargs):
         run_cmd(f'{args.sudo_s} {almond} --install --global --force')
     if args.config:
         pass
+
+
+def _almond_args(subparser):
+    subparser.add_argument(
+        "-a",
+        "--almond-version",
+        dest="almond_version",
+        default=None,
+        help="the version (0.4.0 by default) of Almond to install."
+    )
+    subparser.add_argument(
+        "-s",
+        "--scala-version",
+        dest="scala_version",
+        default=None,
+        help="the version (2.12.8 by default) of Scala to install."
+    )
+
+
+def _add_subparser_almond(subparsers):
+    add_subparser(
+        subparsers, "Almond", aliases=["al", "amd"], add_argument=_almond_args
+    )
         
 
 def evcxr_jupyter(**kwargs):

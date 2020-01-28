@@ -15,6 +15,15 @@ import subprocess as sp
 import logging
 HOME = Path.home()
 USER = HOME.name
+USER_ID = os.getuid()
+GROUP_ID = os.getgid()
+FILE = Path(__file__).resolve()
+BASE_DIR = FILE.parent / 'data'
+LOCAL_DIR = HOME / '.local'
+BIN_DIR = LOCAL_DIR / 'bin'
+BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
+
+
 PLATFORM = platform.platform().lower()
 SETTINGS_FILE = HOME / ".linstall.json"
 SETTINGS = {}

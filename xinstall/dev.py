@@ -1,4 +1,20 @@
-# ------------------------- programming languages -------------------------
+import os
+import shutil
+from pathlib import Path
+from .utils import (
+    USER, 
+    HOME, 
+    BASE_DIR, 
+    BIN_DIR, 
+    LOCAL_DIR, is_ubuntu_debian, is_centos_series, 
+    is_linux, is_fedora, update_apt_source, 
+    brew_install_safe, is_macos, 
+    remove_file_safe,
+    run_cmd, namespace, add_subparser, intellij_idea_plugin,
+)
+from .web import ssh_client
+
+
 def cargo(**kwargs):
     args = namespace(kwargs)
     if args.install:
@@ -70,6 +86,16 @@ def yapf(**kwargs):
         )
     if args.uninstall:
         run_cmd(f'{args.pip} uninstall {args._yes_s} yapf')
+
+
+def _yapf_args(subparser):
+    subparser.add_argument(
+        "-d",
+        "--dest-dir",
+        dest="dst_dir",
+        requested=True,
+        help="The destination directory to copy the YAPF configuration file to."
+    )
 
 
 def nodejs(**kwargs):
@@ -171,6 +197,21 @@ def poetry(**kwargs):
         run_cmd(f"{poetry_bin} self:uninstall")
 
 
+def _poetry_args(subparser):
+    subparser.add_argument(
+        "-b",
+        "--bash-completion",
+        dest="bash_completion",
+        action="store_true",
+        help="Configure Bash completion for poetry as well."
+    )
+
+
+def _add_subparser_poetry(subparsers):
+    add_subparser(
+        subparsers, "Poetry", aliases=["pt"], add_argument=_poetry_args
+    )
+
 
 def pyjnius(**kwargs):
     """Install pyjnius for calling Java from Python.
@@ -204,6 +245,27 @@ def spark(**kwargs):
     if args.uninstall:
         cmd = f"{args.sudo_s} rm -rf /opt/spark*"
         run_cmd(cmd)
+
+
+def _spark_args(subparser):
+    subparser.add_argument(
+        "-m",
+        "--mirror",
+        dest="mirror",
+        default="http://us.mirrors.quenda.co/apache/spark/",
+        help=f"The mirror of Spark to use."
+    )
+    subparser.add_argument(
+        "-v",
+        "--version",
+        dest="version",
+        default="2.4.4",
+        help=f"The version of Spark to install."
+    )
+
+
+def _add_subparser_spark(subparsers):
+    add_subparser(subparsers, "Spark", add_argument=_spark_args)
 
 
 def pyspark(**kwargs):
@@ -299,6 +361,31 @@ def git_ignore(**kwargs):
         with Path(".gitignore").open("a") as fout:
             fout.writelines(lines)
 
+
+def _add_subparser_git_ignore(subparsers):
+    subparser = subparsers.add_parser(
+        "git_ignore",
+        aliases=["gig", "gignore"],
+        help="Append patterns to ignore into .gitignore in the current directory."
+    )
+    subparser.add_argument(
+        "-p",
+        "--python-pattern",
+        dest="python_pattern",
+        action="store_true",
+        help=f"Gitignore patterns for Python developing."
+    )
+    subparser.add_argument(
+        "-j",
+        "--java-pattern",
+        dest="java_pattern",
+        action="store_true",
+        help=f"Gitignore patterns for Java developing."
+    )
+    subparser.set_defaults(func=git_ignore)
+    return subparser
+
+
 def git(**kwargs) -> None:
     """Install and configure Git.
     """
@@ -340,6 +427,19 @@ def git(**kwargs) -> None:
         run_cmd(f'git config --global http.proxy {args.proxy}')
         run_cmd(f'git config --global https.proxy {args.proxy}')
 
+
+def _git_args(subparser):
+    subparser.add_argument(
+        "-p",
+        "--proxy",
+        dest="proxy",
+        default="",
+        help="Configure Git to use the specified proxy."
+    )
+
+
+def _add_subparser_git(subparsers):
+    add_subparser(subparsers, "Git", add_argument=_git_args)
         
 
 def antlr(**kwargs):

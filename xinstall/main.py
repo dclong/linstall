@@ -2,61 +2,24 @@
 """
 from argparse import ArgumentParser
 from . import xinstall
-from .utils import add_subparser, add_subparser
+from .utils import add_subparser
 from .ai import add_subparser_kaggle, add_subparser_lightgbm, add_subparser_pytorch, add_subparser_autogluon
 from .shell import add_subparser_change_shell, add_subparser_wajig, add_subparser_homebrew
 from .ide import add_subparser_neovim, add_subparser_spacevim
-from .github import add_subparser_install_py_github, add_subparser_xinstall, add_subparser_dsutil
+from .github import add_subparser_install_py_github, add_subparser_xinstall, add_subparser_dsutil, add_subparser_pybay
+from .dev import _add_subparser_git, _add_subparser_git_ignore, _add_subparser_poetry, _add_subparser_spark
+from .jupyter import _add_subparser_almond
+from .misc import _add_subparser_nomachine
+__version__ = "0.3.8"
 
 
-def _git_args(subparser):
-    subparser.add_argument(
-        "-p",
-        "--proxy",
-        dest="proxy",
-        default="",
-        help="Configure Git to use the specified proxy."
-    )
+def version(**kwargs):
+    """Print the version of xinstall.
+    """
+    print(__version__)
 
 
-def _yapf_args(subparser):
-    subparser.add_argument(
-        "-d",
-        "--dest-dir",
-        dest="dst_dir",
-        requested=True,
-        help="The destination directory to copy the YAPF configuration file to."
-    )
-
-
-def _poetry_args(subparser):
-    subparser.add_argument(
-        "-b",
-        "--bash-completion",
-        dest="bash_completion",
-        action="store_true",
-        help="Configure Bash completion for poetry as well."
-    )
-
-
-def _almond_args(subparser):
-    subparser.add_argument(
-        "-a",
-        "--almond-version",
-        dest="almond_version",
-        default=None,
-        help="the version (0.4.0 by default) of Almond to install."
-    )
-    subparser.add_argument(
-        "-s",
-        "--scala-version",
-        dest="scala_version",
-        default=None,
-        help="the version (2.12.8 by default) of Scala to install."
-    )
-
-
-def add_subparser_version(subparsers):
+def _add_subparser_version(subparsers):
     subparser = subparsers.add_parser(
         "version",
         aliases=["ver", "v"],
@@ -64,57 +27,6 @@ def add_subparser_version(subparsers):
     )
     subparser.set_defaults(func=xinstall.version)
     return subparser
-
-
-def add_subparser_git_ignore(subparsers):
-    subparser = subparsers.add_parser(
-        "git_ignore",
-        aliases=["gig", "gignore"],
-        help="Append patterns to ignore into .gitignore in the current directory."
-    )
-    subparser.add_argument(
-        "-p",
-        "--python-pattern",
-        dest="python_pattern",
-        action="store_true",
-        help=f"Gitignore patterns for Python developing."
-    )
-    subparser.add_argument(
-        "-j",
-        "--java-pattern",
-        dest="java_pattern",
-        action="store_true",
-        help=f"Gitignore patterns for Java developing."
-    )
-    subparser.set_defaults(func=xinstall.git_ignore)
-    return subparser
-
-
-def _spark_args(subparser):
-    subparser.add_argument(
-        "-m",
-        "--mirror",
-        dest="mirror",
-        default="http://us.mirrors.quenda.co/apache/spark/",
-        help=f"The mirror of Spark to use."
-    )
-    subparser.add_argument(
-        "-v",
-        "--version",
-        dest="version",
-        default="2.4.4",
-        help=f"The version of Spark to install."
-    )
-
-
-def _nomachine_args(subparser):
-    subparser.add_argument(
-        "-v",
-        "--version",
-        dest="version",
-        default="6.8.1_1",
-        help="The version of NoMachine to install."
-    )
 
 
 def parse_args(args=None, namespace=None):
@@ -164,7 +76,8 @@ def parse_args(args=None, namespace=None):
     add_subparser(subparsers, "IntelliJ IDEA", aliases=["intellij", "idea"])
     add_subparser(subparsers, "Bash LSP", aliases=["blsp"])
     # ------------------------- development related  ------------------------------
-    add_subparser(subparsers, "Git", add_argument=_git_args)
+    _add_subparser_git(subparsers)
+    _add_subparser_git_ignore(subparsers)
     add_subparser(subparsers, "NodeJS", aliases=["node"])
     add_subparser(subparsers, "rust")
     add_subparser(subparsers, "evcxr_jupyter", aliases=["evcxr"])
@@ -175,18 +88,17 @@ def parse_args(args=None, namespace=None):
     add_subparser_dsutil(subparsers)
     add_subparser_xinstall(subparsers)
     add_subparser_kaggle(subparsers)
+    add_subparser_pybay(subparsers)
     add_subparser_lightgbm(subparsers)
     add_subparser_pytorch(subparsers)
     add_subparser_autogluon(subparsers)
     add_subparser(subparsers, "OpenJDK8", aliases=["jdk8"])
     add_subparser(subparsers, "sdkman", aliases=[])
-    add_subparser(
-        subparsers, "Poetry", aliases=["pt"], add_argument=_poetry_args
-    )
+    _add_subparser_poetry(subparsers)
     add_subparser(subparsers, "Cargo", aliases=["cgo"])
     add_subparser(subparsers, "ANTLR")
     add_subparser(subparsers, "Docker", aliases=["dock", "dk"])
-    add_subparser(subparsers, "Spark", add_argument=_spark_args)
+    _add_subparser_spark(subparsers)
     add_subparser(subparsers, "PySpark")
     add_subparser(subparsers, "Kubernetes", aliases=["k8s"])
     add_subparser(subparsers, "Minikube", aliases=["mkb"])
@@ -198,25 +110,18 @@ def parse_args(args=None, namespace=None):
     add_subparser(subparsers, "dryscrape", aliases=[])
     add_subparser(subparsers, "download tools", aliases=["dl", "dlt"])
     add_subparser_install_py_github(subparsers)
-    add_subparser_git_ignore(subparsers)
-    add_subparser_version(subparsers)
+    _add_subparser_git_ignore(subparsers)
+    _add_subparser_version(subparsers)
     # ------------------------- JupyterLab related ------------------------------
     add_subparser(subparsers, "BeakerX", aliases=["bkx", "bk"])
     add_subparser(
         subparsers, "jupyterlab-lsp", aliases=["jlab-lsp", "jlab_lsp"]
     )
-    add_subparser(
-        subparsers, "Almond", aliases=["al", "amd"], add_argument=_almond_args
-    )
+    _add_subparser_almond(subparsers)
     add_subparser(subparsers, "iTypeScript", aliases=["its"])
     add_subparser(subparsers, "nbdime", aliases=["nbd"])
     # ------------------------- misc applications ------------------------------
-    add_subparser(
-        subparsers,
-        "NoMachine",
-        aliases=["nm", "nx"],
-        add_argument=_nomachine_args
-    )
+    _add_subparser_nomachine(subparsers)
     add_subparser(subparsers, "VirtualBox", aliases=["vbox"])
     # --------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)

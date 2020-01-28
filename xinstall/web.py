@@ -1,69 +1,24 @@
 #!/usr/bin/env python3
 """Easy installation and configuration of Linux/Mac/Windows apps.
 """
-import sys
 import os
-from typing import Union, Dict
 import shutil
-import tempfile
 from pathlib import Path
-import re
-from argparse import Namespace
-import logging
-from . import utils
 from .utils import (
     USER,
     HOME,
+    BASE_DIR,
+    BIN_DIR,
     run_cmd,
     update_apt_source,
     brew_install_safe,
-    remove_file_safe,
-    is_win,
-    is_linux,
     is_ubuntu_debian,
     is_macos,
-    is_fedora,
     is_centos_series,
     namespace,
 )
-USER_ID = os.getuid()
-GROUP_ID = os.getgid()
-FILE = Path(__file__).resolve()
-BASE_DIR = FILE.parent / 'data'
-LOCAL_DIR = HOME / '.local'
-BIN_DIR = LOCAL_DIR / 'bin'
-BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
-__version__ = "0.3.7"
 
 
-
-def coreutils(**kwargs):
-    """Install CoreUtils.
-    """
-    args = namespace(kwargs)
-    if args.install:
-        if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} coreutils')
-        elif is_macos():
-            brew_install_safe('coreutils')
-        elif is_centos_series():
-            run_cmd(f'{args.sudo_s} yum install coreutils')
-    if args.uninstall:
-        if is_ubuntu_debian():
-            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} coreutils')
-        elif is_macos():
-            run_cmd(f'brew uninstall coreutils')
-        elif is_centos_series():
-            run_cmd(f'{args.sudo_s} yum remove coreutils')
-    if args.config:
-        if is_macos():
-            cmd = f'''export PATH=/usr/local/opt/findutils/libexec/gnubin:"$PATH" \
-                && export MANPATH=/usr/local/opt/findutils/libexec/gnuman:"$MANPATH"
-                '''
-            run_cmd(cmd)
-
-# ------------------------- web tools -------------------------
 def ssh_server(**kwargs):
     args = namespace(kwargs)
     if args.install:
@@ -217,52 +172,3 @@ def download_tools(**kwargs):
             run_cmd(f'brew uninstall wget curl aria2')
         elif is_centos_series():
             pass
-
-
-def virtualbox(**kwargs):
-    args = namespace(kwargs)
-    if args.install:
-        if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(
-                f'{args.sudo_s} apt-get install {args._yes_s} virtualbox-qt',
-            )
-        elif is_macos():
-            run_cmd(f'brew cask install virtualbox virtualbox-extension-pack')
-        elif is_centos_series():
-            pass
-    if args.uninstall:
-        if is_ubuntu_debian():
-            run_cmd(
-                f'{args.sudo_s} apt-get purge {args._yes_s} virtualbox-qt',
-            )
-        elif is_macos():
-            run_cmd(
-                f'brew cask uninstall virtualbox virtualbox-extension-pack',
-            )
-        elif is_centos_series():
-            pass
-    if args.config:
-        pass
-
-
-def version(**kwargs):
-    print(__version__)
-
-
-def nomachine(**kwargs):
-    """Install NoMachine.
-    """
-    args = namespace(kwargs)
-    if args.install:
-        ver = args.version[:args.version.rindex(".")]
-        if is_ubuntu_debian():
-            url = f"https://download.nomachine.com/download/{ver}/Linux/nomachine_{args.version}_amd64.deb"
-            with tempfile.TemporaryDirectory() as tempdir:
-                file = Path(tempdir) / "nomachine.deb"
-                cmd = f"curl -sSL {url} -o {file} && dpkg -i {file}"
-                run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass

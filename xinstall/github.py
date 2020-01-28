@@ -70,3 +70,19 @@ def add_subparser_xinstall(subparsers):
         subparsers, "xinstall", aliases=[], add_argument=_xinstall_args
     )
 
+
+def pybay(**kwargs):
+    """Install the Python package pybay.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"{args.sudo_s} {args.pip} install git+ssh://git@github.corp.ebay.com/marketing-science/pybay"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        run_cmd(f"{args.sudo_s} {args.pip} uninstall pybay")
+
+
+def add_subparser_pybay(subparsers):
+    add_subparser(subparsers, "pybay", aliases=[])
