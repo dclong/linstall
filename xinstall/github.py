@@ -63,8 +63,8 @@ def xinstall(**kwargs):
 
 def _xinstall_args(subparser):
     option_sys(subparser)
-    
-    
+
+
 def add_subparser_xinstall(subparsers):
     add_subparser(
         subparsers, "xinstall", aliases=[], add_argument=_xinstall_args

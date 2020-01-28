@@ -1,7 +1,6 @@
 """The command-line interface for xinstall.
 """
 from argparse import ArgumentParser
-from . import xinstall
 from .utils import add_subparser
 from .ai import add_subparser_kaggle, add_subparser_lightgbm, add_subparser_pytorch, add_subparser_autogluon
 from .shell import add_subparser_change_shell, add_subparser_wajig, add_subparser_homebrew
@@ -25,7 +24,7 @@ def _add_subparser_version(subparsers):
         aliases=["ver", "v"],
         help="Print version of the xinstall package."
     )
-    subparser.set_defaults(func=xinstall.version)
+    subparser.set_defaults(func=version)
     return subparser
 
 

@@ -101,4 +101,6 @@ def _autogluon_args(subparser):
 
 
 def add_subparser_autogluon(subparsers):
-    add_subparser(subparsers, "AutoGluon", aliases=[], add_argument=_autogluon_args)
+    add_subparser(
+        subparsers, "AutoGluon", aliases=[], add_argument=_autogluon_args
+    )

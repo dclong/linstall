@@ -1,3 +1,44 @@
+import logging
+from .utils import (
+    HOME,
+    run_cmd,
+    namespace,
+    add_subparser,
+    is_macos,
+    is_centos_series,
+    is_ubuntu_debian,
+    is_win,
+    update_apt_source,
+    brew_install_safe,
+)
+
+
+def virtualbox(**kwargs):
+    args = namespace(kwargs)
+    if args.install:
+        if is_ubuntu_debian():
+            update_apt_source()
+            run_cmd(
+                f'{args.sudo_s} apt-get install {args._yes_s} virtualbox-qt',
+            )
+        elif is_macos():
+            run_cmd(f'brew cask install virtualbox virtualbox-extension-pack')
+        elif is_centos_series():
+            pass
+    if args.uninstall:
+        if is_ubuntu_debian():
+            run_cmd(
+                f'{args.sudo_s} apt-get purge {args._yes_s} virtualbox-qt',
+            )
+        elif is_macos():
+            run_cmd(
+                f'brew cask uninstall virtualbox virtualbox-extension-pack',
+            )
+        elif is_centos_series():
+            pass
+    if args.config:
+        pass
+
 
 def docker(**kwargs):
     """Install and configure Docker container.

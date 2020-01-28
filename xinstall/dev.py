@@ -2,15 +2,23 @@ import os
 import shutil
 from pathlib import Path
 from .utils import (
-    USER, 
-    HOME, 
-    BASE_DIR, 
-    BIN_DIR, 
-    LOCAL_DIR, is_ubuntu_debian, is_centos_series, 
-    is_linux, is_fedora, update_apt_source, 
-    brew_install_safe, is_macos, 
+    USER,
+    HOME,
+    BASE_DIR,
+    BIN_DIR,
+    LOCAL_DIR,
+    is_ubuntu_debian,
+    is_centos_series,
+    is_linux,
+    is_fedora,
+    update_apt_source,
+    brew_install_safe,
+    is_macos,
     remove_file_safe,
-    run_cmd, namespace, add_subparser, intellij_idea_plugin,
+    run_cmd,
+    namespace,
+    add_subparser,
+    intellij_idea_plugin,
 )
 from .web import ssh_client
 
@@ -282,7 +290,6 @@ def pyspark(**kwargs):
         run_cmd(cmd)
 
 
-
 def rust(**kwargs):
     """Install the Rust programming language.
     """
@@ -440,7 +447,7 @@ def _git_args(subparser):
 
 def _add_subparser_git(subparsers):
     add_subparser(subparsers, "Git", add_argument=_git_args)
-        
+
 
 def antlr(**kwargs):
     """Install and configure Antrl4.

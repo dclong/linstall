@@ -1,4 +1,3 @@
-
 import tempfile
 from pathlib import Path
 from .utils import HOME, BASE_DIR, BIN_DIR, is_ubuntu_debian, is_centos_series, is_linux, is_fedora, update_apt_source, brew_install_safe, is_macos, run_cmd, namespace, add_subparser
@@ -39,31 +38,3 @@ def _add_subparser_nomachine(subparsers):
         aliases=["nm", "nx"],
         add_argument=_nomachine_args
     )
-
-
-def virtualbox(**kwargs):
-    args = namespace(kwargs)
-    if args.install:
-        if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(
-                f'{args.sudo_s} apt-get install {args._yes_s} virtualbox-qt',
-            )
-        elif is_macos():
-            run_cmd(f'brew cask install virtualbox virtualbox-extension-pack')
-        elif is_centos_series():
-            pass
-    if args.uninstall:
-        if is_ubuntu_debian():
-            run_cmd(
-                f'{args.sudo_s} apt-get purge {args._yes_s} virtualbox-qt',
-            )
-        elif is_macos():
-            run_cmd(
-                f'brew cask uninstall virtualbox virtualbox-extension-pack',
-            )
-        elif is_centos_series():
-            pass
-    if args.config:
-        pass
-

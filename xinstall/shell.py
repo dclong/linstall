@@ -72,7 +72,6 @@ def change_shell(**kwargs):
         run_cmd(f'chsh -s {args.shell}')
 
 
-
 def _change_shell_args(subparser):
     subparser.add_argument(
         "-s",
@@ -100,6 +99,7 @@ def _homebrew_args(subparser):
         action="store_true",
         help="Whether to install dependencies."
     )
+
 
 def homebrew(**kwargs):
     """Install Homebrew.
@@ -145,7 +145,7 @@ def add_subparser_homebrew(subparsers):
         subparsers, "Homebrew", aliases=["brew"], add_argument=_homebrew_args
     )
 
-    
+
 def hyper(**kwargs):
     """Install the hyper.js terminal.
     """
@@ -328,6 +328,4 @@ def _wajig_args(subparser):
 
 
 def add_subparser_wajig(subparsers):
-    add_subparser(
-        subparsers, "Wajig", aliases=["wj"], add_argument=_wajig_args
-    )
+    add_subparser(subparsers, "Wajig", aliases=["wj"], add_argument=_wajig_args)

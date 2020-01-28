@@ -142,7 +142,7 @@ def add_subparser_spacevim(subparsers):
     add_subparser(
         subparsers, "SpaceVim", aliases=["svim"], add_argument=_spacevim_args
     )
-    
+
 
 def bash_lsp(**kwargs):
     """Install Bash Language Server.
@@ -165,7 +165,6 @@ def bash_lsp(**kwargs):
     if args.uninstall:
         cmd = f"{args.sudo_s} npm uninstall bash-language-server"
         run_cmd(cmd)
-
 
 
 def ideavim(**kwargs):
