@@ -56,7 +56,10 @@ def jupyterlab_lsp(**kwargs):
 
 def _add_subparser_jupyterlab_lsp(subparsers):
     add_subparser(
-        subparsers, "jupyterlab-lsp", func=jupyterlab_lsp, aliases=["jlab-lsp", "jlab_lsp"]
+        subparsers,
+        "jupyterlab-lsp",
+        func=jupyterlab_lsp,
+        aliases=["jlab-lsp", "jlab_lsp"]
     )
 
 
@@ -137,7 +140,11 @@ def _almond_args(subparser):
 
 def _add_subparser_almond(subparsers):
     add_subparser(
-        subparsers, "Almond", func=almond, aliases=["al", "amd"], add_argument=_almond_args
+        subparsers,
+        "Almond",
+        func=almond,
+        aliases=["al", "amd"],
+        add_argument=_almond_args
     )
 
 
@@ -161,4 +168,6 @@ def evcxr_jupyter(**kwargs):
 
 
 def _add_subparser_evcxr_jupyter(subparsers):
-    add_subparser(subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"])
+    add_subparser(
+        subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"]
+    )

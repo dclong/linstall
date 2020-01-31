@@ -245,9 +245,11 @@ def _poetry_args(subparser):
 
 def _add_subparser_poetry(subparsers):
     add_subparser(
-        subparsers, "Poetry", 
+        subparsers,
+        "Poetry",
         func="poetry",
-        aliases=["pt"], add_argument=_poetry_args
+        aliases=["pt"],
+        add_argument=_poetry_args
     )
 
 

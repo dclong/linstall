@@ -68,7 +68,10 @@ def shell_utils(**kwargs):
 
 def _add_subparser_shell_utils(subparsers):
     add_subparser(
-        subparsers, "Shell utils", func=shell_utils, aliases=["sh_utils", "shutils", "shu", "su"]
+        subparsers,
+        "Shell utils",
+        func=shell_utils,
+        aliases=["sh_utils", "shutils", "shu", "su"]
     )
 
 
@@ -153,9 +156,11 @@ def homebrew(**kwargs):
 
 def _add_subparser_homebrew(subparsers):
     add_subparser(
-        subparsers, "Homebrew", 
+        subparsers,
+        "Homebrew",
         func="homebrew",
-        aliases=["brew"], add_argument=_homebrew_args
+        aliases=["brew"],
+        add_argument=_homebrew_args
     )
 
 
@@ -211,7 +216,9 @@ def openinterminal(**kwargs):
 
 
 def _add_subparser_openinterminal(subparsers):
-    add_subparser(subparsers, "OpenInTerminal", func=openinterminal, aliases=["oit"])
+    add_subparser(
+        subparsers, "OpenInTerminal", func=openinterminal, aliases=["oit"]
+    )
 
 
 def xonsh(**kwargs):
@@ -282,7 +289,10 @@ def bash_completion(**kwargs):
 
 def _add_subparser_bash_complete(subparsers):
     add_subparser(
-        subparsers, "Bash completion", func=bash_completion, aliases=["completion", "comp", "cp"]
+        subparsers,
+        "Bash completion",
+        func=bash_completion,
+        aliases=["completion", "comp", "cp"]
     )
 
 
@@ -370,6 +380,10 @@ def _wajig_args(subparser):
 
 
 def _add_subparser_wajig(subparsers):
-    add_subparser(subparsers, "Wajig", 
+    add_subparser(
+        subparsers,
+        "Wajig",
         func="wajig",
-        aliases=["wj"], add_argument=_wajig_args)
+        aliases=["wj"],
+        add_argument=_wajig_args
+    )

@@ -107,7 +107,9 @@ def proxychains(**kwargs) -> None:
 
 
 def _add_subparser_proxychains(subparsers):
-    add_subparser(subparsers, "ProxyChains", func=proxychains, aliases=["pchains", "pc"])
+    add_subparser(
+        subparsers, "ProxyChains", func=proxychains, aliases=["pchains", "pc"]
+    )
 
 
 def dryscrape(**kwargs):
@@ -196,4 +198,9 @@ def download_tools(**kwargs):
 
 
 def _add_subparser_download_tools(subparsers):
-    add_subparser(subparsers, "download tools", func=download_tools, aliases=["dl", "dlt"])
+    add_subparser(
+        subparsers,
+        "download tools",
+        func=download_tools,
+        aliases=["dl", "dlt"]
+    )

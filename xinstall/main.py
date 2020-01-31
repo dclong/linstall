@@ -37,21 +37,11 @@ from .github import (
     _add_subparser_dsutil,
 )
 from .dev import (
-    _add_subparser_git, 
-    _add_subparser_git_ignore, 
-    _add_subparser_poetry, 
-    _add_subparser_rust, 
-    _add_subparser_nodejs, 
-    _add_subparser_python3,
-    _add_subparser_pyjnius,
-    _add_subparser_ipython,
-    _add_subparser_yapf,
-    _add_subparser_openjdk,
-    _add_subparser_sdkman,
-    _add_subparser_cargo,
-    _add_subparser_antlr,
-    _add_subparser_pyspark,
-    _add_subparser_spark
+    _add_subparser_git, _add_subparser_git_ignore, _add_subparser_poetry,
+    _add_subparser_rust, _add_subparser_nodejs, _add_subparser_python3,
+    _add_subparser_pyjnius, _add_subparser_ipython, _add_subparser_yapf,
+    _add_subparser_openjdk, _add_subparser_sdkman, _add_subparser_cargo,
+    _add_subparser_antlr, _add_subparser_pyspark, _add_subparser_spark
 )
 from .jupyter import (
     _add_subparser_almond,

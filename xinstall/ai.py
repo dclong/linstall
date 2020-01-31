@@ -27,10 +27,8 @@ def kaggle(**kwargs):
         pass
 
 
-def add_subparser_kaggle(subparsers):
-    add_subparser(subparsers, "kaggle", 
-        func="kaggle",
-        aliases=[])
+def _add_subparser_kaggle(subparsers):
+    add_subparser(subparsers, "kaggle", func="kaggle", aliases=[])
 
 
 def lightgbm(**kwargs):
@@ -46,10 +44,8 @@ def lightgbm(**kwargs):
         pass
 
 
-def add_subparser_lightgbm(subparsers):
-    add_subparser(subparsers, "lightgbm", 
-        func="lightgbm",
-        aliases=[])
+def _add_subparser_lightgbm(subparsers):
+    add_subparser(subparsers, "lightgbm", func="lightgbm", aliases=[])
 
 
 def pytorch(**kwargs):
@@ -76,10 +72,14 @@ def _pytorch_args(subparser):
     )
 
 
-def add_subparser_pytorch(subparsers):
-    add_subparser(subparsers, "PyTorch", 
+def _add_subparser_pytorch(subparsers):
+    add_subparser(
+        subparsers,
+        "PyTorch",
         func="pytorch",
-        aliases=[], add_argument=_pytorch_args)
+        aliases=[],
+        add_argument=_pytorch_args
+    )
 
 
 def autogluon(**kwargs):
@@ -106,9 +106,11 @@ def _autogluon_args(subparser):
     )
 
 
-def add_subparser_autogluon(subparsers):
+def _add_subparser_autogluon(subparsers):
     add_subparser(
-        subparsers, "AutoGluon", 
+        subparsers,
+        "AutoGluon",
         func="autogluon",
-        aliases=[], add_argument=_autogluon_args
+        aliases=[],
+        add_argument=_autogluon_args
     )

@@ -73,8 +73,11 @@ def _neovim_args(subparser):
 
 def _add_subparser_neovim(subparsers):
     add_subparser(
-        subparsers, "NeoVim", 
-        func="neovim", aliases=["nvim"], add_argument=_neovim_args
+        subparsers,
+        "NeoVim",
+        func="neovim",
+        aliases=["nvim"],
+        add_argument=_neovim_args
     )
 
 
@@ -145,9 +148,11 @@ def _spacevim_args(subparser):
 
 def _add_subparser_spacevim(subparsers):
     add_subparser(
-        subparsers, "SpaceVim", 
+        subparsers,
+        "SpaceVim",
         func="spacevim",
-        aliases=["svim"], add_argument=_spacevim_args
+        aliases=["svim"],
+        add_argument=_spacevim_args
     )
 
 
@@ -249,7 +254,12 @@ def visual_studio_code(**kwargs):
 
 
 def _add_subparser_visual_studio_code(subparsers):
-    add_subparser(subparsers, "Visual Studio Code", func=visual_studio_code, aliases=["vscode", "code"])
+    add_subparser(
+        subparsers,
+        "Visual Studio Code",
+        func=visual_studio_code,
+        aliases=["vscode", "code"]
+    )
 
 
 def intellij_idea_scala(**kwargs):
@@ -261,4 +271,9 @@ def intellij_idea_scala(**kwargs):
 
 
 def _add_subparser_intellij_idea_scala(subparsers):
-    add_subparser(subparsers, "IntelliJ IDEA", func=intellij_idea, aliases=["intellij", "idea"])
+    add_subparser(
+        subparsers,
+        "IntelliJ IDEA",
+        func=intellij_idea,
+        aliases=["intellij", "idea"]
+    )
