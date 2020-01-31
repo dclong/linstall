@@ -383,7 +383,7 @@ def _add_subparser_wajig(subparsers):
     add_subparser(
         subparsers,
         "Wajig",
-        func="wajig",
+        func=wajig,
         aliases=["wj"],
         add_argument=_wajig_args
     )
