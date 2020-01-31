@@ -44,6 +44,10 @@ def cargo(**kwargs):
             run_cmd(f'yum remove cargo')
 
 
+def _add_subparser_cargo(subparsers):
+    add_subparser(subparsers, "Cargo", func=cargo, aliases=["cgo"])
+
+
 def openjdk8(**kwargs):
     args = namespace(kwargs)
     if args.install:
@@ -70,6 +74,10 @@ def openjdk8(**kwargs):
             pass
 
 
+def _add_subparser_openjdk(subparsers):
+    add_subparser(subparsers, "OpenJDK8", func=openjdk8, aliases=["jdk8"])
+
+
 def sdkman(**kwargs):
     """ Install sdkman.
     https://sdkman.io/install
@@ -81,6 +89,10 @@ def sdkman(**kwargs):
         pass
     if args.uninstall:
         pass
+
+
+def _add_subparser_sdkman(subparsers):
+    add_subparser(subparsers, "sdkman", func=sdkman, aliases=[])
 
 
 def yapf(**kwargs):
@@ -104,6 +116,10 @@ def _yapf_args(subparser):
         requested=True,
         help="The destination directory to copy the YAPF configuration file to."
     )
+
+
+def _add_subparser_yapf(subparsers):
+    add_subparser(subparsers, "yapf", func=yapf, aliases=[])
 
 
 def nodejs(**kwargs):
@@ -130,6 +146,10 @@ def nodejs(**kwargs):
             run_cmd(f'yum remove nodejs')
 
 
+def _add_subparser_nodejs(subparsers):
+    add_subparser(subparsers, "NodeJS", func=nodejs, aliases=["node"])
+
+
 def ipython(**kwargs):
     """Install IPython for Python 3.
     """
@@ -145,6 +165,10 @@ def ipython(**kwargs):
         shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
     if args.uninstall:
         pass
+
+
+def _add_subparser_ipython(subparsers):
+    add_subparser(subparsers, "IPython", func=ipython, aliases=["ipy"])
 
 
 def python3(**kwargs):
@@ -174,6 +198,10 @@ def python3(**kwargs):
             run_cmd(f"brew uninstall python3")
         if is_centos_series():
             run_cmd(f"yum remove python3")
+
+
+def _add_subparser_python3(subparsers):
+    add_subparser(subparsers, "Python3", func=python3, aliases=["py3"])
 
 
 def poetry(**kwargs):
@@ -217,7 +245,9 @@ def _poetry_args(subparser):
 
 def _add_subparser_poetry(subparsers):
     add_subparser(
-        subparsers, "Poetry", aliases=["pt"], add_argument=_poetry_args
+        subparsers, "Poetry", 
+        func="poetry",
+        aliases=["pt"], add_argument=_poetry_args
     )
 
 
@@ -232,6 +262,10 @@ def pyjnius(**kwargs):
         pass
     if args.uninstall:
         pass
+
+
+def _add_subparser_pyjnius(subparsers):
+    add_subparser(subparsers, "pyjnius", func=pyjnius, aliases=["pyj"])
 
 
 def spark(**kwargs):
@@ -273,7 +307,7 @@ def _spark_args(subparser):
 
 
 def _add_subparser_spark(subparsers):
-    add_subparser(subparsers, "Spark", add_argument=_spark_args)
+    add_subparser(subparsers, "Spark", func="spark", add_argument=_spark_args)
 
 
 def pyspark(**kwargs):
@@ -290,6 +324,10 @@ def pyspark(**kwargs):
         run_cmd(cmd)
 
 
+def _add_subparser_pyspark(subparsers):
+    add_subparser(subparsers, "PySpark", func=pyspark)
+
+
 def rust(**kwargs):
     """Install the Rust programming language.
     """
@@ -302,6 +340,10 @@ def rust(**kwargs):
     if args.uninstall:
         cmd = f"{args.sudo_s} apt-get purge {args._yes_s} cargo"
         run_cmd(cmd)
+
+
+def _add_subparser_rust(subparsers):
+    add_subparser(subparsers, "rust", func=rust)
 
 
 def git_ignore(**kwargs):
@@ -446,7 +488,7 @@ def _git_args(subparser):
 
 
 def _add_subparser_git(subparsers):
-    add_subparser(subparsers, "Git", add_argument=_git_args)
+    add_subparser(subparsers, "Git", func="git", add_argument=_git_args)
 
 
 def antlr(**kwargs):
@@ -470,3 +512,7 @@ def antlr(**kwargs):
             run_cmd(f'brew uninstall antlr4')
         elif is_centos_series():
             run_cmd(f'{args.sudo_s} yum remove antlr')
+
+
+def _add_subparser_antlr(subparsers):
+    add_subparser(subparsers, "ANTLR", func=antlr)
