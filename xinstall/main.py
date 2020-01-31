@@ -70,7 +70,7 @@ from .web import (
     _add_subparser_ssh_server,
 )
 from .misc import _add_subparser_nomachine
-__version__ = "0.3.8"
+__version__ = "0.4.0"
 
 
 def version(**kwargs):
