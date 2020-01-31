@@ -247,7 +247,7 @@ def _add_subparser_poetry(subparsers):
     add_subparser(
         subparsers,
         "Poetry",
-        func="poetry",
+        func=poetry,
         aliases=["pt"],
         add_argument=_poetry_args
     )
@@ -309,7 +309,7 @@ def _spark_args(subparser):
 
 
 def _add_subparser_spark(subparsers):
-    add_subparser(subparsers, "Spark", func="spark", add_argument=_spark_args)
+    add_subparser(subparsers, "Spark", func=spark, add_argument=_spark_args)
 
 
 def pyspark(**kwargs):
@@ -490,7 +490,7 @@ def _git_args(subparser):
 
 
 def _add_subparser_git(subparsers):
-    add_subparser(subparsers, "Git", func="git", add_argument=_git_args)
+    add_subparser(subparsers, "Git", func=git, add_argument=_git_args)
 
 
 def antlr(**kwargs):

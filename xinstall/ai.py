@@ -28,7 +28,7 @@ def kaggle(**kwargs):
 
 
 def _add_subparser_kaggle(subparsers):
-    add_subparser(subparsers, "kaggle", func="kaggle", aliases=[])
+    add_subparser(subparsers, "kaggle", func=kaggle, aliases=[])
 
 
 def lightgbm(**kwargs):
@@ -45,7 +45,7 @@ def lightgbm(**kwargs):
 
 
 def _add_subparser_lightgbm(subparsers):
-    add_subparser(subparsers, "lightgbm", func="lightgbm", aliases=[])
+    add_subparser(subparsers, "lightgbm", func=lightgbm, aliases=[])
 
 
 def pytorch(**kwargs):
@@ -76,7 +76,7 @@ def _add_subparser_pytorch(subparsers):
     add_subparser(
         subparsers,
         "PyTorch",
-        func="pytorch",
+        func=pytorch,
         aliases=[],
         add_argument=_pytorch_args
     )
@@ -110,7 +110,7 @@ def _add_subparser_autogluon(subparsers):
     add_subparser(
         subparsers,
         "AutoGluon",
-        func="autogluon",
+        func=autogluon,
         aliases=[],
         add_argument=_autogluon_args
     )
