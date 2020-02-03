@@ -104,7 +104,8 @@ def _autogluon_args(subparser):
         "--cuda-version",
         dest="cuda_version",
         required=True,
-        help="If a valid version is specified, install the GPU version of AutoGluon with the specified version of CUDA."
+        help=
+        "If a valid version is specified, install the GPU version of AutoGluon with the specified version of CUDA."
     )
 
 
