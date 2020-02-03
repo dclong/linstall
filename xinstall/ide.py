@@ -75,7 +75,7 @@ def _add_subparser_neovim(subparsers):
     add_subparser(
         subparsers,
         "NeoVim",
-        func="neovim",
+        func=neovim,
         aliases=["nvim"],
         add_argument=_neovim_args
     )
@@ -150,7 +150,7 @@ def _add_subparser_spacevim(subparsers):
     add_subparser(
         subparsers,
         "SpaceVim",
-        func="spacevim",
+        func=spacevim,
         aliases=["svim"],
         add_argument=_spacevim_args
     )
