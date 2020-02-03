@@ -100,7 +100,7 @@ def autogluon(**kwargs):
 
 def _autogluon_args(subparser):
     subparser.add_argument(
-        "-c",
+        "--cuda",
         "--cuda-version",
         dest="cuda_version",
         required=True,
