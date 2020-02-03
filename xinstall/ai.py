@@ -88,8 +88,9 @@ def autogluon(**kwargs):
     args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install mxnet autogluon"
-        if args.gpu:
-            cmd = f"{args.pip} install mxnet-cu100 autogluon"
+        if args.cuda_version:
+            version = args.cuda_version.replace(".", "")
+            cmd = f"{args.pip} install mxnet-cu{version} autogluon"
         run_cmd(cmd)
     if args.config:
         pass
@@ -99,10 +100,11 @@ def autogluon(**kwargs):
 
 def _autogluon_args(subparser):
     subparser.add_argument(
-        "--gpu",
-        dest="gpu",
-        action="store_true",
-        help="Install the GPU version of AutoGluon."
+        "-c",
+        "--cuda-version",
+        dest="cuda_version",
+        required=True,
+        help="If a valid version is specified, install the GPU version of AutoGluon with the specified version of CUDA."
     )
 
 
