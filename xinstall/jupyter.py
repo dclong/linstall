@@ -19,6 +19,10 @@ def nbdime(**kwargs):
         run_cmd(f'nbdime config-git --enable --global')
 
 
+def _add_subparser_nbdime(subparsers):
+    add_subparser(subparsers, "nbdime", func=nbdime, aliases=["nbd"])
+
+
 def itypescript(**kwargs):
     """Install and configure the ITypeScript kernel.
     """
@@ -33,6 +37,10 @@ def itypescript(**kwargs):
         pass
 
 
+def _add_subparser_itypescript(subparsers):
+    add_subparser(subparsers, "iTypeScript", func=itypescript, aliases=["its"])
+
+
 def jupyterlab_lsp(**kwargs):
     args = namespace(kwargs)
     if args.install:
@@ -44,6 +52,15 @@ def jupyterlab_lsp(**kwargs):
         pass
     if args.uninstall:
         pass
+
+
+def _add_subparser_jupyterlab_lsp(subparsers):
+    add_subparser(
+        subparsers,
+        "jupyterlab-lsp",
+        func=jupyterlab_lsp,
+        aliases=["jlab-lsp", "jlab_lsp"]
+    )
 
 
 def beakerx(**kwargs):
@@ -70,6 +87,10 @@ def beakerx(**kwargs):
         run_cmd(f'{args.pip} uninstall beakerx')
     if args.config:
         run_cmd(f'{args.sudo_s} chown -R {USER_ID}:{GROUP_ID} {HOME}')
+
+
+def _add_subparser_beakerx(subparsers):
+    add_subparser(subparsers, "BeakerX", func=beakerx, aliases=["bkx", "bk"])
 
 
 def almond(**kwargs):
@@ -119,7 +140,11 @@ def _almond_args(subparser):
 
 def _add_subparser_almond(subparsers):
     add_subparser(
-        subparsers, "Almond", aliases=["al", "amd"], add_argument=_almond_args
+        subparsers,
+        "Almond",
+        func=almond,
+        aliases=["al", "amd"],
+        add_argument=_almond_args
     )
 
 
@@ -140,3 +165,9 @@ def evcxr_jupyter(**kwargs):
             && cargo uninstall evcxr_jupyter
             """
         run_cmd(cmd)
+
+
+def _add_subparser_evcxr_jupyter(subparsers):
+    add_subparser(
+        subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"]
+    )

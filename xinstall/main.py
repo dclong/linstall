@@ -2,14 +2,75 @@
 """
 from argparse import ArgumentParser
 from .utils import add_subparser
-from .ai import add_subparser_kaggle, add_subparser_lightgbm, add_subparser_pytorch, add_subparser_autogluon
-from .shell import add_subparser_change_shell, add_subparser_wajig, add_subparser_homebrew
-from .ide import add_subparser_neovim, add_subparser_spacevim
-from .github import add_subparser_install_py_github, add_subparser_xinstall, add_subparser_dsutil, add_subparser_pybay
-from .dev import _add_subparser_git, _add_subparser_git_ignore, _add_subparser_poetry, _add_subparser_spark
-from .jupyter import _add_subparser_almond
+from .ai import (
+    _add_subparser_kaggle,
+    _add_subparser_lightgbm,
+    _add_subparser_pytorch,
+    _add_subparser_autogluon,
+)
+from .shell import (
+    _add_subparser_coreutils,
+    _add_subparser_shell_utils,
+    _add_subparser_bash_it,
+    _add_subparser_xonsh,
+    _add_subparser_hyper,
+    _add_subparser_openinterminal,
+    _add_subparser_bash_complete,
+    _add_subparser_exa,
+    _add_subparser_change_shell,
+    _add_subparser_wajig,
+    _add_subparser_osquery,
+    _add_subparser_homebrew,
+)
+from .ide import (
+    _add_subparser_vim,
+    _add_subparser_neovim,
+    _add_subparser_spacevim,
+    _add_subparser_ideavim,
+    _add_subparser_bash_lsp,
+    _add_subparser_visual_studio_code,
+    _add_subparser_intellij_idea_scala,
+)
+from .github import (
+    _add_subparser_install_py_github,
+    _add_subparser_xinstall,
+    _add_subparser_dsutil,
+)
+from .dev import (
+    _add_subparser_git, _add_subparser_git_ignore, _add_subparser_poetry,
+    _add_subparser_rust, _add_subparser_nodejs, _add_subparser_python3,
+    _add_subparser_pyjnius, _add_subparser_ipython, _add_subparser_yapf,
+    _add_subparser_openjdk, _add_subparser_sdkman, _add_subparser_cargo,
+    _add_subparser_antlr, _add_subparser_pyspark, _add_subparser_spark
+)
+from .jupyter import (
+    _add_subparser_almond,
+    _add_subparser_beakerx,
+    _add_subparser_jupyterlab_lsp,
+    _add_subparser_itypescript,
+    _add_subparser_nbdime,
+    _add_subparser_evcxr_jupyter,
+)
+from .github import (
+    _add_subparser_xinstall,
+    _add_subparser_dsutil,
+)
+from .virtualization import (
+    _add_subparser_docker,
+    _add_subparser_kubernetes,
+    _add_subparser_minikube,
+    _add_subparser_virtualbox,
+)
+from .web import (
+    _add_subparser_blogging,
+    _add_subparser_download_tools,
+    _add_subparser_dryscrape,
+    _add_subparser_proxychains,
+    _add_subparser_ssh_client,
+    _add_subparser_ssh_server,
+)
 from .misc import _add_subparser_nomachine
-__version__ = "0.3.8"
+__version__ = "0.4.1"
 
 
 def version(**kwargs):
@@ -50,78 +111,73 @@ def parse_args(args=None, namespace=None):
     )
     subparsers = parser.add_subparsers(dest="sub_cmd", help="Sub commands.")
     # ------------------------ command-line tools ----------------------------
-    add_subparser(subparsers, "CoreUtils", aliases=["cu"])
-    add_subparser_change_shell(subparsers)
-    add_subparser(
-        subparsers, "Shell utils", aliases=["sh_utils", "shutils", "shu", "su"]
-    )
-    add_subparser(subparsers, "Bash-it", aliases=["shit", "bit"])
-    add_subparser(subparsers, "xonsh")
-    add_subparser_homebrew(subparsers)
-    add_subparser(subparsers, "Hyper", aliases=["hp"])
-    add_subparser(subparsers, "OpenInTerminal", aliases=["oit"])
-    add_subparser(
-        subparsers, "Bash completion", aliases=["completion", "comp", "cp"]
-    )
-    add_subparser_wajig(subparsers)
-    add_subparser(subparsers, "exa")
-    add_subparser(subparsers, "osquery", aliases=["osq"])
-    # ------------------------ Vim & Other IDEs ----------------------
-    add_subparser(subparsers, "Vim")
-    add_subparser_neovim(subparsers)
-    add_subparser_spacevim(subparsers)
-    add_subparser(subparsers, "IdeaVim", aliases=["ivim"])
-    add_subparser(subparsers, "Visual Studio Code", aliases=["vscode", "code"])
-    add_subparser(subparsers, "IntelliJ IDEA", aliases=["intellij", "idea"])
-    add_subparser(subparsers, "Bash LSP", aliases=["blsp"])
+    _add_subparser_coreutils(subparsers)
+    _add_subparser_change_shell(subparsers)
+    _add_subparser_shell_utils(subparsers)
+    _add_subparser_bash_it(subparsers)
+    _add_subparser_xonsh(subparsers)
+    _add_subparser_homebrew(subparsers)
+    _add_subparser_hyper(subparsers)
+    _add_subparser_openinterminal(subparsers)
+    _add_subparser_bash_complete(subparsers)
+    _add_subparser_wajig(subparsers)
+    _add_subparser_exa(subparsers)
+    _add_subparser_osquery(subparsers)
+    # ------------------------ IDEs ----------------------
+    _add_subparser_vim(subparsers)
+    _add_subparser_neovim(subparsers)
+    _add_subparser_spacevim(subparsers)
+    _add_subparser_ideavim(subparsers)
+    _add_subparser_visual_studio_code(subparsers)
+    _add_subparser_intellij_idea_scala(subparsers)
+    _add_subparser_bash_lsp(subparsers)
     # ------------------------- development related  ------------------------------
     _add_subparser_git(subparsers)
     _add_subparser_git_ignore(subparsers)
-    add_subparser(subparsers, "NodeJS", aliases=["node"])
-    add_subparser(subparsers, "rust")
-    add_subparser(subparsers, "evcxr_jupyter", aliases=["evcxr"])
-    add_subparser(subparsers, "Python3", aliases=["py3"])
-    add_subparser(subparsers, "pyjnius", aliases=["pyj"])
-    add_subparser(subparsers, "IPython", aliases=["ipy"])
-    add_subparser(subparsers, "yapf", aliases=[])
-    add_subparser_dsutil(subparsers)
-    add_subparser_xinstall(subparsers)
-    add_subparser_kaggle(subparsers)
-    add_subparser_pybay(subparsers)
-    add_subparser_lightgbm(subparsers)
-    add_subparser_pytorch(subparsers)
-    add_subparser_autogluon(subparsers)
-    add_subparser(subparsers, "OpenJDK8", aliases=["jdk8"])
-    add_subparser(subparsers, "sdkman", aliases=[])
+    _add_subparser_nodejs(subparsers)
+    _add_subparser_evcxr_jupyter(subparsers)
+    _add_subparser_python3(subparsers)
+    _add_subparser_rust(subparsers)
+    _add_subparser_pyjnius(subparsers)
+    _add_subparser_ipython(subparsers)
+    _add_subparser_yapf(subparsers)
+    _add_subparser_openjdk(subparsers)
+    _add_subparser_sdkman(subparsers)
     _add_subparser_poetry(subparsers)
-    add_subparser(subparsers, "Cargo", aliases=["cgo"])
-    add_subparser(subparsers, "ANTLR")
-    add_subparser(subparsers, "Docker", aliases=["dock", "dk"])
+    _add_subparser_cargo(subparsers)
+    _add_subparser_antlr(subparsers)
+    _add_subparser_pyspark(subparsers)
+    # ------------------------- virtualization related  ------------------------------
+    _add_subparser_docker(subparsers)
+    _add_subparser_kubernetes(subparsers)
+    _add_subparser_minikube(subparsers)
+    _add_subparser_virtualbox(subparsers)
+    # ------------------------- GitHub related  ------------------------------
+    _add_subparser_dsutil(subparsers)
+    _add_subparser_xinstall(subparsers)
+    _add_subparser_install_py_github(subparsers)
+    # ------------------------- AI related  ------------------------------
+    _add_subparser_kaggle(subparsers)
+    _add_subparser_lightgbm(subparsers)
+    _add_subparser_pytorch(subparsers)
+    _add_subparser_autogluon(subparsers)
     _add_subparser_spark(subparsers)
-    add_subparser(subparsers, "PySpark")
-    add_subparser(subparsers, "Kubernetes", aliases=["k8s"])
-    add_subparser(subparsers, "Minikube", aliases=["mkb"])
     # ------------------------- web related ------------------------------
-    add_subparser(subparsers, "SSH server", aliases=["sshs"])
-    add_subparser(subparsers, "SSH client", aliases=["sshc"])
-    add_subparser(subparsers, "blogging", aliases=["blog"])
-    add_subparser(subparsers, "ProxyChains", aliases=["pchains", "pc"])
-    add_subparser(subparsers, "dryscrape", aliases=[])
-    add_subparser(subparsers, "download tools", aliases=["dl", "dlt"])
-    add_subparser_install_py_github(subparsers)
-    _add_subparser_git_ignore(subparsers)
-    _add_subparser_version(subparsers)
+    _add_subparser_ssh_server(subparsers)
+    _add_subparser_ssh_client(subparsers)
+    _add_subparser_blogging(subparsers)
+    _add_subparser_proxychains(subparsers)
+    _add_subparser_dryscrape(subparsers)
+    _add_subparser_download_tools(subparsers)
     # ------------------------- JupyterLab related ------------------------------
-    add_subparser(subparsers, "BeakerX", aliases=["bkx", "bk"])
-    add_subparser(
-        subparsers, "jupyterlab-lsp", aliases=["jlab-lsp", "jlab_lsp"]
-    )
+    _add_subparser_beakerx(subparsers)
+    _add_subparser_jupyterlab_lsp(subparsers)
+    _add_subparser_itypescript(subparsers)
+    _add_subparser_nbdime(subparsers)
     _add_subparser_almond(subparsers)
-    add_subparser(subparsers, "iTypeScript", aliases=["its"])
-    add_subparser(subparsers, "nbdime", aliases=["nbd"])
     # ------------------------- misc applications ------------------------------
     _add_subparser_nomachine(subparsers)
-    add_subparser(subparsers, "VirtualBox", aliases=["vbox"])
+    _add_subparser_version(subparsers)
     # --------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)
 

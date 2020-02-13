@@ -1,7 +1,7 @@
 """Install AI related tools.
 """
 from pathlib import Path
-from .utils import HOME, run_cmd, namespace, add_subparser
+from .utils import HOME, USER, run_cmd, namespace, add_subparser
 
 
 def kaggle(**kwargs):
@@ -12,7 +12,7 @@ def kaggle(**kwargs):
         cmd = f"{args.pip} install --user kaggle"
         run_cmd(cmd)
     if args.config:
-        home_host = Path("/home_host/dclong/")
+        home_host = Path(f"/home_host/{USER}/")
         kaggle_home_host = home_host / ".kaggele"
         kaggle_home = HOME / ".kaggele"
         if home_host.is_dir():
@@ -27,8 +27,8 @@ def kaggle(**kwargs):
         pass
 
 
-def add_subparser_kaggle(subparsers):
-    add_subparser(subparsers, "kaggle", aliases=[])
+def _add_subparser_kaggle(subparsers):
+    add_subparser(subparsers, "kaggle", func=kaggle, aliases=[])
 
 
 def lightgbm(**kwargs):
@@ -44,8 +44,8 @@ def lightgbm(**kwargs):
         pass
 
 
-def add_subparser_lightgbm(subparsers):
-    add_subparser(subparsers, "lightgbm", aliases=[])
+def _add_subparser_lightgbm(subparsers):
+    add_subparser(subparsers, "lightgbm", func=lightgbm, aliases=[])
 
 
 def pytorch(**kwargs):
@@ -72,8 +72,14 @@ def _pytorch_args(subparser):
     )
 
 
-def add_subparser_pytorch(subparsers):
-    add_subparser(subparsers, "PyTorch", aliases=[], add_argument=_pytorch_args)
+def _add_subparser_pytorch(subparsers):
+    add_subparser(
+        subparsers,
+        "PyTorch",
+        func=pytorch,
+        aliases=[],
+        add_argument=_pytorch_args
+    )
 
 
 def autogluon(**kwargs):
@@ -82,8 +88,9 @@ def autogluon(**kwargs):
     args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install mxnet autogluon"
-        if args.gpu:
-            cmd = f"{args.pip} install mxnet-cu100 autogluon"
+        if args.cuda_version:
+            version = args.cuda_version.replace(".", "")
+            cmd = f"{args.pip} install mxnet-cu{version} autogluon"
         run_cmd(cmd)
     if args.config:
         pass
@@ -93,14 +100,20 @@ def autogluon(**kwargs):
 
 def _autogluon_args(subparser):
     subparser.add_argument(
-        "--gpu",
-        dest="gpu",
-        action="store_true",
-        help="Install the GPU version of AutoGluon."
+        "--cuda",
+        "--cuda-version",
+        dest="cuda_version",
+        required=True,
+        help=
+        "If a valid version is specified, install the GPU version of AutoGluon with the specified version of CUDA."
     )
 
 
-def add_subparser_autogluon(subparsers):
+def _add_subparser_autogluon(subparsers):
     add_subparser(
-        subparsers, "AutoGluon", aliases=[], add_argument=_autogluon_args
+        subparsers,
+        "AutoGluon",
+        func=autogluon,
+        aliases=[],
+        add_argument=_autogluon_args
     )

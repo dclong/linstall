@@ -32,6 +32,10 @@ def vim(**kwargs):
         pass
 
 
+def _add_subparser_vim(subparsers):
+    add_subparser(subparsers, "Vim", func=vim)
+
+
 def neovim(**kwargs):
     """Install NeoVim.
     """
@@ -67,9 +71,13 @@ def _neovim_args(subparser):
     )
 
 
-def add_subparser_neovim(subparsers):
+def _add_subparser_neovim(subparsers):
     add_subparser(
-        subparsers, "NeoVim", aliases=["nvim"], add_argument=_neovim_args
+        subparsers,
+        "NeoVim",
+        func=neovim,
+        aliases=["nvim"],
+        add_argument=_neovim_args
     )
 
 
@@ -138,9 +146,13 @@ def _spacevim_args(subparser):
     )
 
 
-def add_subparser_spacevim(subparsers):
+def _add_subparser_spacevim(subparsers):
     add_subparser(
-        subparsers, "SpaceVim", aliases=["svim"], add_argument=_spacevim_args
+        subparsers,
+        "SpaceVim",
+        func=spacevim,
+        aliases=["svim"],
+        add_argument=_spacevim_args
     )
 
 
@@ -167,12 +179,20 @@ def bash_lsp(**kwargs):
         run_cmd(cmd)
 
 
+def _add_subparser_bash_lsp(subparsers):
+    add_subparser(subparsers, "Bash LSP", func=bash_lsp, aliases=["blsp"])
+
+
 def ideavim(**kwargs):
     """Install IdeaVim for IntelliJ.
     """
     args = namespace(kwargs)
     if args.config:
         shutil.copy2(BASE_DIR / 'ideavim/ideavimrc', HOME / '.ideavimrc')
+
+
+def _add_subparser_ideavim(subparsers):
+    add_subparser(subparsers, "IdeaVim", func=ideavim, aliases=["ivim"])
 
 
 def intellij_idea(**kwargs):
@@ -233,9 +253,27 @@ def visual_studio_code(**kwargs):
         run_cmd(f'ln -svf {src_file} {dst_dir}')
 
 
+def _add_subparser_visual_studio_code(subparsers):
+    add_subparser(
+        subparsers,
+        "Visual Studio Code",
+        func=visual_studio_code,
+        aliases=["vscode", "code"]
+    )
+
+
 def intellij_idea_scala(**kwargs):
     """Install the Scala plugin for IntelliJ IDEA Community Edition.
     """
     args = namespace(kwargs)
     url = "http://plugins.jetbrains.com/files/1347/73157/scala-intellij-bin-2019.3.17.zip"
     intellij_idea_plugin(version=args.version, url=url)
+
+
+def _add_subparser_intellij_idea_scala(subparsers):
+    add_subparser(
+        subparsers,
+        "IntelliJ IDEA",
+        func=intellij_idea,
+        aliases=["intellij", "idea"]
+    )

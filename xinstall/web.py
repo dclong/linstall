@@ -10,6 +10,7 @@ from .utils import (
     BASE_DIR,
     BIN_DIR,
     run_cmd,
+    add_subparser,
     update_apt_source,
     brew_install_safe,
     is_ubuntu_debian,
@@ -44,6 +45,10 @@ def ssh_server(**kwargs):
             pass
 
 
+def _add_subparser_ssh_server(subparsers):
+    add_subparser(subparsers, "SSH server", func=ssh_server, aliases=["sshs"])
+
+
 def ssh_client(**kwargs) -> None:
     """Configure SSH client.
     :param kwargs: Keyword arguments.
@@ -64,6 +69,10 @@ def ssh_client(**kwargs) -> None:
         des = HOME / '.ssh/config'
         shutil.copy2(src, des)
         des.chmod(0o600)
+
+
+def _add_subparser_ssh_client(subparsers):
+    add_subparser(subparsers, "SSH client", func=ssh_client, aliases=["sshc"])
 
 
 def proxychains(**kwargs) -> None:
@@ -97,6 +106,12 @@ def proxychains(**kwargs) -> None:
             run_cmd(f'{args.sudo_s} yum remove proxychains')
 
 
+def _add_subparser_proxychains(subparsers):
+    add_subparser(
+        subparsers, "ProxyChains", func=proxychains, aliases=["pchains", "pc"]
+    )
+
+
 def dryscrape(**kwargs):
     """Install and configure dryscrape.
     """
@@ -121,6 +136,10 @@ def dryscrape(**kwargs):
             pass
         elif is_centos_series():
             pass
+
+
+def _add_subparser_dryscrape(subparsers):
+    add_subparser(subparsers, "dryscrape", func=dryscrape, aliases=[])
 
 
 def blogging(**kwargs):
@@ -149,6 +168,10 @@ def blogging(**kwargs):
         run_cmd(f"{args.pip} uninstall pelican markdown")
 
 
+def _add_subparser_blogging(subparsers):
+    add_subparser(subparsers, "blogging", func=blogging, aliases=["blog"])
+
+
 def download_tools(**kwargs):
     args = namespace(kwargs)
     if args.install:
@@ -172,3 +195,12 @@ def download_tools(**kwargs):
             run_cmd(f'brew uninstall wget curl aria2')
         elif is_centos_series():
             pass
+
+
+def _add_subparser_download_tools(subparsers):
+    add_subparser(
+        subparsers,
+        "download tools",
+        func=download_tools,
+        aliases=["dl", "dlt"]
+    )

@@ -35,6 +35,7 @@ def _add_subparser_nomachine(subparsers):
     add_subparser(
         subparsers,
         "NoMachine",
+        func=nomachine,
         aliases=["nm", "nx"],
         add_argument=_nomachine_args
     )

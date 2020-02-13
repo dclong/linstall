@@ -40,6 +40,10 @@ def virtualbox(**kwargs):
         pass
 
 
+def _add_subparser_virtualbox(subparsers):
+    add_subparser(subparsers, "VirtualBox", func=virtualbox, aliases=["vbox"])
+
+
 def docker(**kwargs):
     """Install and configure Docker container.
     """
@@ -77,6 +81,10 @@ def docker(**kwargs):
             run_cmd(f'{args.sudo_s} yum remove docker docker-compose')
 
 
+def _add_subparser_docker(subparsers):
+    add_subparser(subparsers, "Docker", func=docker, aliases=["dock", "dk"])
+
+
 def kubernetes(**kwargs):
     """Install and configure kubernetes command-line interface.
     """
@@ -104,6 +112,10 @@ def kubernetes(**kwargs):
             run_cmd(f'brew uninstall kubectl')
         elif is_centos_series():
             pass
+
+
+def _add_subparser_kubernetes(subparsers):
+    add_subparser(subparsers, "Kubernetes", func=kubernetes, aliases=["k8s"])
 
 
 def _minikube_linux(sudo: bool, yes: bool = True):
@@ -138,3 +150,7 @@ def minikube(**kwargs):
             run_cmd(f'brew cask uninstall minikube')
         elif is_centos_series():
             run_cmd(f'{args.sudo_s} rm /usr/local/bin/minikube')
+
+
+def _add_subparser_minikube(subparsers):
+    add_subparser(subparsers, "Minikube", func=minikube, aliases=["mkb"])

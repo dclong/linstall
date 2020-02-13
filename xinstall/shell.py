@@ -31,6 +31,10 @@ def coreutils(**kwargs):
             run_cmd(cmd)
 
 
+def _add_subparser_coreutils(subparsers):
+    add_subparser(subparsers, "CoreUtils", func=coreutils, aliases=["cu"])
+
+
 def shell_utils(**kwargs):
     """Install Shell-related utils.
     """
@@ -62,6 +66,15 @@ def shell_utils(**kwargs):
         pass
 
 
+def _add_subparser_shell_utils(subparsers):
+    add_subparser(
+        subparsers,
+        "Shell utils",
+        func=shell_utils,
+        aliases=["sh_utils", "shutils", "shu", "su"]
+    )
+
+
 def change_shell(**kwargs):
     """Change the default shell.
     """
@@ -82,10 +95,11 @@ def _change_shell_args(subparser):
     )
 
 
-def add_subparser_change_shell(subparsers):
+def _add_subparser_change_shell(subparsers):
     add_subparser(
         subparsers,
         "change shell",
+        func="change_shell",
         aliases=["chsh", "cs"],
         add_argument=_change_shell_args
     )
@@ -140,9 +154,13 @@ def homebrew(**kwargs):
             pass
 
 
-def add_subparser_homebrew(subparsers):
+def _add_subparser_homebrew(subparsers):
     add_subparser(
-        subparsers, "Homebrew", aliases=["brew"], add_argument=_homebrew_args
+        subparsers,
+        "Homebrew",
+        func="homebrew",
+        aliases=["brew"],
+        add_argument=_homebrew_args
     )
 
 
@@ -168,7 +186,6 @@ def hyper(**kwargs):
         #if os.path.exists(path):
         #    os.remove(path)
         shutil.copy2(os.path.join(BASE_DIR, 'hyper/hyper.js'), path)
-
     if args.uninstall:
         if is_ubuntu_debian():
             #!{args.sudo_s} apt-get purge hyper
@@ -178,6 +195,10 @@ def hyper(**kwargs):
         elif is_centos_series():
             #!sudo yum remove hyper
             pass
+
+
+def _add_subparser_hyper(subparsers):
+    add_subparser(subparsers, "Hyper", func=hyper, aliases=["hp"])
 
 
 def openinterminal(**kwargs):
@@ -194,6 +215,12 @@ def openinterminal(**kwargs):
             run_cmd(f"brew cask uninstall openinterminal")
 
 
+def _add_subparser_openinterminal(subparsers):
+    add_subparser(
+        subparsers, "OpenInTerminal", func=openinterminal, aliases=["oit"]
+    )
+
+
 def xonsh(**kwargs):
     """Install xonsh, a Python based shell.
     """
@@ -208,6 +235,10 @@ def xonsh(**kwargs):
         shutil.copy2(src, dst)
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall xonsh")
+
+
+def _add_subparser_xonsh(subparsers):
+    add_subparser(subparsers, "xonsh", func=xonsh)
 
 
 def bash_it(**kwargs):
@@ -227,6 +258,10 @@ def bash_it(**kwargs):
     if args.uninstall:
         run_cmd('~/.bash_it/uninstall.sh')
         shutil.rmtree(HOME / '.bash_it')
+
+
+def _add_subparser_bash_it(subparsers):
+    add_subparser(subparsers, "Bash-it", func=bash_it, aliases=["shit", "bit"])
 
 
 def bash_completion(**kwargs):
@@ -252,6 +287,15 @@ def bash_completion(**kwargs):
             run_cmd(f'{args.sudo_s} yum remove bash-completion')
 
 
+def _add_subparser_bash_complete(subparsers):
+    add_subparser(
+        subparsers,
+        "Bash completion",
+        func=bash_completion,
+        aliases=["completion", "comp", "cp"]
+    )
+
+
 def exa(**kwargs):
     """Install exa which is an Rust-implemented alternative to ls.
     """
@@ -272,6 +316,10 @@ def exa(**kwargs):
             run_cmd(f'brew uninstall exa')
         elif is_centos_series():
             run_cmd(f'{args.sudo_s} cargo uninstall --root /usr/local/ exa')
+
+
+def _add_subparser_exa(subparsers):
+    add_subparser(subparsers, "exa", func=exa)
 
 
 def osquery(**kwargs):
@@ -301,6 +349,10 @@ def osquery(**kwargs):
             run_cmd(f'{args.sudo_s} yum remove osquery')
 
 
+def _add_subparser_osquery(subparsers):
+    add_subparser(subparsers, "osquery", func=osquery, aliases=["osq"])
+
+
 def wajig(**kwargs) -> None:
     args = namespace(kwargs)
     if not is_ubuntu_debian():
@@ -327,5 +379,11 @@ def _wajig_args(subparser):
     )
 
 
-def add_subparser_wajig(subparsers):
-    add_subparser(subparsers, "Wajig", aliases=["wj"], add_argument=_wajig_args)
+def _add_subparser_wajig(subparsers):
+    add_subparser(
+        subparsers,
+        "Wajig",
+        func=wajig,
+        aliases=["wj"],
+        add_argument=_wajig_args
+    )

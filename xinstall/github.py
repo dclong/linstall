@@ -9,7 +9,7 @@ def install_py_github(**kwargs):
     )
 
 
-def add_subparser_install_py_github(subparsers):
+def _add_subparser_install_py_github(subparsers):
     subparser = subparsers.add_parser(
         "install_py_github",
         aliases=["inpygit", "pygit", "ipg"],
@@ -42,8 +42,14 @@ def _dsutil_args(subparser):
     option_sys(subparser)
 
 
-def add_subparser_dsutil(subparsers):
-    add_subparser(subparsers, "dsutil", aliases=[], add_argument=_dsutil_args)
+def _add_subparser_dsutil(subparsers):
+    add_subparser(
+        subparsers,
+        "dsutil",
+        func=dsutil,
+        aliases=[],
+        add_argument=_dsutil_args
+    )
 
 
 def xinstall(**kwargs):
@@ -65,24 +71,11 @@ def _xinstall_args(subparser):
     option_sys(subparser)
 
 
-def add_subparser_xinstall(subparsers):
+def _add_subparser_xinstall(subparsers):
     add_subparser(
-        subparsers, "xinstall", aliases=[], add_argument=_xinstall_args
+        subparsers,
+        "xinstall",
+        func=xinstall,
+        aliases=[],
+        add_argument=_xinstall_args
     )
-
-
-def pybay(**kwargs):
-    """Install the Python package pybay.
-    """
-    args = namespace(kwargs)
-    if args.install:
-        cmd = f"{args.sudo_s} {args.pip} install git+ssh://git@github.corp.ebay.com/marketing-science/pybay"
-        run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        run_cmd(f"{args.sudo_s} {args.pip} uninstall pybay")
-
-
-def add_subparser_pybay(subparsers):
-    add_subparser(subparsers, "pybay", aliases=[])

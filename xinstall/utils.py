@@ -295,14 +295,13 @@ def option_jupyter(subparser):
 def add_subparser(
     subparsers,
     name: str,
+    func: Callable,
     aliases: Sequence = (),
-    func: Union[Callable, None] = None,
     help_: Union[str, None] = None,
     add_argument: Union[Callable, None] = None
 ):
     sub_cmd = re.sub(r"(\s+)|-", "_", name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
-    func = func if func else eval(f"xinstall.{sub_cmd}")
     help_ = help_ if help_ else f"Install and configure {name}."
     subparser = subparsers.add_parser(sub_cmd, aliases=aliases, help=help_)
     subparser.add_argument(
