@@ -303,7 +303,8 @@ def _spark_args(subparser):
         "--mirror",
         dest="mirror",
         default="http://us.mirrors.quenda.co/apache/spark/",
-        help=f"The mirror (default http://us.mirrors.quenda.co/apache/spark/) of Spark to use."
+        help=
+        f"The mirror (default http://us.mirrors.quenda.co/apache/spark/) of Spark to use."
     )
     subparser.add_argument(
         "-v",
@@ -330,7 +331,13 @@ def pyspark(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if not Path("/opt/pyspark").exists():
-            spark(install=True, config=True, version="2.4.5", sudo=args.sudo, yes=args.yes)
+            spark(
+                install=True,
+                config=True,
+                version="2.4.5",
+                sudo=args.sudo,
+                yes=args.yes
+            )
         cmd = f"{args.pip} install pyspark findspark optimuspyspark"
         run_cmd(cmd)
     if args.config:
