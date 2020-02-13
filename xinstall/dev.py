@@ -330,10 +330,11 @@ def pyspark(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        if not Path("/opt/pyspark").exists():
+        if not Path("/opt/spark").exists():
             spark(
                 install=True,
                 config=True,
+                mirror="http://us.mirrors.quenda.co/apache/spark/",
                 version="2.4.5",
                 sudo=args.sudo,
                 yes=args.yes
