@@ -272,6 +272,12 @@ def _add_subparser_pyjnius(subparsers):
 
 def spark(**kwargs):
     """Install Spark into /opt/spark.
+    :param sudo:
+    :param yes:
+    :param install:
+    :param config:
+    :param uninstall:
+    :param version:
     """
     args = namespace(kwargs)
     if args.install:
@@ -297,13 +303,13 @@ def _spark_args(subparser):
         "--mirror",
         dest="mirror",
         default="http://us.mirrors.quenda.co/apache/spark/",
-        help=f"The mirror of Spark to use."
+        help=f"The mirror (default http://us.mirrors.quenda.co/apache/spark/) of Spark to use."
     )
     subparser.add_argument(
         "-v",
         "--version",
         dest="version",
-        default="2.4.4",
+        default="2.4.5",
         help=f"The version of Spark to install."
     )
 
@@ -314,9 +320,17 @@ def _add_subparser_spark(subparsers):
 
 def pyspark(**kwargs):
     """Install PySpark.
+    :param sudo:
+    :param yes:
+    :param install:
+    :param config:
+    :param uninstall:
+    :param version:
     """
     args = namespace(kwargs)
     if args.install:
+        if not Path("/opt/pyspark").exists():
+            spark(install=True, config=True, version="2.4.5", sudo=args.sudo, yes=args.yes)
         cmd = f"{args.pip} install pyspark findspark optimuspyspark"
         run_cmd(cmd)
     if args.config:
