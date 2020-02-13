@@ -297,13 +297,13 @@ def _spark_args(subparser):
         "--mirror",
         dest="mirror",
         default="http://us.mirrors.quenda.co/apache/spark/",
-        help=f"The mirror of Spark to use."
+        help=f"The mirror (default http://us.mirrors.quenda.co/apache/spark/) of Spark to use."
     )
     subparser.add_argument(
         "-v",
         "--version",
         dest="version",
-        default="2.4.4",
+        default="2.4.5",
         help=f"The version of Spark to install."
     )
 
