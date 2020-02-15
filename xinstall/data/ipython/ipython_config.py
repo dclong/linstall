@@ -77,10 +77,10 @@ c.AliasManager.user_aliases = [
     ('find.log', 'find . -name "*log"'),
     ('find.markdown', 'find . -type f -iname "*.markdown" -o -iname "*.md"'),
     ('find.md', 'find.markdown'),
-    ('find.movie', 'find.video'),
+    ('find.mov', 'find . -type f -iname "*.mov"'),
     (
         'find.media',
-        'find . -type f -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.avi" -o -iname "*.png" -o -iname "*.wmv" -o -iname "*.mp3" -o -iname "*.mp4" -o -iname "*.mkv"'
+        'find . -type f -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.mp3" -o -iname "*.avi" -o -iname "*.mkv"-o -iname "*.mov" -o -iname "*.mp4" -o -iname "*.wmv"'
     ),
     ('find.pig', 'find . -type f -iname "*.pig"'),
     ('find.pdf', 'find . -type f -iname "*.pdf"'),
@@ -119,7 +119,7 @@ c.AliasManager.user_aliases = [
     ('find.tilde', 'find . -name "*~"'),
     (
         'find.video',
-        'find . -type f -iname "*.mkv" -o -iname "*.avi" -o -iname "*.wmv" -o -iname "*.mp4"'
+        'find . -type f  -iname "*.avi" -o -iname "*.mkv" -o -iname "*.mov" -o -iname "*.mp4" -o -iname "*.wmv"'
     ),
     ('find.word', 'find . -type f -iname "*.doc" -o -iname "*.docx" -o iname'),
     ('find.word', 'find . -type f -iname "*.doc" -o -iname "*.docx"'),
