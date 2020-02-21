@@ -135,7 +135,7 @@ def minikube(**kwargs):
             update_apt_source(seconds=-1E10)
             _minikube_linux(sudo=args.sudo, yes=args.yes)
         elif is_macos():
-            run_cmd(f'brew cask install minikube')
+            run_cmd(f'brew install minikube')
         elif is_centos_series():
             _minikube_linux(sudo=args.sudo, yes=args.yes)
         elif is_win():
