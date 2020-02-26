@@ -7,6 +7,9 @@ from .ai import (
     _add_subparser_lightgbm,
     _add_subparser_pytorch,
     _add_subparser_autogluon,
+    _add_subparser_tensorflow,
+    _add_subparser_pytext,
+    _add_subparser_gensim,
 )
 from .shell import (
     _add_subparser_coreutils,
@@ -147,6 +150,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_cargo(subparsers)
     _add_subparser_antlr(subparsers)
     _add_subparser_pyspark(subparsers)
+    _add_subparser_spark(subparsers)
     # ------------------------- virtualization related  ------------------------------
     _add_subparser_docker(subparsers)
     _add_subparser_kubernetes(subparsers)
@@ -161,7 +165,9 @@ def parse_args(args=None, namespace=None):
     _add_subparser_lightgbm(subparsers)
     _add_subparser_pytorch(subparsers)
     _add_subparser_autogluon(subparsers)
-    _add_subparser_spark(subparsers)
+    _add_subparser_pytext(subparsers)
+    _add_subparser_tensorflow(subparsers)
+    _add_subparser_gensim(subparsers)
     # ------------------------- web related ------------------------------
     _add_subparser_ssh_server(subparsers)
     _add_subparser_ssh_client(subparsers)
