@@ -117,3 +117,73 @@ def _add_subparser_autogluon(subparsers):
         aliases=[],
         add_argument=_autogluon_args
     )
+
+
+def tensorflow(**kwargs):
+    """Insert the Python package TensorFlow.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"{args.pip} install tensorflow"
+        if args.cuda_version:
+            pass
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_tensorflow(subparsers):
+    add_subparser(
+        subparsers,
+        "tensorflow",
+        func=tensorflow,
+        aliases=["tf"],
+    )
+
+
+def gensim(**kwargs):
+    """Insert the Python package GenSim.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"{args.pip} install gensim"
+        if args.cuda_version:
+            pass
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_gensim(subparsers):
+    add_subparser(
+        subparsers,
+        "gensim",
+        func=gensim,
+    )
+
+
+def pytext(**kwargs):
+    """Insert the Python package PyText.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"{args.pip} install pytext-nlp"
+        if args.cuda_version:
+            pass
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_pytext(subparsers):
+    add_subparser(
+        subparsers,
+        "pytext",
+        func=pytext,
+    )

@@ -26,7 +26,7 @@ def ssh_server(**kwargs):
         if is_ubuntu_debian():
             update_apt_source()
             run_cmd(
-                f'{args.sudo_s} apt-get install {args._yes_s} openssh-server fail2ban',
+                f"{args.sudo_s} apt-get install {args._yes_s} openssh-server fail2ban",
             )
         elif is_macos():
             pass
@@ -37,7 +37,7 @@ def ssh_server(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo_s} apt-get purge {args._yes_s} openssh-server fail2ban',
+                f"{args.sudo_s} apt-get purge {args._yes_s} openssh-server fail2ban",
             )
         elif is_macos():
             pass
@@ -65,8 +65,8 @@ def ssh_client(**kwargs) -> None:
                 pass
             shutil.copytree(ssh_src, ssh_dst)
         ssh_dst.mkdir(exist_ok=True)
-        src = BASE_DIR / 'ssh/client/config'
-        des = HOME / '.ssh/config'
+        src = BASE_DIR / "ssh/client/config"
+        des = HOME / ".ssh/config"
         shutil.copy2(src, des)
         des.chmod(0o600)
 
@@ -83,27 +83,27 @@ def proxychains(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f'{args.sudo_s} apt-get install {args._yes_s} proxychains4',
-            )
+            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} proxychains4 \
+                    {args.sudo_s} ln -s /usr/bin/proxychains4 /usr/bin/proxychains"""
+            run_cmd(cmd)
         elif is_macos():
-            brew_install_safe(['proxychains-ng'])
+            brew_install_safe(["proxychains-ng"])
         elif is_centos_series():
-            run_cmd(f'{args.sudo_s} yum install proxychains')
+            run_cmd(f"{args.sudo_s} yum install proxychains")
     if args.config:
-        print('Configuring proxychains ...')
-        des_dir = os.path.join(HOME, '.proxychains')
+        print("Configuring proxychains ...")
+        des_dir = os.path.join(HOME, ".proxychains")
         os.makedirs(des_dir, exist_ok=True)
         shutil.copy2(
-            os.path.join(BASE_DIR, 'proxychains/proxychains.conf'), des_dir
+            os.path.join(BASE_DIR, "proxychains/proxychains.conf"), des_dir
         )
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo_s} apt-get purge proxychains')
+            run_cmd(f"{args.sudo_s} apt-get purge proxychains4")
         elif is_macos():
-            run_cmd(f'brew uninstall proxychains-ng')
+            run_cmd(f"brew uninstall proxychains-ng")
         elif is_centos_series():
-            run_cmd(f'{args.sudo_s} yum remove proxychains')
+            run_cmd(f"{args.sudo_s} yum remove proxychains")
 
 
 def _add_subparser_proxychains(subparsers):
