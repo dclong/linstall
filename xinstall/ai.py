@@ -187,3 +187,25 @@ def _add_subparser_pytext(subparsers):
         "pytext",
         func=pytext,
     )
+
+
+def opencv_python(**kwargs):
+    """Insert the Python package opencv-python.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"""{args.sudo_s} apt-get install libsm6 libxrender-dev \
+                {args.pip} install opencv-python"""
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_opencv_python(subparsers):
+    add_subparser(
+        subparsers,
+        "opencv_python",
+        func=opencv_python,
+    )
