@@ -10,6 +10,7 @@ from .ai import (
     _add_subparser_tensorflow,
     _add_subparser_pytext,
     _add_subparser_gensim,
+    _add_subparser_opencv_python,
 )
 from .shell import (
     _add_subparser_coreutils,
@@ -73,7 +74,7 @@ from .web import (
     _add_subparser_ssh_server,
 )
 from .misc import _add_subparser_nomachine
-__version__ = "0.4.6"
+__version__ = "0.4.7"
 
 
 def version(**kwargs):
@@ -168,6 +169,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_pytext(subparsers)
     _add_subparser_tensorflow(subparsers)
     _add_subparser_gensim(subparsers)
+    _add_subparser_opencv_python(subparsers)
     # ------------------------- web related ------------------------------
     _add_subparser_ssh_server(subparsers)
     _add_subparser_ssh_client(subparsers)
