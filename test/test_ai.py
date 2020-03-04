@@ -1,0 +1,18 @@
+"""Test the ai module.
+"""
+import subprocess as sp
+sp.run("sudo apt-get update", shell=True, check=True)
+
+
+def test_kaggle():
+    """Test installing the Python package kaggle.
+    """
+    cmd = "xinstall kaggle -ic"
+    sp.run(cmd, shell=True, check=True)
+
+
+def test_lightgbm():
+    """Test installing and configuring LightGBM.
+    """
+    cmd = "xinstall lightgbm -ic"
+    sp.run(cmd, shell=True, check=True)
