@@ -28,20 +28,20 @@ def cargo(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} cargo')
+            run_cmd(f"{args.sudo_s} apt-get install {args._yes_s} cargo")
         if is_macos():
-            brew_install_safe(['cargo'])
+            brew_install_safe(["cargo"])
         if is_centos_series():
-            run_cmd(f'{args.sudo_s} yum install {args._yes_s} cargo')
+            run_cmd(f"{args.sudo_s} yum install {args._yes_s} cargo")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} cargo')
+            run_cmd(f"{args.sudo_s} apt-get purge {args._yes_s} cargo")
         if is_macos():
-            run_cmd(f'brew uninstall cargo')
+            run_cmd(f"brew uninstall cargo")
         if is_centos_series():
-            run_cmd(f'yum remove cargo')
+            run_cmd(f"yum remove cargo")
 
 
 def _add_subparser_cargo(subparsers):
@@ -54,10 +54,10 @@ def openjdk8(**kwargs):
         if is_ubuntu_debian():
             update_apt_source()
             run_cmd(
-                f'{args.sudo_s} apt-get install {args._yes_s} openjdk-jdk-8 maven gradle',
+                f"{args.sudo_s} apt-get install {args._yes_s} openjdk-jdk-8 maven gradle",
             )
         if is_macos():
-            cmd = 'brew tap AdoptOpenJDK/openjdk && brew cask install adoptopenjdk8'
+            cmd = "brew tap AdoptOpenJDK/openjdk && brew cask install adoptopenjdk8"
             run_cmd(cmd)
         if is_centos_series():
             pass
@@ -66,10 +66,10 @@ def openjdk8(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo_s} apt-get purge {args._yes_s} openjdk-jdk-8 maven gradle',
+                f"{args.sudo_s} apt-get purge {args._yes_s} openjdk-jdk-8 maven gradle",
             )
         if is_macos():
-            run_cmd(f'brew cask uninstall adoptopenjdk8')
+            run_cmd(f"brew cask uninstall adoptopenjdk8")
         if is_centos_series():
             pass
 
@@ -84,7 +84,7 @@ def sdkman(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        run_cmd(f'''curl -s https://get.sdkman.io | bash''')
+        run_cmd(f"""curl -s https://get.sdkman.io | bash""")
     if args.config:
         pass
     if args.uninstall:
@@ -98,14 +98,14 @@ def _add_subparser_sdkman(subparsers):
 def yapf(**kwargs):
     args = namespace(kwargs)
     if args.install:
-        run_cmd(f'{args.pip} install --user {args._yes_s} yapf')
+        run_cmd(f"{args.pip} install --user {args._yes_s} yapf")
     if args.config:
         shutil.copy2(
-            os.path.join(BASE_DIR, 'yapf/style.yapf'),
-            os.path.join(args.dst_dir, '.style.yapf')
+            os.path.join(BASE_DIR, "yapf/style.yapf"),
+            os.path.join(args.dst_dir, ".style.yapf")
         )
     if args.uninstall:
-        run_cmd(f'{args.pip} uninstall {args._yes_s} yapf')
+        run_cmd(f"{args.pip} uninstall {args._yes_s} yapf")
 
 
 def _yapf_args(subparser):
@@ -129,21 +129,21 @@ def nodejs(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f'''{args.sudo_s} apt-get install {args._yes_s} nodejs npm'''
+            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} nodejs npm"""
             run_cmd(cmd)
         if is_macos():
-            brew_install_safe(['nodejs'])
+            brew_install_safe(["nodejs"])
         if is_centos_series():
-            run_cmd(f'{args.sudo_s} yum install {args._yes_s} nodejs')
+            run_cmd(f"{args.sudo_s} yum install {args._yes_s} nodejs")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} nodejs')
+            run_cmd(f"{args.sudo_s} apt-get purge {args._yes_s} nodejs")
         if is_macos():
-            run_cmd(f'brew uninstall nodejs')
+            run_cmd(f"brew uninstall nodejs")
         if is_centos_series():
-            run_cmd(f'yum remove nodejs')
+            run_cmd(f"yum remove nodejs")
 
 
 def _add_subparser_nodejs(subparsers):
@@ -467,38 +467,38 @@ def git(**kwargs) -> None:
         if is_ubuntu_debian():
             update_apt_source()
             run_cmd(
-                f'{args.sudo_s} apt-get install {args._yes_s} git git-lfs',
+                f"{args.sudo_s} apt-get install {args._yes_s} git git-lfs",
             )
         elif is_macos():
-            brew_install_safe(['git', 'git-lfs', 'bash-completion@2'])
+            brew_install_safe(["git", "git-lfs", "bash-completion@2"])
         elif is_centos_series():
-            run_cmd(f'{args.sudo_s} yum install git')
-        run_cmd('git lfs install')
+            run_cmd(f"{args.sudo_s} yum install git")
+        run_cmd("git lfs install")
     if args.uninstall:
-        run_cmd('git lfs uninstall')
+        run_cmd("git lfs uninstall")
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} git git-lfs')
+            run_cmd(f"{args.sudo_s} apt-get purge {args._yes_s} git git-lfs")
         elif is_macos():
-            run_cmd(f'brew uninstall git git-lfs')
+            run_cmd(f"brew uninstall git git-lfs")
         elif is_centos_series():
-            run_cmd(f'{args.sudo_s} yum remove git')
+            run_cmd(f"{args.sudo_s} yum remove git")
     if args.config:
         ssh_client(config=True)
-        gitconfig = HOME / '.gitconfig'
+        gitconfig = HOME / ".gitconfig"
         # try to remove the file to avoid dead symbolic link problem
         remove_file_safe(gitconfig)
-        shutil.copy2(BASE_DIR / 'git/gitconfig', gitconfig)
-        gitignore = HOME / '.gitignore'
+        shutil.copy2(BASE_DIR / "git/gitconfig", gitconfig)
+        gitignore = HOME / ".gitignore"
         remove_file_safe(gitignore)
-        shutil.copy2(BASE_DIR / 'git/gitignore', gitignore)
+        shutil.copy2(BASE_DIR / "git/gitignore", gitignore)
         if is_macos():
-            file = '/usr/local/etc/bash_completion.d/git-completion.bash'
-            bashrc = f'\n# Git completion\n[ -f {file} ] &&  . {file}'
-            with (HOME / '.bash_profile').open('a') as fout:
+            file = "/usr/local/etc/bash_completion.d/git-completion.bash"
+            bashrc = f"\n# Git completion\n[ -f {file} ] &&  . {file}"
+            with (HOME / ".bash_profile").open("a") as fout:
                 fout.write(bashrc)
-    if 'proxy' in kwargs and args.proxy:
-        run_cmd(f'git config --global http.proxy {args.proxy}')
-        run_cmd(f'git config --global https.proxy {args.proxy}')
+    if "proxy" in kwargs and args.proxy:
+        run_cmd(f"git config --global http.proxy {args.proxy}")
+        run_cmd(f"git config --global https.proxy {args.proxy}")
 
 
 def _git_args(subparser):
@@ -522,20 +522,20 @@ def antlr(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f'{args.sudo_s} apt-get install {args._yes_s} antlr4')
+            run_cmd(f"{args.sudo_s} apt-get install {args._yes_s} antlr4")
         elif is_macos():
-            brew_install_safe(['antlr4'])
+            brew_install_safe(["antlr4"])
         elif is_centos_series():
-            run_cmd(f'{args.sudo_s} yum install antlr')
+            run_cmd(f"{args.sudo_s} yum install antlr")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f'{args.sudo_s} apt-get purge {args._yes_s} antlr4')
+            run_cmd(f"{args.sudo_s} apt-get purge {args._yes_s} antlr4")
         elif is_macos():
-            run_cmd(f'brew uninstall antlr4')
+            run_cmd(f"brew uninstall antlr4")
         elif is_centos_series():
-            run_cmd(f'{args.sudo_s} yum remove antlr')
+            run_cmd(f"{args.sudo_s} yum remove antlr")
 
 
 def _add_subparser_antlr(subparsers):
