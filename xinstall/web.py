@@ -84,7 +84,7 @@ def proxychains(**kwargs) -> None:
         if is_ubuntu_debian():
             update_apt_source()
             cmd = f"""{args.sudo_s} apt-get install {args._yes_s} proxychains4 \
-                    {args.sudo_s} ln -s /usr/bin/proxychains4 /usr/bin/proxychains"""
+                    && {args.sudo_s} ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(["proxychains-ng"])
@@ -119,9 +119,9 @@ def dryscrape(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f'''{args.sudo_s} apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
+            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
                 && {args.pip} install --user dryscrape
-                '''
+                """
             run_cmd(cmd)
         elif is_macos():
             pass
@@ -155,8 +155,8 @@ def blogging(**kwargs):
             run_cmd(f"git -C {blog} pull origin master")
         else:
             run_cmd(f"git clone git@github.com:dclong/blog.git {blog}")
-        cmd = f"""git -C {blog} submodule init && \
-                git -C {blog} submodule update --recursive --remote
+        cmd = f"""git -C {blog} submodule init \
+                && git -C {blog} submodule update --recursive --remote
                 """
         run_cmd(cmd)
     if args.config:
@@ -178,10 +178,10 @@ def download_tools(**kwargs):
         if is_ubuntu_debian():
             update_apt_source()
             run_cmd(
-                f'{args.sudo_s} apt-get install {args._yes_s} wget curl aria2',
+                f"{args.sudo_s} apt-get install {args._yes_s} wget curl aria2",
             )
         elif is_macos():
-            brew_install_safe(['wget', 'curl', 'aria2'])
+            brew_install_safe(["wget", "curl", "aria2"])
         elif is_centos_series():
             pass
     if args.config:
@@ -189,10 +189,10 @@ def download_tools(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f'{args.sudo_s} apt-get purge {args._yes_s} wget curl aria2',
+                f"{args.sudo_s} apt-get purge {args._yes_s} wget curl aria2",
             )
         elif is_macos():
-            run_cmd(f'brew uninstall wget curl aria2')
+            run_cmd(f"brew uninstall wget curl aria2")
         elif is_centos_series():
             pass
 

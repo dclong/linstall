@@ -18,9 +18,9 @@ USER = HOME.name
 USER_ID = os.getuid()
 GROUP_ID = os.getgid()
 FILE = Path(__file__).resolve()
-BASE_DIR = FILE.parent / 'data'
-LOCAL_DIR = HOME / '.local'
-BIN_DIR = LOCAL_DIR / 'bin'
+BASE_DIR = FILE.parent / "data"
+LOCAL_DIR = HOME / ".local"
+BIN_DIR = LOCAL_DIR / "bin"
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
 
 PLATFORM = platform.platform().lower()
@@ -241,11 +241,11 @@ def intellij_idea_plugin(version: str, url: str):
 
 
 def namespace(dic: Dict) -> Namespace:
-    dic.setdefault('sudo', False)
-    dic.setdefault('yes', False)
-    dic['sudo_s'] = 'sudo' if dic['sudo'] else ''
-    dic['_sudo_s'] = '--sudo' if dic['sudo'] else ''
-    dic['_yes_s'] = '--yes' if dic['yes'] else ''
+    dic.setdefault("sudo", False)
+    dic.setdefault("yes", False)
+    dic["sudo_s"] = "sudo" if dic["sudo"] else ""
+    dic["_sudo_s"] = "--sudo" if dic["sudo"] else ""
+    dic["_yes_s"] = "--yes" if dic["yes"] else ""
     return Namespace(**dic)
 
 

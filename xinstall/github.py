@@ -30,12 +30,12 @@ def dsutil(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        url = 'https://github.com/dclong/dsutil'
+        url = "https://github.com/dclong/dsutil"
         utils.install_py_github(url=url, pip=args.pip)
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f'{args.pip} uninstall {args._yes_s} dsutil')
+        run_cmd(f"{args.pip} uninstall {args._yes_s} dsutil")
 
 
 def _dsutil_args(subparser):
@@ -57,7 +57,7 @@ def xinstall(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        url = 'https://github.com/dclong/xinstall'
+        url = "https://github.com/dclong/xinstall"
         utils.install_py_github(
             url=url, sudo=args.sudo, sys=args.sys, pip=args.pip
         )
