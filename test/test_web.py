@@ -14,6 +14,6 @@ def test_blogging():
 def test_proxychains():
     """Test installing the blogging tools.
     """
-    cmd = "xinstall --sudo pc -ic"
+    cmd = "xinstall --sudo -y pc -ic"
     sp.run(cmd, shell=True, check=True)
 
