@@ -74,7 +74,10 @@ from .web import (
     _add_subparser_ssh_client,
     _add_subparser_ssh_server,
 )
-from .misc import _add_subparser_nomachine
+from .desktop import (
+    _add_subparser_nomachine,
+    _add_subparser_lxqt,
+)
 __version__ = "0.5.0"
 
 
@@ -185,9 +188,10 @@ def parse_args(args=None, namespace=None):
     _add_subparser_itypescript(subparsers)
     _add_subparser_nbdime(subparsers)
     _add_subparser_almond(subparsers)
-    # ------------------------- misc applications ------------------------------
-    _add_subparser_nomachine(subparsers)
+    # ------------------------- Desktop Environment ------------------------------
     _add_subparser_version(subparsers)
+    _add_subparser_nomachine(subparsers)
+    _add_subparser_lxqt(subparsers)
     # --------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)
 

@@ -26,7 +26,7 @@ def _nomachine_args(subparser):
         "-v",
         "--version",
         dest="version",
-        default="6.8.1_1",
+        default="6.9.2_1",
         help="The version of NoMachine to install."
     )
 
@@ -38,4 +38,27 @@ def _add_subparser_nomachine(subparsers):
         func=nomachine,
         aliases=["nm", "nx"],
         add_argument=_nomachine_args
+    )
+
+
+def lxqt(**kwargs):
+    """Install the LXQt desktop environment.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        if is_ubuntu_debian():
+            update_apt_source()
+            cmd = f"{args.sudo_s} apt-get install lxqt"
+            run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_lxqt(subparsers):
+    add_subparser(
+        subparsers,
+        "lxqt",
+        func=lxqt,
     )
