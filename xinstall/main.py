@@ -64,6 +64,7 @@ from .virtualization import (
     _add_subparser_kubernetes,
     _add_subparser_minikube,
     _add_subparser_virtualbox,
+    _add_subparser_multipass,
 )
 from .web import (
     _add_subparser_blogging,
@@ -157,6 +158,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_kubernetes(subparsers)
     _add_subparser_minikube(subparsers)
     _add_subparser_virtualbox(subparsers)
+    _add_subparser_multipass(subparsers)
     # ------------------------- GitHub related  ------------------------------
     _add_subparser_dsutil(subparsers)
     _add_subparser_xinstall(subparsers)

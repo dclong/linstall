@@ -154,3 +154,32 @@ def minikube(**kwargs):
 
 def _add_subparser_minikube(subparsers):
     add_subparser(subparsers, "Minikube", func=minikube, aliases=["mkb"])
+
+
+def multipass(**kwargs):
+    args = namespace(kwargs)
+    if args.install:
+        if is_ubuntu_debian():
+            cmd = f"{args.sudo_s} snap install multipass --classic"
+            run_cmd(cmd)
+        elif is_macos():
+            cmd = "brew cask install multipass"
+            run_cmd(cmd)
+        elif is_centos_series():
+            pass
+        elif is_win():
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_ubuntu_debian():
+            cmd = f"{args.sudo_s} snap uninstall multipass"
+            run_cmd(cmd)
+        elif is_macos():
+            run_cmd(f"brew cask uninstall multipass")
+        elif is_centos_series():
+            pass
+
+
+def _add_subparser_multipass(subparsers):
+    add_subparser(subparsers, "Multipass", func=multipass, aliases=["mp"])
