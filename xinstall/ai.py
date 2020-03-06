@@ -120,13 +120,17 @@ def _add_subparser_autogluon(subparsers):
 
 
 def tensorflow(**kwargs):
-    """Insert the Python package TensorFlow.
+    """Install the Python package TensorFlow.
+    Since the most common to use TensorFlow is to install it into a Docker image 
+    that already come with Nvidia CUDA support, 
+    GPU support/dependencies (CUDA and CuDNN) is not handled here.
+    You need to manually install CUDA and CuDNN if you need GPU support.
+    For more details,
+    please refer to https://www.tensorflow.org/install/gpu.
     """
     args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install tensorflow"
-        if args.cuda_version:
-            pass
         run_cmd(cmd)
     if args.config:
         pass
