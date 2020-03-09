@@ -88,7 +88,7 @@ c.AliasManager.user_aliases = [
     ('find.parquet', 'find . -iname "*.parquet"'),
     ('find.pom', 'find . -name "pom.xml"'),
     ('find.ppt', 'find . -type f -iname "*.ppt" -o -iname "*.pptx"'),
-    ('find.py', 'find . -type f -iname "*.py"'),
+    ("find.py", "find . -type f -iname '*.py' -not -path '*/.venv/*' -not -path '*/venv/*' -not -path '*/.ipynb_checkpoints/*'"),
     ('find.r', 'find . -type f -iname "*.r"'),
     ('find.rdata', 'find . -type f -iname "*.rdata"'),
     ('find.rpt', 'find . -type f -iname "*.rpt"'),
