@@ -190,6 +190,7 @@ def microk8s(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             cmd = f"""{args.sudo_s} snap install microk8s --classic \
+                    && {args.sudo_s} ln -svf /snap/bin/microk8s.kubectl /snap/bin/kubectl \
                     && {args.sudo_s} gpasswd -a $(id -un) microk8s"""
             run_cmd(cmd)
         elif is_macos():
