@@ -557,7 +557,9 @@ def pygetwindow(**kwargs):
 
 
 def _add_subparser_pygetwindow(subparsers):
-    add_subparser(subparsers, "pygetwindow", 
+    add_subparser(
+        subparsers,
+        "pygetwindow",
         func=pygetwindow,
-        aliases=["pgw", "getwindow", "gwin"], 
+        aliases=["pgw", "getwindow", "gwin"],
     )
