@@ -45,7 +45,8 @@ from .dev import (
     _add_subparser_rust, _add_subparser_nodejs, _add_subparser_python3,
     _add_subparser_pyjnius, _add_subparser_ipython, _add_subparser_yapf,
     _add_subparser_openjdk, _add_subparser_sdkman, _add_subparser_cargo,
-    _add_subparser_antlr, _add_subparser_pyspark, _add_subparser_spark
+    _add_subparser_antlr, _add_subparser_pyspark, _add_subparser_spark,
+    _add_subparser_pygetwindow,
 )
 from .jupyter import (
     _add_subparser_almond,
@@ -157,6 +158,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_antlr(subparsers)
     _add_subparser_pyspark(subparsers)
     _add_subparser_spark(subparsers)
+    _add_subparser_pygetwindow(subparsers)
     # ------------------------- virtualization related  ------------------------------
     _add_subparser_docker(subparsers)
     _add_subparser_kubernetes(subparsers)
