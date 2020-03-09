@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 from pathlib import Path
 from .utils import (
@@ -547,6 +548,8 @@ def pygetwindow(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
+        if is_linux():
+            sys.exit("PyGetWindow is not supported on Linux currently!")
         cmd = f"{args.sudo_s} pip3 install pyobjc-framework-quartz pygetwindow"
         run_cmd(cmd)
     if args.config:

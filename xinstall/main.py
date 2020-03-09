@@ -90,7 +90,7 @@ from .desktop import (
     _add_subparser_nomachine,
     _add_subparser_lxqt,
 )
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 
 
 def version(**kwargs):
