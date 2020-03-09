@@ -6,7 +6,7 @@ from . import github
 from . import ide
 from . import jupyter
 from . import main
-from . import misc
+from . import desktop
 from . import shell
 from . import utils
 from . import web
