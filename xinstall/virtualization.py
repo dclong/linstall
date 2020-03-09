@@ -183,3 +183,33 @@ def multipass(**kwargs):
 
 def _add_subparser_multipass(subparsers):
     add_subparser(subparsers, "Multipass", func=multipass, aliases=["mp"])
+
+
+def microk8s(**kwargs):
+    args = namespace(kwargs)
+    if args.install:
+        if is_ubuntu_debian():
+            cmd = f"""{args.sudo_s} snap install microk8s --classic \
+                    && {args.sudo_s} ln -svf /snap/bin/microk8s.kubectl /snap/bin/kubectl \
+                    && {args.sudo_s} gpasswd -a $(id -un) microk8s"""
+            run_cmd(cmd)
+        elif is_macos():
+            pass
+        elif is_centos_series():
+            pass
+        elif is_win():
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_ubuntu_debian():
+            cmd = f"{args.sudo_s} snap uninstall microk8s"
+            run_cmd(cmd)
+        elif is_macos():
+            pass
+        elif is_centos_series():
+            pass
+
+
+def _add_subparser_microk8s(subparsers):
+    add_subparser(subparsers, "Microk8s", func=microk8s, aliases=["mk8s"])

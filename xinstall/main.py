@@ -41,11 +41,22 @@ from .github import (
     _add_subparser_dsutil,
 )
 from .dev import (
-    _add_subparser_git, _add_subparser_git_ignore, _add_subparser_poetry,
-    _add_subparser_rust, _add_subparser_nodejs, _add_subparser_python3,
-    _add_subparser_pyjnius, _add_subparser_ipython, _add_subparser_yapf,
-    _add_subparser_openjdk, _add_subparser_sdkman, _add_subparser_cargo,
-    _add_subparser_antlr, _add_subparser_pyspark, _add_subparser_spark
+    _add_subparser_git,
+    _add_subparser_git_ignore,
+    _add_subparser_poetry,
+    _add_subparser_rust,
+    _add_subparser_nodejs,
+    _add_subparser_python3,
+    _add_subparser_pyjnius,
+    _add_subparser_ipython,
+    _add_subparser_yapf,
+    _add_subparser_openjdk,
+    _add_subparser_sdkman,
+    _add_subparser_cargo,
+    _add_subparser_antlr,
+    _add_subparser_pyspark,
+    _add_subparser_spark,
+    _add_subparser_pygetwindow,
 )
 from .jupyter import (
     _add_subparser_almond,
@@ -65,6 +76,7 @@ from .virtualization import (
     _add_subparser_minikube,
     _add_subparser_virtualbox,
     _add_subparser_multipass,
+    _add_subparser_microk8s,
 )
 from .web import (
     _add_subparser_blogging,
@@ -74,8 +86,11 @@ from .web import (
     _add_subparser_ssh_client,
     _add_subparser_ssh_server,
 )
-from .misc import _add_subparser_nomachine
-__version__ = "0.5.0"
+from .desktop import (
+    _add_subparser_nomachine,
+    _add_subparser_lxqt,
+)
+__version__ = "0.5.1"
 
 
 def version(**kwargs):
@@ -153,12 +168,14 @@ def parse_args(args=None, namespace=None):
     _add_subparser_antlr(subparsers)
     _add_subparser_pyspark(subparsers)
     _add_subparser_spark(subparsers)
+    _add_subparser_pygetwindow(subparsers)
     # ------------------------- virtualization related  ------------------------------
     _add_subparser_docker(subparsers)
     _add_subparser_kubernetes(subparsers)
     _add_subparser_minikube(subparsers)
     _add_subparser_virtualbox(subparsers)
     _add_subparser_multipass(subparsers)
+    _add_subparser_microk8s(subparsers)
     # ------------------------- GitHub related  ------------------------------
     _add_subparser_dsutil(subparsers)
     _add_subparser_xinstall(subparsers)
@@ -185,9 +202,10 @@ def parse_args(args=None, namespace=None):
     _add_subparser_itypescript(subparsers)
     _add_subparser_nbdime(subparsers)
     _add_subparser_almond(subparsers)
-    # ------------------------- misc applications ------------------------------
-    _add_subparser_nomachine(subparsers)
+    # ------------------------- Desktop Environment ------------------------------
     _add_subparser_version(subparsers)
+    _add_subparser_nomachine(subparsers)
+    _add_subparser_lxqt(subparsers)
     # --------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)
 
