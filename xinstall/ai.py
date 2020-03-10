@@ -212,4 +212,5 @@ def _add_subparser_opencv_python(subparsers):
         subparsers,
         "opencv_python",
         func=opencv_python,
+        aliases=["opencv", "cv2"],
     )
