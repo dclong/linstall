@@ -1,7 +1,8 @@
 """Install AI related tools.
 """
 from pathlib import Path
-from .utils import HOME, USER, run_cmd, namespace, add_subparser
+import warnings
+from .utils import HOME, USER, run_cmd, namespace, add_subparser, is_linux, is_macos
 
 
 def kaggle(**kwargs):
@@ -53,10 +54,16 @@ def pytorch(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html"
-        if args.gpu:
+        if is_linux():
+            cmd = f"{args.pip} install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html"
+            if args.gpu:
+                cmd = f"{args.pip} install torch torchvision"
+            run_cmd(cmd)
+        elif is_macos():
             cmd = f"{args.pip} install torch torchvision"
-        run_cmd(cmd)
+            if args.gpu:
+                warnings.warn("Ignore the option '--gpu' as CUDA version of PyTorch is not supported on macOS.")
+            run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
