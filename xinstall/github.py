@@ -31,7 +31,9 @@ def dsutil(**kwargs):
     args = namespace(kwargs)
     if args.install:
         url = "https://github.com/dclong/dsutil"
-        utils.install_py_github(url=url, pip=args.pip, sudo=args.sudo, user=args.user)
+        utils.install_py_github(
+            url=url, pip=args.pip, sudo=args.sudo, user=args.user
+        )
     if args.config:
         pass
     if args.uninstall:

@@ -62,7 +62,9 @@ def pytorch(**kwargs):
         elif is_macos():
             cmd = f"{args.pip} install torch torchvision"
             if args.gpu:
-                warnings.warn("Ignore the option '--gpu' as CUDA version of PyTorch is not supported on macOS.")
+                warnings.warn(
+                    "Ignore the option '--gpu' as CUDA version of PyTorch is not supported on macOS."
+                )
             run_cmd(cmd)
     if args.config:
         pass
