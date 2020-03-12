@@ -11,6 +11,7 @@ from .ai import (
     _add_subparser_pytext,
     _add_subparser_gensim,
     _add_subparser_opencv_python,
+    _add_subparser_nlp,
 )
 from .shell import (
     _add_subparser_coreutils,
@@ -189,6 +190,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_tensorflow(subparsers)
     _add_subparser_gensim(subparsers)
     _add_subparser_opencv_python(subparsers)
+    _add_subparser_nlp(subparsers)
     # ------------------------- web related ------------------------------
     _add_subparser_ssh_server(subparsers)
     _add_subparser_ssh_client(subparsers)

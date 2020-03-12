@@ -1,11 +1,11 @@
-from .utils import option_pip, option_python, option_sys, namespace, add_subparser, run_cmd
+from .utils import option_pip, option_python, option_user, namespace, add_subparser, run_cmd
 from . import utils
 
 
 def install_py_github(**kwargs):
     args = namespace(kwargs)
     utils.install_py_github(
-        url=args.url, sudo=args.sudo, sys=args.sys, pip=args.pip
+        url=args.url, sudo=args.sudo, user=args.user, pip=args.pip
     )
 
 
@@ -18,7 +18,7 @@ def _add_subparser_install_py_github(subparsers):
     subparser.add_argument(
         dest="url", help=f"The URL of the Python package's GitHub repository."
     )
-    option_sys(subparser)
+    option_user(subparser)
     option_python(subparser)
     option_pip(subparser)
     subparser.set_defaults(func=install_py_github)
@@ -31,7 +31,7 @@ def dsutil(**kwargs):
     args = namespace(kwargs)
     if args.install:
         url = "https://github.com/dclong/dsutil"
-        utils.install_py_github(url=url, pip=args.pip)
+        utils.install_py_github(url=url, pip=args.pip, sudo=args.sudo, user=args.user)
     if args.config:
         pass
     if args.uninstall:
@@ -59,7 +59,7 @@ def xinstall(**kwargs):
     if args.install:
         url = "https://github.com/dclong/xinstall"
         utils.install_py_github(
-            url=url, sudo=args.sudo, sys=args.sys, pip=args.pip
+            url=url, sudo=args.sudo, user=args.user, pip=args.pip
         )
     if args.config:
         pass
@@ -68,7 +68,7 @@ def xinstall(**kwargs):
 
 
 def _xinstall_args(subparser):
-    option_sys(subparser)
+    option_user(subparser)
 
 
 def _add_subparser_xinstall(subparsers):

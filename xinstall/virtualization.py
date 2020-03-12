@@ -64,9 +64,9 @@ def docker(**kwargs):
         elif is_centos_series():
             run_cmd(f"{args.sudo_s} yum install docker docker-compose")
     if args.config:
-        run_cmd("gpasswd -a $(id -un) docker")
+        run_cmd(f"{args.sudo_s} gpasswd -a $(id -un) docker")
         logging.warning(
-            'Please logout and then login to make the group "docker" effective!'
+            "Please run the command 'newgrp docker' or logout/login to make the group 'docker' effective!"
         )
     if args.uninstall:
         if is_ubuntu_debian():

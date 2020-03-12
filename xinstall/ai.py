@@ -1,7 +1,8 @@
 """Install AI related tools.
 """
 from pathlib import Path
-from .utils import HOME, USER, run_cmd, namespace, add_subparser
+import warnings
+from .utils import HOME, USER, run_cmd, namespace, add_subparser, is_linux, is_macos
 
 
 def kaggle(**kwargs):
@@ -53,10 +54,16 @@ def pytorch(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html"
-        if args.gpu:
+        if is_linux():
+            cmd = f"{args.pip} install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html"
+            if args.gpu:
+                cmd = f"{args.pip} install torch torchvision"
+            run_cmd(cmd)
+        elif is_macos():
             cmd = f"{args.pip} install torch torchvision"
-        run_cmd(cmd)
+            if args.gpu:
+                warnings.warn("Ignore the option '--gpu' as CUDA version of PyTorch is not supported on macOS.")
+            run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
@@ -198,9 +205,13 @@ def opencv_python(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"""{args.sudo_s} apt-get install libsm6 libxrender-dev \
-                && {args.pip} install opencv-python"""
-        run_cmd(cmd)
+        if is_linux():
+            cmd = f"""{args.sudo_s} apt-get install libsm6 libxrender-dev \
+                    && {args.pip} install opencv-python"""
+            run_cmd(cmd)
+        elif is_macos():
+            cmd = f"{args.pip} install opencv-python"
+            run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
@@ -212,4 +223,27 @@ def _add_subparser_opencv_python(subparsers):
         subparsers,
         "opencv_python",
         func=opencv_python,
+        aliases=["opencv", "cv2"],
+    )
+
+
+def nlp(**kwargs):
+    """Insert Python packages (transformers, pytext and fasttext) for NLP.
+    This function assumes that the correct version of PyTorch has already been installed.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"{args.sudo_s} pip3 install transformers pytext fasttext"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_nlp(subparsers):
+    add_subparser(
+        subparsers,
+        "nlp",
+        func=nlp,
     )
