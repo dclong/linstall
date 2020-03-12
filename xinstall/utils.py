@@ -212,7 +212,10 @@ def _github_version(url) -> str:
 
 
 def install_py_github(
-    url: str, sudo: bool = False, user: bool = False, pip: str = "pip3"
+    url: str,
+    sudo: bool = False,
+    user: bool = False,
+    pip: str = "pip3"
 ) -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
     :param url: The root URL of the GitHub repository.
@@ -257,8 +260,7 @@ def option_user(subparser):
         "--user",
         dest="user",
         action="store_true",
-        help=
-        "Install the Python package to user's local directory."
+        help="Install the Python package to user's local directory."
     )
 
 
