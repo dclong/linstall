@@ -247,7 +247,8 @@ def bash_it(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"""git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it \
+        cmd = f"""rm -rf ~/.bash_it \
+                && git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it \
                 && ~/.bash_it/install.sh --silent
                 """
         run_cmd(cmd)
