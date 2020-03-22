@@ -44,9 +44,9 @@ def _add_subparser_itypescript(subparsers):
 def jupyterlab_lsp(**kwargs):
     args = namespace(kwargs)
     if args.install:
-        cmd = """{args.sudo_s} {args.pip} install --pre jupyter-lsp \
+        cmd = """{args.pip} install jupyter-lsp \
                 && {args.sudo_s} {args.jupyter} labextension install @krassowski/jupyterlab-lsp \
-                && {args.sudo_s} {args.pip} install python-language-server[all] pyls-mypy"""
+                && {args.pip} install python-language-server[all] pyls-mypy"""
         run_cmd(cmd)
     if args.config:
         pass

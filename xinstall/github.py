@@ -66,7 +66,7 @@ def xinstall(**kwargs):
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f"{args.sudo_s} {args.pip} uninstall xinstall")
+        run_cmd(f"{args.pip} uninstall xinstall")
 
 
 def _xinstall_args(subparser):

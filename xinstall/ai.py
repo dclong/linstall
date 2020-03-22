@@ -235,7 +235,7 @@ def nlp(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.sudo_s} pip3 install transformers pytext fasttext"
+        cmd = f"{args.pip} install transformers pytext fasttext"
         run_cmd(cmd)
     if args.config:
         pass

@@ -226,7 +226,7 @@ def install_py_github(
     """
     version = _github_version(url)
     url = f"{url}/releases/download/{version}/{Path(url).name}-{re.sub('[a-zA-Z]', '', version)}-py3-none-any.whl"
-    cmd = f"{'sudo' if sudo else ''} {pip} install {'--user' if user else ''} --upgrade {url}"
+    cmd = f"{pip} install {'--user' if user else ''} --upgrade {url}"
     run_cmd(cmd)
 
 
