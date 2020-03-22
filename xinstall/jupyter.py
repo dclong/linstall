@@ -28,11 +28,11 @@ def itypescript(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        run_cmd(f"{args.sudo_s} npm install -g --unsafe-perm itypescript")
-        run_cmd(f"{args.sudo_s} its --ts-hide-undefined --install=global")
+        run_cmd(f"npm install -g --unsafe-perm itypescript")
+        run_cmd(f"its --ts-hide-undefined --install=global")
     if args.uninstall:
-        run_cmd(f"{args.sudo_s} jupyter kernelspec uninstall typescript")
-        run_cmd(f"{args.sudo_s} npm uninstall itypescript")
+        run_cmd(f"jupyter kernelspec uninstall typescript")
+        run_cmd(f"npm uninstall itypescript")
     if args.config:
         pass
 
@@ -45,7 +45,7 @@ def jupyterlab_lsp(**kwargs):
     args = namespace(kwargs)
     if args.install:
         cmd = """{args.pip} install jupyter-lsp \
-                && {args.sudo_s} {args.jupyter} labextension install @krassowski/jupyterlab-lsp \
+                && {args.jupyter} labextension install @krassowski/jupyterlab-lsp \
                 && {args.pip} install python-language-server[all] pyls-mypy"""
         run_cmd(cmd)
     if args.config:
@@ -69,24 +69,24 @@ def beakerx(**kwargs):
     args = namespace(kwargs)
     if args.install:
         run_cmd(f"{args.pip} install --user beakerx")
-        run_cmd(f"{args.sudo_s} beakerx install")
+        run_cmd(f"beakerx install")
         run_cmd(
-            f"{args.sudo_s} jupyter labextension install @jupyter-widgets/jupyterlab-manager",
+            f"jupyter labextension install @jupyter-widgets/jupyterlab-manager",
         )
         run_cmd(
-            f"{args.sudo_s} jupyter labextension install beakerx-jupyterlab",
+            f"jupyter labextension install beakerx-jupyterlab",
         )
     if args.uninstall:
         run_cmd(
-            f"{args.sudo_s} jupyter labextension uninstall beakerx-jupyterlab",
+            f"jupyter labextension uninstall beakerx-jupyterlab",
         )
         run_cmd(
-            f"{args.sudo_s} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager",
+            f"jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager",
         )
-        run_cmd(f"{args.sudo_s} beakerx uninstall")
+        run_cmd(f"beakerx uninstall")
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:
-        run_cmd(f"{args.sudo_s} chown -R {USER_ID}:{GROUP_ID} {HOME}")
+        run_cmd(f"chown -R {USER_ID}:{GROUP_ID} {HOME}")
 
 
 def _add_subparser_beakerx(subparsers):
@@ -116,7 +116,7 @@ def almond(**kwargs):
                 -o {almond} \
                 sh.almond:scala-kernel_{args.scala_version}:{args.almond_version}""",
         )
-        run_cmd(f"{args.sudo_s} {almond} --install --global --force")
+        run_cmd(f"{almond} --install --global --force")
     if args.config:
         pass
 
@@ -153,7 +153,7 @@ def evcxr_jupyter(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"""{args.sudo_s} apt-get install {args._yes_s} cmake cargo \
+        cmd = f"""apt-get install {args._yes_s} cmake cargo \
             && cargo install --force evcxr_jupyter \
             && {HOME}/.cargo/bin/evcxr_jupyter --install"""
         run_cmd(cmd)

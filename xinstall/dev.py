@@ -29,16 +29,16 @@ def cargo(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"{args.sudo_s} apt-get install {args._yes_s} cargo")
+            run_cmd(f"apt-get install {args._yes_s} cargo")
         if is_macos():
             brew_install_safe(["cargo"])
         if is_centos_series():
-            run_cmd(f"{args.sudo_s} yum install {args._yes_s} cargo")
+            run_cmd(f"yum install {args._yes_s} cargo")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"{args.sudo_s} apt-get purge {args._yes_s} cargo")
+            run_cmd(f"apt-get purge {args._yes_s} cargo")
         if is_macos():
             run_cmd(f"brew uninstall cargo")
         if is_centos_series():
@@ -55,7 +55,7 @@ def openjdk8(**kwargs):
         if is_ubuntu_debian():
             update_apt_source()
             run_cmd(
-                f"{args.sudo_s} apt-get install {args._yes_s} openjdk-jdk-8 maven gradle",
+                f"apt-get install {args._yes_s} openjdk-jdk-8 maven gradle",
             )
         if is_macos():
             cmd = "brew tap AdoptOpenJDK/openjdk && brew cask install adoptopenjdk8"
@@ -67,7 +67,7 @@ def openjdk8(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f"{args.sudo_s} apt-get purge {args._yes_s} openjdk-jdk-8 maven gradle",
+                f"apt-get purge {args._yes_s} openjdk-jdk-8 maven gradle",
             )
         if is_macos():
             run_cmd(f"brew cask uninstall adoptopenjdk8")
@@ -130,17 +130,17 @@ def nodejs(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} nodejs npm"""
+            cmd = f"""apt-get install {args._yes_s} nodejs npm"""
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["nodejs"])
         if is_centos_series():
-            run_cmd(f"{args.sudo_s} yum install {args._yes_s} nodejs")
+            run_cmd(f"yum install {args._yes_s} nodejs")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"{args.sudo_s} apt-get purge {args._yes_s} nodejs")
+            run_cmd(f"apt-get purge {args._yes_s} nodejs")
         if is_macos():
             run_cmd(f"brew uninstall nodejs")
         if is_centos_series():
@@ -179,13 +179,13 @@ def python3(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"{args.sudo_s} apt-get install {args._yes_s} python3 python3-pip python3-setuptools"
+            cmd = f"apt-get install {args._yes_s} python3 python3-pip python3-setuptools"
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["python3"])
         if is_centos_series():
             run_cmd(
-                f"{args.sudo_s} yum install {args._yes_s} python34 python34-devel python34-pip",
+                f"yum install {args._yes_s} python34 python34-devel python34-pip",
             )
             run_cmd(f"{args.pip} install --user setuptools")
     if args.config:
@@ -193,7 +193,7 @@ def python3(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f"{args.sudo_s} apt-get purge {args._yes_s} python3 python3-dev python3-setuptools python3-pip python3-venv",
+                f"apt-get purge {args._yes_s} python3 python3-dev python3-setuptools python3-pip python3-venv",
             )
         if is_macos():
             run_cmd(f"brew uninstall python3")
@@ -224,7 +224,7 @@ def poetry(**kwargs):
         # bash completion
         if args.bash_completion:
             if is_linux():
-                cmd = f"{poetry_bin} completions bash | {args.sudo_s} tee /etc/bash_completion.d/poetry.bash-completion > /dev/null"
+                cmd = f"{poetry_bin} completions bash | tee /etc/bash_completion.d/poetry.bash-completion > /dev/null"
                 run_cmd(cmd)
                 return
             if is_macos():
@@ -273,7 +273,6 @@ def _add_subparser_pyjnius(subparsers):
 
 def spark(**kwargs):
     """Install Spark into /opt/spark.
-    :param sudo:
     :param yes:
     :param install:
     :param config:
@@ -285,8 +284,8 @@ def spark(**kwargs):
         spark_hdp = f"spark-{args.version}-bin-hadoop2.7"
         url = f"{args.mirror}/spark-{args.version}/{spark_hdp}.tgz"
         cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
-                && {args.sudo_s} tar -zxvf /tmp/{spark_hdp}.tgz -C /opt/ \
-                && {args.sudo_s} ln -svf /opt/{spark_hdp} /opt/spark \
+                && tar -zxvf /tmp/{spark_hdp}.tgz -C /opt/ \
+                && ln -svf /opt/{spark_hdp} /opt/spark \
                 && rm /tmp/{spark_hdp}.tgz
             """
         run_cmd(cmd)
@@ -294,7 +293,7 @@ def spark(**kwargs):
         cmd = "export SPARK_HOME=/opt/spark"
         run_cmd(cmd)
     if args.uninstall:
-        cmd = f"{args.sudo_s} rm -rf /opt/spark*"
+        cmd = f"rm -rf /opt/spark*"
         run_cmd(cmd)
 
 
@@ -322,7 +321,6 @@ def _add_subparser_spark(subparsers):
 
 def pyspark(**kwargs):
     """Install PySpark.
-    :param sudo:
     :param yes:
     :param install:
     :param config:
@@ -337,7 +335,6 @@ def pyspark(**kwargs):
                 config=True,
                 mirror="http://us.mirrors.quenda.co/apache/spark/",
                 version="2.4.5",
-                sudo=args.sudo,
                 yes=args.yes
             )
         cmd = f"{args.pip} install pyspark findspark optimuspyspark"
@@ -358,12 +355,12 @@ def rust(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.sudo_s} apt-get install {args._yes_s} cmake cargo"
+        cmd = f"apt-get install {args._yes_s} cmake cargo"
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"{args.sudo_s} apt-get purge {args._yes_s} cargo"
+        cmd = f"apt-get purge {args._yes_s} cargo"
         run_cmd(cmd)
 
 
@@ -468,21 +465,21 @@ def git(**kwargs) -> None:
         if is_ubuntu_debian():
             update_apt_source()
             run_cmd(
-                f"{args.sudo_s} apt-get install {args._yes_s} git git-lfs",
+                f"apt-get install {args._yes_s} git git-lfs",
             )
         elif is_macos():
             brew_install_safe(["git", "git-lfs", "bash-completion@2"])
         elif is_centos_series():
-            run_cmd(f"{args.sudo_s} yum install git")
+            run_cmd(f"yum install git")
         run_cmd("git lfs install")
     if args.uninstall:
         run_cmd("git lfs uninstall")
         if is_ubuntu_debian():
-            run_cmd(f"{args.sudo_s} apt-get purge {args._yes_s} git git-lfs")
+            run_cmd(f"apt-get purge {args._yes_s} git git-lfs")
         elif is_macos():
             run_cmd(f"brew uninstall git git-lfs")
         elif is_centos_series():
-            run_cmd(f"{args.sudo_s} yum remove git")
+            run_cmd(f"yum remove git")
     if args.config:
         ssh_client(config=True)
         gitconfig = HOME / ".gitconfig"
@@ -523,20 +520,20 @@ def antlr(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"{args.sudo_s} apt-get install {args._yes_s} antlr4")
+            run_cmd(f"apt-get install {args._yes_s} antlr4")
         elif is_macos():
             brew_install_safe(["antlr4"])
         elif is_centos_series():
-            run_cmd(f"{args.sudo_s} yum install antlr")
+            run_cmd(f"yum install antlr")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"{args.sudo_s} apt-get purge {args._yes_s} antlr4")
+            run_cmd(f"apt-get purge {args._yes_s} antlr4")
         elif is_macos():
             run_cmd(f"brew uninstall antlr4")
         elif is_centos_series():
-            run_cmd(f"{args.sudo_s} yum remove antlr")
+            run_cmd(f"yum remove antlr")
 
 
 def _add_subparser_antlr(subparsers):

@@ -5,7 +5,7 @@ from . import utils
 def install_py_github(**kwargs):
     args = namespace(kwargs)
     utils.install_py_github(
-        url=args.url, sudo=args.sudo, user=args.user, pip=args.pip
+        url=args.url, user=args.user, pip=args.pip
     )
 
 
@@ -32,7 +32,7 @@ def dsutil(**kwargs):
     if args.install:
         url = "https://github.com/dclong/dsutil"
         utils.install_py_github(
-            url=url, pip=args.pip, sudo=args.sudo, user=args.user
+            url=url, pip=args.pip, user=args.user
         )
     if args.config:
         pass
@@ -61,7 +61,7 @@ def xinstall(**kwargs):
     if args.install:
         url = "https://github.com/dclong/xinstall"
         utils.install_py_github(
-            url=url, sudo=args.sudo, user=args.user, pip=args.pip
+            url=url, user=args.user, pip=args.pip
         )
     if args.config:
         pass

@@ -208,7 +208,7 @@ def opencv_python(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_linux():
-            cmd = f"""{args.sudo_s} apt-get install libsm6 libxrender-dev \
+            cmd = f"""apt-get install libsm6 libxrender-dev \
                     && {args.pip} install opencv-python"""
             run_cmd(cmd)
         elif is_macos():

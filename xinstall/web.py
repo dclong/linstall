@@ -26,7 +26,7 @@ def ssh_server(**kwargs):
         if is_ubuntu_debian():
             update_apt_source()
             run_cmd(
-                f"{args.sudo_s} apt-get install {args._yes_s} openssh-server fail2ban",
+                f"apt-get install {args._yes_s} openssh-server fail2ban",
             )
         elif is_macos():
             pass
@@ -37,7 +37,7 @@ def ssh_server(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f"{args.sudo_s} apt-get purge {args._yes_s} openssh-server fail2ban",
+                f"apt-get purge {args._yes_s} openssh-server fail2ban",
             )
         elif is_macos():
             pass
@@ -83,13 +83,13 @@ def proxychains(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} proxychains4 \
-                    && {args.sudo_s} ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
+            cmd = f""" apt-get install {args._yes_s} proxychains4 \
+                    && ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(["proxychains-ng"])
         elif is_centos_series():
-            run_cmd(f"{args.sudo_s} yum install proxychains")
+            run_cmd(f"yum install proxychains")
     if args.config:
         print("Configuring proxychains ...")
         des_dir = os.path.join(HOME, ".proxychains")
@@ -99,11 +99,11 @@ def proxychains(**kwargs) -> None:
         )
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"{args.sudo_s} apt-get purge proxychains4")
+            run_cmd(f"apt-get purge proxychains4")
         elif is_macos():
             run_cmd(f"brew uninstall proxychains-ng")
         elif is_centos_series():
-            run_cmd(f"{args.sudo_s} yum remove proxychains")
+            run_cmd(f"yum remove proxychains")
 
 
 def _add_subparser_proxychains(subparsers):
@@ -119,7 +119,7 @@ def dryscrape(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
+            cmd = f"""apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
                 && {args.pip} install --user dryscrape
                 """
             run_cmd(cmd)
@@ -178,7 +178,7 @@ def download_tools(**kwargs):
         if is_ubuntu_debian():
             update_apt_source()
             run_cmd(
-                f"{args.sudo_s} apt-get install {args._yes_s} wget curl aria2",
+                f"apt-get install {args._yes_s} wget curl aria2",
             )
         elif is_macos():
             brew_install_safe(["wget", "curl", "aria2"])
@@ -189,7 +189,7 @@ def download_tools(**kwargs):
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f"{args.sudo_s} apt-get purge {args._yes_s} wget curl aria2",
+                f"apt-get purge {args._yes_s} wget curl aria2",
             )
         elif is_macos():
             run_cmd(f"brew uninstall wget curl aria2")

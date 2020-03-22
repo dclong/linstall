@@ -117,13 +117,6 @@ def parse_args(args=None, namespace=None):
         description="Easy installation and configuration for Unix/Linux"
     )
     parser.add_argument(
-        "-s",
-        "--sudo",
-        dest="sudo",
-        action="store_true",
-        help="Run commands using sudo."
-    )
-    parser.add_argument(
         "-y",
         "--yes",
         dest="yes",
