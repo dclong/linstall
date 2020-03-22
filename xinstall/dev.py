@@ -66,9 +66,7 @@ def openjdk8(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"apt-get purge {args._yes_s} openjdk-jdk-8 maven gradle",
-            )
+            run_cmd(f"apt-get purge {args._yes_s} openjdk-jdk-8 maven gradle", )
         if is_macos():
             run_cmd(f"brew cask uninstall adoptopenjdk8")
         if is_centos_series():
@@ -464,9 +462,7 @@ def git(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"apt-get install {args._yes_s} git git-lfs",
-            )
+            run_cmd(f"apt-get install {args._yes_s} git git-lfs", )
         elif is_macos():
             brew_install_safe(["git", "git-lfs", "bash-completion@2"])
         elif is_centos_series():

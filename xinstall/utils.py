@@ -209,11 +209,7 @@ def _github_version(url) -> str:
     return Path(req.url).name
 
 
-def install_py_github(
-    url: str,
-    user: bool = False,
-    pip: str = "pip3"
-) -> None:
+def install_py_github(url: str, user: bool = False, pip: str = "pip3") -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
     :param url: The root URL of the GitHub repository.
     :param user: If True, install to user's local directory. 

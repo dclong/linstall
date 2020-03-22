@@ -4,9 +4,7 @@ from . import utils
 
 def install_py_github(**kwargs):
     args = namespace(kwargs)
-    utils.install_py_github(
-        url=args.url, user=args.user, pip=args.pip
-    )
+    utils.install_py_github(url=args.url, user=args.user, pip=args.pip)
 
 
 def _add_subparser_install_py_github(subparsers):
@@ -31,9 +29,7 @@ def dsutil(**kwargs):
     args = namespace(kwargs)
     if args.install:
         url = "https://github.com/dclong/dsutil"
-        utils.install_py_github(
-            url=url, pip=args.pip, user=args.user
-        )
+        utils.install_py_github(url=url, pip=args.pip, user=args.user)
     if args.config:
         pass
     if args.uninstall:
@@ -60,9 +56,7 @@ def xinstall(**kwargs):
     args = namespace(kwargs)
     if args.install:
         url = "https://github.com/dclong/xinstall"
-        utils.install_py_github(
-            url=url, user=args.user, pip=args.pip
-        )
+        utils.install_py_github(url=url, user=args.user, pip=args.pip)
     if args.config:
         pass
     if args.uninstall:

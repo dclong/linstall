@@ -25,9 +25,7 @@ def ssh_server(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"apt-get install {args._yes_s} openssh-server fail2ban",
-            )
+            run_cmd(f"apt-get install {args._yes_s} openssh-server fail2ban", )
         elif is_macos():
             pass
         elif is_centos_series():
@@ -36,9 +34,7 @@ def ssh_server(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"apt-get purge {args._yes_s} openssh-server fail2ban",
-            )
+            run_cmd(f"apt-get purge {args._yes_s} openssh-server fail2ban", )
         elif is_macos():
             pass
         elif is_centos_series():
@@ -177,9 +173,7 @@ def download_tools(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"apt-get install {args._yes_s} wget curl aria2",
-            )
+            run_cmd(f"apt-get install {args._yes_s} wget curl aria2", )
         elif is_macos():
             brew_install_safe(["wget", "curl", "aria2"])
         elif is_centos_series():
@@ -188,9 +182,7 @@ def download_tools(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"apt-get purge {args._yes_s} wget curl aria2",
-            )
+            run_cmd(f"apt-get purge {args._yes_s} wget curl aria2", )
         elif is_macos():
             run_cmd(f"brew uninstall wget curl aria2")
         elif is_centos_series():

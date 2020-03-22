@@ -14,9 +14,7 @@ def vim(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"apt-get install {args._yes_s} vim vim-nox",
-            )
+            run_cmd(f"apt-get install {args._yes_s} vim vim-nox", )
         elif is_macos():
             brew_install_safe(["vim"])
         elif is_centos_series():
@@ -215,9 +213,7 @@ def intellij_idea(**kwargs):
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"apt-get purge {args._yes_s} intellij-idea-ce",
-            )
+            run_cmd(f"apt-get purge {args._yes_s} intellij-idea-ce", )
         elif is_macos():
             run_cmd(f"brew cask uninstall intellij-idea-ce")
         elif is_centos_series():

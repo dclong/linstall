@@ -48,9 +48,7 @@ def shell_utils(**kwargs):
         elif is_macos():
             brew_install_safe(["bash-completion@2", "man-db"])
         elif is_centos_series():
-            run_cmd(
-                f"yum install bash-completion command-not-found man-db",
-            )
+            run_cmd(f"yum install bash-completion command-not-found man-db", )
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
@@ -59,9 +57,7 @@ def shell_utils(**kwargs):
         elif is_macos():
             run_cmd(f"brew uninstall bash-completion man-db")
         elif is_centos_series():
-            run_cmd(
-                f"yum remove bash-completion command-not-found man-db",
-            )
+            run_cmd(f"yum remove bash-completion command-not-found man-db", )
     if args.config:
         pass
 
@@ -270,9 +266,7 @@ def bash_completion(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"apt-get install {args._yes_s} bash-completion",
-            )
+            run_cmd(f"apt-get install {args._yes_s} bash-completion", )
         elif is_macos():
             brew_install_safe(["bash-completion@2"])
         elif is_centos_series():

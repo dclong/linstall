@@ -18,18 +18,14 @@ def virtualbox(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"apt-get install {args._yes_s} virtualbox-qt",
-            )
+            run_cmd(f"apt-get install {args._yes_s} virtualbox-qt", )
         elif is_macos():
             run_cmd(f"brew cask install virtualbox virtualbox-extension-pack")
         elif is_centos_series():
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"apt-get purge {args._yes_s} virtualbox-qt",
-            )
+            run_cmd(f"apt-get purge {args._yes_s} virtualbox-qt", )
         elif is_macos():
             run_cmd(
                 f"brew cask uninstall virtualbox virtualbox-extension-pack",
@@ -51,9 +47,7 @@ def docker(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"apt-get install {args._yes_s} docker.io docker-compose",
-            )
+            run_cmd(f"apt-get install {args._yes_s} docker.io docker-compose", )
         elif is_macos():
             brew_install_safe(
                 [
@@ -70,9 +64,7 @@ def docker(**kwargs):
         )
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"apt-get purge {args._yes_s} docker docker-compose",
-            )
+            run_cmd(f"apt-get purge {args._yes_s} docker docker-compose", )
         elif is_macos():
             run_cmd(
                 f"brew uninstall docker docker-completion docker-compose docker-compose-completion",
