@@ -64,7 +64,9 @@ def ssh_client(**kwargs) -> None:
         src = BASE_DIR / "ssh/client/config"
         des = HOME / ".ssh/config"
         shutil.copy2(src, des)
-        des.chmod(0o600)
+        # file permissions
+        cmd = f"chown -R $(id -un):$(id -gn) {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
+        run_cmd(cmd)
 
 
 def _add_subparser_ssh_client(subparsers):
