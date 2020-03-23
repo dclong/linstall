@@ -1,9 +1,8 @@
 import os
 from .utils import (
-    USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, USER, GROUP,
-    is_ubuntu_debian, is_centos_series, is_linux, is_fedora, update_apt_source,
-    brew_install_safe, is_macos, run_cmd, namespace, add_subparser,
-    intellij_idea_plugin
+    USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, USER, GROUP, is_ubuntu_debian,
+    is_centos_series, is_linux, is_fedora, update_apt_source, brew_install_safe,
+    is_macos, run_cmd, namespace, add_subparser, intellij_idea_plugin
 )
 
 
