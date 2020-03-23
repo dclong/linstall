@@ -6,14 +6,19 @@ You can download a copy of the latest release and install it using pip.
 ```
 sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.6.0/xinstall-0.6.0-py3-none-any.whl
 ```
-Or you can use the following script to download and install the latest version automatically.
+Or you can use the following command to install the latest master branch
+if you have pip 20.0+.
 ```
-curl -sSL www.legendu.net/media/install_py_github.py | python3 - https://github.com/dclong/xinstall --sudo --sys
+sudo pip3 install git+https://github.com/dclong/xinstall
 ```
 ## Usage
 
 1. Run `xinstall -h` for the help doc.
 
+2. Update xinstall.
+
+        sudo xinstall xinstall -ic
+        
 2. Below is an example of install SpaceVim and configure it.
 
         xinstall svim -ic
