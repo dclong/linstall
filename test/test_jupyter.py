@@ -7,5 +7,5 @@ sp.run("sudo apt-get update", shell=True, check=True)
 def test_evcxr_jupyter():
     """Test installing evcxr Jupyter/Lab kernel.
     """
-    cmd = "xinstall --sudo -y evcxr -ic"
+    cmd = "sudo xinstall -y evcxr -ic"
     sp.run(cmd, shell=True, check=True)

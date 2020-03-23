@@ -5,8 +5,9 @@ import os
 import shutil
 from pathlib import Path
 from .utils import (
-    USER,
     HOME,
+    USER,
+    GROUP,
     BASE_DIR,
     BIN_DIR,
     run_cmd,
@@ -25,9 +26,7 @@ def ssh_server(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"{args.sudo_s} apt-get install {args._yes_s} openssh-server fail2ban",
-            )
+            run_cmd(f"apt-get install {args._yes_s} openssh-server fail2ban", )
         elif is_macos():
             pass
         elif is_centos_series():
@@ -36,9 +35,7 @@ def ssh_server(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"{args.sudo_s} apt-get purge {args._yes_s} openssh-server fail2ban",
-            )
+            run_cmd(f"apt-get purge {args._yes_s} openssh-server fail2ban", )
         elif is_macos():
             pass
         elif is_centos_series():
@@ -68,7 +65,9 @@ def ssh_client(**kwargs) -> None:
         src = BASE_DIR / "ssh/client/config"
         des = HOME / ".ssh/config"
         shutil.copy2(src, des)
-        des.chmod(0o600)
+        # file permissions
+        cmd = f"chown -R {USER}:{GROUP} {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
+        run_cmd(cmd)
 
 
 def _add_subparser_ssh_client(subparsers):
@@ -83,13 +82,13 @@ def proxychains(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} proxychains4 \
-                    && {args.sudo_s} ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
+            cmd = f""" apt-get install {args._yes_s} proxychains4 \
+                    && ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(["proxychains-ng"])
         elif is_centos_series():
-            run_cmd(f"{args.sudo_s} yum install proxychains")
+            run_cmd(f"yum install proxychains")
     if args.config:
         print("Configuring proxychains ...")
         des_dir = os.path.join(HOME, ".proxychains")
@@ -99,11 +98,11 @@ def proxychains(**kwargs) -> None:
         )
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"{args.sudo_s} apt-get purge proxychains4")
+            run_cmd(f"apt-get purge proxychains4")
         elif is_macos():
             run_cmd(f"brew uninstall proxychains-ng")
         elif is_centos_series():
-            run_cmd(f"{args.sudo_s} yum remove proxychains")
+            run_cmd(f"yum remove proxychains")
 
 
 def _add_subparser_proxychains(subparsers):
@@ -119,7 +118,7 @@ def dryscrape(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"""{args.sudo_s} apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
+            cmd = f"""apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
                 && {args.pip} install --user dryscrape
                 """
             run_cmd(cmd)
@@ -177,9 +176,7 @@ def download_tools(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"{args.sudo_s} apt-get install {args._yes_s} wget curl aria2",
-            )
+            run_cmd(f"apt-get install {args._yes_s} wget curl aria2", )
         elif is_macos():
             brew_install_safe(["wget", "curl", "aria2"])
         elif is_centos_series():
@@ -188,9 +185,7 @@ def download_tools(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"{args.sudo_s} apt-get purge {args._yes_s} wget curl aria2",
-            )
+            run_cmd(f"apt-get purge {args._yes_s} wget curl aria2", )
         elif is_macos():
             run_cmd(f"brew uninstall wget curl aria2")
         elif is_centos_series():

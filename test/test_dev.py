@@ -7,7 +7,7 @@ sp.run("sudo apt-get update", shell=True, check=True)
 def test_git():
     """Test installing and configuring Git.
     """
-    cmd = "xinstall --sudo -y git -ic"
+    cmd = "sudo xinstall -y git -ic"
     sp.run(cmd, shell=True, check=True)
 
 
@@ -21,7 +21,7 @@ def test_pyjnius():
 def test_nodejs():
     """Test installing nodejs.
     """
-    cmd = "xinstall --sudo -y nodejs -ic"
+    cmd = "sudo xinstall -y nodejs -ic"
     sp.run(cmd, shell=True, check=True)
 
 
@@ -35,7 +35,7 @@ def test_bash_lsp():
 def test_spark():
     """Test installing Spark.
     """
-    cmd = "xinstall --sudo spark -ic"
+    cmd = "sudo xinstall spark -ic"
     sp.run(cmd, shell=True, check=True)
 
 
@@ -49,7 +49,7 @@ def test_pyspark():
 def test_rust():
     """Test installing the Rust programming language.
     """
-    cmd = "xinstall --sudo -y rust -ic"
+    cmd = "sudo xinstall -y rust -ic"
     sp.run(cmd, shell=True, check=True)
 
 

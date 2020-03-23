@@ -12,11 +12,11 @@ import tempfile
 import re
 import datetime
 import subprocess as sp
+import pwd
 import logging
 HOME = Path.home()
 USER = HOME.name
-USER_ID = os.getuid()
-GROUP_ID = os.getgid()
+GROUP = pwd.getpwnam(USER).pw_gid
 FILE = Path(__file__).resolve()
 BASE_DIR = FILE.parent / "data"
 LOCAL_DIR = HOME / ".local"
@@ -80,7 +80,7 @@ def run_cmd(cmd: Union[List, str]) -> None:
     :param cmd: The command to run.
     """
     proc = sp.run(cmd, shell=isinstance(cmd, str), check=True)
-    logging.info(proc.args)
+    logging.debug(proc.args)
 
 
 def brew_install_safe(pkgs: Union[str, List]) -> None:
@@ -186,7 +186,6 @@ def to_bool(value: Any) -> bool:
 
 def update_apt_source(yes: bool = True, seconds: float = 3600 * 12):
     """Run apt-get update if necessary.
-    :param sudo: If True, run using sudo.
     :param yes: If True, automatically yes to prompt questions.
     :param seconds: Do not run if this function has already been run `seconds` seconds ago.
     """
@@ -197,9 +196,8 @@ def update_apt_source(yes: bool = True, seconds: float = 3600 * 12):
     )
     now = datetime.datetime.now()
     if (now - time).seconds > seconds:
-        sudo = "" if USER == "root" else "sudo"
         yes = "--yes" if yes else ""
-        run_cmd(f"{sudo} apt-get update {yes}")
+        run_cmd(f"apt-get update {yes}")
         SETTINGS[key] = now.strftime(fmt)
         with open(SETTINGS_FILE, "w") as fout:
             json.dump(SETTINGS, fout)
@@ -211,22 +209,16 @@ def _github_version(url) -> str:
     return Path(req.url).name
 
 
-def install_py_github(
-    url: str,
-    sudo: bool = False,
-    user: bool = False,
-    pip: str = "pip3"
-) -> None:
+def install_py_github(url: str, user: bool = False, pip: str = "pip3") -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
     :param url: The root URL of the GitHub repository.
-    :param sudo: If True, install using sudo.
     :param user: If True, install to user's local directory. 
         This option is equivalant to 'pip install --user'.
     :param pip: The path (pip3 by default) to the pip executable. 
     """
     version = _github_version(url)
     url = f"{url}/releases/download/{version}/{Path(url).name}-{re.sub('[a-zA-Z]', '', version)}-py3-none-any.whl"
-    cmd = f"{'sudo' if sudo else ''} {pip} install {'--user' if user else ''} --upgrade {url}"
+    cmd = f"{pip} install {'--user' if user else ''} --upgrade {url}"
     run_cmd(cmd)
 
 
@@ -247,10 +239,7 @@ def intellij_idea_plugin(version: str, url: str):
 
 
 def namespace(dic: Dict) -> Namespace:
-    dic.setdefault("sudo", False)
     dic.setdefault("yes", False)
-    dic["sudo_s"] = "sudo" if dic["sudo"] else ""
-    dic["_sudo_s"] = "--sudo" if dic["sudo"] else ""
     dic["_yes_s"] = "--yes" if dic["yes"] else ""
     return Namespace(**dic)
 

@@ -1,5 +1,6 @@
 """The command-line interface for xinstall.
 """
+import logging
 from argparse import ArgumentParser
 from .utils import add_subparser
 from .ai import (
@@ -91,7 +92,7 @@ from .desktop import (
     _add_subparser_nomachine,
     _add_subparser_lxqt,
 )
-__version__ = "0.5.4"
+__version__ = "0.6.0"
 
 
 def version(**kwargs):
@@ -117,11 +118,11 @@ def parse_args(args=None, namespace=None):
         description="Easy installation and configuration for Unix/Linux"
     )
     parser.add_argument(
-        "-s",
-        "--sudo",
-        dest="sudo",
-        action="store_true",
-        help="Run commands using sudo."
+        "-l",
+        "--level",
+        dest="level",
+        default="WARNING",
+        help="The level of logging."
     )
     parser.add_argument(
         "-y",
@@ -216,6 +217,7 @@ def main():
     """Run xinstall command-line interface.
     """
     args = parse_args()
+    logging.basicConfig(level=getattr(logging, args.level.upper()))
     args.func(**vars(args))
 
 

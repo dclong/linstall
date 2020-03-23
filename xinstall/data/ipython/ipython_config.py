@@ -239,10 +239,7 @@ c.AliasManager.user_aliases = [
         "mount.vboxsf.gdrive",
         "sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 gdrive ${HOME}/gdrive"
     ),
-    (
-        "ls.media",
-        "ls *.jpg *.jpeg *.png *.mp3 *.avi *.mkv *.mov *.mp4 *.wmv"
-    ),
+    ("ls.media", "ls *.jpg *.jpeg *.png *.mp3 *.avi *.mkv *.mov *.mp4 *.wmv"),
 ]
 if 'darwin' in PLATFORM:
     c.AliasManager.user_aliases.extend([
