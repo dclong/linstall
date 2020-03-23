@@ -12,11 +12,11 @@ import tempfile
 import re
 import datetime
 import subprocess as sp
+import pwd
 import logging
 HOME = Path.home()
 USER = HOME.name
-USER_ID = os.getuid()
-GROUP_ID = os.getgid()
+GROUP = pwd.getpwnam(USER).pw_gid
 FILE = Path(__file__).resolve()
 BASE_DIR = FILE.parent / "data"
 LOCAL_DIR = HOME / ".local"
@@ -80,7 +80,7 @@ def run_cmd(cmd: Union[List, str]) -> None:
     :param cmd: The command to run.
     """
     proc = sp.run(cmd, shell=isinstance(cmd, str), check=True)
-    logging.info(proc.args)
+    logging.debug(proc.args)
 
 
 def brew_install_safe(pkgs: Union[str, List]) -> None:

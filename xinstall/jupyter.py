@@ -1,6 +1,6 @@
 import os
 from .utils import (
-    USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, USER_ID, GROUP_ID,
+    USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, USER, GROUP,
     is_ubuntu_debian, is_centos_series, is_linux, is_fedora, update_apt_source,
     brew_install_safe, is_macos, run_cmd, namespace, add_subparser,
     intellij_idea_plugin
@@ -82,7 +82,7 @@ def beakerx(**kwargs):
         run_cmd(f"beakerx uninstall")
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:
-        run_cmd(f"chown -R {USER_ID}:{GROUP_ID} {HOME}")
+        run_cmd(f"chown -R {USER}:{GROUP} {HOME}")
 
 
 def _add_subparser_beakerx(subparsers):

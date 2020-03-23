@@ -5,8 +5,9 @@ import os
 import shutil
 from pathlib import Path
 from .utils import (
-    USER,
     HOME,
+    USER,
+    GROUP,
     BASE_DIR,
     BIN_DIR,
     run_cmd,
@@ -65,7 +66,7 @@ def ssh_client(**kwargs) -> None:
         des = HOME / ".ssh/config"
         shutil.copy2(src, des)
         # file permissions
-        cmd = f"chown -R $(id -un):$(id -gn) {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
+        cmd = f"chown -R {USER}:{GROUP} {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
         run_cmd(cmd)
 
 
