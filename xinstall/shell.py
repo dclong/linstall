@@ -258,7 +258,9 @@ def bash_it(**kwargs):
 
 
 def _add_subparser_bash_it(subparsers):
-    add_subparser(subparsers, "Bash-it", func=bash_it, aliases=["bashit", "shit", "bit"])
+    add_subparser(
+        subparsers, "Bash-it", func=bash_it, aliases=["bashit", "shit", "bit"]
+    )
 
 
 def bash_completion(**kwargs):
