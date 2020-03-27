@@ -59,6 +59,7 @@ from .dev import (
 from .bigdata import (
     _add_subparser_pyspark,
     _add_subparser_spark,
+    _add_subparser_dask,
 )
 from .jupyter import (
     _add_subparser_almond,
@@ -169,9 +170,10 @@ def parse_args(args=None, namespace=None):
     _add_subparser_poetry(subparsers)
     _add_subparser_cargo(subparsers)
     _add_subparser_antlr(subparsers)
-    _add_subparser_pyspark(subparsers)
+    # --------------------------- big data related  --------------------------------
+    _add_subparser_dask(subparsers)
     _add_subparser_spark(subparsers)
-    _add_subparser_pygetwindow(subparsers)
+    _add_subparser_pyspark(subparsers)
     # ------------------------- virtualization related  ------------------------------
     _add_subparser_docker(subparsers)
     _add_subparser_kubernetes(subparsers)
@@ -210,6 +212,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_version(subparsers)
     _add_subparser_nomachine(subparsers)
     _add_subparser_lxqt(subparsers)
+    _add_subparser_pygetwindow(subparsers)
     # --------------------------------------------------------
     return parser.parse_args(args=args, namespace=namespace)
 

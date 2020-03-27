@@ -93,3 +93,25 @@ def pyspark(**kwargs):
 
 def _add_subparser_pyspark(subparsers):
     add_subparser(subparsers, "PySpark", func=pyspark)
+
+
+def dask(**kwargs):
+    """Install the Python module dask.
+    :param yes:
+    :param install:
+    :param config:
+    :param uninstall:
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"{args.pip} install dask[complete]"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.pip} uninstall dask"
+        run_cmd(cmd)
+
+
+def _add_subparser_dask(subparsers):
+    add_subparser(subparsers, "dask", func=dask)
