@@ -55,6 +55,7 @@ from .dev import (
     _add_subparser_sdkman,
     _add_subparser_cargo,
     _add_subparser_antlr,
+    _add_subparser_jpype1,
 )
 from .bigdata import (
     _add_subparser_pyspark,
@@ -170,6 +171,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_poetry(subparsers)
     _add_subparser_cargo(subparsers)
     _add_subparser_antlr(subparsers)
+    _add_subparser_jpype1(subparsers)
     # --------------------------- big data related  --------------------------------
     _add_subparser_dask(subparsers)
     _add_subparser_spark(subparsers)
