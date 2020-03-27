@@ -1,3 +1,5 @@
+"""Installing dev related tools.
+"""
 import os
 import sys
 import shutil
@@ -269,85 +271,6 @@ def _add_subparser_pyjnius(subparsers):
     add_subparser(subparsers, "pyjnius", func=pyjnius, aliases=["pyj"])
 
 
-def spark(**kwargs):
-    """Install Spark into /opt/spark.
-    :param yes:
-    :param install:
-    :param config:
-    :param uninstall:
-    :param version:
-    """
-    args = namespace(kwargs)
-    if args.install:
-        spark_hdp = f"spark-{args.version}-bin-hadoop2.7"
-        url = f"{args.mirror}/spark-{args.version}/{spark_hdp}.tgz"
-        cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
-                && tar -zxvf /tmp/{spark_hdp}.tgz -C /opt/ \
-                && ln -svf /opt/{spark_hdp} /opt/spark \
-                && rm /tmp/{spark_hdp}.tgz
-            """
-        run_cmd(cmd)
-    if args.config:
-        cmd = "export SPARK_HOME=/opt/spark"
-        run_cmd(cmd)
-    if args.uninstall:
-        cmd = f"rm -rf /opt/spark*"
-        run_cmd(cmd)
-
-
-def _spark_args(subparser):
-    subparser.add_argument(
-        "-m",
-        "--mirror",
-        dest="mirror",
-        default="http://us.mirrors.quenda.co/apache/spark/",
-        help=
-        f"The mirror (default http://us.mirrors.quenda.co/apache/spark/) of Spark to use."
-    )
-    subparser.add_argument(
-        "-v",
-        "--version",
-        dest="version",
-        default="2.4.5",
-        help=f"The version of Spark to install."
-    )
-
-
-def _add_subparser_spark(subparsers):
-    add_subparser(subparsers, "Spark", func=spark, add_argument=_spark_args)
-
-
-def pyspark(**kwargs):
-    """Install PySpark.
-    :param yes:
-    :param install:
-    :param config:
-    :param uninstall:
-    :param version:
-    """
-    args = namespace(kwargs)
-    if args.install:
-        if not Path("/opt/spark").exists():
-            spark(
-                install=True,
-                config=True,
-                mirror="http://us.mirrors.quenda.co/apache/spark/",
-                version="2.4.5",
-                yes=args.yes
-            )
-        cmd = f"{args.pip} install pyspark findspark optimuspyspark"
-        run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        cmd = f"{args.pip} uninstall pyspark findspark optimuspyspark"
-        run_cmd(cmd)
-
-
-def _add_subparser_pyspark(subparsers):
-    add_subparser(subparsers, "PySpark", func=pyspark)
-
-
 def rust(**kwargs):
     """Install the Rust programming language.
     """
@@ -534,28 +457,3 @@ def antlr(**kwargs):
 
 def _add_subparser_antlr(subparsers):
     add_subparser(subparsers, "ANTLR", func=antlr)
-
-
-def pygetwindow(**kwargs):
-    """Install and configure the Python package PyGetWindow.
-    """
-    args = namespace(kwargs)
-    if args.install:
-        if is_linux():
-            sys.exit("PyGetWindow is not supported on Linux currently!")
-        cmd = f"{args.pip} install pyobjc-framework-quartz pygetwindow"
-        run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        cmd = f"{args.pip} uninstall pyobjc-framework-quartz pygetwindow"
-        run_cmd(cmd)
-
-
-def _add_subparser_pygetwindow(subparsers):
-    add_subparser(
-        subparsers,
-        "pygetwindow",
-        func=pygetwindow,
-        aliases=["pgw", "getwindow", "gwin"],
-    )

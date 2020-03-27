@@ -2,7 +2,6 @@
 """
 import logging
 from argparse import ArgumentParser
-from .utils import add_subparser
 from .ai import (
     _add_subparser_kaggle,
     _add_subparser_lightgbm,
@@ -56,9 +55,10 @@ from .dev import (
     _add_subparser_sdkman,
     _add_subparser_cargo,
     _add_subparser_antlr,
+)
+from .bigdata import (
     _add_subparser_pyspark,
     _add_subparser_spark,
-    _add_subparser_pygetwindow,
 )
 from .jupyter import (
     _add_subparser_almond,
@@ -91,8 +91,9 @@ from .web import (
 from .desktop import (
     _add_subparser_nomachine,
     _add_subparser_lxqt,
+    _add_subparser_pygetwindow,
 )
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 
 
 def version(**kwargs):
