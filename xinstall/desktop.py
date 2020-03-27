@@ -1,6 +1,11 @@
+import sys
 import tempfile
 from pathlib import Path
-from .utils import HOME, BASE_DIR, BIN_DIR, is_ubuntu_debian, is_centos_series, is_linux, is_fedora, update_apt_source, brew_install_safe, is_macos, run_cmd, namespace, add_subparser
+from .utils import (
+    HOME, BASE_DIR, BIN_DIR, is_ubuntu_debian, is_centos_series, is_linux,
+    is_fedora, update_apt_source, brew_install_safe, is_macos, run_cmd,
+    namespace, add_subparser
+)
 
 
 def nomachine(**kwargs):
@@ -61,4 +66,29 @@ def _add_subparser_lxqt(subparsers):
         subparsers,
         "lxqt",
         func=lxqt,
+    )
+
+
+def pygetwindow(**kwargs):
+    """Install and configure the Python package PyGetWindow.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        if is_linux():
+            sys.exit("PyGetWindow is not supported on Linux currently!")
+        cmd = f"{args.pip} install pyobjc-framework-quartz pygetwindow"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.pip} uninstall pyobjc-framework-quartz pygetwindow"
+        run_cmd(cmd)
+
+
+def _add_subparser_pygetwindow(subparsers):
+    add_subparser(
+        subparsers,
+        "pygetwindow",
+        func=pygetwindow,
+        aliases=["pgw", "getwindow", "gwin"],
     )
