@@ -55,7 +55,7 @@ def pytorch(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_linux():
-            cmd = f"{args.pip} install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html"
+            cmd = f"{args.pip} install torch torchvision"
             if args.gpu:
                 cmd = f"{args.pip} install torch torchvision"
             run_cmd(cmd)
