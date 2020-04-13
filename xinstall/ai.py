@@ -228,7 +228,7 @@ def _add_subparser_opencv_python(subparsers):
 
 
 def nlp(**kwargs):
-    """Insert Python packages (transformers, pytext and fasttext) for NLP.
+    """Install Python packages (PyTorch, transformers, pytext-nlp and fasttext) for NLP.
     This function assumes that the correct version of PyTorch has already been installed.
     """
     args = namespace(kwargs)
@@ -246,4 +246,5 @@ def _add_subparser_nlp(subparsers):
         subparsers,
         "nlp",
         func=nlp,
+        help_=nlp.__doc__,
     )
