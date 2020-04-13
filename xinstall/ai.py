@@ -50,7 +50,7 @@ def _add_subparser_lightgbm(subparsers):
 
 
 def pytorch(**kwargs):
-    """Insert the Python package kaggle.
+    """Insert PyTorch.
     """
     args = namespace(kwargs)
     if args.install:
@@ -59,10 +59,6 @@ def pytorch(**kwargs):
             run_cmd(cmd)
         elif is_macos():
             cmd = f"{args.pip} install torch torchvision"
-            if args.gpu:
-                warnings.warn(
-                    "Ignore the option '--gpu' as CUDA version of PyTorch is not supported on macOS."
-                )
             run_cmd(cmd)
     if args.config:
         pass
@@ -70,13 +66,13 @@ def pytorch(**kwargs):
         pass
 
 
-def _pytorch_args(subparser):
-    subparser.add_argument(
-        "--gpu",
-        dest="gpu",
-        action="store_true",
-        help="Install the GPU version of PyTorch."
-    )
+#def _pytorch_args(subparser):
+#    subparser.add_argument(
+#        "--gpu",
+#        dest="gpu",
+#        action="store_true",
+#        help="Install the GPU version of PyTorch."
+#    )
 
 
 def _add_subparser_pytorch(subparsers):
@@ -85,12 +81,11 @@ def _add_subparser_pytorch(subparsers):
         "PyTorch",
         func=pytorch,
         aliases=[],
-        add_argument=_pytorch_args
     )
 
 
 def autogluon(**kwargs):
-    """Insert the Python package kaggle.
+    """Insert the Python package AutoGluon.
     """
     args = namespace(kwargs)
     if args.install:
@@ -122,7 +117,7 @@ def _add_subparser_autogluon(subparsers):
         "AutoGluon",
         func=autogluon,
         aliases=[],
-        add_argument=_autogluon_args
+        add_argument=_autogluon_args,
     )
 
 
@@ -246,5 +241,4 @@ def _add_subparser_nlp(subparsers):
         subparsers,
         "nlp",
         func=nlp,
-        help_=nlp.__doc__,
     )
