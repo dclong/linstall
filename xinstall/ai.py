@@ -56,8 +56,6 @@ def pytorch(**kwargs):
     if args.install:
         if is_linux():
             cmd = f"{args.pip} install torch torchvision"
-            if args.gpu:
-                cmd = f"{args.pip} install torch torchvision"
             run_cmd(cmd)
         elif is_macos():
             cmd = f"{args.pip} install torch torchvision"
@@ -235,7 +233,7 @@ def nlp(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install transformers pytext fasttext"
+        cmd = f"{args.pip} install torch torchvision transformers pytext-nlp fasttext"
         run_cmd(cmd)
     if args.config:
         pass
