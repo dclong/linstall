@@ -2,5 +2,6 @@
     "editor.fontSize": 14,
     "editor.detectIndentation": false,
     "keyboard.dispatch": "keyCode",
-    "workbench.startupEditor": "newUntitledFile"
+    "workbench.startupEditor": "newUntitledFile",
+    "python.linting.pylintArgs": ["--extension-pkg-whitelist=numpy,cv2"]
 }
