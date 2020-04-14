@@ -1,7 +1,6 @@
 """Installing dev related tools.
 """
 import os
-import sys
 import shutil
 from pathlib import Path
 from .utils import (
@@ -457,3 +456,21 @@ def antlr(**kwargs):
 
 def _add_subparser_antlr(subparsers):
     add_subparser(subparsers, "ANTLR", func=antlr)
+
+
+def jpype1(**kwargs):
+    """Install the Python package JPype.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"{args.pip} install JPype1"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.pip} uninstall JPype1"
+        run_cmd(cmd)
+
+
+def _add_subparser_jpype1(subparsers):
+    add_subparser(subparsers, "JPype1", func=jpype1, aliases=["jpype", "jp"])

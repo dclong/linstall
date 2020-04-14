@@ -296,7 +296,7 @@ def add_subparser(
 ):
     sub_cmd = re.sub(r"(\s+)|-", "_", name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
-    help_ = help_ if help_ else f"Install and configure {name}."
+    help_ = help_ if help_ else func.__doc__
     subparser = subparsers.add_parser(sub_cmd, aliases=aliases, help=help_)
     subparser.add_argument(
         "-i",
