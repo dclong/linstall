@@ -251,14 +251,30 @@ c.AliasManager.user_aliases = [
     ("ls.tex.aux", "ls *.aux *.bbl *.blg *.log *.toc *.synctex.gz"),
 ]
 if "darwin" in PLATFORM:
-    c.AliasManager.user_aliases.extend([
-        ("md5sum", "md5 -r"),
-        ("ffmpeg.record_screen", "ffmpeg -f avfoundation -i '1' -pix_fmt yuv420p -r 25 $(date +%m%d%H%M%S).mp4"),
-        ("record_screen", "ffmpeg -f avfoundation -i '1' -pix_fmt yuv420p -r 25 $(date +%m%d%H%M%S).mp4"),
-    ])
+    c.AliasManager.user_aliases.extend(
+        [
+            ("md5sum", "md5 -r"),
+            (
+                "ffmpeg.record_screen",
+                "ffmpeg -f avfoundation -i '1' -pix_fmt yuv420p -r 25 $(date +%m%d%H%M%S).mp4"
+            ),
+            (
+                "record_screen",
+                "ffmpeg -f avfoundation -i '1' -pix_fmt yuv420p -r 25 $(date +%m%d%H%M%S).mp4"
+            ),
+        ]
+    )
 else:
-    c.AliasManager.user_aliases.extend([
-        ("ffmpeg.record_screen", "ffmpeg -f x11grab -r 25 -s cif -i :0.0 $(date +%m%d%H%M%S).mp4"),
-        ("record_screen", "ffmpeg -f x11grab -r 25 -s cif -i :0.0 $(date +%m%d%H%M%S).mp4"),
-    ])
+    c.AliasManager.user_aliases.extend(
+        [
+            (
+                "ffmpeg.record_screen",
+                "ffmpeg -f x11grab -r 25 -s cif -i :0.0 $(date +%m%d%H%M%S).mp4"
+            ),
+            (
+                "record_screen",
+                "ffmpeg -f x11grab -r 25 -s cif -i :0.0 $(date +%m%d%H%M%S).mp4"
+            ),
+        ]
+    )
 c.IPCompleter.use_jedi = False
