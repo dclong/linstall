@@ -3,19 +3,19 @@ from pathlib import Path
 PLATFORM = platform.platform().lower()
 c = get_config()
 c.AliasManager.user_aliases = [
-    ('mvi', 'mv -i'),
-    ('cpi', 'cp -ir'),
-    ('rsync.progress', 'rsync -avh --progress'),
-    ('rsync.progress.pc', 'proxychains rsync -avh --progress'),
-    ('rsync.delete', 'rsync -avh --progress --delete'),
-    ('rsync.delete.pc', 'proxychains rsync -avh --progress --delete'),
-    ('hdfs.count', 'hdfs dfs -count -q -v'),
-    ('hdfs.ls', 'hdfs dfs -ls'),
-    ('blog', 'python3 $HOME/archives/blog/main.py'),
+    ("mvi", "mv -i"),
+    ("cpi", "cp -ir"),
+    ("rsync.progress", "rsync -avh --progress"),
+    ("rsync.progress.pc", "proxychains rsync -avh --progress"),
+    ("rsync.delete", "rsync -avh --progress --delete"),
+    ("rsync.delete.pc", "proxychains rsync -avh --progress --delete"),
+    ("hdfs.count", "hdfs dfs -count -q -v"),
+    ("hdfs.ls", "hdfs dfs -ls"),
+    ("blog", "python3 $HOME/archives/blog/main.py"),
     # du
-    ('du.0', 'du -hd 0'),
-    ('du.1', 'du -hd 1'),
-    ('du.1s', 'du -d 1 | sort -n'),
+    ("du.0", "du -hd 0"),
+    ("du.1", "du -hd 1"),
+    ("du.1s", "du -d 1 | sort -n"),
     # docker
     (
         "docker.jupyterhub_ds",
