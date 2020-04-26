@@ -195,14 +195,14 @@ def _add_subparser_pytext(subparsers):
     )
 
 
-def opencv_python(**kwargs):
-    """Insert the Python package opencv-python.
+def computer_vision(**kwargs):
+    """Insert computer vision Python packages: opencv-python, scikit-image and Pillow.
     """
     args = namespace(kwargs)
     if args.install:
         if is_linux():
             cmd = f"""apt-get install {args._yes_s} libsm6 libxrender-dev \
-                    && {args.pip} install opencv-python"""
+                    && {args.pip} install opencv-python scikit-image pillow"""
             run_cmd(cmd)
         elif is_macos():
             cmd = f"{args.pip} install opencv-python"
@@ -213,12 +213,12 @@ def opencv_python(**kwargs):
         pass
 
 
-def _add_subparser_opencv_python(subparsers):
+def _add_subparser_computer_vision(subparsers):
     add_subparser(
         subparsers,
         "opencv_python",
-        func=opencv_python,
-        aliases=["opencv", "cv2"],
+        func=computer_vision,
+        aliases=["computer_vision", "vision", "cv"],
     )
 
 
