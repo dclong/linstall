@@ -31,26 +31,26 @@ class MyPrompt(Prompts):
 
     def _git_status(self) -> List[bytes]:
         try:
-            proc = subprocess.run(['git', 'status'], stdout=subprocess.PIPE)
+            proc = subprocess.run(["git", "status"], stdout=subprocess.PIPE)
         except (FileNotFoundError, subprocess.CalledProcessError):
             return []
         lines = [line.strip() for line in proc.stdout.splitlines()]
         # get rid of the leading #
         for idx, line in enumerate(lines):
-            if line.startswith(b'#'):
+            if line.startswith(b"#"):
                 lines[idx] = line[1:].strip()
-        return [line for line in lines if line != b'']
+        return [line for line in lines if line != b""]
 
     def _changed(self, line: bytes) -> bool:
         """Check whether the line indicating changes in the Git Repository.
         """
         keywords = [
-            b'new file:',
-            b'deleted:',
-            b'modified:',
-            b'renamed:',
-            b'untracked files:',
-            b'your branch is ahead',
+            b"new file:",
+            b"deleted:",
+            b"modified:",
+            b"renamed:",
+            b"untracked files:",
+            b"your branch is ahead",
         ]
         line = line.lower().strip()
         for key in keywords:
@@ -69,36 +69,36 @@ class MyPrompt(Prompts):
         :return: The name of the current branch.
         """
         try:
-            proc = subprocess.run(['git', 'branch'], stdout=subprocess.PIPE)
+            proc = subprocess.run(["git", "branch"], stdout=subprocess.PIPE)
         except (FileNotFoundError, subprocess.CalledProcessError):
-            return ''
+            return ""
         for line in proc.stdout.splitlines():
             line = line.strip()
-            if line.startswith(b'*'):
+            if line.startswith(b"*"):
                 return line[1:].strip().decode()
-        return ''
+        return ""
 
     def _git_remote(self) -> List[str]:
         """Get the remote names of the current Git repository.
         :return: A list of remote names.
         """
         try:
-            proc = subprocess.run(['git', 'remote'], stdout=subprocess.PIPE)
+            proc = subprocess.run(["git", "remote"], stdout=subprocess.PIPE)
         except (FileNotFoundError, subprocess.CalledProcessError):
-            return ''
-        return [line.strip().decode() for line in proc.stdout.splitlines() if line.strip() != b'']
+            return ""
+        return [line.strip().decode() for line in proc.stdout.splitlines() if line.strip() != b""]
 
     def in_prompt_tokens(self, cli=None):
-        remotes = ''
-        branch = ''
-        # if Path('.git').is_dir():
+        remotes = ""
+        branch = ""
+        # if Path(".git").is_dir():
         if False:
-            remotes = '(' + '|'.join(self._git_remote()) + ')'
-            branch = '[' + self._git_branch() + f'{"*" if self._git_changed() else ""}]'
+            remotes = "(" + "|".join(self._git_remote()) + ")"
+            branch = "[" + self._git_branch() + f"{'*' if self._git_changed() else ''}]"
         cwd = Path.cwd()
         return [
-            (Token, f'{USER}@{HOST} {cwd} {remotes} {branch}'),
-            (Token.Prompt, '\n    >>> ')
+            (Token, f"{USER}@{HOST} {cwd} {remotes} {branch}"),
+            (Token.Prompt, "\n    >>> ")
         ]
 
 
@@ -108,16 +108,16 @@ get_ipython().prompts = MyPrompt(get_ipython())
 @register_line_magic
 def trash(line: str):
     path = Path(line)
-    trash_dir = Path.home() / '.Trash'
-    if any(dist in PLATFORM for dist in ('ubuntu', 'debian')):
-        trash_dir = Path.home() / '.local/share/Trash/files'
+    trash_dir = Path.home() / ".Trash"
+    if any(dist in PLATFORM for dist in ("ubuntu", "debian")):
+        trash_dir = Path.home() / ".local/share/Trash/files"
         trash_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
         backup = trash_dir / path.name
         if backup.exists():
-            backup = backup.with_name(backup.name + '_' + datetime.datetime.now().strftime('%Y%m%d%H%M%S%f'))
+            backup = backup.with_name(backup.name + "_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S%f"))
         shutil.move(path, backup)
 # ------------------------------- alias -----------------------------------
-#if 'linux' in PLATFORM: 
+#if "linux" in PLATFORM: 
 #    %alias cs cd %l && ls --color=auto
 #else:
 #    %alias cs cd %l && ls -G
@@ -137,7 +137,7 @@ def symlink_blog() -> None:
 
 symlink_blog()
 # -------------------------------------------------------------------------
-os.environ['PATH'] = ":".join({str(path): None for path in (
+os.environ["PATH"] = ":".join({str(path): None for path in (
     [HOME / ".local/bin"] + 
     list(HOME.glob("Library/Python/3.*/bin")) +
     list(Path("/").glob("apache/hadoop/bin")) +

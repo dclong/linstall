@@ -384,7 +384,7 @@ def git(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} git git-lfs", )
+            run_cmd(f"apt-get install {args._yes_s} git git-lfs")
         elif is_macos():
             brew_install_safe(["git", "git-lfs", "bash-completion@2"])
         elif is_centos_series():
