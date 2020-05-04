@@ -205,7 +205,7 @@ def computer_vision(**kwargs):
                     && {args.pip} install opencv-python scikit-image pillow"""
             run_cmd(cmd)
         elif is_macos():
-            cmd = f"{args.pip} install opencv-python"
+            cmd = f"{args.pip} install opencv-python scikit-image pillow"
             run_cmd(cmd)
     if args.config:
         pass
@@ -216,9 +216,9 @@ def computer_vision(**kwargs):
 def _add_subparser_computer_vision(subparsers):
     add_subparser(
         subparsers,
-        "opencv_python",
+        "computer_vision",
         func=computer_vision,
-        aliases=["computer_vision", "vision", "cv"],
+        aliases=["vision", "cv"],
     )
 
 
