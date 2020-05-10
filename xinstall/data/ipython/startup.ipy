@@ -137,10 +137,11 @@ def symlink_blog() -> None:
 
 symlink_blog()
 # -------------------------------------------------------------------------
-os.environ["PATH"] = ":".join({str(path): None for path in (
-    [HOME / ".local/bin"] + 
-    list(HOME.glob("Library/Python/3.*/bin")) +
-    list(Path("/").glob("apache/hadoop/bin")) +
+# use dict to dedup while keep the original order!!!
+os.environ["PATH"] = ":".join({str(path): None for path in
+    list(HOME.glob(".*/bin")) + \
+    list(HOME.glob("Library/Python/3.*/bin")) + \
+    list(Path("/").glob("apache/hadoop/bin")) + \
     os.environ["PATH"].split(":")
-)})
+})
 %rehashx
