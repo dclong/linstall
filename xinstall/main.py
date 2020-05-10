@@ -45,7 +45,6 @@ from .dev import (
     _add_subparser_git,
     _add_subparser_git_ignore,
     _add_subparser_poetry,
-    _add_subparser_rust,
     _add_subparser_nodejs,
     _add_subparser_python3,
     _add_subparser_pyjnius,
@@ -53,7 +52,9 @@ from .dev import (
     _add_subparser_yapf,
     _add_subparser_openjdk,
     _add_subparser_sdkman,
-    _add_subparser_cargo,
+    _add_subparser_rust,
+    _add_subparser_rustup,
+    _add_subparser_rustpython,
     _add_subparser_antlr,
     _add_subparser_jpype1,
 )
@@ -95,7 +96,7 @@ from .desktop import (
     _add_subparser_lxqt,
     _add_subparser_pygetwindow,
 )
-__version__ = "0.8.1"
+__version__ = "0.8.2"
 
 
 def version(**kwargs):
@@ -162,14 +163,15 @@ def parse_args(args=None, namespace=None):
     _add_subparser_nodejs(subparsers)
     _add_subparser_evcxr_jupyter(subparsers)
     _add_subparser_python3(subparsers)
-    _add_subparser_rust(subparsers)
     _add_subparser_pyjnius(subparsers)
     _add_subparser_ipython(subparsers)
     _add_subparser_yapf(subparsers)
     _add_subparser_openjdk(subparsers)
     _add_subparser_sdkman(subparsers)
     _add_subparser_poetry(subparsers)
-    _add_subparser_cargo(subparsers)
+    _add_subparser_rust(subparsers)
+    _add_subparser_rustup(subparsers)
+    _add_subparser_rustpython(subparsers)
     _add_subparser_antlr(subparsers)
     _add_subparser_jpype1(subparsers)
     # --------------------------- big data related  --------------------------------
