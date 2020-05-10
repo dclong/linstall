@@ -500,3 +500,19 @@ def jpype1(**kwargs):
 
 def _add_subparser_jpype1(subparsers):
     add_subparser(subparsers, "JPype1", func=jpype1, aliases=["jpype", "jp"])
+
+
+def deno(**kwargs):
+    args = namespace(kwargs)
+    if args.install:
+        cmd = "curl -fsSL https://deno.land/x/install/install.sh | sh"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_deno(subparsers):
+    add_subparser(subparsers, "Deno", func=deno, aliases=[])
+

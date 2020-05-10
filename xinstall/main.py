@@ -55,6 +55,7 @@ from .dev import (
     _add_subparser_rust,
     _add_subparser_rustup,
     _add_subparser_rustpython,
+    _add_subparser_deno,
     _add_subparser_antlr,
     _add_subparser_jpype1,
 )
@@ -172,6 +173,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_rust(subparsers)
     _add_subparser_rustup(subparsers)
     _add_subparser_rustpython(subparsers)
+    _add_subparser_deno(subparsers)
     _add_subparser_antlr(subparsers)
     _add_subparser_jpype1(subparsers)
     # --------------------------- big data related  --------------------------------
