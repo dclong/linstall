@@ -113,7 +113,7 @@ def is_ubuntu_debian():
 def is_linux():
     """Check whehter the current OS is Linux. 
     """
-    dists = ("ubuntu", "debian", "centos", "redhat", "fedora")
+    dists = ("linux", "ubuntu", "debian", "centos", "redhat", "fedora")
     return _any_in_platform(dists)
 
 
