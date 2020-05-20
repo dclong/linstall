@@ -201,7 +201,12 @@ def computer_vision(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_linux():
-            cmd = f"""apt-get install {args._yes_s} libsm6 libxrender-dev \
+            cmd = f"""apt-get install {args._yes_s} \
+                        libsm6 libxrender-dev libaec-dev \
+                        libblosc-dev libbrotli-dev libghc-bzlib-dev libgif-dev \
+                        libopenjp2-7-dev liblcms2-dev libjxr-dev liblz4-dev \
+                        liblzma-dev libpng-dev libsnappy-dev libtiff-dev \
+                        libwebp-dev libzopfli-dev libzstd-dev \
                     && {args.pip} install opencv-python scikit-image pillow"""
             run_cmd(cmd)
         elif is_macos():
