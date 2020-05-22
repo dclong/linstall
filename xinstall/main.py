@@ -59,6 +59,7 @@ from .dev import (
 )
 from .bigdata import (
     _add_subparser_pyspark,
+    _add_subparser_optimuspyspark,
     _add_subparser_spark,
     _add_subparser_dask,
 )
@@ -176,6 +177,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_dask(subparsers)
     _add_subparser_spark(subparsers)
     _add_subparser_pyspark(subparsers)
+    _add_subparser_optimuspyspark(subparsers)
     # ------------------------- virtualization related  ------------------------------
     _add_subparser_docker(subparsers)
     _add_subparser_kubernetes(subparsers)

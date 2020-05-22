@@ -13,6 +13,7 @@ from .utils import (
     run_cmd,
     namespace,
     add_subparser,
+    option_user,
 )
 
 
@@ -82,17 +83,40 @@ def pyspark(**kwargs):
                 version="2.4.5",
                 yes=args.yes
             )
-        cmd = f"{args.pip} install pyspark findspark optimuspyspark"
+        cmd = f"{args.pip} install {args._user_s} pyspark findspark"
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"{args.pip} uninstall pyspark findspark optimuspyspark"
+        cmd = f"{args.pip} uninstall pyspark findspark"
         run_cmd(cmd)
 
 
 def _add_subparser_pyspark(subparsers):
-    add_subparser(subparsers, "PySpark", func=pyspark)
+    add_subparser(subparsers, "PySpark", func=pyspark, add_argument=option_user)
+
+
+def optimuspyspark(**kwargs):
+    """Install Optimus (a PySpark package for data profiling).
+    :param yes:
+    :param install:
+    :param config:
+    :param uninstall:
+    :param version:
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"{args.pip} install {args._user_s} optimuspyspark"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.pip} uninstall optimuspyspark"
+        run_cmd(cmd)
+
+
+def _add_subparser_optimuspyspark(subparsers):
+    add_subparser(subparsers, "Optimus", func=optimuspyspark, add_argument=option_user)
 
 
 def dask(**kwargs):
@@ -104,7 +128,7 @@ def dask(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install dask[complete]"
+        cmd = f"{args.pip} install {args._user_s} dask[complete]"
         run_cmd(cmd)
     if args.config:
         pass
@@ -114,4 +138,4 @@ def dask(**kwargs):
 
 
 def _add_subparser_dask(subparsers):
-    add_subparser(subparsers, "dask", func=dask)
+    add_subparser(subparsers, "dask", func=dask, add_argument=option_user)

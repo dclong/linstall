@@ -126,12 +126,18 @@ def symlink_blog() -> None:
     path = HOME / ".local/bin/blog"
     blog1 = HOME / "archives/blog/main.py"
     if blog1.is_file():
-        path.unlink()
+        try:
+            path.unlink()
+        except FileNotFoundError:
+            pass
         path.symlink_to(blog1)
         return
     blog2 = Path("/workdir/blog/main.py")
     if blog2.is_file():
-        path.unlink()
+        try:
+            path.unlink()
+        except FileNotFoundError:
+            pass
         path.symlink_to(blog2)
 
 

@@ -241,6 +241,8 @@ def intellij_idea_plugin(version: str, url: str):
 def namespace(dic: Dict) -> Namespace:
     dic.setdefault("yes", False)
     dic["_yes_s"] = "--yes" if dic["yes"] else ""
+    dic.setdefault("user", False)
+    dic["_user_s"] = "--user" if dic["user"] else ""
     return Namespace(**dic)
 
 
