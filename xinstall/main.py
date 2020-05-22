@@ -55,11 +55,13 @@ from .dev import (
     _add_subparser_rust,
     _add_subparser_rustup,
     _add_subparser_rustpython,
+    _add_subparser_deno,
     _add_subparser_antlr,
     _add_subparser_jpype1,
 )
 from .bigdata import (
     _add_subparser_pyspark,
+    _add_subparser_optimuspyspark,
     _add_subparser_spark,
     _add_subparser_dask,
 )
@@ -96,7 +98,7 @@ from .desktop import (
     _add_subparser_lxqt,
     _add_subparser_pygetwindow,
 )
-__version__ = "0.8.2"
+__version__ = "0.9.0"
 
 
 def version(**kwargs):
@@ -172,12 +174,14 @@ def parse_args(args=None, namespace=None):
     _add_subparser_rust(subparsers)
     _add_subparser_rustup(subparsers)
     _add_subparser_rustpython(subparsers)
+    _add_subparser_deno(subparsers)
     _add_subparser_antlr(subparsers)
     _add_subparser_jpype1(subparsers)
     # --------------------------- big data related  --------------------------------
     _add_subparser_dask(subparsers)
     _add_subparser_spark(subparsers)
     _add_subparser_pyspark(subparsers)
+    _add_subparser_optimuspyspark(subparsers)
     # ------------------------- virtualization related  ------------------------------
     _add_subparser_docker(subparsers)
     _add_subparser_kubernetes(subparsers)

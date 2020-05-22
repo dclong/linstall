@@ -21,6 +21,7 @@ from .utils import (
     namespace,
     add_subparser,
     intellij_idea_plugin,
+    option_user,
 )
 from .web import ssh_client
 
@@ -73,14 +74,14 @@ def _add_subparser_sdkman(subparsers):
 def yapf(**kwargs):
     args = namespace(kwargs)
     if args.install:
-        run_cmd(f"{args.pip} install --user {args._yes_s} yapf")
+        run_cmd(f"{args.pip} install {args._user_s} yapf")
     if args.config:
         shutil.copy2(
             os.path.join(BASE_DIR, "yapf/style.yapf"),
             os.path.join(args.dst_dir, ".style.yapf")
         )
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall {args._yes_s} yapf")
+        run_cmd(f"{args.pip} uninstall yapf")
 
 
 def _yapf_args(subparser):
@@ -89,12 +90,15 @@ def _yapf_args(subparser):
         "--dest-dir",
         dest="dst_dir",
         requested=True,
-        help="The destination directory to copy the YAPF configuration file to."
+        help="The destination directory to copy the YAPF configuration file to.",
     )
+    option_user(subparser)
 
 
 def _add_subparser_yapf(subparsers):
-    add_subparser(subparsers, "yapf", func=yapf, aliases=[])
+    add_subparser(
+        subparsers, "yapf", func=yapf, aliases=[], add_argument=_yapf_args
+    )
 
 
 def nodejs(**kwargs):
@@ -130,7 +134,7 @@ def ipython(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install --user {args._yes_s} ipython"
+        cmd = f"{args.pip} install {args._user_s} ipython"
         run_cmd(cmd)
     if args.config:
         run_cmd(f"{args.ipython} profile create")
@@ -143,7 +147,13 @@ def ipython(**kwargs):
 
 
 def _add_subparser_ipython(subparsers):
-    add_subparser(subparsers, "IPython", func=ipython, aliases=["ipy"])
+    add_subparser(
+        subparsers,
+        "IPython",
+        func=ipython,
+        aliases=["ipy"],
+        add_argument=option_user
+    )
 
 
 def python3(**kwargs):
@@ -161,7 +171,7 @@ def python3(**kwargs):
             run_cmd(
                 f"yum install {args._yes_s} python34 python34-devel python34-pip",
             )
-            run_cmd(f"{args.pip} install --user setuptools")
+            run_cmd(f"{args.pip} install {args._user_s} setuptools")
     if args.config:
         pass
     if args.uninstall:
@@ -176,7 +186,13 @@ def python3(**kwargs):
 
 
 def _add_subparser_python3(subparsers):
-    add_subparser(subparsers, "Python3", func=python3, aliases=["py3"])
+    add_subparser(
+        subparsers,
+        "Python3",
+        func=python3,
+        aliases=["py3"],
+        add_argument=option_user
+    )
 
 
 def poetry(**kwargs):
@@ -233,7 +249,7 @@ def pyjnius(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install --user Cython pyjnius"
+        cmd = f"{args.pip} install {args.user} Cython pyjnius"
         run_cmd(cmd)
     if args.config:
         pass
@@ -242,7 +258,13 @@ def pyjnius(**kwargs):
 
 
 def _add_subparser_pyjnius(subparsers):
-    add_subparser(subparsers, "pyjnius", func=pyjnius, aliases=["pyj"])
+    add_subparser(
+        subparsers,
+        "pyjnius",
+        func=pyjnius,
+        aliases=["pyj"],
+        add_argument=option_user
+    )
 
 
 def rustup(**kwargs):
@@ -489,7 +511,7 @@ def jpype1(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install JPype1"
+        cmd = f"{args.pip} install {args._user_s} JPype1"
         run_cmd(cmd)
     if args.config:
         pass
@@ -499,4 +521,25 @@ def jpype1(**kwargs):
 
 
 def _add_subparser_jpype1(subparsers):
-    add_subparser(subparsers, "JPype1", func=jpype1, aliases=["jpype", "jp"])
+    add_subparser(
+        subparsers,
+        "JPype1",
+        func=jpype1,
+        aliases=["jpype", "jp"],
+        add_argument=option_user
+    )
+
+
+def deno(**kwargs):
+    args = namespace(kwargs)
+    if args.install:
+        cmd = "curl -fsSL https://deno.land/x/install/install.sh | sh"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_deno(subparsers):
+    add_subparser(subparsers, "Deno", func=deno, aliases=[])
