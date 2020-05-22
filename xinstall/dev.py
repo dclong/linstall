@@ -26,31 +26,6 @@ from .utils import (
 from .web import ssh_client
 
 
-def cargo(**kwargs):
-    args = namespace(kwargs)
-    if args.install:
-        if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} cargo")
-        if is_macos():
-            brew_install_safe(["cargo"])
-        if is_centos_series():
-            run_cmd(f"yum install {args._yes_s} cargo")
-    if args.config:
-        pass
-    if args.uninstall:
-        if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} cargo")
-        if is_macos():
-            run_cmd(f"brew uninstall cargo")
-        if is_centos_series():
-            run_cmd(f"yum remove cargo")
-
-
-def _add_subparser_cargo(subparsers):
-    add_subparser(subparsers, "Cargo", func=cargo, aliases=["cgo"])
-
-
 def openjdk8(**kwargs):
     args = namespace(kwargs)
     if args.install:
@@ -272,22 +247,73 @@ def _add_subparser_pyjnius(subparsers):
     add_subparser(subparsers, "pyjnius", func=pyjnius, aliases=["pyj"], add_argument=option_user)
 
 
-def rust(**kwargs):
-    """Install the Rust programming language.
+def rustup(**kwargs):
+    """Install rustup which is the version management tool for Rust.
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"apt-get install {args._yes_s} cmake cargo"
+        cmd = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"apt-get purge {args._yes_s} cargo"
+        cmd = "rustup self uninstall"
         run_cmd(cmd)
+
+
+def _add_subparser_rustup(subparsers):
+    add_subparser(subparsers, "rustup", func=rustup)
+
+
+def rust(**kwargs):
+    """Install the Rust programming language (rustc and cargo) 
+        (to system-wide locations using apt-get instead of to ~/.cargo using rustup).
+    """
+    args = namespace(kwargs)
+    if args.install:
+        if is_ubuntu_debian():
+            update_apt_source()
+            cmd = f"apt-get install {args._yes_s} cmake rustc cargo"
+            run_cmd(cmd)
+        if is_centos_series():
+            cmd = f"yum install {args._yes_s} cmake rustc cargo"
+            run_cmd(cmd)
+        if is_macos():
+            brew_install_safe(["cmake", "rustc", "cargo"])
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_ubuntu_debian():
+            cmd = f"apt-get purge {args._yes_s} rustc cargo"
+            run_cmd(cmd)
+        if is_centos_series():
+            run_cmd(f"yum remove rustc cargo")
+        if is_macos():
+            cmd = f"brew uninstall rustc cargo"
+            run_cmd(cmd)
 
 
 def _add_subparser_rust(subparsers):
     add_subparser(subparsers, "rust", func=rust)
+
+
+def rustpython(**kwargs):
+    """Install and configure RustPython.
+    """
+    rust(**kwargs)
+    args = namespace(kwargs)
+    if args.install:
+        cmd = "cargo install rustpython"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = "cargo uninstall rustpython"
+        run_cmd(cmd)
+
+
+def _add_subparser_rustpython(subparsers):
+    add_subparser(subparsers, "RustPython", func=rustpython, aliases=["rustpy"])
 
 
 def git_ignore(**kwargs):
@@ -476,3 +502,18 @@ def jpype1(**kwargs):
 
 def _add_subparser_jpype1(subparsers):
     add_subparser(subparsers, "JPype1", func=jpype1, aliases=["jpype", "jp"], add_argument=option_user)
+
+
+def deno(**kwargs):
+    args = namespace(kwargs)
+    if args.install:
+        cmd = "curl -fsSL https://deno.land/x/install/install.sh | sh"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_deno(subparsers):
+    add_subparser(subparsers, "Deno", func=deno, aliases=[])
