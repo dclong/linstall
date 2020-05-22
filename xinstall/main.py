@@ -98,7 +98,7 @@ from .desktop import (
     _add_subparser_lxqt,
     _add_subparser_pygetwindow,
 )
-__version__ = "0.8.2"
+__version__ = "0.9.0"
 
 
 def version(**kwargs):
