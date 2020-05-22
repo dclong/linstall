@@ -116,7 +116,9 @@ def optimuspyspark(**kwargs):
 
 
 def _add_subparser_optimuspyspark(subparsers):
-    add_subparser(subparsers, "Optimus", func=optimuspyspark, add_argument=option_user)
+    add_subparser(
+        subparsers, "Optimus", func=optimuspyspark, add_argument=option_user
+    )
 
 
 def dask(**kwargs):

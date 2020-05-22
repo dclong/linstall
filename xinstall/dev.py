@@ -93,10 +93,12 @@ def _yapf_args(subparser):
         help="The destination directory to copy the YAPF configuration file to.",
     )
     option_user(subparser)
-    
+
 
 def _add_subparser_yapf(subparsers):
-    add_subparser(subparsers, "yapf", func=yapf, aliases=[], add_argument=_yapf_args)
+    add_subparser(
+        subparsers, "yapf", func=yapf, aliases=[], add_argument=_yapf_args
+    )
 
 
 def nodejs(**kwargs):
@@ -145,7 +147,13 @@ def ipython(**kwargs):
 
 
 def _add_subparser_ipython(subparsers):
-    add_subparser(subparsers, "IPython", func=ipython, aliases=["ipy"], add_argument=option_user)
+    add_subparser(
+        subparsers,
+        "IPython",
+        func=ipython,
+        aliases=["ipy"],
+        add_argument=option_user
+    )
 
 
 def python3(**kwargs):
@@ -178,7 +186,13 @@ def python3(**kwargs):
 
 
 def _add_subparser_python3(subparsers):
-    add_subparser(subparsers, "Python3", func=python3, aliases=["py3"], add_argument=option_user)
+    add_subparser(
+        subparsers,
+        "Python3",
+        func=python3,
+        aliases=["py3"],
+        add_argument=option_user
+    )
 
 
 def poetry(**kwargs):
@@ -244,7 +258,13 @@ def pyjnius(**kwargs):
 
 
 def _add_subparser_pyjnius(subparsers):
-    add_subparser(subparsers, "pyjnius", func=pyjnius, aliases=["pyj"], add_argument=option_user)
+    add_subparser(
+        subparsers,
+        "pyjnius",
+        func=pyjnius,
+        aliases=["pyj"],
+        add_argument=option_user
+    )
 
 
 def rustup(**kwargs):
@@ -501,7 +521,13 @@ def jpype1(**kwargs):
 
 
 def _add_subparser_jpype1(subparsers):
-    add_subparser(subparsers, "JPype1", func=jpype1, aliases=["jpype", "jp"], add_argument=option_user)
+    add_subparser(
+        subparsers,
+        "JPype1",
+        func=jpype1,
+        aliases=["jpype", "jp"],
+        add_argument=option_user
+    )
 
 
 def deno(**kwargs):
