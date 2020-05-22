@@ -1,6 +1,7 @@
 """Install AI related tools.
 """
 from pathlib import Path
+import logging
 import warnings
 from .utils import HOME, USER, run_cmd, namespace, add_subparser, is_linux, is_macos
 
@@ -20,10 +21,12 @@ def kaggle(**kwargs):
             kaggle_home_host.mkdir(exist_ok=True)
             try:
                 kaggle_home.symlink_to(kaggle_home_host)
+                logging.info(f"Symbolic link {kaggle_home} pointing to {kaggle_home_host} is created.")
             except FileExistsError:
                 pass
         else:
             kaggle_home.mkdir(exist_ok=True)
+            logging.info(f"The directory {kaggle_home} is created.")
     if args.uninstall:
         pass
 

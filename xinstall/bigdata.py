@@ -1,5 +1,6 @@
 """Install big data related tools.
 """
+import logging
 from pathlib import Path
 from .utils import (
     is_ubuntu_debian,
@@ -38,6 +39,7 @@ def spark(**kwargs):
     if args.config:
         cmd = "export SPARK_HOME=/opt/spark"
         run_cmd(cmd)
+        logging.info("Environment variable SPARK_HOME=/opt/spark is exported.")
     if args.uninstall:
         cmd = f"rm -rf /opt/spark*"
         run_cmd(cmd)

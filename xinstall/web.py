@@ -2,6 +2,7 @@
 """Easy installation and configuration of Linux/Mac/Windows apps.
 """
 import os
+import logging
 import shutil
 from pathlib import Path
 from .utils import (
@@ -61,13 +62,16 @@ def ssh_client(**kwargs) -> None:
             except FileNotFoundError:
                 pass
             shutil.copytree(ssh_src, ssh_dst)
+            logging.info(f"{ssh_src} is copied to {ssh_dst}.")
         ssh_dst.mkdir(exist_ok=True)
         src = BASE_DIR / "ssh/client/config"
         des = HOME / ".ssh/config"
         shutil.copy2(src, des)
+        logging.info(f"{ssh_src} is copied to {ssh_dst}.")
         # file permissions
         cmd = f"chown -R {USER}:{GROUP} {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
         run_cmd(cmd)
+        logging.info(f"The permissions of ~/.ssh and its contents are corrected set.")
 
 
 def _add_subparser_ssh_client(subparsers):
@@ -91,11 +95,11 @@ def proxychains(**kwargs) -> None:
             run_cmd(f"yum install proxychains")
     if args.config:
         print("Configuring proxychains ...")
+        src_file = BASE_DIR / "proxychains/proxychains.conf"
         des_dir = os.path.join(HOME, ".proxychains")
         os.makedirs(des_dir, exist_ok=True)
-        shutil.copy2(
-            os.path.join(BASE_DIR, "proxychains/proxychains.conf"), des_dir
-        )
+        shutil.copy2(src_file, des_dir)
+        logging.info(f"{src_file} is copied to the directory {des_dir}.")
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(f"apt-get purge proxychains4")
@@ -159,8 +163,11 @@ def blogging(**kwargs):
                 """
         run_cmd(cmd)
     if args.config:
+        blog_bin = BIN_DIR / "blog"
+        main_py = archives / "blog/main.py"
         try:
-            (BIN_DIR / "blog").symlink_to(archives / "blog/main.py")
+            blog_bin.symlink_to(main_py)
+            logging.info(f"Symbolic link {blog_bin} pointing to {main_py} is created.")
         except FileExistsError:
             pass
     if args.uninstall:

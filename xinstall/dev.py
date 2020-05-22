@@ -1,6 +1,7 @@
 """Installing dev related tools.
 """
 import os
+import logging
 import shutil
 from pathlib import Path
 from .utils import (
@@ -76,10 +77,10 @@ def yapf(**kwargs):
     if args.install:
         run_cmd(f"{args.pip} install {args._user_s} yapf")
     if args.config:
-        shutil.copy2(
-            os.path.join(BASE_DIR, "yapf/style.yapf"),
-            os.path.join(args.dst_dir, ".style.yapf")
-        )
+        src_file = BASE_DIR / "yapf/style.yapf"
+        des_file = args.dst_dir / ".style.yapf"
+        shutil.copy2(src_file, des_file)
+        logging.info(f"{src_file} is copied to {des_file}.")
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall yapf")
 
@@ -90,6 +91,7 @@ def _yapf_args(subparser):
         "--dest-dir",
         dest="dst_dir",
         requested=True,
+        type=Path,
         help="The destination directory to copy the YAPF configuration file to.",
     )
     option_user(subparser)
@@ -142,6 +144,8 @@ def ipython(**kwargs):
         dst_dir = HOME / ".ipython/profile_default"
         shutil.copy2(src_dir / "ipython_config.py", dst_dir)
         shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
+        logging.info(f"{src_dir / 'ipython_config.py'} is copied to the directory {dst_dir}.")
+        logging.info(f"{src_dir / 'startup.ipy'} is copied to the directory {dst_dir / 'startup'}.")
     if args.uninstall:
         pass
 
@@ -206,11 +210,15 @@ def poetry(**kwargs):
     if args.config:
         # symbolic link
         desfile = BIN_DIR / "poetry"
-        if desfile.exists():
+        try:
             desfile.unlink()
+        except FileNotFoundError:
+            pass
         desfile.symlink_to(poetry_bin)
+        logging.info(f"Symbolic link {desfile} pointing to {poetry_bin} is created.")
         # make poetry always create virtual environment in the root directory of the project
         run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
+        logging.info(f"Python poetry has been configured to create virtual environments inside projects!")
         # bash completion
         if args.bash_completion:
             if is_linux():
@@ -220,6 +228,7 @@ def poetry(**kwargs):
             if is_macos():
                 cmd = f"{poetry_bin} completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion"
                 run_cmd(cmd)
+            logging.info(f"Bash completion is enabled for poetry.")
     if args.uninstall:
         run_cmd(f"{poetry_bin} self:uninstall")
 
@@ -452,14 +461,17 @@ def git(**kwargs) -> None:
         # try to remove the file to avoid dead symbolic link problem
         remove_file_safe(gitconfig)
         shutil.copy2(BASE_DIR / "git/gitconfig", gitconfig)
+        logging.info(f"{BASE_DIR / 'git/gitconfig'} is copied to {gitconfig}")
         gitignore = HOME / ".gitignore"
         remove_file_safe(gitignore)
         shutil.copy2(BASE_DIR / "git/gitignore", gitignore)
+        logging.info(f"{BASE_DIR / 'git/gitignore'} is copied to {gitignore}")
         if is_macos():
             file = "/usr/local/etc/bash_completion.d/git-completion.bash"
             bashrc = f"\n# Git completion\n[ -f {file} ] &&  . {file}"
             with (HOME / ".bash_profile").open("a") as fout:
                 fout.write(bashrc)
+            logging.info(f"Bash completion is enabled for Git.")
     if "proxy" in kwargs and args.proxy:
         run_cmd(f"git config --global http.proxy {args.proxy}")
         run_cmd(f"git config --global https.proxy {args.proxy}")

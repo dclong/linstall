@@ -1,3 +1,4 @@
+import logging
 import shutil
 import sys
 import os
@@ -29,6 +30,7 @@ def coreutils(**kwargs):
                 && export MANPATH=/usr/local/opt/findutils/libexec/gnuman:"$MANPATH"
                 """
             run_cmd(cmd)
+            logging.info("GNU paths are exported.")
 
 
 def _add_subparser_coreutils(subparsers):
@@ -139,6 +141,7 @@ def homebrew(**kwargs):
                 profiles = [f"{HOME}/.bash_profile", f"{HOME}/.profile"]
                 for profile in profiles:
                     run_cmd(f"{brew} shellenv >> {profile}")
+                logging.info(f"Shell environment variables for Linuxbrew are inserted to {profiles}.")
             else:
                 sys.exit("Homebrew is not installed!")
     if args.uninstall:
@@ -178,10 +181,12 @@ def hyper(**kwargs):
         run_cmd(f"hyper i hyper-search")
         run_cmd(f"hyper i hyper-pane")
         run_cmd(f"hyper i hyperpower")
+        logging.info(f"Hyper plugins hypercwd, hyper-search, hyper-pane and hyperpower are installed.")
         path = f"{HOME}/.hyper.js"
         #if os.path.exists(path):
         #    os.remove(path)
         shutil.copy2(os.path.join(BASE_DIR, "hyper/hyper.js"), path)
+        logging.info(f"{BASE_DIR / 'hyper/hyper.js'} is copied to {path}.")
     if args.uninstall:
         if is_ubuntu_debian():
             #!apt-get purge hyper
@@ -226,9 +231,12 @@ def xonsh(**kwargs):
     if args.config:
         src = f"{BASE_DIR}/xonsh/xonshrc"
         dst = HOME / ".xonshrc"
-        if dst.exists():
+        try:
             dst.unlink()
+        except FileNotFoundError:
+            pass
         shutil.copy2(src, dst)
+        logging.info(f"{src} is copied to {dst}.")
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall xonsh")
 
@@ -252,6 +260,7 @@ def bash_it(**kwargs):
         profile = ".bashrc" if is_linux() else ".bash_profile"
         with (HOME / profile).open("a") as fout:
             fout.write(f"\n# PATH\nexport PATH={BIN_DIR}:$PATH")
+        logging.info(f"'export PATH={BIN_DIR}:$PATH' is inserted into {profile}.")
     if args.uninstall:
         run_cmd("~/.bash_it/uninstall.sh")
         shutil.rmtree(HOME / ".bash_it")
