@@ -20,7 +20,10 @@ def kaggle(**kwargs):
             kaggle_home_host.mkdir(exist_ok=True)
             try:
                 kaggle_home.symlink_to(kaggle_home_host)
-                logging.info("Symbolic link %s pointing to %s is created.", kaggle_home, kaggle_home_host)
+                logging.info(
+                    "Symbolic link %s pointing to %s is created.", kaggle_home,
+                    kaggle_home_host
+                )
             except FileExistsError:
                 pass
         else:

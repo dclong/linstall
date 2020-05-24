@@ -157,7 +157,10 @@ def homebrew(**kwargs) -> None:
                 profiles = [f"{HOME}/.bash_profile", f"{HOME}/.profile"]
                 for profile in profiles:
                     run_cmd(f"{brew} shellenv >> {profile}")
-                logging.info("Shell environment variables for Linuxbrew are inserted to %s.", profiles)
+                logging.info(
+                    "Shell environment variables for Linuxbrew are inserted to %s.",
+                    profiles
+                )
             else:
                 sys.exit("Homebrew is not installed!")
     if args.uninstall:
@@ -197,7 +200,9 @@ def hyper(**kwargs) -> None:
         run_cmd("hyper i hyper-search")
         run_cmd("hyper i hyper-pane")
         run_cmd("hyper i hyperpower")
-        logging.info("Hyper plugins hypercwd, hyper-search, hyper-pane and hyperpower are installed.")
+        logging.info(
+            "Hyper plugins hypercwd, hyper-search, hyper-pane and hyperpower are installed."
+        )
         path = f"{HOME}/.hyper.js"
         #if os.path.exists(path):
         #    os.remove(path)
@@ -276,7 +281,9 @@ def bash_it(**kwargs) -> None:
         profile = ".bashrc" if is_linux() else ".bash_profile"
         with (HOME / profile).open("a") as fout:
             fout.write(f"\n# PATH\nexport PATH={BIN_DIR}:$PATH")
-        logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile)
+        logging.info(
+            "'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile
+        )
     if args.uninstall:
         run_cmd("~/.bash_it/uninstall.sh")
         shutil.rmtree(HOME / ".bash_it")
