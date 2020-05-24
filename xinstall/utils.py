@@ -315,10 +315,7 @@ def option_option(subparser) -> None:
     :param subparser: A sub parser.
     """
     subparser.add_argument(
-        "--option",
-        dest="option",
-        default="",
-        help="Additional options."
+        "--option", dest="option", default="", help="Additional options."
     )
 
 
