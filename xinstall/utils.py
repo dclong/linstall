@@ -309,6 +309,16 @@ def option_jupyter(subparser) -> None:
     )
 
 
+def option_option(subparser) -> None:
+    """Add the option --option into the sub parser.
+
+    :param subparser: A sub parser.
+    """
+    subparser.add_argument(
+        "--option", dest="option", default="", help="Additional options."
+    )
+
+
 def add_subparser(
     subparsers,
     name: str,
