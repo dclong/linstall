@@ -82,7 +82,9 @@ def beakerx(**kwargs) -> None:
         run_cmd("jupyter labextension install beakerx-jupyterlab")
     if args.uninstall:
         run_cmd("jupyter labextension uninstall beakerx-jupyterlab")
-        run_cmd("jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager")
+        run_cmd(
+            "jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager"
+        )
         run_cmd("beakerx uninstall")
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:

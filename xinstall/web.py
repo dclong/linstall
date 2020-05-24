@@ -73,7 +73,9 @@ def ssh_client(**kwargs) -> None:
         # file permissions
         cmd = f"chown -R {USER}:{GROUP} {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
         run_cmd(cmd)
-        logging.info("The permissions of ~/.ssh and its contents are corrected set.")
+        logging.info(
+            "The permissions of ~/.ssh and its contents are corrected set."
+        )
 
 
 def _add_subparser_ssh_client(subparsers):
@@ -169,7 +171,9 @@ def blogging(**kwargs):
         main_py = archives / "blog/main.py"
         try:
             blog_bin.symlink_to(main_py)
-            logging.info("Symbolic link %s pointing to %s is created.", blog_bin, main_py)
+            logging.info(
+                "Symbolic link %s pointing to %s is created.", blog_bin, main_py
+            )
         except FileExistsError:
             pass
     if args.uninstall:

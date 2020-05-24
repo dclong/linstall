@@ -144,8 +144,14 @@ def ipython(**kwargs):
         dst_dir = HOME / ".ipython/profile_default"
         shutil.copy2(src_dir / "ipython_config.py", dst_dir)
         shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
-        logging.info("%s is copied to the directory %s.", src_dir / "ipython_config.py", dst_dir)
-        logging.info("%s is copied to the directory %s.", src_dir / "startup.ipy", dst_dir / "startup")
+        logging.info(
+            "%s is copied to the directory %s.", src_dir / "ipython_config.py",
+            dst_dir
+        )
+        logging.info(
+            "%s is copied to the directory %s.", src_dir / "startup.ipy",
+            dst_dir / "startup"
+        )
     if args.uninstall:
         pass
 
@@ -215,10 +221,14 @@ def poetry(**kwargs):
         except FileNotFoundError:
             pass
         desfile.symlink_to(poetry_bin)
-        logging.info("Symbolic link %s pointing to %s is created.", desfile, poetry_bin)
+        logging.info(
+            "Symbolic link %s pointing to %s is created.", desfile, poetry_bin
+        )
         # make poetry always create virtual environment in the root directory of the project
         run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
-        logging.info("Python poetry has been configured to create virtual environments inside projects!")
+        logging.info(
+            "Python poetry has been configured to create virtual environments inside projects!"
+        )
         # bash completion
         if args.bash_completion:
             if is_linux():
@@ -461,11 +471,15 @@ def git(**kwargs) -> None:
         # try to remove the file to avoid dead symbolic link problem
         remove_file_safe(gitconfig)
         shutil.copy2(BASE_DIR / "git/gitconfig", gitconfig)
-        logging.info("%s is copied to %s", BASE_DIR / "git/gitconfig", gitconfig)
+        logging.info(
+            "%s is copied to %s", BASE_DIR / "git/gitconfig", gitconfig
+        )
         gitignore = HOME / ".gitignore"
         remove_file_safe(gitignore)
         shutil.copy2(BASE_DIR / "git/gitignore", gitignore)
-        logging.info("%s is copied to %s", BASE_DIR / "git/gitignore", gitignore)
+        logging.info(
+            "%s is copied to %s", BASE_DIR / "git/gitignore", gitignore
+        )
         if is_macos():
             file = "/usr/local/etc/bash_completion.d/git-completion.bash"
             bashrc = f"\n# Git completion\n[ -f {file} ] &&  . {file}"
