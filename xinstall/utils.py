@@ -269,7 +269,7 @@ def option_python(subparser) -> None:
         "--python",
         dest="python",
         default="python3",
-        help=f"Path to the python3 command."
+        help="Path to the python3 command."
     )
 
 
@@ -282,7 +282,7 @@ def option_ipython(subparser) -> None:
         "--ipython",
         dest="ipython",
         default="ipython3",
-        help=f"Path to the ipython3 command."
+        help="Path to the ipython3 command."
     )
 
 
@@ -292,7 +292,7 @@ def option_pip(subparser) -> None:
     :param subparser: A sub parser.
     """
     subparser.add_argument(
-        "--pip", dest="pip", default="pip3", help=f"Path to the pip command."
+        "--pip", dest="pip", default="pip3", help="Path to the pip command."
     )
 
 
@@ -305,7 +305,7 @@ def option_jupyter(subparser) -> None:
         "--jupyter",
         dest="jupyter",
         default="jupyter",
-        help=f"Path to the jupyter command."
+        help="Path to the jupyter command."
     )
 
 
@@ -359,7 +359,7 @@ def add_subparser(
         "--log",
         dest="log",
         action="store_true",
-        help=f"Print the command to run."
+        help="Print the command to run."
     )
     option_python(subparser)
     option_ipython(subparser)

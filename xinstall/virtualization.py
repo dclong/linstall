@@ -23,7 +23,7 @@ def virtualbox(**kwargs) -> None:
             update_apt_source()
             run_cmd(f"apt-get install {args.yes_s} virtualbox-qt", )
         elif is_macos():
-            run_cmd(f"brew cask install virtualbox virtualbox-extension-pack")
+            run_cmd("brew cask install virtualbox virtualbox-extension-pack")
         elif is_centos_series():
             pass
     if args.uninstall:
@@ -31,7 +31,7 @@ def virtualbox(**kwargs) -> None:
             run_cmd(f"apt-get purge {args.yes_s} virtualbox-qt", )
         elif is_macos():
             run_cmd(
-                f"brew cask uninstall virtualbox virtualbox-extension-pack",
+                "brew cask uninstall virtualbox virtualbox-extension-pack",
             )
         elif is_centos_series():
             pass
@@ -59,9 +59,9 @@ def docker(**kwargs):
                 ]
             )
         elif is_centos_series():
-            run_cmd(f"yum install docker docker-compose")
+            run_cmd("yum install docker docker-compose")
     if args.config:
-        run_cmd(f"gpasswd -a $(id -un) docker")
+        run_cmd("gpasswd -a $(id -un) docker")
         logging.warning(
             "Please run the command 'newgrp docker' or logout/login to make the group 'docker' effective!"
         )
@@ -70,10 +70,10 @@ def docker(**kwargs):
             run_cmd(f"apt-get purge {args.yes_s} docker docker-compose", )
         elif is_macos():
             run_cmd(
-                f"brew uninstall docker docker-completion docker-compose docker-compose-completion",
+                "brew uninstall docker docker-completion docker-compose docker-compose-completion",
             )
         elif is_centos_series():
-            run_cmd(f"yum remove docker docker-compose")
+            run_cmd("yum remove docker docker-compose")
 
 
 def _add_subparser_docker(subparsers):
@@ -87,10 +87,10 @@ def kubernetes(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             run_cmd(
-                f"curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
+                "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -",
             )
             run_cmd(
-                f'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list',
+                'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list',
             )
             update_apt_source(seconds=-1E10)
             run_cmd(f"apt-get install {args.yes_s} kubectl")
@@ -104,7 +104,7 @@ def kubernetes(**kwargs):
         if is_ubuntu_debian():
             run_cmd(f"apt-get purge {args.yes_s} kubectl")
         elif is_macos():
-            run_cmd(f"brew uninstall kubectl")
+            run_cmd("brew uninstall kubectl")
         elif is_centos_series():
             pass
 
@@ -132,21 +132,21 @@ def minikube(**kwargs) -> None:
             update_apt_source(seconds=-1E10)
             _minikube_linux(yes=args.yes)
         elif is_macos():
-            run_cmd(f"brew install minikube")
+            run_cmd("brew install minikube")
         elif is_centos_series():
             _minikube_linux(yes=args.yes)
         elif is_win():
-            run_cmd(f"choco install minikube")
+            run_cmd("choco install minikube")
             print("VT-x/AMD-v virtualization must be enabled in BIOS.")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"rm /usr/local/bin/minikube")
+            run_cmd("rm /usr/local/bin/minikube")
         elif is_macos():
-            run_cmd(f"brew cask uninstall minikube")
+            run_cmd("brew cask uninstall minikube")
         elif is_centos_series():
-            run_cmd(f"rm /usr/local/bin/minikube")
+            run_cmd("rm /usr/local/bin/minikube")
 
 
 def _add_subparser_minikube(subparsers):
@@ -159,7 +159,7 @@ def multipass(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            cmd = f"snap install multipass --classic"
+            cmd = "snap install multipass --classic"
             run_cmd(cmd)
         elif is_macos():
             cmd = "brew cask install multipass"
@@ -172,10 +172,10 @@ def multipass(**kwargs) -> None:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            cmd = f"snap uninstall multipass"
+            cmd = "snap uninstall multipass"
             run_cmd(cmd)
         elif is_macos():
-            run_cmd(f"brew cask uninstall multipass")
+            run_cmd("brew cask uninstall multipass")
         elif is_centos_series():
             pass
 
@@ -190,7 +190,7 @@ def microk8s(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            cmd = f"""snap install microk8s --classic \
+            cmd = """snap install microk8s --classic \
                     && ln -svf /snap/bin/microk8s.kubectl /snap/bin/kubectl \
                     && gpasswd -a $(id -un) microk8s"""
             run_cmd(cmd)
@@ -204,7 +204,7 @@ def microk8s(**kwargs) -> None:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            cmd = f"snap uninstall microk8s"
+            cmd = "snap uninstall microk8s"
             run_cmd(cmd)
         elif is_macos():
             pass

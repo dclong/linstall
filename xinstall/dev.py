@@ -43,7 +43,7 @@ def openjdk8(**kwargs):
         if is_ubuntu_debian():
             run_cmd(f"apt-get purge {args.yes_s} openjdk-jdk-8 maven gradle", )
         if is_macos():
-            run_cmd(f"brew cask uninstall adoptopenjdk8")
+            run_cmd("brew cask uninstall adoptopenjdk8")
         if is_centos_series():
             pass
 
@@ -58,7 +58,7 @@ def sdkman(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        run_cmd(f"""curl -s https://get.sdkman.io | bash""")
+        run_cmd("""curl -s https://get.sdkman.io | bash""")
     if args.config:
         pass
     if args.uninstall:
@@ -80,7 +80,7 @@ def yapf(**kwargs):
             src_file = BASE_DIR / "yapf/style.yapf"
             des_file = args.dst_dir / ".style.yapf"
             shutil.copy2(src_file, des_file)
-            logging.info(f"{src_file} is copied to {des_file}.")
+            logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall yapf")
 
@@ -122,9 +122,9 @@ def nodejs(**kwargs):
         if is_ubuntu_debian():
             run_cmd(f"apt-get purge {args.yes_s} nodejs")
         if is_macos():
-            run_cmd(f"brew uninstall nodejs")
+            run_cmd("brew uninstall nodejs")
         if is_centos_series():
-            run_cmd(f"yum remove nodejs")
+            run_cmd("yum remove nodejs")
 
 
 def _add_subparser_nodejs(subparsers):
@@ -144,8 +144,8 @@ def ipython(**kwargs):
         dst_dir = HOME / ".ipython/profile_default"
         shutil.copy2(src_dir / "ipython_config.py", dst_dir)
         shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
-        logging.info(f"{src_dir / 'ipython_config.py'} is copied to the directory {dst_dir}.")
-        logging.info(f"{src_dir / 'startup.ipy'} is copied to the directory {dst_dir / 'startup'}.")
+        logging.info("%s is copied to the directory %s.", src_dir / "ipython_config.py", dst_dir)
+        logging.info("%s is copied to the directory %s.", src_dir / "startup.ipy", dst_dir / "startup")
     if args.uninstall:
         pass
 
@@ -184,9 +184,9 @@ def python3(**kwargs):
                 python3 python3-dev python3-setuptools python3-pip python3-venv"""
             run_cmd(cmd)
         if is_macos():
-            run_cmd(f"brew uninstall python3")
+            run_cmd("brew uninstall python3")
         if is_centos_series():
-            run_cmd(f"yum remove python3")
+            run_cmd("yum remove python3")
 
 
 def _add_subparser_python3(subparsers):
@@ -215,10 +215,10 @@ def poetry(**kwargs):
         except FileNotFoundError:
             pass
         desfile.symlink_to(poetry_bin)
-        logging.info(f"Symbolic link {desfile} pointing to {poetry_bin} is created.")
+        logging.info("Symbolic link %s pointing to %s is created.", desfile, poetry_bin)
         # make poetry always create virtual environment in the root directory of the project
         run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
-        logging.info(f"Python poetry has been configured to create virtual environments inside projects!")
+        logging.info("Python poetry has been configured to create virtual environments inside projects!")
         # bash completion
         if args.bash_completion:
             if is_linux():
@@ -228,7 +228,7 @@ def poetry(**kwargs):
             if is_macos():
                 cmd = f"{poetry_bin} completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion"
                 run_cmd(cmd)
-            logging.info(f"Bash completion is enabled for poetry.")
+            logging.info("Bash completion is enabled for poetry.")
     if args.uninstall:
         run_cmd(f"{poetry_bin} self:uninstall")
 
@@ -316,9 +316,9 @@ def rust(**kwargs):
             cmd = f"apt-get purge {args.yes_s} rustc cargo"
             run_cmd(cmd)
         if is_centos_series():
-            run_cmd(f"yum remove rustc cargo")
+            run_cmd("yum remove rustc cargo")
         if is_macos():
-            cmd = f"brew uninstall rustc cargo"
+            cmd = "brew uninstall rustc cargo"
             run_cmd(cmd)
 
 
@@ -421,14 +421,14 @@ def _add_subparser_git_ignore(subparsers):
         "--python-pattern",
         dest="python_pattern",
         action="store_true",
-        help=f"Gitignore patterns for Python developing."
+        help="Gitignore patterns for Python developing."
     )
     subparser.add_argument(
         "-j",
         "--java-pattern",
         dest="java_pattern",
         action="store_true",
-        help=f"Gitignore patterns for Java developing."
+        help="Gitignore patterns for Java developing."
     )
     subparser.set_defaults(func=git_ignore)
     return subparser
@@ -445,33 +445,33 @@ def git(**kwargs) -> None:
         elif is_macos():
             brew_install_safe(["git", "git-lfs", "bash-completion@2"])
         elif is_centos_series():
-            run_cmd(f"yum install git")
+            run_cmd("yum install git")
         run_cmd("git lfs install")
     if args.uninstall:
         run_cmd("git lfs uninstall")
         if is_ubuntu_debian():
             run_cmd(f"apt-get purge {args.yes_s} git git-lfs")
         elif is_macos():
-            run_cmd(f"brew uninstall git git-lfs")
+            run_cmd("brew uninstall git git-lfs")
         elif is_centos_series():
-            run_cmd(f"yum remove git")
+            run_cmd("yum remove git")
     if args.config:
         ssh_client(config=True)
         gitconfig = HOME / ".gitconfig"
         # try to remove the file to avoid dead symbolic link problem
         remove_file_safe(gitconfig)
         shutil.copy2(BASE_DIR / "git/gitconfig", gitconfig)
-        logging.info(f"{BASE_DIR / 'git/gitconfig'} is copied to {gitconfig}")
+        logging.info("%s is copied to %s", BASE_DIR / "git/gitconfig", gitconfig)
         gitignore = HOME / ".gitignore"
         remove_file_safe(gitignore)
         shutil.copy2(BASE_DIR / "git/gitignore", gitignore)
-        logging.info(f"{BASE_DIR / 'git/gitignore'} is copied to {gitignore}")
+        logging.info("%s is copied to %s", BASE_DIR / "git/gitignore", gitignore)
         if is_macos():
             file = "/usr/local/etc/bash_completion.d/git-completion.bash"
             bashrc = f"\n# Git completion\n[ -f {file} ] &&  . {file}"
             with (HOME / ".bash_profile").open("a") as fout:
                 fout.write(bashrc)
-            logging.info(f"Bash completion is enabled for Git.")
+            logging.info("Bash completion is enabled for Git.")
     if "proxy" in kwargs and args.proxy:
         run_cmd(f"git config --global http.proxy {args.proxy}")
         run_cmd(f"git config --global https.proxy {args.proxy}")
@@ -502,16 +502,16 @@ def antlr(**kwargs):
         elif is_macos():
             brew_install_safe(["antlr4"])
         elif is_centos_series():
-            run_cmd(f"yum install antlr")
+            run_cmd("yum install antlr")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(f"apt-get purge {args.yes_s} antlr4")
         elif is_macos():
-            run_cmd(f"brew uninstall antlr4")
+            run_cmd("brew uninstall antlr4")
         elif is_centos_series():
-            run_cmd(f"yum remove antlr")
+            run_cmd("yum remove antlr")
 
 
 def _add_subparser_antlr(subparsers):
