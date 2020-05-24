@@ -3,14 +3,6 @@
 import logging
 from pathlib import Path
 from .utils import (
-    is_ubuntu_debian,
-    is_centos_series,
-    is_linux,
-    is_fedora,
-    update_apt_source,
-    brew_install_safe,
-    is_macos,
-    remove_file_safe,
     run_cmd,
     namespace,
     add_subparser,
@@ -41,7 +33,7 @@ def spark(**kwargs):
         run_cmd(cmd)
         logging.info("Environment variable SPARK_HOME=/opt/spark is exported.")
     if args.uninstall:
-        cmd = f"rm -rf /opt/spark*"
+        cmd = "rm -rf /opt/spark*"
         run_cmd(cmd)
 
 
@@ -52,14 +44,14 @@ def _spark_args(subparser):
         dest="mirror",
         default="http://us.mirrors.quenda.co/apache/spark/",
         help=
-        f"The mirror (default http://us.mirrors.quenda.co/apache/spark/) of Spark to use."
+        "The mirror (default http://us.mirrors.quenda.co/apache/spark/) of Spark to use."
     )
     subparser.add_argument(
         "-v",
         "--version",
         dest="version",
         default="2.4.5",
-        help=f"The version of Spark to install."
+        help="The version of Spark to install."
     )
 
 
@@ -85,7 +77,7 @@ def pyspark(**kwargs):
                 version="2.4.5",
                 yes=args.yes
             )
-        cmd = f"{args.pip} install {args._user_s} pyspark findspark"
+        cmd = f"{args.pip} install {args.user_s} pyspark findspark"
         run_cmd(cmd)
     if args.config:
         pass
@@ -108,7 +100,7 @@ def optimuspyspark(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install {args._user_s} optimuspyspark"
+        cmd = f"{args.pip} install {args.user_s} optimuspyspark"
         run_cmd(cmd)
     if args.config:
         pass
@@ -132,7 +124,7 @@ def dask(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install {args._user_s} dask[complete]"
+        cmd = f"{args.pip} install {args.user_s} dask[complete]"
         run_cmd(cmd)
     if args.config:
         pass

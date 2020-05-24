@@ -239,10 +239,15 @@ def intellij_idea_plugin(version: str, url: str):
 
 
 def namespace(dic: Dict) -> Namespace:
+    """Convert a dictionary object to an argpase Namespace.
+
+    :param dic: A dictionary object.
+    :return: An argparse Namespace.
+    """
     dic.setdefault("yes", False)
-    dic["_yes_s"] = "--yes" if dic["yes"] else ""
+    dic["yes_s"] = "--yes" if dic["yes"] else ""
     dic.setdefault("user", False)
-    dic["_user_s"] = "--user" if dic["user"] else ""
+    dic["user_s"] = "--user" if dic["user"] else ""
     return Namespace(**dic)
 
 
@@ -255,7 +260,11 @@ def option_user(subparser):
     )
 
 
-def option_python(subparser):
+def option_python(subparser) -> None:
+    """Add the option --python into the sub parser.
+
+    :param subparser: A sub parser.
+    """
     subparser.add_argument(
         "--python",
         dest="python",
@@ -264,7 +273,11 @@ def option_python(subparser):
     )
 
 
-def option_ipython(subparser):
+def option_ipython(subparser) -> None:
+    """Add the option --ipython into the sub parser.
+
+    :param subparser: A sub parser.
+    """
     subparser.add_argument(
         "--ipython",
         dest="ipython",
@@ -273,13 +286,21 @@ def option_ipython(subparser):
     )
 
 
-def option_pip(subparser):
+def option_pip(subparser) -> None:
+    """Add the option --pip into the sub parser.
+
+    :param subparser: A sub parser.
+    """
     subparser.add_argument(
         "--pip", dest="pip", default="pip3", help=f"Path to the pip command."
     )
 
 
-def option_jupyter(subparser):
+def option_jupyter(subparser) -> None:
+    """Add the option --jupyter into the sub parser.
+
+    :param subparser: A sub parser.
+    """
     subparser.add_argument(
         "--jupyter",
         dest="jupyter",
@@ -295,7 +316,19 @@ def add_subparser(
     aliases: Sequence = (),
     help_: Union[str, None] = None,
     add_argument: Union[Callable, None] = None
-):
+) -> None:
+    """Add a sub parser to the main parser.
+
+    :param subparsers: The subparsers handler.
+    :param name: The name of the sub command.
+    :param func: The function corresponding to the sub parser.
+    :param aliases: A list of aliases of the sub command.
+    :type aliases: Sequence, optional
+    :param help_: Help doc of the sub command. If None, then the help doc of func is used.
+    :type help_: Union[str, None], optional
+    :param add_argument: A callable object to add aditional arguments (in addition to those default arguments), defaults to None
+    :type add_argument: Union[Callable, None], optional
+    """
     sub_cmd = re.sub(r"(\s+)|-", "_", name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
     help_ = help_ if help_ else func.__doc__

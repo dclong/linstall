@@ -2,7 +2,6 @@
 """
 from pathlib import Path
 import logging
-import warnings
 from .utils import HOME, USER, run_cmd, namespace, add_subparser, is_linux, is_macos
 
 
@@ -21,12 +20,12 @@ def kaggle(**kwargs):
             kaggle_home_host.mkdir(exist_ok=True)
             try:
                 kaggle_home.symlink_to(kaggle_home_host)
-                logging.info(f"Symbolic link {kaggle_home} pointing to {kaggle_home_host} is created.")
+                logging.info("Symbolic link %s pointing to %s is created.", kaggle_home, kaggle_home_host)
             except FileExistsError:
                 pass
         else:
             kaggle_home.mkdir(exist_ok=True)
-            logging.info(f"The directory {kaggle_home} is created.")
+            logging.info("The directory %s is created.", kaggle_home)
     if args.uninstall:
         pass
 
@@ -204,7 +203,7 @@ def computer_vision(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_linux():
-            cmd = f"""apt-get install {args._yes_s} \
+            cmd = f"""apt-get install {args.yes_s} \
                         libsm6 libxrender-dev libaec-dev \
                         libblosc-dev libbrotli-dev libghc-bzlib-dev libgif-dev \
                         libopenjp2-7-dev liblcms2-dev libjxr-dev liblz4-dev \

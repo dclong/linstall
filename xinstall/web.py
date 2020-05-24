@@ -22,12 +22,14 @@ from .utils import (
 )
 
 
-def ssh_server(**kwargs):
+def ssh_server(**kwargs) -> None:
+    """Install and configure SSH server.
+    """
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} openssh-server fail2ban", )
+            run_cmd(f"apt-get install {args.yes_s} openssh-server fail2ban", )
         elif is_macos():
             pass
         elif is_centos_series():
@@ -36,7 +38,7 @@ def ssh_server(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} openssh-server fail2ban", )
+            run_cmd(f"apt-get purge {args.yes_s} openssh-server fail2ban", )
         elif is_macos():
             pass
         elif is_centos_series():
@@ -62,16 +64,16 @@ def ssh_client(**kwargs) -> None:
             except FileNotFoundError:
                 pass
             shutil.copytree(ssh_src, ssh_dst)
-            logging.info(f"{ssh_src} is copied to {ssh_dst}.")
+            logging.info("%s is copied to %s.", ssh_src, ssh_dst)
         ssh_dst.mkdir(exist_ok=True)
         src = BASE_DIR / "ssh/client/config"
         des = HOME / ".ssh/config"
         shutil.copy2(src, des)
-        logging.info(f"{ssh_src} is copied to {ssh_dst}.")
+        logging.info("%s is copied to %s.", ssh_src, ssh_dst)
         # file permissions
         cmd = f"chown -R {USER}:{GROUP} {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
         run_cmd(cmd)
-        logging.info(f"The permissions of ~/.ssh and its contents are corrected set.")
+        logging.info("The permissions of ~/.ssh and its contents are corrected set.")
 
 
 def _add_subparser_ssh_client(subparsers):
@@ -86,27 +88,27 @@ def proxychains(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f""" apt-get install {args._yes_s} proxychains4 \
+            cmd = f"""apt-get install {args.yes_s} proxychains4 \
                     && ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(["proxychains-ng"])
         elif is_centos_series():
-            run_cmd(f"yum install proxychains")
+            run_cmd("yum install proxychains")
     if args.config:
         print("Configuring proxychains ...")
         src_file = BASE_DIR / "proxychains/proxychains.conf"
         des_dir = os.path.join(HOME, ".proxychains")
         os.makedirs(des_dir, exist_ok=True)
         shutil.copy2(src_file, des_dir)
-        logging.info(f"{src_file} is copied to the directory {des_dir}.")
+        logging.info("%s is copied to the directory %s.", src_file, des_dir)
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge proxychains4")
+            run_cmd("apt-get purge proxychains4")
         elif is_macos():
-            run_cmd(f"brew uninstall proxychains-ng")
+            run_cmd("brew uninstall proxychains-ng")
         elif is_centos_series():
-            run_cmd(f"yum remove proxychains")
+            run_cmd("yum remove proxychains")
 
 
 def _add_subparser_proxychains(subparsers):
@@ -122,7 +124,7 @@ def dryscrape(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"""apt-get install {args._yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
+            cmd = f"""apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
                 && {args.pip} install --user dryscrape
                 """
             run_cmd(cmd)
@@ -167,7 +169,7 @@ def blogging(**kwargs):
         main_py = archives / "blog/main.py"
         try:
             blog_bin.symlink_to(main_py)
-            logging.info(f"Symbolic link {blog_bin} pointing to {main_py} is created.")
+            logging.info("Symbolic link %s pointing to %s is created.", blog_bin, main_py)
         except FileExistsError:
             pass
     if args.uninstall:
@@ -183,7 +185,7 @@ def download_tools(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} wget curl aria2", )
+            run_cmd(f"apt-get install {args.yes_s} wget curl aria2", )
         elif is_macos():
             brew_install_safe(["wget", "curl", "aria2"])
         elif is_centos_series():
@@ -192,9 +194,9 @@ def download_tools(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} wget curl aria2", )
+            run_cmd(f"apt-get purge {args.yes_s} wget curl aria2")
         elif is_macos():
-            run_cmd(f"brew uninstall wget curl aria2")
+            run_cmd("brew uninstall wget curl aria2")
         elif is_centos_series():
             pass
 

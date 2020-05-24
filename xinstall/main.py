@@ -73,10 +73,6 @@ from .jupyter import (
     _add_subparser_nbdime,
     _add_subparser_evcxr_jupyter,
 )
-from .github import (
-    _add_subparser_xinstall,
-    _add_subparser_dsutil,
-)
 from .virtualization import (
     _add_subparser_docker,
     _add_subparser_kubernetes,

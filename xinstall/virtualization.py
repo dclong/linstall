@@ -1,6 +1,7 @@
+"""Install virtualization related applications.
+"""
 import logging
 from .utils import (
-    HOME,
     run_cmd,
     namespace,
     add_subparser,
@@ -13,19 +14,21 @@ from .utils import (
 )
 
 
-def virtualbox(**kwargs):
+def virtualbox(**kwargs) -> None:
+    """Install VirtualBox.
+    """
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} virtualbox-qt", )
+            run_cmd(f"apt-get install {args.yes_s} virtualbox-qt", )
         elif is_macos():
             run_cmd(f"brew cask install virtualbox virtualbox-extension-pack")
         elif is_centos_series():
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} virtualbox-qt", )
+            run_cmd(f"apt-get purge {args.yes_s} virtualbox-qt", )
         elif is_macos():
             run_cmd(
                 f"brew cask uninstall virtualbox virtualbox-extension-pack",
@@ -47,7 +50,7 @@ def docker(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} docker.io docker-compose", )
+            run_cmd(f"apt-get install {args.yes_s} docker.io docker-compose")
         elif is_macos():
             brew_install_safe(
                 [
@@ -64,7 +67,7 @@ def docker(**kwargs):
         )
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} docker docker-compose", )
+            run_cmd(f"apt-get purge {args.yes_s} docker docker-compose", )
         elif is_macos():
             run_cmd(
                 f"brew uninstall docker docker-completion docker-compose docker-compose-completion",
@@ -90,7 +93,7 @@ def kubernetes(**kwargs):
                 f'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list',
             )
             update_apt_source(seconds=-1E10)
-            run_cmd(f"apt-get install {args._yes_s} kubectl")
+            run_cmd(f"apt-get install {args.yes_s} kubectl")
         elif is_macos():
             brew_install_safe(["kubernetes-cli"])
         elif is_centos_series():
@@ -99,7 +102,7 @@ def kubernetes(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} kubectl")
+            run_cmd(f"apt-get purge {args.yes_s} kubectl")
         elif is_macos():
             run_cmd(f"brew uninstall kubectl")
         elif is_centos_series():
@@ -118,7 +121,9 @@ def _minikube_linux(yes: bool = True):
     print("VT-x/AMD-v virtualization must be enabled in BIOS.")
 
 
-def minikube(**kwargs):
+def minikube(**kwargs) -> None:
+    """Install MiniKube.
+    """
     args = namespace(kwargs)
     virtualbox(**kwargs)
     kubernetes(**kwargs)
@@ -148,7 +153,9 @@ def _add_subparser_minikube(subparsers):
     add_subparser(subparsers, "Minikube", func=minikube, aliases=["mkb"])
 
 
-def multipass(**kwargs):
+def multipass(**kwargs) -> None:
+    """Install Multipass.
+    """
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -177,7 +184,9 @@ def _add_subparser_multipass(subparsers):
     add_subparser(subparsers, "Multipass", func=multipass, aliases=["mp"])
 
 
-def microk8s(**kwargs):
+def microk8s(**kwargs) -> None:
+    """Install MicroK8S.
+    """
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():

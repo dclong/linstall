@@ -30,7 +30,7 @@ def openjdk8(**kwargs):
         if is_ubuntu_debian():
             update_apt_source()
             run_cmd(
-                f"apt-get install {args._yes_s} openjdk-jdk-8 maven gradle",
+                f"apt-get install {args.yes_s} openjdk-jdk-8 maven gradle",
             )
         if is_macos():
             cmd = "brew tap AdoptOpenJDK/openjdk && brew cask install adoptopenjdk8"
@@ -41,7 +41,7 @@ def openjdk8(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} openjdk-jdk-8 maven gradle", )
+            run_cmd(f"apt-get purge {args.yes_s} openjdk-jdk-8 maven gradle", )
         if is_macos():
             run_cmd(f"brew cask uninstall adoptopenjdk8")
         if is_centos_series():
@@ -74,7 +74,7 @@ def yapf(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        run_cmd(f"{args.pip} install {args._user_s} yapf")
+        run_cmd(f"{args.pip} install {args.user_s} yapf")
     if args.config:
         if args.dst_dir:
             src_file = BASE_DIR / "yapf/style.yapf"
@@ -110,17 +110,17 @@ def nodejs(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"""apt-get install {args._yes_s} nodejs npm"""
+            cmd = f"""apt-get install {args.yes_s} nodejs npm"""
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["nodejs"])
         if is_centos_series():
-            run_cmd(f"yum install {args._yes_s} nodejs")
+            run_cmd(f"yum install {args.yes_s} nodejs")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} nodejs")
+            run_cmd(f"apt-get purge {args.yes_s} nodejs")
         if is_macos():
             run_cmd(f"brew uninstall nodejs")
         if is_centos_series():
@@ -136,7 +136,7 @@ def ipython(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install {args._user_s} ipython"
+        cmd = f"{args.pip} install {args.user_s} ipython"
         run_cmd(cmd)
     if args.config:
         run_cmd(f"{args.ipython} profile create")
@@ -167,20 +167,20 @@ def python3(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"apt-get install {args._yes_s} python3 python3-pip python3-setuptools"
+            cmd = f"apt-get install {args.yes_s} python3 python3-pip python3-setuptools"
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["python3"])
         if is_centos_series():
             run_cmd(
-                f"yum install {args._yes_s} python34 python34-devel python34-pip",
+                f"yum install {args.yes_s} python34 python34-devel python34-pip",
             )
-            run_cmd(f"{args.pip} install {args._user_s} setuptools")
+            run_cmd(f"{args.pip} install {args.user_s} setuptools")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            cmd = f"""apt-get purge {args._yes_s} \
+            cmd = f"""apt-get purge {args.yes_s} \
                 python3 python3-dev python3-setuptools python3-pip python3-venv"""
             run_cmd(cmd)
         if is_macos():
@@ -302,10 +302,10 @@ def rust(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"apt-get install {args._yes_s} cmake rustc cargo"
+            cmd = f"apt-get install {args.yes_s} cmake rustc cargo"
             run_cmd(cmd)
         if is_centos_series():
-            cmd = f"yum install {args._yes_s} cmake rustc cargo"
+            cmd = f"yum install {args.yes_s} cmake rustc cargo"
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["cmake", "rustc", "cargo"])
@@ -313,7 +313,7 @@ def rust(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            cmd = f"apt-get purge {args._yes_s} rustc cargo"
+            cmd = f"apt-get purge {args.yes_s} rustc cargo"
             run_cmd(cmd)
         if is_centos_series():
             run_cmd(f"yum remove rustc cargo")
@@ -441,7 +441,7 @@ def git(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} git git-lfs")
+            run_cmd(f"apt-get install {args.yes_s} git git-lfs")
         elif is_macos():
             brew_install_safe(["git", "git-lfs", "bash-completion@2"])
         elif is_centos_series():
@@ -450,7 +450,7 @@ def git(**kwargs) -> None:
     if args.uninstall:
         run_cmd("git lfs uninstall")
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} git git-lfs")
+            run_cmd(f"apt-get purge {args.yes_s} git git-lfs")
         elif is_macos():
             run_cmd(f"brew uninstall git git-lfs")
         elif is_centos_series():
@@ -498,7 +498,7 @@ def antlr(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} antlr4")
+            run_cmd(f"apt-get install {args.yes_s} antlr4")
         elif is_macos():
             brew_install_safe(["antlr4"])
         elif is_centos_series():
@@ -507,7 +507,7 @@ def antlr(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} antlr4")
+            run_cmd(f"apt-get purge {args.yes_s} antlr4")
         elif is_macos():
             run_cmd(f"brew uninstall antlr4")
         elif is_centos_series():
@@ -523,7 +523,7 @@ def jpype1(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install {args._user_s} JPype1"
+        cmd = f"{args.pip} install {args.user_s} JPype1"
         run_cmd(cmd)
     if args.config:
         pass

@@ -4,63 +4,78 @@ from typing import Union
 import os
 import shutil
 import re
-from .utils import USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, is_ubuntu_debian, is_centos_series, is_linux, is_fedora, update_apt_source, brew_install_safe, is_macos, run_cmd, namespace, add_subparser, intellij_idea_plugin
+from .utils import (
+    USER,
+    HOME,
+    BASE_DIR,
+    BIN_DIR,
+    LOCAL_DIR,
+    is_ubuntu_debian,
+    is_centos_series,
+    update_apt_source,
+    brew_install_safe,
+    is_macos,
+    run_cmd,
+    namespace,
+    add_subparser,
+    intellij_idea_plugin,
+)
 
 
-def vim(**kwargs):
+def vim(**kwargs) -> None:
     """Install Vim.
     """
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} vim vim-nox", )
+            run_cmd(f"apt-get install {args.yes_s} vim vim-nox")
         elif is_macos():
             brew_install_safe(["vim"])
         elif is_centos_series():
-            run_cmd(f"yum install {args._yes_s} vim-enhanced")
+            run_cmd(f"yum install {args.yes_s} vim-enhanced")
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} vim vim-nox")
+            run_cmd(f"apt-get purge {args.yes_s} vim vim-nox")
         elif is_macos():
-            run_cmd(f"brew uninstall vim")
+            run_cmd("brew uninstall vim")
         elif is_centos_series():
-            run_cmd(f"yum remove vim")
+            run_cmd("yum remove vim")
     if args.config:
         pass
 
 
-def _add_subparser_vim(subparsers):
+def _add_subparser_vim(subparsers) -> None:
     add_subparser(subparsers, "Vim", func=vim)
 
 
-def neovim(**kwargs):
+def neovim(**kwargs) -> None:
     """Install NeoVim.
     """
     args = namespace(kwargs)
     if args.ppa and is_ubuntu_debian():
         args.install = True
-        run_cmd(f"add-apt-repository -y ppa:neovim-ppa/stable")
+        run_cmd("add-apt-repository -y ppa:neovim-ppa/stable")
         update_apt_source()
     if args.install:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get install {args._yes_s} neovim")
+            run_cmd(f"apt-get install {args.yes_s} neovim")
         elif is_macos():
             brew_install_safe(["neovim"])
         elif is_centos_series():
-            run_cmd(f"yum install neovim")
+            run_cmd("yum install neovim")
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} neovim")
+            run_cmd(f"apt-get purge {args.yes_s} neovim")
         elif is_macos():
-            run_cmd(f"brew uninstall neovim")
+            run_cmd("brew uninstall neovim")
         elif is_centos_series():
-            run_cmd(f"yum remove neovim")
+            run_cmd("yum remove neovim")
     if args.config:
         pass
 
 
-def _neovim_args(subparser):
+def _neovim_args(subparser) -> None:
     subparser.add_argument(
         "--ppa",
         dest="ppa",
@@ -69,7 +84,7 @@ def _neovim_args(subparser):
     )
 
 
-def _add_subparser_neovim(subparsers):
+def _add_subparser_neovim(subparsers) -> None:
     add_subparser(
         subparsers,
         "NeoVim",
@@ -99,7 +114,7 @@ def _svim_true_color(true_color: Union[bool, None]) -> None:
         fout.writelines(lines)
 
 
-def _svim_gen_config():
+def _svim_gen_config() -> None:
     """Generate init.toml for SpaceVim if it does not exist.
     """
     des_dir = HOME / ".SpaceVim.d"
@@ -108,27 +123,27 @@ def _svim_gen_config():
         shutil.copy2(BASE_DIR / "SpaceVim/init.toml", des_dir)
 
 
-def spacevim(**kwargs):
+def spacevim(**kwargs) -> None:
     """Install and configure SpaceVim.
     """
     args = namespace(kwargs)
     if args.install:
-        run_cmd(f"curl -sLf https://spacevim.org/install.sh | bash")
+        run_cmd("curl -sLf https://spacevim.org/install.sh | bash")
         if shutil.which("nvim"):
-            run_cmd(f'nvim --headless +"call dein#install()" +qall')
+            run_cmd('nvim --headless +"call dein#install()" +qall')
         cmd = f"{args.pip} install --user python-language-server[all] pyls-mypy"
         # npm install -g bash-language-server javascript-typescript-langserver
         run_cmd(cmd)
     if args.uninstall:
         run_cmd(
-            f"curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall",
+            "curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall",
         )
     if args.config:
         _svim_gen_config()
     _svim_true_color(args.true_colors)
 
 
-def _spacevim_args(subparser):
+def _spacevim_args(subparser) -> None:
     subparser.add_argument(
         "--enable-true-colors",
         dest="true_colors",
@@ -144,7 +159,7 @@ def _spacevim_args(subparser):
     )
 
 
-def _add_subparser_spacevim(subparsers):
+def _add_subparser_spacevim(subparsers) -> None:
     add_subparser(
         subparsers,
         "SpaceVim",
@@ -154,12 +169,12 @@ def _add_subparser_spacevim(subparsers):
     )
 
 
-def bash_lsp(**kwargs):
+def bash_lsp(**kwargs) -> None:
     """Install Bash Language Server.
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"npm install -g bash-language-server"
+        cmd = "npm install -g bash-language-server"
         run_cmd(cmd)
     if args.config:
         _svim_gen_config()
@@ -173,15 +188,15 @@ def bash_lsp(**kwargs):
         with toml.open("w") as fout:
             fout.writelines(lines)
     if args.uninstall:
-        cmd = f"npm uninstall bash-language-server"
+        cmd = "npm uninstall bash-language-server"
         run_cmd(cmd)
 
 
-def _add_subparser_bash_lsp(subparsers):
+def _add_subparser_bash_lsp(subparsers) -> None:
     add_subparser(subparsers, "Bash LSP", func=bash_lsp, aliases=["blsp"])
 
 
-def ideavim(**kwargs):
+def ideavim(**kwargs) -> None:
     """Install IdeaVim for IntelliJ.
     """
     args = namespace(kwargs)
@@ -189,11 +204,13 @@ def ideavim(**kwargs):
         shutil.copy2(BASE_DIR / "ideavim/ideavimrc", HOME / ".ideavimrc")
 
 
-def _add_subparser_ideavim(subparsers):
+def _add_subparser_ideavim(subparsers) -> None:
     add_subparser(subparsers, "IdeaVim", func=ideavim, aliases=["ivim"])
 
 
-def intellij_idea(**kwargs):
+def intellij_idea(**kwargs) -> None:
+    """Install IntelliJ IDEA.
+    """
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -208,37 +225,39 @@ def intellij_idea(**kwargs):
                 && ln -s {des_dir}/bin/idea.sh {executable}"""
             run_cmd(cmd)
         elif is_macos():
-            run_cmd(f"brew cask install intellij-idea-ce")
+            run_cmd("brew cask install intellij-idea-ce")
         elif is_centos_series():
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} intellij-idea-ce", )
+            run_cmd(f"apt-get purge {args.yes_s} intellij-idea-ce")
         elif is_macos():
-            run_cmd(f"brew cask uninstall intellij-idea-ce")
+            run_cmd("brew cask uninstall intellij-idea-ce")
         elif is_centos_series():
             pass
     if args.config:
         pass
 
 
-def visual_studio_code(**kwargs):
+def visual_studio_code(**kwargs) -> None:
+    """Install Visual Studio Code.
+    """
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(f"apt-get install {args._yes_s} vscode")
+            run_cmd(f"apt-get install {args.yes_s} vscode")
         elif is_macos():
-            run_cmd(f"brew cask install visual-studio-code")
+            run_cmd("brew cask install visual-studio-code")
         elif is_centos_series():
-            run_cmd(f"yum install vscode")
+            run_cmd("yum install vscode")
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args._yes_s} vscode")
+            run_cmd(f"apt-get purge {args.yes_s} vscode")
         elif is_macos():
-            run_cmd(f"brew cask uninstall visual-studio-code")
+            run_cmd("brew cask uninstall visual-studio-code")
         elif is_centos_series():
-            run_cmd(f"yum remove vscode")
+            run_cmd("yum remove vscode")
     if args.config:
         src_file = f"{BASE_DIR}/vscode/settings.json"
         dst_dir = f"{HOME}/.config/Code/User/"
@@ -249,7 +268,7 @@ def visual_studio_code(**kwargs):
         run_cmd(f"ln -svf {src_file} {dst_dir}")
 
 
-def _add_subparser_visual_studio_code(subparsers):
+def _add_subparser_visual_studio_code(subparsers) -> None:
     add_subparser(
         subparsers,
         "Visual Studio Code",
@@ -258,7 +277,7 @@ def _add_subparser_visual_studio_code(subparsers):
     )
 
 
-def intellij_idea_scala(**kwargs):
+def intellij_idea_scala(**kwargs) -> None:
     """Install the Scala plugin for IntelliJ IDEA Community Edition.
     """
     args = namespace(kwargs)
@@ -266,7 +285,7 @@ def intellij_idea_scala(**kwargs):
     intellij_idea_plugin(version=args.version, url=url)
 
 
-def _add_subparser_intellij_idea_scala(subparsers):
+def _add_subparser_intellij_idea_scala(subparsers) -> None:
     add_subparser(
         subparsers,
         "IntelliJ IDEA",
