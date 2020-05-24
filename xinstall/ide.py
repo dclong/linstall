@@ -133,9 +133,10 @@ def spacevim(**kwargs) -> None:
         run_cmd("curl -sLf https://spacevim.org/install.sh | bash")
         if shutil.which("nvim"):
             run_cmd('nvim --headless +"call dein#install()" +qall')
-        cmd = f"{args.pip} install {args.user_s} python-language-server[all] pyls-mypy {args.options}"
-        # npm install -g bash-language-server javascript-typescript-langserver
-        run_cmd(cmd)
+        if not args.no_lsp:
+            cmd = f"{args.pip} install {args.user_s} python-language-server[all] pyls-mypy"
+            # npm install -g bash-language-server javascript-typescript-langserver
+            run_cmd(cmd)
     if args.uninstall:
         run_cmd(
             "curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall",
@@ -159,8 +160,13 @@ def _spacevim_args(subparser) -> None:
         action="store_false",
         help="disable true color (default true) for SpaceVim."
     )
+    subparser.add_argument(
+        "--no-lsp",
+        dest="no_lsp",
+        action="store_true",
+        help="disable true color (default true) for SpaceVim."
+    )
     option_user(subparser)
-    option_option(subparser)
 
 
 def _add_subparser_spacevim(subparsers) -> None:
