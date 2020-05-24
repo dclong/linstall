@@ -1,20 +1,24 @@
+"""GitHub related utils.
+"""
 from .utils import option_pip, option_python, option_user, namespace, add_subparser, run_cmd
 from . import utils
 
 
-def install_py_github(**kwargs):
+def install_py_github(**kwargs) -> None:
+    """Install a Python package from GitHub.
+    """
     args = namespace(kwargs)
     utils.install_py_github(url=args.url, user=args.user, pip=args.pip)
 
 
-def _add_subparser_install_py_github(subparsers):
+def _add_subparser_install_py_github(subparsers) -> None:
     subparser = subparsers.add_parser(
         "install_py_github",
         aliases=["inpygit", "pygit", "ipg"],
         help="Install the latest version of a Python package from GitHub."
     )
     subparser.add_argument(
-        dest="url", help=f"The URL of the Python package's GitHub repository."
+        dest="url", help="The URL of the Python package's GitHub repository."
     )
     option_user(subparser)
     option_python(subparser)
@@ -23,7 +27,7 @@ def _add_subparser_install_py_github(subparsers):
     return subparser
 
 
-def dsutil(**kwargs):
+def dsutil(**kwargs) -> None:
     """Install the Python package dsutil.
     """
     args = namespace(kwargs)
@@ -33,14 +37,14 @@ def dsutil(**kwargs):
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall {args._yes_s} dsutil")
+        run_cmd(f"{args.pip} uninstall {args.yes_s} dsutil")
 
 
-def _dsutil_args(subparser):
+def _dsutil_args(subparser) -> None:
     option_user(subparser)
 
 
-def _add_subparser_dsutil(subparsers):
+def _add_subparser_dsutil(subparsers) -> None:
     add_subparser(
         subparsers,
         "dsutil",
@@ -50,7 +54,7 @@ def _add_subparser_dsutil(subparsers):
     )
 
 
-def xinstall(**kwargs):
+def xinstall(**kwargs) -> None:
     """Install xonsh, a Python based shell.
     """
     args = namespace(kwargs)
@@ -63,11 +67,11 @@ def xinstall(**kwargs):
         run_cmd(f"{args.pip} uninstall xinstall")
 
 
-def _xinstall_args(subparser):
+def _xinstall_args(subparser) -> None:
     option_user(subparser)
 
 
-def _add_subparser_xinstall(subparsers):
+def _add_subparser_xinstall(subparsers) -> None:
     add_subparser(
         subparsers,
         "xinstall",

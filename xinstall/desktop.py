@@ -1,10 +1,15 @@
+"""Install and configure desktop applications.
+"""
 import sys
 import tempfile
 from pathlib import Path
 from .utils import (
-    HOME, BASE_DIR, BIN_DIR, is_ubuntu_debian, is_centos_series, is_linux,
-    is_fedora, update_apt_source, brew_install_safe, is_macos, run_cmd,
-    namespace, add_subparser
+    is_ubuntu_debian,
+    is_linux,
+    update_apt_source,
+    run_cmd,
+    namespace,
+    add_subparser,
 )
 
 
@@ -53,7 +58,7 @@ def lxqt(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"apt-get install lxqt"
+            cmd = "apt-get install lxqt"
             run_cmd(cmd)
     if args.config:
         pass

@@ -1,12 +1,17 @@
-import os
+"""Install and configure Jupyter/Lab related tools.
+"""
 from .utils import (
-    USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, USER, GROUP, is_ubuntu_debian,
-    is_centos_series, is_linux, is_fedora, update_apt_source, brew_install_safe,
-    is_macos, run_cmd, namespace, add_subparser, intellij_idea_plugin
+    USER,
+    HOME,
+    BIN_DIR,
+    GROUP,
+    run_cmd,
+    namespace,
+    add_subparser,
 )
 
 
-def nbdime(**kwargs):
+def nbdime(**kwargs) -> None:
     """Install and configure nbdime for comparing difference of notebooks.
     """
     args = namespace(kwargs)
@@ -15,32 +20,34 @@ def nbdime(**kwargs):
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall nbdime")
     if args.config:
-        run_cmd(f"nbdime config-git --enable --global")
+        run_cmd("nbdime config-git --enable --global")
 
 
-def _add_subparser_nbdime(subparsers):
+def _add_subparser_nbdime(subparsers) -> None:
     add_subparser(subparsers, "nbdime", func=nbdime, aliases=["nbd"])
 
 
-def itypescript(**kwargs):
+def itypescript(**kwargs) -> None:
     """Install and configure the ITypeScript kernel.
     """
     args = namespace(kwargs)
     if args.install:
-        run_cmd(f"npm install -g --unsafe-perm itypescript")
-        run_cmd(f"its --ts-hide-undefined --install=global")
+        run_cmd("npm install -g --unsafe-perm itypescript")
+        run_cmd("its --ts-hide-undefined --install=global")
     if args.uninstall:
-        run_cmd(f"jupyter kernelspec uninstall typescript")
-        run_cmd(f"npm uninstall itypescript")
+        run_cmd("jupyter kernelspec uninstall typescript")
+        run_cmd("npm uninstall itypescript")
     if args.config:
         pass
 
 
-def _add_subparser_itypescript(subparsers):
+def _add_subparser_itypescript(subparsers) -> None:
     add_subparser(subparsers, "iTypeScript", func=itypescript, aliases=["its"])
 
 
-def jupyterlab_lsp(**kwargs):
+def jupyterlab_lsp(**kwargs) -> None:
+    """Install jupyterlab-lsp.
+    """
     args = namespace(kwargs)
     if args.install:
         cmd = """{args.pip} install jupyter-lsp \
@@ -53,7 +60,7 @@ def jupyterlab_lsp(**kwargs):
         pass
 
 
-def _add_subparser_jupyterlab_lsp(subparsers):
+def _add_subparser_jupyterlab_lsp(subparsers) -> None:
     add_subparser(
         subparsers,
         "jupyterlab-lsp",
@@ -62,33 +69,31 @@ def _add_subparser_jupyterlab_lsp(subparsers):
     )
 
 
-def beakerx(**kwargs):
+def beakerx(**kwargs) -> None:
     """Install/uninstall/configure the BeakerX kernels.
     """
     args = namespace(kwargs)
     if args.install:
         run_cmd(f"{args.pip} install --user beakerx")
-        run_cmd(f"beakerx install")
+        run_cmd("beakerx install")
         run_cmd(
-            f"jupyter labextension install @jupyter-widgets/jupyterlab-manager",
+            "jupyter labextension install @jupyter-widgets/jupyterlab-manager",
         )
-        run_cmd(f"jupyter labextension install beakerx-jupyterlab", )
+        run_cmd("jupyter labextension install beakerx-jupyterlab")
     if args.uninstall:
-        run_cmd(f"jupyter labextension uninstall beakerx-jupyterlab", )
-        run_cmd(
-            f"jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager",
-        )
-        run_cmd(f"beakerx uninstall")
+        run_cmd("jupyter labextension uninstall beakerx-jupyterlab")
+        run_cmd("jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager")
+        run_cmd("beakerx uninstall")
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:
         run_cmd(f"chown -R {USER}:{GROUP} {HOME}")
 
 
-def _add_subparser_beakerx(subparsers):
+def _add_subparser_beakerx(subparsers) -> None:
     add_subparser(subparsers, "BeakerX", func=beakerx, aliases=["bkx", "bk"])
 
 
-def almond(**kwargs):
+def almond(**kwargs) -> None:
     """Install/uninstall/configure the Almond Scala kernel.
     """
     args = namespace(kwargs)
@@ -101,22 +106,22 @@ def almond(**kwargs):
     else:
         args.install = True
     if args.install:
-        coursier = os.path.join(BIN_DIR, "coursier")
-        almond = os.path.join(BIN_DIR, "almond")
+        coursier = BIN_DIR / "coursier"
+        almond_bin = BIN_DIR / "almond"
         run_cmd(f"curl -L -o {coursier} https://git.io/coursier-cli")
         run_cmd(f"chmod +x {coursier}")
         run_cmd(
             f"""{coursier} bootstrap -f -r jitpack -i user \
                 -I user:sh.almond:scala-kernel-api_{args.scala_version}:{args.almond_version} \
-                -o {almond} \
+                -o {almond_bin} \
                 sh.almond:scala-kernel_{args.scala_version}:{args.almond_version}""",
         )
-        run_cmd(f"{almond} --install --global --force")
+        run_cmd(f"{almond_bin} --install --global --force")
     if args.config:
         pass
 
 
-def _almond_args(subparser):
+def _almond_args(subparser) -> None:
     subparser.add_argument(
         "-a",
         "--almond-version",
@@ -133,7 +138,7 @@ def _almond_args(subparser):
     )
 
 
-def _add_subparser_almond(subparsers):
+def _add_subparser_almond(subparsers) -> None:
     add_subparser(
         subparsers,
         "Almond",
@@ -143,12 +148,12 @@ def _add_subparser_almond(subparsers):
     )
 
 
-def evcxr_jupyter(**kwargs):
+def evcxr_jupyter(**kwargs) -> None:
     """Install the evcxr Rust kernel for Jupyter/Lab server.
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"""apt-get install {args._yes_s} cmake cargo \
+        cmd = f"""apt-get install {args.yes_s} cmake cargo \
             && cargo install --force evcxr_jupyter \
             && {HOME}/.cargo/bin/evcxr_jupyter --install"""
         run_cmd(cmd)
@@ -161,7 +166,7 @@ def evcxr_jupyter(**kwargs):
         run_cmd(cmd)
 
 
-def _add_subparser_evcxr_jupyter(subparsers):
+def _add_subparser_evcxr_jupyter(subparsers) -> None:
     add_subparser(
         subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"]
     )
