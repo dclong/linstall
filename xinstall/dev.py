@@ -1,19 +1,15 @@
 """Installing dev related tools.
 """
-import os
 import logging
 import shutil
 from pathlib import Path
 from .utils import (
-    USER,
     HOME,
     BASE_DIR,
     BIN_DIR,
-    LOCAL_DIR,
     is_ubuntu_debian,
     is_centos_series,
     is_linux,
-    is_fedora,
     update_apt_source,
     brew_install_safe,
     is_macos,
@@ -21,13 +17,14 @@ from .utils import (
     run_cmd,
     namespace,
     add_subparser,
-    intellij_idea_plugin,
     option_user,
 )
 from .web import ssh_client
 
 
 def openjdk8(**kwargs):
+    """Install OpenJDK 8.
+    """
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
@@ -73,14 +70,17 @@ def _add_subparser_sdkman(subparsers):
 
 
 def yapf(**kwargs):
+    """Install Google's yapf (for formatting Python scripts).
+    """
     args = namespace(kwargs)
     if args.install:
         run_cmd(f"{args.pip} install {args._user_s} yapf")
     if args.config:
-        src_file = BASE_DIR / "yapf/style.yapf"
-        des_file = args.dst_dir / ".style.yapf"
-        shutil.copy2(src_file, des_file)
-        logging.info(f"{src_file} is copied to {des_file}.")
+        if args.dst_dir:
+            src_file = BASE_DIR / "yapf/style.yapf"
+            des_file = args.dst_dir / ".style.yapf"
+            shutil.copy2(src_file, des_file)
+            logging.info(f"{src_file} is copied to {des_file}.")
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall yapf")
 
@@ -90,8 +90,8 @@ def _yapf_args(subparser):
         "-d",
         "--dest-dir",
         dest="dst_dir",
-        requested=True,
         type=Path,
+        default=None,
         help="The destination directory to copy the YAPF configuration file to.",
     )
     option_user(subparser)
@@ -180,9 +180,9 @@ def python3(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"apt-get purge {args._yes_s} python3 python3-dev python3-setuptools python3-pip python3-venv",
-            )
+            cmd = f"""apt-get purge {args._yes_s} \
+                python3 python3-dev python3-setuptools python3-pip python3-venv"""
+            run_cmd(cmd)
         if is_macos():
             run_cmd(f"brew uninstall python3")
         if is_centos_series():
