@@ -19,6 +19,7 @@ from .utils import (
     namespace,
     add_subparser,
     intellij_idea_plugin,
+    option_user,
 )
 
 
@@ -131,7 +132,7 @@ def spacevim(**kwargs) -> None:
         run_cmd("curl -sLf https://spacevim.org/install.sh | bash")
         if shutil.which("nvim"):
             run_cmd('nvim --headless +"call dein#install()" +qall')
-        cmd = f"{args.pip} install --user python-language-server[all] pyls-mypy"
+        cmd = f"{args.pip} install {args.user_s} python-language-server[all] pyls-mypy"
         # npm install -g bash-language-server javascript-typescript-langserver
         run_cmd(cmd)
     if args.uninstall:
@@ -157,6 +158,7 @@ def _spacevim_args(subparser) -> None:
         action="store_false",
         help="disable true color (default true) for SpaceVim."
     )
+    option_user(subparser)
 
 
 def _add_subparser_spacevim(subparsers) -> None:
