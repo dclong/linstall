@@ -42,9 +42,9 @@ def _spark_args(subparser):
         "-m",
         "--mirror",
         dest="mirror",
-        default="http://us.mirrors.quenda.co/apache/spark/",
+        default="https://archive.apache.org/dist/spark",
         help=
-        "The mirror (default http://us.mirrors.quenda.co/apache/spark/) of Spark to use."
+        "The mirror of Spark (default https://archive.apache.org/dist/spark) to use."
     )
     subparser.add_argument(
         "-v",
