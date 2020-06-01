@@ -11,7 +11,7 @@ from .utils import (
 
 
 def spark(**kwargs):
-    """Install Spark into /opt/spark.
+    """Install Spark.
     :param yes:
     :param install:
     :param config:
@@ -19,21 +19,23 @@ def spark(**kwargs):
     :param version:
     """
     args = namespace(kwargs)
+    dir_ = Path(args.location)
     if args.install:
+        dir_.mkdir(exist_ok=True)
         spark_hdp = f"spark-{args.version}-bin-hadoop2.7"
         url = f"{args.mirror}/spark-{args.version}/{spark_hdp}.tgz"
         cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
-                && tar -zxvf /tmp/{spark_hdp}.tgz -C /opt/ \
-                && ln -svf /opt/{spark_hdp} /opt/spark \
+                && tar -zxvf /tmp/{spark_hdp}.tgz -C {dir_} \
+                && ln -svf {dir_}/{spark_hdp} {dir_}/spark \
                 && rm /tmp/{spark_hdp}.tgz
             """
         run_cmd(cmd)
     if args.config:
-        cmd = "export SPARK_HOME=/opt/spark"
+        cmd = f"export SPARK_HOME={dir_}/spark"
         run_cmd(cmd)
-        logging.info("Environment variable SPARK_HOME=/opt/spark is exported.")
+        logging.info(f"Environment variable SPARK_HOME={dir_}/spark is exported.")
     if args.uninstall:
-        cmd = "rm -rf /opt/spark*"
+        cmd = f"rm -rf {dir_}/spark*"
         run_cmd(cmd)
 
 
@@ -53,6 +55,12 @@ def _spark_args(subparser):
         default="2.4.5",
         help="The version of Spark to install."
     )
+    subparser.add_argument(
+        "--location",
+        dest="location",
+        default="/opt",
+        help="The location to install Spark to."
+    )
 
 
 def _add_subparser_spark(subparsers):
@@ -69,14 +77,6 @@ def pyspark(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        if not Path("/opt/spark").exists():
-            spark(
-                install=True,
-                config=True,
-                mirror="http://us.mirrors.quenda.co/apache/spark/",
-                version="2.4.5",
-                yes=args.yes
-            )
         cmd = f"{args.pip} install {args.user_s} pyspark findspark"
         run_cmd(cmd)
     if args.config:
