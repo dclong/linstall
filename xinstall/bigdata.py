@@ -33,7 +33,9 @@ def spark(**kwargs):
     if args.config:
         cmd = f"export SPARK_HOME={dir_}/spark"
         run_cmd(cmd)
-        logging.info(f"Environment variable SPARK_HOME={dir_}/spark is exported.")
+        logging.info(
+            f"Environment variable SPARK_HOME={dir_}/spark is exported."
+        )
     if args.uninstall:
         cmd = f"rm -rf {dir_}/spark*"
         run_cmd(cmd)
