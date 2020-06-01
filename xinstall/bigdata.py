@@ -56,7 +56,6 @@ def _spark_args(subparser):
         help="The version of Spark to install."
     )
     subparser.add_argument(
-        "-l",
         "--location",
         dest="location",
         default="/opt",
