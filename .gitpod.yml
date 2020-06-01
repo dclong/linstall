@@ -2,4 +2,4 @@ image: dclong/gitpod
 ports:
   - port: 8888
 tasks:
-  - command: nvim --headless +"call dein#install()" +qall
+  - command: . /scripts/gitpod.sh
