@@ -98,7 +98,7 @@ class MyPrompt(Prompts):
         cwd = Path.cwd()
         return [
             (Token, f"{USER}@{HOST} {cwd} {remotes} {branch}"),
-            (Token.Prompt, "\n    >>> ")
+            (Token.Prompt, f"\nIn[{self.shell.execution_count}] >>> ")
         ]
 
 
