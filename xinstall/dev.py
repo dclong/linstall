@@ -139,9 +139,9 @@ def ipython(**kwargs):
         cmd = f"{args.pip} install {args.user_s} ipython"
         run_cmd(cmd)
     if args.config:
-        run_cmd(f"{args.ipython} profile create")
+        run_cmd(f"{args.ipython} profile create --profile-dir {args.profile_dir}")
         src_dir = BASE_DIR / "ipython"
-        dst_dir = HOME / ".ipython/profile_default"
+        dst_dir = args.profile_dir / "profile_default"
         shutil.copy2(src_dir / "ipython_config.py", dst_dir)
         shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
         logging.info(
@@ -156,13 +156,23 @@ def ipython(**kwargs):
         pass
 
 
+def _ipython_args(subparser):
+    subparser.add_argument(
+        "--profile-dir",
+        dest="profile_dir",
+        type=Path,
+        default=HOME / ".ipython",
+        help="The directory for storing IPython configuration files.",
+    )
+
+
 def _add_subparser_ipython(subparsers):
     add_subparser(
         subparsers,
         "IPython",
         func=ipython,
         aliases=["ipy"],
-        add_argument=option_user
+        add_argument=_ipython_args,
     )
 
 
