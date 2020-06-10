@@ -139,11 +139,9 @@ def ipython(**kwargs):
         cmd = f"{args.pip} install {args.user_s} ipython"
         run_cmd(cmd)
     if args.config:
-        run_cmd(
-            f"{args.ipython} profile create --profile-dir {args.profile_dir}"
-        )
         src_dir = BASE_DIR / "ipython"
         dst_dir = args.profile_dir / "profile_default"
+        (dst_dir / "startup").mkdir(mode=0o755, parents=True, exist_ok=True)
         shutil.copy2(src_dir / "ipython_config.py", dst_dir)
         shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
         logging.info(
