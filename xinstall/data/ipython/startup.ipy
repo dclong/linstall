@@ -111,11 +111,11 @@ def trash(line: str):
     trash_dir = Path.home() / ".Trash"
     if any(dist in PLATFORM for dist in ("ubuntu", "debian")):
         trash_dir = Path.home() / ".local/share/Trash/files"
-        trash_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
-        backup = trash_dir / path.name
-        if backup.exists():
-            backup = backup.with_name(backup.name + "_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S%f"))
-        shutil.move(path, backup)
+    trash_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+    backup = trash_dir / path.name
+    if backup.exists():
+        backup = backup.with_name(backup.name + "_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S%f"))
+    shutil.move(path, backup)
 # ------------------------------- alias -----------------------------------
 #if "linux" in PLATFORM: 
 #    %alias cs cd %l && ls --color=auto
