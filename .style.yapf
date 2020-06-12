@@ -1,3 +1,4 @@
 [style]
 # YAPF uses the feacebook style
 based_on_style = facebook
+column_limit = 88
