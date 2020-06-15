@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xinstall.virtualization &#8212; xinstall 0.12.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for xinstall.virtualization</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Install virtualization related applications.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">run_cmd</span><span class="p">,</span>
+    <span class="n">namespace</span><span class="p">,</span>
+    <span class="n">add_subparser</span><span class="p">,</span>
+    <span class="n">is_macos</span><span class="p">,</span>
+    <span class="n">is_centos_series</span><span class="p">,</span>
+    <span class="n">is_ubuntu_debian</span><span class="p">,</span>
+    <span class="n">is_win</span><span class="p">,</span>
+    <span class="n">update_apt_source</span><span class="p">,</span>
+    <span class="n">brew_install_safe</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="virtualbox"><a class="viewcode-back" href="../../xinstall.html#xinstall.virtualization.virtualbox">[docs]</a><span class="k">def</span> <span class="nf">virtualbox</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install VirtualBox.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> virtualbox-qt&quot;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew cask install virtualbox virtualbox-extension-pack&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> virtualbox-qt&quot;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span>
+                <span class="s2">&quot;brew cask uninstall virtualbox virtualbox-extension-pack&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_virtualbox</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;VirtualBox&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">virtualbox</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;vbox&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="docker"><a class="viewcode-back" href="../../xinstall.html#xinstall.virtualization.docker">[docs]</a><span class="k">def</span> <span class="nf">docker</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure Docker container.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> docker.io docker-compose&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">brew_install_safe</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;docker-compose&quot;</span><span class="p">,</span> <span class="s2">&quot;bash-completion@2&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;docker-completion&quot;</span><span class="p">,</span> <span class="s2">&quot;docker-compose-completion&quot;</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum install docker docker-compose&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;gpasswd -a $(id -un) docker&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;Please run the command &#39;newgrp docker&#39; or logout/login to make the group &#39;docker&#39; effective!&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> docker docker-compose&quot;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span>
+                <span class="s2">&quot;brew uninstall docker docker-completion docker-compose docker-compose-completion&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum remove docker docker-compose&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_docker</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;Docker&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">docker</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;dock&quot;</span><span class="p">,</span> <span class="s2">&quot;dk&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="kubernetes"><a class="viewcode-back" href="../../xinstall.html#xinstall.virtualization.kubernetes">[docs]</a><span class="k">def</span> <span class="nf">kubernetes</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure kubernetes command-line interface.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span>
+                <span class="s2">&quot;curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">run_cmd</span><span class="p">(</span>
+                <span class="s1">&#39;echo &quot;deb https://apt.kubernetes.io/ kubernetes-xenial main&quot; | tee -a /etc/apt/sources.list.d/kubernetes.list&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">update_apt_source</span><span class="p">(</span><span class="n">seconds</span><span class="o">=-</span><span class="mf">1E10</span><span class="p">)</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> kubectl&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">brew_install_safe</span><span class="p">([</span><span class="s2">&quot;kubernetes-cli&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> kubectl&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew uninstall kubectl&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_kubernetes</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;Kubernetes&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">kubernetes</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;k8s&quot;</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">_minikube_linux</span><span class="p">(</span><span class="n">yes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="n">run_cmd</span><span class="p">(</span>
+        <span class="n">f</span><span class="s2">&quot;&quot;&quot;curl -L https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -o /tmp/minikube-linux-amd64 </span><span class="se">\</span>
+<span class="s2">            &amp;&amp; apt-get install </span><span class="si">{yes}</span><span class="s2"> /tmp/minikube-linux-amd64 /usr/local/bin/minikube&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;VT-x/AMD-v virtualization must be enabled in BIOS.&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="minikube"><a class="viewcode-back" href="../../xinstall.html#xinstall.virtualization.minikube">[docs]</a><span class="k">def</span> <span class="nf">minikube</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install MiniKube.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">virtualbox</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">kubernetes</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">(</span><span class="n">seconds</span><span class="o">=-</span><span class="mf">1E10</span><span class="p">)</span>
+            <span class="n">_minikube_linux</span><span class="p">(</span><span class="n">yes</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">yes</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew install minikube&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">_minikube_linux</span><span class="p">(</span><span class="n">yes</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">yes</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_win</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;choco install minikube&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;VT-x/AMD-v virtualization must be enabled in BIOS.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;rm /usr/local/bin/minikube&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew cask uninstall minikube&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;rm /usr/local/bin/minikube&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_minikube</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;Minikube&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">minikube</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mkb&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="multipass"><a class="viewcode-back" href="../../xinstall.html#xinstall.virtualization.multipass">[docs]</a><span class="k">def</span> <span class="nf">multipass</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install Multipass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;snap install multipass --classic&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;brew cask install multipass&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">is_win</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;snap uninstall multipass&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew cask uninstall multipass&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_multipass</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;Multipass&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">multipass</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mp&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="microk8s"><a class="viewcode-back" href="../../xinstall.html#xinstall.virtualization.microk8s">[docs]</a><span class="k">def</span> <span class="nf">microk8s</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install MicroK8S.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;snap install microk8s --classic </span><span class="se">\</span>
+<span class="s2">                    &amp;&amp; ln -svf /snap/bin/microk8s.kubectl /snap/bin/kubectl </span><span class="se">\</span>
+<span class="s2">                    &amp;&amp; gpasswd -a $(id -un) microk8s&quot;&quot;&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">is_win</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;snap uninstall microk8s&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_microk8s</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;Microk8s&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">microk8s</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mk8s&quot;</span><span class="p">])</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">xinstall</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ben Du.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

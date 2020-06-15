@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xinstall.jupyter &#8212; xinstall 0.12.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for xinstall.jupyter</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Install and configure Jupyter/Lab related tools.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">USER</span><span class="p">,</span>
+    <span class="n">HOME</span><span class="p">,</span>
+    <span class="n">BIN_DIR</span><span class="p">,</span>
+    <span class="n">GROUP</span><span class="p">,</span>
+    <span class="n">run_cmd</span><span class="p">,</span>
+    <span class="n">namespace</span><span class="p">,</span>
+    <span class="n">add_subparser</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="nbdime"><a class="viewcode-back" href="../../xinstall.html#xinstall.jupyter.nbdime">[docs]</a><span class="k">def</span> <span class="nf">nbdime</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure nbdime for comparing difference of notebooks.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install --user nbdime&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> uninstall nbdime&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;nbdime config-git --enable --global&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_nbdime</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;nbdime&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">nbdime</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;nbd&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="itypescript"><a class="viewcode-back" href="../../xinstall.html#xinstall.jupyter.itypescript">[docs]</a><span class="k">def</span> <span class="nf">itypescript</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure the ITypeScript kernel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;npm install -g --unsafe-perm itypescript&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;its --ts-hide-undefined --install=global&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;jupyter kernelspec uninstall typescript&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;npm uninstall itypescript&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_itypescript</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;iTypeScript&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">itypescript</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;its&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="jupyterlab_lsp"><a class="viewcode-back" href="../../xinstall.html#xinstall.jupyter.jupyterlab_lsp">[docs]</a><span class="k">def</span> <span class="nf">jupyterlab_lsp</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install jupyterlab-lsp.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{args.pip}</span><span class="s2"> install jupyter-lsp </span><span class="se">\</span>
+<span class="s2">                &amp;&amp; </span><span class="si">{args.jupyter}</span><span class="s2"> labextension install @krassowski/jupyterlab-lsp </span><span class="se">\</span>
+<span class="s2">                &amp;&amp; </span><span class="si">{args.pip}</span><span class="s2"> install python-language-server[all] pyls-mypy&quot;&quot;&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_jupyterlab_lsp</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span>
+        <span class="s2">&quot;jupyterlab-lsp&quot;</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">jupyterlab_lsp</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jlab-lsp&quot;</span><span class="p">,</span> <span class="s2">&quot;jlab_lsp&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="beakerx"><a class="viewcode-back" href="../../xinstall.html#xinstall.jupyter.beakerx">[docs]</a><span class="k">def</span> <span class="nf">beakerx</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install/uninstall/configure the BeakerX kernels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install --user beakerx&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;beakerx install&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span>
+            <span class="s2">&quot;jupyter labextension install @jupyter-widgets/jupyterlab-manager&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;jupyter labextension install beakerx-jupyterlab&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;jupyter labextension uninstall beakerx-jupyterlab&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span>
+            <span class="s2">&quot;jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager&quot;</span>
+        <span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;beakerx uninstall&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> uninstall beakerx&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;chown -R </span><span class="si">{USER}</span><span class="s2">:</span><span class="si">{GROUP}</span><span class="s2"> </span><span class="si">{HOME}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_beakerx</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;BeakerX&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">beakerx</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bkx&quot;</span><span class="p">,</span> <span class="s2">&quot;bk&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="almond"><a class="viewcode-back" href="../../xinstall.html#xinstall.jupyter.almond">[docs]</a><span class="k">def</span> <span class="nf">almond</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install/uninstall/configure the Almond Scala kernel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">almond_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">almond_version</span> <span class="o">=</span> <span class="s2">&quot;0.4.0&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">install</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">scala_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">scala_version</span> <span class="o">=</span> <span class="s2">&quot;2.12.12&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">install</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">coursier</span> <span class="o">=</span> <span class="n">BIN_DIR</span> <span class="o">/</span> <span class="s2">&quot;coursier&quot;</span>
+        <span class="n">almond_bin</span> <span class="o">=</span> <span class="n">BIN_DIR</span> <span class="o">/</span> <span class="s2">&quot;almond&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;curl -L -o </span><span class="si">{coursier}</span><span class="s2"> https://git.io/coursier-cli&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;chmod +x </span><span class="si">{coursier}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span>
+            <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span><span class="si">{coursier}</span><span class="s2"> bootstrap -f -r jitpack -i user </span><span class="se">\</span>
+<span class="s2">                -I user:sh.almond:scala-kernel-api_</span><span class="si">{args.scala_version}</span><span class="s2">:</span><span class="si">{args.almond_version}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">                -o </span><span class="si">{almond_bin}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">                sh.almond:scala-kernel_</span><span class="si">{args.scala_version}</span><span class="s2">:</span><span class="si">{args.almond_version}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{almond_bin}</span><span class="s2"> --install --global --force&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_almond_args</span><span class="p">(</span><span class="n">subparser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--almond-version&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;almond_version&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the version (0.4.0 by default) of Almond to install.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-s&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--scala-version&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;scala_version&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the version (2.12.8 by default) of Scala to install.&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_almond</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span>
+        <span class="s2">&quot;Almond&quot;</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">almond</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;al&quot;</span><span class="p">,</span> <span class="s2">&quot;amd&quot;</span><span class="p">],</span>
+        <span class="n">add_argument</span><span class="o">=</span><span class="n">_almond_args</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="evcxr_jupyter"><a class="viewcode-back" href="../../xinstall.html#xinstall.jupyter.evcxr_jupyter">[docs]</a><span class="k">def</span> <span class="nf">evcxr_jupyter</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install the evcxr Rust kernel for Jupyter/Lab server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> cmake cargo </span><span class="se">\</span>
+<span class="s2">            &amp;&amp; cargo install --force evcxr_jupyter </span><span class="se">\</span>
+<span class="s2">            &amp;&amp; </span><span class="si">{HOME}</span><span class="s2">/.cargo/bin/evcxr_jupyter --install&quot;&quot;&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span><span class="si">{HOME}</span><span class="s2">/.cargo/bin/evcxr_jupyter --uninstall </span><span class="se">\</span>
+<span class="s2">            &amp;&amp; cargo uninstall evcxr_jupyter</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_evcxr_jupyter</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;evcxr_jupyter&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">evcxr_jupyter</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;evcxr&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">xinstall</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ben Du.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

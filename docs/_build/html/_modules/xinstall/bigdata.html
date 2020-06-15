@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xinstall.bigdata &#8212; xinstall 0.12.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for xinstall.bigdata</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Install big data related tools.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">run_cmd</span><span class="p">,</span>
+    <span class="n">namespace</span><span class="p">,</span>
+    <span class="n">add_subparser</span><span class="p">,</span>
+    <span class="n">option_user</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="spark"><a class="viewcode-back" href="../../xinstall.html#xinstall.bigdata.spark">[docs]</a><span class="k">def</span> <span class="nf">spark</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install Spark.</span>
+<span class="sd">    :param yes:</span>
+<span class="sd">    :param install:</span>
+<span class="sd">    :param config:</span>
+<span class="sd">    :param uninstall:</span>
+<span class="sd">    :param version:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">dir_</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">dir_</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">spark_hdp</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;spark-</span><span class="si">{args.version}</span><span class="s2">-bin-hadoop2.7&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.mirror}</span><span class="s2">/spark-</span><span class="si">{args.version}</span><span class="s2">/</span><span class="si">{spark_hdp}</span><span class="s2">.tgz&quot;</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;curl </span><span class="si">{url}</span><span class="s2"> -o /tmp/</span><span class="si">{spark_hdp}</span><span class="s2">.tgz </span><span class="se">\</span>
+<span class="s2">                &amp;&amp; tar -zxvf /tmp/</span><span class="si">{spark_hdp}</span><span class="s2">.tgz -C </span><span class="si">{dir_}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">                &amp;&amp; ln -svf </span><span class="si">{dir_}</span><span class="s2">/</span><span class="si">{spark_hdp}</span><span class="s2"> </span><span class="si">{dir_}</span><span class="s2">/spark </span><span class="se">\</span>
+<span class="s2">                &amp;&amp; rm /tmp/</span><span class="si">{spark_hdp}</span><span class="s2">.tgz</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;export SPARK_HOME=</span><span class="si">{dir_}</span><span class="s2">/spark&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="n">f</span><span class="s2">&quot;Environment variable SPARK_HOME=</span><span class="si">{dir_}</span><span class="s2">/spark is exported.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;rm -rf </span><span class="si">{dir_}</span><span class="s2">/spark*&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_spark_args</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--mirror&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;mirror&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;https://archive.apache.org/dist/spark&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span>
+        <span class="s2">&quot;The mirror of Spark (default https://archive.apache.org/dist/spark) to use.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-v&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;2.4.5&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The version of Spark to install.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--loc&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--location&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;location&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;/opt&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The location to install Spark to.&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_spark</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;Spark&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">spark</span><span class="p">,</span> <span class="n">add_argument</span><span class="o">=</span><span class="n">_spark_args</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="pyspark"><a class="viewcode-back" href="../../xinstall.html#xinstall.bigdata.pyspark">[docs]</a><span class="k">def</span> <span class="nf">pyspark</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install PySpark.</span>
+<span class="sd">    :param yes:</span>
+<span class="sd">    :param install:</span>
+<span class="sd">    :param config:</span>
+<span class="sd">    :param uninstall:</span>
+<span class="sd">    :param version:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install </span><span class="si">{args.user_s}</span><span class="s2"> pyspark findspark&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> uninstall pyspark findspark&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_pyspark</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;PySpark&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">pyspark</span><span class="p">,</span> <span class="n">add_argument</span><span class="o">=</span><span class="n">option_user</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="optimuspyspark"><a class="viewcode-back" href="../../xinstall.html#xinstall.bigdata.optimuspyspark">[docs]</a><span class="k">def</span> <span class="nf">optimuspyspark</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install Optimus (a PySpark package for data profiling).</span>
+<span class="sd">    :param yes:</span>
+<span class="sd">    :param install:</span>
+<span class="sd">    :param config:</span>
+<span class="sd">    :param uninstall:</span>
+<span class="sd">    :param version:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install </span><span class="si">{args.user_s}</span><span class="s2"> optimuspyspark&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> uninstall optimuspyspark&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_optimuspyspark</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;Optimus&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">optimuspyspark</span><span class="p">,</span> <span class="n">add_argument</span><span class="o">=</span><span class="n">option_user</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="dask"><a class="viewcode-back" href="../../xinstall.html#xinstall.bigdata.dask">[docs]</a><span class="k">def</span> <span class="nf">dask</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install the Python module dask.</span>
+<span class="sd">    :param yes:</span>
+<span class="sd">    :param install:</span>
+<span class="sd">    :param config:</span>
+<span class="sd">    :param uninstall:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install </span><span class="si">{args.user_s}</span><span class="s2"> dask[complete]&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> uninstall dask&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_dask</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;dask&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">dask</span><span class="p">,</span> <span class="n">add_argument</span><span class="o">=</span><span class="n">option_user</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">xinstall</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ben Du.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

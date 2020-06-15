@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xinstall.web &#8212; xinstall 0.12.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for xinstall.web</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;Easy installation and configuration of Linux/Mac/Windows apps.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">HOME</span><span class="p">,</span>
+    <span class="n">USER</span><span class="p">,</span>
+    <span class="n">GROUP</span><span class="p">,</span>
+    <span class="n">BASE_DIR</span><span class="p">,</span>
+    <span class="n">BIN_DIR</span><span class="p">,</span>
+    <span class="n">run_cmd</span><span class="p">,</span>
+    <span class="n">add_subparser</span><span class="p">,</span>
+    <span class="n">update_apt_source</span><span class="p">,</span>
+    <span class="n">brew_install_safe</span><span class="p">,</span>
+    <span class="n">is_ubuntu_debian</span><span class="p">,</span>
+    <span class="n">is_macos</span><span class="p">,</span>
+    <span class="n">is_centos_series</span><span class="p">,</span>
+    <span class="n">namespace</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="ssh_server"><a class="viewcode-back" href="../../xinstall.html#xinstall.web.ssh_server">[docs]</a><span class="k">def</span> <span class="nf">ssh_server</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure SSH server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> openssh-server fail2ban&quot;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> openssh-server fail2ban&quot;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_ssh_server</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;SSH server&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">ssh_server</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sshs&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="ssh_client"><a class="viewcode-back" href="../../xinstall.html#xinstall.web.ssh_client">[docs]</a><span class="k">def</span> <span class="nf">ssh_client</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Configure SSH client.</span>
+<span class="sd">    :param kwargs: Keyword arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="n">ssh_src</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;/home_host/</span><span class="si">{USER}</span><span class="s2">/.ssh&quot;</span><span class="p">)</span>
+        <span class="n">ssh_dst</span> <span class="o">=</span> <span class="n">HOME</span> <span class="o">/</span> <span class="s2">&quot;.ssh&quot;</span>
+        <span class="k">if</span> <span class="n">ssh_src</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="c1"># inside a Docker container, use .ssh from host</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">ssh_dst</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">ssh_src</span><span class="p">,</span> <span class="n">ssh_dst</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is copied to </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">ssh_src</span><span class="p">,</span> <span class="n">ssh_dst</span><span class="p">)</span>
+        <span class="n">ssh_dst</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;ssh/client/config&quot;</span>
+        <span class="n">des</span> <span class="o">=</span> <span class="n">HOME</span> <span class="o">/</span> <span class="s2">&quot;.ssh/config&quot;</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">des</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is copied to </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">ssh_src</span><span class="p">,</span> <span class="n">ssh_dst</span><span class="p">)</span>
+        <span class="c1"># file permissions</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;chown -R </span><span class="si">{USER}</span><span class="s2">:</span><span class="si">{GROUP}</span><span class="s2"> </span><span class="si">{HOME}</span><span class="s2">/.ssh &amp;&amp; chmod 600 </span><span class="si">{HOME}</span><span class="s2">/.ssh/*&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;The permissions of ~/.ssh and its contents are corrected set.&quot;</span>
+        <span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_ssh_client</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;SSH client&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">ssh_client</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sshc&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="proxychains"><a class="viewcode-back" href="../../xinstall.html#xinstall.web.proxychains">[docs]</a><span class="k">def</span> <span class="nf">proxychains</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure ProxyChains.</span>
+<span class="sd">    :param kwargs: Keyword arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> proxychains4 </span><span class="se">\</span>
+<span class="s2">                    &amp;&amp; ln -svf /usr/bin/proxychains4 /usr/bin/proxychains&quot;&quot;&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">brew_install_safe</span><span class="p">([</span><span class="s2">&quot;proxychains-ng&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum install proxychains&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configuring proxychains ...&quot;</span><span class="p">)</span>
+        <span class="n">src_file</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;proxychains/proxychains.conf&quot;</span>
+        <span class="n">des_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HOME</span><span class="p">,</span> <span class="s2">&quot;.proxychains&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">des_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">src_file</span><span class="p">,</span> <span class="n">des_dir</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is copied to the directory </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">src_file</span><span class="p">,</span> <span class="n">des_dir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;apt-get purge proxychains4&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew uninstall proxychains-ng&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum remove proxychains&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_proxychains</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;ProxyChains&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">proxychains</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pchains&quot;</span><span class="p">,</span> <span class="s2">&quot;pc&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="dryscrape"><a class="viewcode-back" href="../../xinstall.html#xinstall.web.dryscrape">[docs]</a><span class="k">def</span> <span class="nf">dryscrape</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure dryscrape.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> qt5-default libqt5webkit5-dev build-essential xvfb </span><span class="se">\</span>
+<span class="s2">                &amp;&amp; </span><span class="si">{args.pip}</span><span class="s2"> install --user dryscrape</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_dryscrape</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;dryscrape&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">dryscrape</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[])</span>
+
+
+<div class="viewcode-block" id="blogging"><a class="viewcode-back" href="../../xinstall.html#xinstall.web.blogging">[docs]</a><span class="k">def</span> <span class="nf">blogging</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install blogging tools.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install --user pelican markdown&quot;</span><span class="p">)</span>
+        <span class="n">archives</span> <span class="o">=</span> <span class="n">HOME</span> <span class="o">/</span> <span class="s2">&quot;archives&quot;</span>
+        <span class="n">archives</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="mo">0o700</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">blog</span> <span class="o">=</span> <span class="n">archives</span> <span class="o">/</span> <span class="s2">&quot;blog&quot;</span>
+        <span class="k">if</span> <span class="n">blog</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;git -C </span><span class="si">{blog}</span><span class="s2"> pull origin master&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;git clone git@github.com:dclong/blog.git </span><span class="si">{blog}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;git -C </span><span class="si">{blog}</span><span class="s2"> submodule init </span><span class="se">\</span>
+<span class="s2">                &amp;&amp; git -C </span><span class="si">{blog}</span><span class="s2"> submodule update --recursive --remote</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="n">blog_bin</span> <span class="o">=</span> <span class="n">BIN_DIR</span> <span class="o">/</span> <span class="s2">&quot;blog&quot;</span>
+        <span class="n">main_py</span> <span class="o">=</span> <span class="n">archives</span> <span class="o">/</span> <span class="s2">&quot;blog/main.py&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">blog_bin</span><span class="o">.</span><span class="n">symlink_to</span><span class="p">(</span><span class="n">main_py</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;Symbolic link </span><span class="si">%s</span><span class="s2"> pointing to </span><span class="si">%s</span><span class="s2"> is created.&quot;</span><span class="p">,</span> <span class="n">blog_bin</span><span class="p">,</span> <span class="n">main_py</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> uninstall pelican markdown&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_blogging</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;blogging&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">blogging</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;blog&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="download_tools"><a class="viewcode-back" href="../../xinstall.html#xinstall.web.download_tools">[docs]</a><span class="k">def</span> <span class="nf">download_tools</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> wget curl aria2&quot;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">brew_install_safe</span><span class="p">([</span><span class="s2">&quot;wget&quot;</span><span class="p">,</span> <span class="s2">&quot;curl&quot;</span><span class="p">,</span> <span class="s2">&quot;aria2&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> wget curl aria2&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew uninstall wget curl aria2&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_download_tools</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span>
+        <span class="s2">&quot;download tools&quot;</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">download_tools</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;dl&quot;</span><span class="p">,</span> <span class="s2">&quot;dlt&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">xinstall</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ben Du.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

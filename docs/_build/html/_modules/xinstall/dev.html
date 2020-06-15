@@ -1,0 +1,679 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xinstall.dev &#8212; xinstall 0.12.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for xinstall.dev</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Installing dev related tools.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">HOME</span><span class="p">,</span>
+    <span class="n">BASE_DIR</span><span class="p">,</span>
+    <span class="n">BIN_DIR</span><span class="p">,</span>
+    <span class="n">is_ubuntu_debian</span><span class="p">,</span>
+    <span class="n">is_centos_series</span><span class="p">,</span>
+    <span class="n">is_linux</span><span class="p">,</span>
+    <span class="n">update_apt_source</span><span class="p">,</span>
+    <span class="n">brew_install_safe</span><span class="p">,</span>
+    <span class="n">is_macos</span><span class="p">,</span>
+    <span class="n">remove_file_safe</span><span class="p">,</span>
+    <span class="n">run_cmd</span><span class="p">,</span>
+    <span class="n">namespace</span><span class="p">,</span>
+    <span class="n">add_subparser</span><span class="p">,</span>
+    <span class="n">option_user</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.web</span> <span class="k">import</span> <span class="n">ssh_client</span>
+
+
+<div class="viewcode-block" id="openjdk8"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.openjdk8">[docs]</a><span class="k">def</span> <span class="nf">openjdk8</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install OpenJDK 8.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">run_cmd</span><span class="p">(</span>
+                <span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> openjdk-jdk-8 maven gradle&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;brew tap AdoptOpenJDK/openjdk &amp;&amp; brew cask install adoptopenjdk8&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> openjdk-jdk-8 maven gradle&quot;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew cask uninstall adoptopenjdk8&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_openjdk</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;OpenJDK8&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">openjdk8</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jdk8&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="sdkman"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.sdkman">[docs]</a><span class="k">def</span> <span class="nf">sdkman</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Install sdkman.</span>
+<span class="sd">    https://sdkman.io/install</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;curl -s https://get.sdkman.io | bash&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_sdkman</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;sdkman&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">sdkman</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[])</span>
+
+
+<div class="viewcode-block" id="yapf"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.yapf">[docs]</a><span class="k">def</span> <span class="nf">yapf</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install Google&#39;s yapf (for formatting Python scripts).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install </span><span class="si">{args.user_s}</span><span class="s2"> yapf&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dst_dir</span><span class="p">:</span>
+            <span class="n">src_file</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;yapf/style.yapf&quot;</span>
+            <span class="n">des_file</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">dst_dir</span> <span class="o">/</span> <span class="s2">&quot;.style.yapf&quot;</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">src_file</span><span class="p">,</span> <span class="n">des_file</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is copied to </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">src_file</span><span class="p">,</span> <span class="n">des_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> uninstall yapf&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_yapf_args</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--dest-dir&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;dst_dir&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The destination directory to copy the YAPF configuration file to.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">option_user</span><span class="p">(</span><span class="n">subparser</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_yapf</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;yapf&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">yapf</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[],</span> <span class="n">add_argument</span><span class="o">=</span><span class="n">_yapf_args</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="nodejs"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.nodejs">[docs]</a><span class="k">def</span> <span class="nf">nodejs</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install nodejs and npm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> nodejs npm&quot;&quot;&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">brew_install_safe</span><span class="p">([</span><span class="s2">&quot;nodejs&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;yum install </span><span class="si">{args.yes_s}</span><span class="s2"> nodejs&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> nodejs&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew uninstall nodejs&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum remove nodejs&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_nodejs</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;NodeJS&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">nodejs</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="ipython"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.ipython">[docs]</a><span class="k">def</span> <span class="nf">ipython</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install IPython for Python 3.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install </span><span class="si">{args.user_s}</span><span class="s2"> ipython&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="n">src_dir</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;ipython&quot;</span>
+        <span class="n">dst_dir</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">profile_dir</span> <span class="o">/</span> <span class="s2">&quot;profile_default&quot;</span>
+        <span class="p">(</span><span class="n">dst_dir</span> <span class="o">/</span> <span class="s2">&quot;startup&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="mo">0o755</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">src_dir</span> <span class="o">/</span> <span class="s2">&quot;ipython_config.py&quot;</span><span class="p">,</span> <span class="n">dst_dir</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">src_dir</span> <span class="o">/</span> <span class="s2">&quot;startup.ipy&quot;</span><span class="p">,</span> <span class="n">dst_dir</span> <span class="o">/</span> <span class="s2">&quot;startup&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is copied to the directory </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">src_dir</span> <span class="o">/</span> <span class="s2">&quot;ipython_config.py&quot;</span><span class="p">,</span>
+            <span class="n">dst_dir</span>
+        <span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is copied to the directory </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">src_dir</span> <span class="o">/</span> <span class="s2">&quot;startup.ipy&quot;</span><span class="p">,</span>
+            <span class="n">dst_dir</span> <span class="o">/</span> <span class="s2">&quot;startup&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_ipython_args</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--profile-dir&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;profile_dir&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">HOME</span> <span class="o">/</span> <span class="s2">&quot;.ipython&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The directory for storing IPython configuration files.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_ipython</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span>
+        <span class="s2">&quot;IPython&quot;</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">ipython</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ipy&quot;</span><span class="p">],</span>
+        <span class="n">add_argument</span><span class="o">=</span><span class="n">_ipython_args</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="python3"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.python3">[docs]</a><span class="k">def</span> <span class="nf">python3</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure Python 3.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> python3 python3-pip python3-setuptools&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">brew_install_safe</span><span class="p">([</span><span class="s2">&quot;python3&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span>
+                <span class="n">f</span><span class="s2">&quot;yum install </span><span class="si">{args.yes_s}</span><span class="s2"> python34 python34-devel python34-pip&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install </span><span class="si">{args.user_s}</span><span class="s2"> setuptools&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">                python3 python3-dev python3-setuptools python3-pip python3-venv&quot;&quot;&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew uninstall python3&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum remove python3&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_python3</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span>
+        <span class="s2">&quot;Python3&quot;</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">python3</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;py3&quot;</span><span class="p">],</span>
+        <span class="n">add_argument</span><span class="o">=</span><span class="n">option_user</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="poetry"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.poetry">[docs]</a><span class="k">def</span> <span class="nf">poetry</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure Python poetry.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | </span><span class="si">{args.python}</span><span class="s2">&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">poetry_bin</span> <span class="o">=</span> <span class="n">HOME</span> <span class="o">/</span> <span class="s2">&quot;.poetry/bin/poetry&quot;</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="c1"># symbolic link</span>
+        <span class="n">desfile</span> <span class="o">=</span> <span class="n">BIN_DIR</span> <span class="o">/</span> <span class="s2">&quot;poetry&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">desfile</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="n">desfile</span><span class="o">.</span><span class="n">symlink_to</span><span class="p">(</span><span class="n">poetry_bin</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Symbolic link </span><span class="si">%s</span><span class="s2"> pointing to </span><span class="si">%s</span><span class="s2"> is created.&quot;</span><span class="p">,</span> <span class="n">desfile</span><span class="p">,</span> <span class="n">poetry_bin</span>
+        <span class="p">)</span>
+        <span class="c1"># make poetry always create virtual environment in the root directory of the project</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{poetry_bin}</span><span class="s2"> config virtualenvs.in-project true&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Python poetry has been configured to create virtual environments inside projects!&quot;</span>
+        <span class="p">)</span>
+        <span class="c1"># bash completion</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">bash_completion</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_linux</span><span class="p">():</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{poetry_bin}</span><span class="s2"> completions bash | tee /etc/bash_completion.d/poetry.bash-completion &gt; /dev/null&quot;</span>
+                <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{poetry_bin}</span><span class="s2"> completions bash &gt; $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion&quot;</span>
+                <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Bash completion is enabled for poetry.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{poetry_bin}</span><span class="s2"> self:uninstall&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_poetry_args</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-b&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--bash-completion&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;bash_completion&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Configure Bash completion for poetry as well.&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_poetry</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span>
+        <span class="s2">&quot;Poetry&quot;</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">poetry</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pt&quot;</span><span class="p">],</span>
+        <span class="n">add_argument</span><span class="o">=</span><span class="n">_poetry_args</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="pyjnius"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.pyjnius">[docs]</a><span class="k">def</span> <span class="nf">pyjnius</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install pyjnius for calling Java from Python.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install </span><span class="si">{args.user}</span><span class="s2"> Cython pyjnius&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_pyjnius</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span>
+        <span class="s2">&quot;pyjnius&quot;</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">pyjnius</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pyj&quot;</span><span class="p">],</span>
+        <span class="n">add_argument</span><span class="o">=</span><span class="n">option_user</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="rustup"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.rustup">[docs]</a><span class="k">def</span> <span class="nf">rustup</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install rustup which is the version management tool for Rust.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://sh.rustup.rs | sh&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;rustup self uninstall&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_rustup</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;rustup&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">rustup</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="rust"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.rust">[docs]</a><span class="k">def</span> <span class="nf">rust</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install the Rust programming language (rustc and cargo) </span>
+<span class="sd">        (to system-wide locations using apt-get instead of to ~/.cargo using rustup).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> cmake rustc cargo&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;yum install </span><span class="si">{args.yes_s}</span><span class="s2"> cmake rustc cargo&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">brew_install_safe</span><span class="p">([</span><span class="s2">&quot;cmake&quot;</span><span class="p">,</span> <span class="s2">&quot;rustc&quot;</span><span class="p">,</span> <span class="s2">&quot;cargo&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> rustc cargo&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum remove rustc cargo&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;brew uninstall rustc cargo&quot;</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_rust</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;rust&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">rust</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="rustpython"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.rustpython">[docs]</a><span class="k">def</span> <span class="nf">rustpython</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure RustPython.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rust</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;cargo install rustpython&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;cargo uninstall rustpython&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_rustpython</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;RustPython&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">rustpython</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;rustpy&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="git_ignore"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.git_ignore">[docs]</a><span class="k">def</span> <span class="nf">git_ignore</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Insert patterns to ingore into .gitignore in the current directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">python_pattern</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;.DS_Store&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.idea/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.ipr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.iws&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.ipynb_checkpoints/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.coverage&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.mypy&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.mypy_cache&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.crc&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;__pycache__/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;venv/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.venv/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;target/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dist/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.egg-info/&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">]</span>
+        <span class="k">with</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.gitignore&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+            <span class="n">fout</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">java_pattern</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;# Java&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.class&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;## BlueJ files&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.ctxt&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;## Mobile Tools for Java (J2ME)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.mtj.tmp/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;## Package Files&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.jar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.war&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.ear&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;# Gradle&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.gradle&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/build/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/out/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;## Ignore Gradle GUI config&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;gradle-app.setting&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;## Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;!gradle-wrapper.jar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;## Cache of project&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.gradletasknamecache&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;hs_err_pid*&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;# Mac&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.DS_Store&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;# IDE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.idea/&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.ipr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.iws&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;# Misc&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;core&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;*.log&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;deprecated&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">]</span>
+        <span class="k">with</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.gitignore&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+            <span class="n">fout</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_git_ignore</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">subparser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;git_ignore&quot;</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gig&quot;</span><span class="p">,</span> <span class="s2">&quot;gignore&quot;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Append patterns to ignore into .gitignore in the current directory.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-p&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--python-pattern&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;python_pattern&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Gitignore patterns for Python developing.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-j&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--java-pattern&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;java_pattern&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Gitignore patterns for Java developing.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">git_ignore</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">subparser</span>
+
+
+<div class="viewcode-block" id="git"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.git">[docs]</a><span class="k">def</span> <span class="nf">git</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure Git.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> git git-lfs&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">brew_install_safe</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;git-lfs&quot;</span><span class="p">,</span> <span class="s2">&quot;bash-completion@2&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum install git&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;git lfs install&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;git lfs uninstall&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> git git-lfs&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew uninstall git git-lfs&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum remove git&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="n">ssh_client</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">gitconfig</span> <span class="o">=</span> <span class="n">HOME</span> <span class="o">/</span> <span class="s2">&quot;.gitconfig&quot;</span>
+        <span class="c1"># try to remove the file to avoid dead symbolic link problem</span>
+        <span class="n">remove_file_safe</span><span class="p">(</span><span class="n">gitconfig</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;git/gitconfig&quot;</span><span class="p">,</span> <span class="n">gitconfig</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is copied to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;git/gitconfig&quot;</span><span class="p">,</span> <span class="n">gitconfig</span>
+        <span class="p">)</span>
+        <span class="n">gitignore</span> <span class="o">=</span> <span class="n">HOME</span> <span class="o">/</span> <span class="s2">&quot;.gitignore&quot;</span>
+        <span class="n">remove_file_safe</span><span class="p">(</span><span class="n">gitignore</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;git/gitignore&quot;</span><span class="p">,</span> <span class="n">gitignore</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is copied to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;git/gitignore&quot;</span><span class="p">,</span> <span class="n">gitignore</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;/usr/local/etc/bash_completion.d/git-completion.bash&quot;</span>
+            <span class="n">bashrc</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"># Git completion</span><span class="se">\n</span><span class="s2">[ -f </span><span class="si">{file}</span><span class="s2"> ] &amp;&amp;  . </span><span class="si">{file}</span><span class="s2">&quot;</span>
+            <span class="k">with</span> <span class="p">(</span><span class="n">HOME</span> <span class="o">/</span> <span class="s2">&quot;.bash_profile&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+                <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bashrc</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Bash completion is enabled for Git.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;proxy&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="n">args</span><span class="o">.</span><span class="n">proxy</span><span class="p">:</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;git config --global http.proxy </span><span class="si">{args.proxy}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;git config --global https.proxy </span><span class="si">{args.proxy}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_git_args</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">subparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-p&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--proxy&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;proxy&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Configure Git to use the specified proxy.&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_git</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;Git&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">git</span><span class="p">,</span> <span class="n">add_argument</span><span class="o">=</span><span class="n">_git_args</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="antlr"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.antlr">[docs]</a><span class="k">def</span> <span class="nf">antlr</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install and configure Antrl4.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">update_apt_source</span><span class="p">()</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get install </span><span class="si">{args.yes_s}</span><span class="s2"> antlr4&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">brew_install_safe</span><span class="p">([</span><span class="s2">&quot;antlr4&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum install antlr&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_ubuntu_debian</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;apt-get purge </span><span class="si">{args.yes_s}</span><span class="s2"> antlr4&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_macos</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;brew uninstall antlr4&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_centos_series</span><span class="p">():</span>
+            <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&quot;yum remove antlr&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_antlr</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;ANTLR&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">antlr</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="jpype1"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.jpype1">[docs]</a><span class="k">def</span> <span class="nf">jpype1</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Install the Python package JPype.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> install </span><span class="si">{args.user_s}</span><span class="s2"> JPype1&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{args.pip}</span><span class="s2"> uninstall JPype1&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_jpype1</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">,</span>
+        <span class="s2">&quot;JPype1&quot;</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">jpype1</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jpype&quot;</span><span class="p">,</span> <span class="s2">&quot;jp&quot;</span><span class="p">],</span>
+        <span class="n">add_argument</span><span class="o">=</span><span class="n">option_user</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="deno"><a class="viewcode-back" href="../../xinstall.html#xinstall.dev.deno">[docs]</a><span class="k">def</span> <span class="nf">deno</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;curl -fsSL https://deno.land/x/install/install.sh | sh&quot;</span>
+        <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">uninstall</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_add_subparser_deno</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">add_subparser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="s2">&quot;Deno&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">deno</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[])</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">xinstall</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Ben Du.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
