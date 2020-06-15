@@ -106,9 +106,7 @@ def version(**kwargs):
 
 def _add_subparser_version(subparsers):
     subparser = subparsers.add_parser(
-        "version",
-        aliases=["ver", "v"],
-        help="Print version of the xinstall package."
+        "version", aliases=["ver", "v"], help="Print version of the xinstall package."
     )
     subparser.set_defaults(func=version)
     return subparser
@@ -121,11 +119,7 @@ def parse_args(args=None, namespace=None):
         description="Easy installation and configuration for Unix/Linux"
     )
     parser.add_argument(
-        "-l",
-        "--level",
-        dest="level",
-        default="WARNING",
-        help="The level of logging."
+        "-l", "--level", dest="level", default="WARNING", help="The level of logging."
     )
     parser.add_argument(
         "-y",

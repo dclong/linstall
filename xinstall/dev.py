@@ -29,9 +29,7 @@ def openjdk8(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"apt-get install {args.yes_s} openjdk-jdk-8 maven gradle",
-            )
+            run_cmd(f"apt-get install {args.yes_s} openjdk-jdk-8 maven gradle", )
         if is_macos():
             cmd = "brew tap AdoptOpenJDK/openjdk && brew cask install adoptopenjdk8"
             run_cmd(cmd)
@@ -98,9 +96,7 @@ def _yapf_args(subparser):
 
 
 def _add_subparser_yapf(subparsers):
-    add_subparser(
-        subparsers, "yapf", func=yapf, aliases=[], add_argument=_yapf_args
-    )
+    add_subparser(subparsers, "yapf", func=yapf, aliases=[], add_argument=_yapf_args)
 
 
 def nodejs(**kwargs):
@@ -145,8 +141,7 @@ def ipython(**kwargs):
         shutil.copy2(src_dir / "ipython_config.py", dst_dir)
         shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
         logging.info(
-            "%s is copied to the directory %s.", src_dir / "ipython_config.py",
-            dst_dir
+            "%s is copied to the directory %s.", src_dir / "ipython_config.py", dst_dir
         )
         logging.info(
             "%s is copied to the directory %s.", src_dir / "startup.ipy",
@@ -188,9 +183,7 @@ def python3(**kwargs):
         if is_macos():
             brew_install_safe(["python3"])
         if is_centos_series():
-            run_cmd(
-                f"yum install {args.yes_s} python34 python34-devel python34-pip",
-            )
+            run_cmd(f"yum install {args.yes_s} python34 python34-devel python34-pip", )
             run_cmd(f"{args.pip} install {args.user_s} setuptools")
     if args.config:
         pass
@@ -207,11 +200,7 @@ def python3(**kwargs):
 
 def _add_subparser_python3(subparsers):
     add_subparser(
-        subparsers,
-        "Python3",
-        func=python3,
-        aliases=["py3"],
-        add_argument=option_user
+        subparsers, "Python3", func=python3, aliases=["py3"], add_argument=option_user
     )
 
 
@@ -231,9 +220,7 @@ def poetry(**kwargs):
         except FileNotFoundError:
             pass
         desfile.symlink_to(poetry_bin)
-        logging.info(
-            "Symbolic link %s pointing to %s is created.", desfile, poetry_bin
-        )
+        logging.info("Symbolic link %s pointing to %s is created.", desfile, poetry_bin)
         # make poetry always create virtual environment in the root directory of the project
         run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
         logging.info(
@@ -265,11 +252,7 @@ def _poetry_args(subparser):
 
 def _add_subparser_poetry(subparsers):
     add_subparser(
-        subparsers,
-        "Poetry",
-        func=poetry,
-        aliases=["pt"],
-        add_argument=_poetry_args
+        subparsers, "Poetry", func=poetry, aliases=["pt"], add_argument=_poetry_args
     )
 
 
@@ -288,11 +271,7 @@ def pyjnius(**kwargs):
 
 def _add_subparser_pyjnius(subparsers):
     add_subparser(
-        subparsers,
-        "pyjnius",
-        func=pyjnius,
-        aliases=["pyj"],
-        add_argument=option_user
+        subparsers, "pyjnius", func=pyjnius, aliases=["pyj"], add_argument=option_user
     )
 
 
@@ -481,15 +460,11 @@ def git(**kwargs) -> None:
         # try to remove the file to avoid dead symbolic link problem
         remove_file_safe(gitconfig)
         shutil.copy2(BASE_DIR / "git/gitconfig", gitconfig)
-        logging.info(
-            "%s is copied to %s", BASE_DIR / "git/gitconfig", gitconfig
-        )
+        logging.info("%s is copied to %s", BASE_DIR / "git/gitconfig", gitconfig)
         gitignore = HOME / ".gitignore"
         remove_file_safe(gitignore)
         shutil.copy2(BASE_DIR / "git/gitignore", gitignore)
-        logging.info(
-            "%s is copied to %s", BASE_DIR / "git/gitignore", gitignore
-        )
+        logging.info("%s is copied to %s", BASE_DIR / "git/gitignore", gitignore)
         if is_macos():
             file = "/usr/local/etc/bash_completion.d/git-completion.bash"
             bashrc = f"\n# Git completion\n[ -f {file} ] &&  . {file}"

@@ -88,11 +88,7 @@ def _neovim_args(subparser) -> None:
 
 def _add_subparser_neovim(subparsers) -> None:
     add_subparser(
-        subparsers,
-        "NeoVim",
-        func=neovim,
-        aliases=["nvim"],
-        add_argument=_neovim_args
+        subparsers, "NeoVim", func=neovim, aliases=["nvim"], add_argument=_neovim_args
     )
 
 
@@ -138,9 +134,7 @@ def spacevim(**kwargs) -> None:
             # npm install -g bash-language-server javascript-typescript-langserver
             run_cmd(cmd)
     if args.uninstall:
-        run_cmd(
-            "curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall",
-        )
+        run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall", )
     if args.config:
         _svim_gen_config()
     _svim_true_color(args.true_colors)
@@ -191,8 +185,7 @@ def bash_lsp(**kwargs) -> None:
         toml = HOME / ".SpaceVim.d/init.toml"
         with toml.open("r") as fin:
             lines = [
-                '  "sh",'
-                if re.search(r"^\s*#\s*(\"|')sh(\"|'),\s*$", line) else line
+                '  "sh",' if re.search(r"^\s*#\s*(\"|')sh(\"|'),\s*$", line) else line
                 for line in fin
             ]
         with toml.open("w") as fout:
@@ -297,8 +290,5 @@ def intellij_idea_scala(**kwargs) -> None:
 
 def _add_subparser_intellij_idea_scala(subparsers) -> None:
     add_subparser(
-        subparsers,
-        "IntelliJ IDEA",
-        func=intellij_idea,
-        aliases=["intellij", "idea"]
+        subparsers, "IntelliJ IDEA", func=intellij_idea, aliases=["intellij", "idea"]
     )

@@ -46,11 +46,7 @@ def _dsutil_args(subparser) -> None:
 
 def _add_subparser_dsutil(subparsers) -> None:
     add_subparser(
-        subparsers,
-        "dsutil",
-        func=dsutil,
-        aliases=[],
-        add_argument=_dsutil_args
+        subparsers, "dsutil", func=dsutil, aliases=[], add_argument=_dsutil_args
     )
 
 
@@ -73,9 +69,5 @@ def _xinstall_args(subparser) -> None:
 
 def _add_subparser_xinstall(subparsers) -> None:
     add_subparser(
-        subparsers,
-        "xinstall",
-        func=xinstall,
-        aliases=[],
-        add_argument=_xinstall_args
+        subparsers, "xinstall", func=xinstall, aliases=[], add_argument=_xinstall_args
     )
