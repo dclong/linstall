@@ -34,6 +34,7 @@ if os.path.isfile(SETTINGS_FILE):
 def copy_if_exists(src: Union[Path, str], dst: Path = HOME) -> bool:
     """Copy a file.
     No exception is thrown if the source file does not exist.
+
     :param src: The path of the source file.
     :param dst: The path of the destination file.
     """
@@ -51,6 +52,7 @@ def link_if_exists(
 ) -> bool:
     """Make a symbolic link of a file.
     No exception is thrown if the source file does not exist.
+
     :param src: The path of the source file.
     :param dst: The path of the destination file.
     """
@@ -67,6 +69,7 @@ def link_if_exists(
 
 def remove_file_safe(path: Path) -> None:
     """Remove a file or sybmolic link.
+
     :param path: The path to the file or symbolic link.
     """
     try:
@@ -77,6 +80,7 @@ def remove_file_safe(path: Path) -> None:
 
 def run_cmd(cmd: Union[List, str]) -> None:
     """Run a shell command.
+
     :param cmd: The command to run.
     """
     proc = sp.run(cmd, shell=isinstance(cmd, str), check=True)
@@ -85,6 +89,7 @@ def run_cmd(cmd: Union[List, str]) -> None:
 
 def brew_install_safe(pkgs: Union[str, List]) -> None:
     """Using Homebrew to install without throwing exceptions if a package to install already exists.
+
     :param pkgs: A (list of) package(s) to install using Homebrew.
     """
     if isinstance(pkgs, list):
@@ -147,6 +152,7 @@ def is_win():
 
 def copy_file(srcfile, dstfile):
     """Copy file without throwing exceptions when a broken symbolic link already exists at the destination.
+
     :param srcfile: The source file to copy from.
     :param dstfile: The destination file to copy to.
     """
@@ -186,6 +192,7 @@ def to_bool(value: Any) -> bool:
 
 def update_apt_source(yes: bool = True, seconds: float = 3600 * 12):
     """Run apt-get update if necessary.
+
     :param yes: If True, automatically yes to prompt questions.
     :param seconds: Do not run if this function has already been run `seconds` seconds ago.
     """
@@ -211,6 +218,7 @@ def _github_version(url) -> str:
 
 def install_py_github(url: str, user: bool = False, pip: str = "pip3") -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
+
     :param url: The root URL of the GitHub repository.
     :param user: If True, install to user's local directory. 
     This option is equivalant to 'pip install --user'.
@@ -224,6 +232,7 @@ def install_py_github(url: str, user: bool = False, pip: str = "pip3") -> None:
 
 def intellij_idea_plugin(version: str, url: str):
     """Install the specified plugin for IntelliJ IDEA Community Edition.
+
     :param version: The version of IntelliJ IDEA.
     :param url: The download URL of the plugin to install.
     """
