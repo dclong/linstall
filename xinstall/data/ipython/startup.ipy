@@ -103,7 +103,11 @@ class MyPrompt(Prompts):
 
 
 get_ipython().prompts = MyPrompt(get_ipython())
-
+# ------------------------------- const -----------------------------------
+if "darwin" in PLATFORM:
+    trash_dir = HOME / ".Trash"
+else:
+    trash_dir = HOME / ".local/share/Trash/"
 # ------------------------------- magic -----------------------------------
 @register_line_magic
 def trash(line: str):

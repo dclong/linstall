@@ -1,6 +1,5 @@
 import platform
 from pathlib import Path
-HOME = Path.home()
 PLATFORM = platform.platform().lower()
 c = get_config()
 c.AliasManager.user_aliases = [
@@ -265,7 +264,6 @@ if "darwin" in PLATFORM:
             ),
         ]
     )
-    trash_dir = HOME / ".Trash"
 else:
     c.AliasManager.user_aliases.extend(
         [
@@ -279,5 +277,4 @@ else:
             ),
         ]
     )
-    trash_dir = HOME / ".local/share/Trash/"
 c.IPCompleter.use_jedi = False
