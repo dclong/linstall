@@ -47,6 +47,7 @@ from .dev import (
     _add_subparser_poetry,
     _add_subparser_nodejs,
     _add_subparser_python3,
+    _add_subparser_sphinx,
     _add_subparser_pyjnius,
     _add_subparser_ipython,
     _add_subparser_yapf,
@@ -161,6 +162,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_nodejs(subparsers)
     _add_subparser_evcxr_jupyter(subparsers)
     _add_subparser_python3(subparsers)
+    _add_subparser_sphinx(subparsers)
     _add_subparser_pyjnius(subparsers)
     _add_subparser_ipython(subparsers)
     _add_subparser_yapf(subparsers)

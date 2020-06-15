@@ -579,3 +579,19 @@ def deno(**kwargs):
 
 def _add_subparser_deno(subparsers):
     add_subparser(subparsers, "Deno", func=deno, aliases=[])
+
+
+def sphinx(**kwargs):
+    args = namespace(kwargs)
+    if args.install:
+        cmd = "{args.pip} install {args.user_s} sphinx sphinx-autodoc-typehints"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = "{args.pip} uninstall sphinx sphinx-autodoc-typehints"
+        run_cmd(cmd)
+
+
+def _add_subparser_sphinx(subparsers):
+    add_subparser(subparsers, "sphinx", func=sphinx, aliases=[])
