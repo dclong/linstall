@@ -4,6 +4,7 @@ from typing import Union, List, Sequence, Any, Sized, Dict, Callable
 from argparse import Namespace
 import os
 import sys
+import distro
 import json
 from pathlib import Path
 import urllib.request
