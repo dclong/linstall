@@ -3,7 +3,7 @@
 from typing import Union, List, Sequence, Any, Sized, Dict, Callable
 from argparse import Namespace
 import os
-import platform
+import sys
 import json
 from pathlib import Path
 import urllib.request
@@ -23,7 +23,7 @@ LOCAL_DIR = HOME / ".local"
 BIN_DIR = LOCAL_DIR / "bin"
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
 
-PLATFORM = platform.platform().lower()
+DISTRO_ID = distro.id()
 SETTINGS_FILE = HOME / ".linstall.json"
 SETTINGS = {}
 if os.path.isfile(SETTINGS_FILE):
@@ -104,50 +104,40 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
     run_cmd(f"brew link {pkgs}")
 
 
-def _any_in_platform(keywords):
-    return any(kwd in PLATFORM for kwd in keywords)
-
-
 def is_ubuntu_debian():
     """Check whehter the current OS is Ubuntu/Debian. 
     """
-    dists = ("ubuntu", "debian")
-    return _any_in_platform(dists)
+    return DISTRO_ID in ("ubuntu", "debian")
 
 
 def is_linux():
     """Check whehter the current OS is Linux. 
     """
-    dists = ("linux", "ubuntu", "debian", "centos", "redhat", "fedora")
-    return _any_in_platform(dists)
+    return sys.platform == "linux"
 
 
 def is_centos_series():
     """Check whehter the current OS belongs to the CentOS series (CentOS, RedHat or Fedora).
     """
-    dists = ("centos", "redhat", "fedora")
-    return _any_in_platform(dists)
+    return DISTRO_ID in ("centos", "redhat", "fedora")
 
 
 def is_fedora():
     """Check whehter the current OS is Fedora.
     """
-    dists = ("fedora", )
-    return _any_in_platform(dists)
+    return DISTRO_ID == "fedora"
 
 
 def is_macos():
     """Check whehter the current OS is macOS.
     """
-    dists = ("darwin", )
-    return _any_in_platform(dists)
+    return DISTRO_ID == "darwin"
 
 
 def is_win():
     """Check whehter the current OS is Windows.
     """
-    dists = ("win32", )
-    return _any_in_platform(dists)
+    return sys.platform == "win32"
 
 
 def copy_file(srcfile, dstfile):
