@@ -33,9 +33,7 @@ def spark(**kwargs):
     if args.config:
         cmd = f"export SPARK_HOME={dir_}/spark"
         run_cmd(cmd)
-        logging.info(
-            f"Environment variable SPARK_HOME={dir_}/spark is exported."
-        )
+        logging.info(f"Environment variable SPARK_HOME={dir_}/spark is exported.")
     if args.uninstall:
         cmd = f"rm -rf {dir_}/spark*"
         run_cmd(cmd)
@@ -47,8 +45,7 @@ def _spark_args(subparser):
         "--mirror",
         dest="mirror",
         default="https://archive.apache.org/dist/spark",
-        help=
-        "The mirror of Spark (default https://archive.apache.org/dist/spark) to use."
+        help="The mirror of Spark (default https://archive.apache.org/dist/spark) to use."
     )
     subparser.add_argument(
         "-v",
@@ -113,9 +110,7 @@ def optimuspyspark(**kwargs):
 
 
 def _add_subparser_optimuspyspark(subparsers):
-    add_subparser(
-        subparsers, "Optimus", func=optimuspyspark, add_argument=option_user
-    )
+    add_subparser(subparsers, "Optimus", func=optimuspyspark, add_argument=option_user)
 
 
 def dask(**kwargs):

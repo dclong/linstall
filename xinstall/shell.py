@@ -137,9 +137,7 @@ def homebrew(**kwargs) -> None:
         args.install = True
         if is_ubuntu_debian():
             update_apt_source()
-            run_cmd(
-                f"apt-get install {args.yes_s} build-essential curl file git",
-            )
+            run_cmd(f"apt-get install {args.yes_s} build-essential curl file git", )
         elif is_centos_series():
             run_cmd("yum groupinstall 'Development Tools'")
             run_cmd("yum install curl file git")
@@ -238,9 +236,7 @@ def openinterminal(**kwargs) -> None:
 
 
 def _add_subparser_openinterminal(subparsers) -> None:
-    add_subparser(
-        subparsers, "OpenInTerminal", func=openinterminal, aliases=["oit"]
-    )
+    add_subparser(subparsers, "OpenInTerminal", func=openinterminal, aliases=["oit"])
 
 
 def xonsh(**kwargs) -> None:
@@ -281,9 +277,7 @@ def bash_it(**kwargs) -> None:
         profile = ".bashrc" if is_linux() else ".bash_profile"
         with (HOME / profile).open("a") as fout:
             fout.write(f"\n# PATH\nexport PATH={BIN_DIR}:$PATH")
-        logging.info(
-            "'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile
-        )
+        logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile)
     if args.uninstall:
         run_cmd("~/.bash_it/uninstall.sh")
         shutil.rmtree(HOME / ".bash_it")
@@ -412,9 +406,5 @@ def _wajig_args(subparser) -> None:
 
 def _add_subparser_wajig(subparsers) -> None:
     add_subparser(
-        subparsers,
-        "Wajig",
-        func=wajig,
-        aliases=["wj"],
-        add_argument=_wajig_args
+        subparsers, "Wajig", func=wajig, aliases=["wj"], add_argument=_wajig_args
     )

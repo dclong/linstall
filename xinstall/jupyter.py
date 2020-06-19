@@ -76,15 +76,11 @@ def beakerx(**kwargs) -> None:
     if args.install:
         run_cmd(f"{args.pip} install --user beakerx")
         run_cmd("beakerx install")
-        run_cmd(
-            "jupyter labextension install @jupyter-widgets/jupyterlab-manager",
-        )
+        run_cmd("jupyter labextension install @jupyter-widgets/jupyterlab-manager", )
         run_cmd("jupyter labextension install beakerx-jupyterlab")
     if args.uninstall:
         run_cmd("jupyter labextension uninstall beakerx-jupyterlab")
-        run_cmd(
-            "jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager"
-        )
+        run_cmd("jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager")
         run_cmd("beakerx uninstall")
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:
@@ -169,6 +165,4 @@ def evcxr_jupyter(**kwargs) -> None:
 
 
 def _add_subparser_evcxr_jupyter(subparsers) -> None:
-    add_subparser(
-        subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"]
-    )
+    add_subparser(subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"])

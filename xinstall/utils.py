@@ -46,9 +46,7 @@ def copy_if_exists(src: Union[Path, str], dst: Path = HOME) -> bool:
 
 
 def link_if_exists(
-    src: Union[Path, str],
-    dst: Path = HOME,
-    target_is_directory: bool = True
+    src: Union[Path, str], dst: Path = HOME, target_is_directory: bool = True
 ) -> bool:
     """Make a symbolic link of a file.
     No exception is thrown if the source file does not exist.
@@ -96,9 +94,7 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
         for pkg in pkgs:
             brew_install_safe(pkg)
         return
-    proc = sp.run(
-        f"brew ls --versions {pkgs}", shell=True, check=False, stdout=sp.PIPE
-    )
+    proc = sp.run(f"brew ls --versions {pkgs}", shell=True, check=False, stdout=sp.PIPE)
     if not proc.stdout:
         run_cmd(f"brew install {pkgs}")
     run_cmd(f"brew link {pkgs}")
@@ -343,11 +339,7 @@ def add_subparser(
     help_ = help_ if help_ else func.__doc__
     subparser = subparsers.add_parser(sub_cmd, aliases=aliases, help=help_)
     subparser.add_argument(
-        "-i",
-        "--install",
-        dest="install",
-        action="store_true",
-        help=f"install {name}."
+        "-i", "--install", dest="install", action="store_true", help=f"install {name}."
     )
     subparser.add_argument(
         "-u",

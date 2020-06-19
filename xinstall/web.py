@@ -73,9 +73,7 @@ def ssh_client(**kwargs) -> None:
         # file permissions
         cmd = f"chown -R {USER}:{GROUP} {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
         run_cmd(cmd)
-        logging.info(
-            "The permissions of ~/.ssh and its contents are corrected set."
-        )
+        logging.info("The permissions of ~/.ssh and its contents are corrected set.")
 
 
 def _add_subparser_ssh_client(subparsers):
@@ -207,8 +205,5 @@ def download_tools(**kwargs):
 
 def _add_subparser_download_tools(subparsers):
     add_subparser(
-        subparsers,
-        "download tools",
-        func=download_tools,
-        aliases=["dl", "dlt"]
+        subparsers, "download tools", func=download_tools, aliases=["dl", "dlt"]
     )

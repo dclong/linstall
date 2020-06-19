@@ -47,6 +47,7 @@ from .dev import (
     _add_subparser_poetry,
     _add_subparser_nodejs,
     _add_subparser_python3,
+    _add_subparser_sphinx,
     _add_subparser_pyjnius,
     _add_subparser_ipython,
     _add_subparser_yapf,
@@ -94,7 +95,7 @@ from .desktop import (
     _add_subparser_lxqt,
     _add_subparser_pygetwindow,
 )
-__version__ = "0.12.5"
+__version__ = "0.13.1"
 
 
 def version(**kwargs):
@@ -105,9 +106,7 @@ def version(**kwargs):
 
 def _add_subparser_version(subparsers):
     subparser = subparsers.add_parser(
-        "version",
-        aliases=["ver", "v"],
-        help="Print version of the xinstall package."
+        "version", aliases=["ver", "v"], help="Print version of the xinstall package."
     )
     subparser.set_defaults(func=version)
     return subparser
@@ -120,11 +119,7 @@ def parse_args(args=None, namespace=None):
         description="Easy installation and configuration for Unix/Linux"
     )
     parser.add_argument(
-        "-l",
-        "--level",
-        dest="level",
-        default="WARNING",
-        help="The level of logging."
+        "-l", "--level", dest="level", default="WARNING", help="The level of logging."
     )
     parser.add_argument(
         "-y",
@@ -161,6 +156,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_nodejs(subparsers)
     _add_subparser_evcxr_jupyter(subparsers)
     _add_subparser_python3(subparsers)
+    _add_subparser_sphinx(subparsers)
     _add_subparser_pyjnius(subparsers)
     _add_subparser_ipython(subparsers)
     _add_subparser_yapf(subparsers)

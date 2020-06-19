@@ -30,9 +30,7 @@ def virtualbox(**kwargs) -> None:
         if is_ubuntu_debian():
             run_cmd(f"apt-get purge {args.yes_s} virtualbox-qt", )
         elif is_macos():
-            run_cmd(
-                "brew cask uninstall virtualbox virtualbox-extension-pack",
-            )
+            run_cmd("brew cask uninstall virtualbox virtualbox-extension-pack", )
         elif is_centos_series():
             pass
     if args.config:
