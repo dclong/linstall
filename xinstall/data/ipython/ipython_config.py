@@ -58,6 +58,14 @@ c.AliasManager.user_aliases = [
         "docker run -d --hostname jupyterhub-almond --log-opt max-size=50m -p 8000:8000 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-almond:next /scripts/sys/init.sh"
     ),
     (
+        "docker.jupyterhub",
+        "docker run -d --hostname jupyterhub --log-opt max-size=50m -p 8000:8000 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub /scripts/sys/init.sh"
+    ),
+    (
+        "docker.jupyterhub.next",
+        "docker run -d --hostname jupyterhub --log-opt max-size=50m -p 8000:8000 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub:next /scripts/sys/init.sh"
+    ),
+    (
         "docker.jupyterhub_ai",
         "docker run -d --hostname jupyterhub-ai --log-opt max-size=50m -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ai /scripts/sys/init.sh"
     ),
