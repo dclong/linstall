@@ -51,7 +51,7 @@ def _spark_args(subparser):
         "-v",
         "--version",
         dest="version",
-        default="2.4.5",
+        default="3.0.0",
         help="The version of Spark to install."
     )
     subparser.add_argument(
