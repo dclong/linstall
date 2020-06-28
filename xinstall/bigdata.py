@@ -35,9 +35,9 @@ def spark(**kwargs):
         run_cmd(cmd)
     if args.config:
         metastore_db = spark_home / "metastore_db"
-        metastore_db.mkdir(parent=True, exist_ok=True)
+        metastore_db.mkdir(parents=True, exist_ok=True)
         warehouse = spark_home / "warehouse"
-        warehouse.mkdir(parent=True, exist_ok=True)
+        warehouse.mkdir(parents=True, exist_ok=True)
         shutil.copy2(BASE_DIR / "spark/spark-defaults.conf", dir_ / "spark/conf/")
         logging.info(
             f"Spark is configured to use {metastore_db} as the metastore database and {warehouse} as the Hive warehouse."
