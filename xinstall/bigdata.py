@@ -3,6 +3,7 @@
 import logging
 from pathlib import Path
 from .utils import (
+    BASE_DIR,
     run_cmd,
     namespace,
     add_subparser,
@@ -31,9 +32,10 @@ def spark(**kwargs):
             """
         run_cmd(cmd)
     if args.config:
-        cmd = f"export SPARK_HOME={dir_}/spark"
-        run_cmd(cmd)
-        logging.info(f"Environment variable SPARK_HOME={dir_}/spark is exported.")
+        metastore_db = dir_ / "spark/metastore_db"
+        metastore_db.mkdir(parent=True, exist_ok=True)
+        shutil.copy2(BASE_DIR / "spark/spark-defaults.conf", dir_ / "spark/conf/")
+        logging.info(f"Spark is configured to use {metastore_db} as the metastore location.")
     if args.uninstall:
         cmd = f"rm -rf {dir_}/spark*"
         run_cmd(cmd)
