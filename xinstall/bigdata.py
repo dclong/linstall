@@ -1,5 +1,6 @@
 """Install big data related tools.
 """
+import os
 import logging
 from pathlib import Path
 import shutil
@@ -34,10 +35,12 @@ def spark(**kwargs):
             """
         run_cmd(cmd)
     if args.config:
+        mask = os.umask(0)
         metastore_db = spark_home / "metastore_db"
         metastore_db.mkdir(parents=True, exist_ok=True)
         warehouse = spark_home / "warehouse"
         warehouse.mkdir(parents=True, exist_ok=True)
+        os.umask(mask)
         shutil.copy2(BASE_DIR / "spark/spark-defaults.conf", dir_ / "spark/conf/")
         logging.info(
             f"Spark is configured to use {metastore_db} as the metastore database and {warehouse} as the Hive warehouse."
