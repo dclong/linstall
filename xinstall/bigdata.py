@@ -1,8 +1,11 @@
 """Install big data related tools.
 """
+import os
 import logging
 from pathlib import Path
+import shutil
 from .utils import (
+    BASE_DIR,
     run_cmd,
     namespace,
     add_subparser,
@@ -20,20 +23,28 @@ def spark(**kwargs):
     """
     args = namespace(kwargs)
     dir_ = Path(args.location)
+    spark_home = dir_ / "spark"
     if args.install:
         dir_.mkdir(exist_ok=True)
         spark_hdp = f"spark-{args.version}-bin-hadoop2.7"
         url = f"{args.mirror}/spark-{args.version}/{spark_hdp}.tgz"
         cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
                 && tar -zxvf /tmp/{spark_hdp}.tgz -C {dir_} \
-                && ln -svf {dir_}/{spark_hdp} {dir_}/spark \
+                && ln -svf {dir_}/{spark_hdp} {spark_home} \
                 && rm /tmp/{spark_hdp}.tgz
             """
         run_cmd(cmd)
     if args.config:
-        cmd = f"export SPARK_HOME={dir_}/spark"
-        run_cmd(cmd)
-        logging.info(f"Environment variable SPARK_HOME={dir_}/spark is exported.")
+        mask = os.umask(0)
+        metastore_db = spark_home / "metastore_db"
+        metastore_db.mkdir(parents=True, exist_ok=True)
+        warehouse = spark_home / "warehouse"
+        warehouse.mkdir(parents=True, exist_ok=True)
+        os.umask(mask)
+        shutil.copy2(BASE_DIR / "spark/spark-defaults.conf", dir_ / "spark/conf/")
+        logging.info(
+            f"Spark is configured to use {metastore_db} as the metastore database and {warehouse} as the Hive warehouse."
+        )
     if args.uninstall:
         cmd = f"rm -rf {dir_}/spark*"
         run_cmd(cmd)
