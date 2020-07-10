@@ -5,7 +5,7 @@ description = ""
 authors = ["Benjamin Du <longendu@yahoo.com>"]
 
 [tool.poetry.scripts]
-xinstall = 'xinstall:main.main'
+xinstall = "xinstall:main.main"
 
 [tool.poetry.dependencies]
 python = ">=3.6"
@@ -13,8 +13,8 @@ distro = ">=1.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=3.0"
-pylint = "^2.4.4"
+pylint = ">=2.4.4"
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["poetry>=1.0.0"]
 build-backend = "poetry.masonry.api"
