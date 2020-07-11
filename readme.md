@@ -9,7 +9,7 @@ sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.13.
 Or you can use the following command to install the latest master branch
 if you have pip 20.0+.
 ```
-sudo pip3 install git+https://github.com/dclong/xinstall
+sudo pip3 install git+https://github.com/dclong/xinstall@master
 ```
 ## Usage
 

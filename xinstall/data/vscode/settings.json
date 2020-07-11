@@ -3,5 +3,9 @@
     "editor.detectIndentation": false,
     "keyboard.dispatch": "keyCode",
     "workbench.startupEditor": "newUntitledFile",
-    "python.linting.pylintArgs": ["--extension-pkg-whitelist=numpy,cv2"]
+    "python.linting.pylintArgs": [
+        "--extension-pkg-whitelist=numpy,cv2,pyspark",
+        "--generated-members=cv2.*,pyspark.*",
+        "--ignored-modules=pyspark.sql.functions"
+    ]
 }
