@@ -29,7 +29,7 @@ def spark(**kwargs):
         spark_hdp = f"spark-{args.version}-bin-hadoop2.7"
         url = f"{args.mirror}/spark-{args.version}/{spark_hdp}.tgz"
         cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
-                && tar -zxvf /tmp/{spark_hdp}.tgz -C {dir_} \
+                && tar -zxf /tmp/{spark_hdp}.tgz -C {dir_} \
                 && ln -svf {dir_}/{spark_hdp} {spark_home} \
                 && rm /tmp/{spark_hdp}.tgz
             """
