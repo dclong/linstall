@@ -26,10 +26,10 @@ def spark(**kwargs):
     spark_home = dir_ / "spark"
     if args.install:
         dir_.mkdir(exist_ok=True)
-        spark_hdp = f"spark-{args.version}-bin-hadoop2.7"
-        url = f"{args.mirror}/spark-{args.version}/{spark_hdp}.tgz"
+        spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
+        url = f"{args.mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
-                && tar -zxvf /tmp/{spark_hdp}.tgz -C {dir_} \
+                && tar -zxf /tmp/{spark_hdp}.tgz -C {dir_} \
                 && ln -svf {dir_}/{spark_hdp} {spark_home} \
                 && rm /tmp/{spark_hdp}.tgz
             """
@@ -59,11 +59,18 @@ def _spark_args(subparser):
         help="The mirror of Spark (default https://archive.apache.org/dist/spark) to use."
     )
     subparser.add_argument(
-        "-v",
-        "--version",
-        dest="version",
+        "--sv",
+        "--spark-version",
+        dest="spark_version",
         default="3.0.0",
         help="The version of Spark to install."
+    )
+    subparser.add_argument(
+        "--hv",
+        "--hadoop-version",
+        dest="hadoop_version",
+        default="3.2",
+        help="The version of Hadoop to use."
     )
     subparser.add_argument(
         "--loc",
