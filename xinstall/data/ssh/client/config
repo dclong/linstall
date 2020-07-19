@@ -52,5 +52,5 @@ Host *
     GSSAPIAuthentication yes
     GSSAPIDelegateCredentials no
 # make connection alive
-    ServerAliveInterval 30
+    ServerAliveInterval 10
     ServerAliveCountMax 3
