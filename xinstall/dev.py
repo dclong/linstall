@@ -128,7 +128,9 @@ def _pylint_args(subparser):
 
 
 def _add_subparser_pylint(subparsers):
-    add_subparser(subparsers, "pylint", func=pylint, aliases=[], add_argument=_pylint_args)
+    add_subparser(
+        subparsers, "pylint", func=pylint, aliases=[], add_argument=_pylint_args
+    )
 
 
 def nodejs(**kwargs):
