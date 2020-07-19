@@ -99,6 +99,40 @@ def _add_subparser_yapf(subparsers):
     add_subparser(subparsers, "yapf", func=yapf, aliases=[], add_argument=_yapf_args)
 
 
+def pylint(**kwargs):
+    """Install pylint.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        run_cmd(f"{args.pip} install {args.user_s} pylint")
+    if args.config:
+        if args.dst_dir:
+            src_file = BASE_DIR / "pylint/pylintrc"
+            des_file = args.dst_dir / ".pylintrc"
+            shutil.copy2(src_file, des_file)
+            logging.info("%s is copied to %s.", src_file, des_file)
+    if args.uninstall:
+        run_cmd(f"{args.pip} uninstall pylint")
+
+
+def _pylint_args(subparser):
+    subparser.add_argument(
+        "-d",
+        "--dest-dir",
+        dest="dst_dir",
+        type=Path,
+        default=None,
+        help="The destination directory to copy the pylint configuration file to.",
+    )
+    option_user(subparser)
+
+
+def _add_subparser_pylint(subparsers):
+    add_subparser(
+        subparsers, "pylint", func=pylint, aliases=[], add_argument=_pylint_args
+    )
+
+
 def nodejs(**kwargs):
     """Install nodejs and npm.
     """

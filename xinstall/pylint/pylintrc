@@ -1,0 +1,11 @@
+[MASTER]
+unsafe-load-any-extension=no
+extension-pkg-whitelist=numpy,cv2,pyspark
+generated-members=cv2.*,pyspark.*
+ignored-modules=pyspark.sql.functions
+
+[TYPECHECK]
+ignored-classes=Namespace
+
+[MESSAGES CONTROL]
+disable=C0330
