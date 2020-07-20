@@ -60,7 +60,9 @@ def pytorch(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_linux():
-            cmd = f"{args.pip} install torch torchvision"
+            cmd = f"{args.pip} install torch==1.5.1+cpu torchvision==0.6.1+cpu -f https://download.pytorch.org/whl/torch_stable.html"
+            if args.gpu:
+                cmd = f"{args.pip} install torch torchvision"
             run_cmd(cmd)
         elif is_macos():
             cmd = f"{args.pip} install torch torchvision"
@@ -71,13 +73,13 @@ def pytorch(**kwargs):
         pass
 
 
-#def _pytorch_args(subparser):
-#    subparser.add_argument(
-#        "--gpu",
-#        dest="gpu",
-#        action="store_true",
-#        help="Install the GPU version of PyTorch."
-#    )
+def _pytorch_args(subparser):
+    subparser.add_argument(
+        "--gpu",
+        dest="gpu",
+        action="store_true",
+        help="Install the GPU version of PyTorch."
+    )
 
 
 def _add_subparser_pytorch(subparsers):
@@ -86,6 +88,7 @@ def _add_subparser_pytorch(subparsers):
         "PyTorch",
         func=pytorch,
         aliases=[],
+        add_argument=_pytorch_args
     )
 
 
