@@ -14,6 +14,7 @@ distro = ">=1.5.0"
 [tool.poetry.dev-dependencies]
 pytest = ">=3.0"
 pylint = ">=2.4.4"
+mypy = ">=0.782"
 
 [build-system]
 requires = ["poetry>=1.0.0"]
