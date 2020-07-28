@@ -244,6 +244,8 @@ def poetry(**kwargs):
     args = namespace(kwargs)
     if args.install:
         cmd = f"curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}"
+        if args.version:
+            cmd += f" - --version {args.version}"
         run_cmd(cmd)
     poetry_bin = HOME / ".poetry/bin/poetry"
     if args.config:
