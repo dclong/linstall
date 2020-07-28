@@ -1,4 +1,5 @@
 [MASTER]
+ignore=.ipynb_checkpoints
 unsafe-load-any-extension=no
 extension-pkg-whitelist=numpy,cv2,pyspark
 generated-members=cv2.*,pyspark.*

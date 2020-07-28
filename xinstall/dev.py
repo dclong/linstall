@@ -212,12 +212,12 @@ def python3(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source()
-            cmd = f"apt-get install {args.yes_s} python3 python3-pip python3-setuptools"
+            cmd = f"apt-get install {args.yes_s} python3 python3-dev python3-pip python3-setuptools python3-venv"
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["python3"])
         if is_centos_series():
-            run_cmd(f"yum install {args.yes_s} python34 python34-devel python34-pip", )
+            run_cmd(f"yum install {args.yes_s} python3 python3-devel python3-pip", )
             run_cmd(f"{args.pip} install {args.user_s} setuptools")
     if args.config:
         pass
@@ -234,7 +234,7 @@ def python3(**kwargs):
 
 def _add_subparser_python3(subparsers):
     add_subparser(
-        subparsers, "Python3", func=python3, aliases=["py3"], add_argument=option_user
+        subparsers, "Python3", func=python3, aliases=["py3", "py", "python"], add_argument=option_user
     )
 
 
