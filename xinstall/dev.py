@@ -284,6 +284,13 @@ def _poetry_args(subparser):
         action="store_true",
         help="Configure Bash completion for poetry as well."
     )
+    subparser.add_argument(
+        "-v",
+        "--version",
+        dest="version",
+        default="",
+        help="The version of Python Poetry to install."
+    )
 
 
 def _add_subparser_poetry(subparsers):
