@@ -234,7 +234,11 @@ def python3(**kwargs):
 
 def _add_subparser_python3(subparsers):
     add_subparser(
-        subparsers, "Python3", func=python3, aliases=["py3", "py", "python"], add_argument=option_user
+        subparsers,
+        "Python3",
+        func=python3,
+        aliases=["py3", "py", "python"],
+        add_argument=option_user
     )
 
 

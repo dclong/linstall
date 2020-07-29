@@ -84,11 +84,7 @@ def _pytorch_args(subparser):
 
 def _add_subparser_pytorch(subparsers):
     add_subparser(
-        subparsers,
-        "PyTorch",
-        func=pytorch,
-        aliases=[],
-        add_argument=_pytorch_args
+        subparsers, "PyTorch", func=pytorch, aliases=[], add_argument=_pytorch_args
     )
 
 

@@ -73,7 +73,7 @@ def docker(**kwargs):
         elif is_centos_series():
             run_cmd("yum remove docker docker-compose")
 
-            
+
 def _docker_args(subparser):
     subparser.add_argument(
         "-u",
@@ -82,11 +82,16 @@ def _docker_args(subparser):
         required=True,
         help="The user to add to the docker group.",
     )
-    option_user(subparser)
-    
-    
+
+
 def _add_subparser_docker(subparsers):
-    add_subparser(subparsers, "Docker", func=docker, add_argument=_docker_args, aliases=["dock", "dk"])
+    add_subparser(
+        subparsers,
+        "Docker",
+        func=docker,
+        add_argument=_docker_args,
+        aliases=["dock", "dk"]
+    )
 
 
 def kubernetes(**kwargs):
