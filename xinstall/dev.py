@@ -234,7 +234,11 @@ def python3(**kwargs):
 
 def _add_subparser_python3(subparsers):
     add_subparser(
-        subparsers, "Python3", func=python3, aliases=["py3", "py", "python"], add_argument=option_user
+        subparsers,
+        "Python3",
+        func=python3,
+        aliases=["py3", "py", "python"],
+        add_argument=option_user
     )
 
 
@@ -283,6 +287,13 @@ def _poetry_args(subparser):
         dest="bash_completion",
         action="store_true",
         help="Configure Bash completion for poetry as well."
+    )
+    subparser.add_argument(
+        "-v",
+        "--version",
+        dest="version",
+        default="",
+        help="The version of Python Poetry to install."
     )
 
 
@@ -384,86 +395,42 @@ def git_ignore(**kwargs):
     """Insert patterns to ingore into .gitignore in the current directory.
     """
     args = namespace(kwargs)
-    if args.python_pattern:
-        lines = [
-            ".DS_Store",
-            ".idea/",
-            "*.ipr",
-            "*.iws",
-            ".ipynb_checkpoints/",
-            ".coverage",
-            ".mypy",
-            ".mypy_cache",
-            "*.crc",
-            "__pycache__/",
-            "venv/",
-            ".venv/",
-            "target/",
-            "dist/",
-            "*.egg-info/",
-        ]
-        lines = [line.strip() + "\n" for line in lines]
-        with Path(".gitignore").open("a") as fout:
-            fout.writelines(lines)
-    if args.java_pattern:
-        lines = [
-            "# Java",
-            "*.class",
-            "## BlueJ files",
-            "*.ctxt",
-            "## Mobile Tools for Java (J2ME)",
-            ".mtj.tmp/",
-            "## Package Files",
-            "*.jar",
-            "*.war",
-            "*.ear",
-            "# Gradle",
-            ".gradle",
-            "/build/",
-            "/out/",
-            "## Ignore Gradle GUI config",
-            "gradle-app.setting",
-            "## Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)",
-            "!gradle-wrapper.jar",
-            "## Cache of project",
-            ".gradletasknamecache",
-            "# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml",
-            "hs_err_pid*",
-            "# Mac",
-            ".DS_Store",
-            "# IDE",
-            ".idea/",
-            "*.ipr",
-            "*.iws",
-            "# Misc",
-            "core",
-            "*.log",
-            "deprecated",
-        ]
-        lines = [line.strip() + "\n" for line in lines]
-        with Path(".gitignore").open("a") as fout:
-            fout.writelines(lines)
+    dest = args.dest / ".gitignore"
+    mode = "a" if args.append else "w"
+    if args.python:
+        with dest.open(mode) as fout:
+            fout.write((BASE_DIR / "git/gitignore_python").read_text())
+    if args.java:
+        with dest.open(mode) as fout:
+            fout.write((BASE_DIR / "git/gitignore_java").read_text())
 
 
 def _add_subparser_git_ignore(subparsers):
     subparser = subparsers.add_parser(
         "git_ignore",
-        aliases=["gig", "gignore"],
+        aliases=["gig", "gignore", "ignore"],
         help="Append patterns to ignore into .gitignore in the current directory."
     )
     subparser.add_argument(
         "-p",
-        "--python-pattern",
-        dest="python_pattern",
+        "--python",
+        dest="python",
         action="store_true",
         help="Gitignore patterns for Python developing."
     )
     subparser.add_argument(
         "-j",
-        "--java-pattern",
-        dest="java_pattern",
+        "--java",
+        dest="java",
         action="store_true",
         help="Gitignore patterns for Java developing."
+    )
+    subparser.add_argument(
+        "-a",
+        "--append",
+        dest="append",
+        action="store_true",
+        help="Append patterns to ignore into .gitignore rather than overwrite it."
     )
     subparser.set_defaults(func=git_ignore)
     return subparser
