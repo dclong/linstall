@@ -59,7 +59,7 @@ def docker(**kwargs):
         elif is_centos_series():
             run_cmd("yum install docker docker-compose")
     if args.config:
-        run_cmd("gpasswd -a $(id -un) docker")
+        run_cmd(f"gpasswd -a {args.user} docker")
         logging.warning(
             "Please run the command 'newgrp docker' or logout/login to make the group 'docker' effective!"
         )
@@ -73,9 +73,20 @@ def docker(**kwargs):
         elif is_centos_series():
             run_cmd("yum remove docker docker-compose")
 
-
+            
+def _docker_args(subparser):
+    subparser.add_argument(
+        "-u",
+        "--user",
+        dest="user",
+        required=True,
+        help="The user to add to the docker group.",
+    )
+    option_user(subparser)
+    
+    
 def _add_subparser_docker(subparsers):
-    add_subparser(subparsers, "Docker", func=docker, aliases=["dock", "dk"])
+    add_subparser(subparsers, "Docker", func=docker, add_argument=_docker_args, aliases=["dock", "dk"])
 
 
 def kubernetes(**kwargs):
