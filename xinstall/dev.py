@@ -391,10 +391,14 @@ def git_ignore(**kwargs):
     """Insert patterns to ingore into .gitignore in the current directory.
     """
     args = namespace(kwargs)
+    dest = args.dest / ".gitignore"
+    mode = "a" if args.append else "w"
     if args.python:
-        shutil.copy2(BASE_DIR / "git/gitignore_python", args.dest / ".gitignore")
+        with dest.open(mode) as fout:
+            fout.write((BASE_DIR / "git/gitignore_python").read_text())
     if args.java:
-        shutil.copy2(BASE_DIR / "git/gitignore_java", args.dest / ".gitignore")
+        with dest.open(mode) as fout:
+            fout.write((BASE_DIR / "git/gitignore_java").read_text())
 
 
 def _add_subparser_git_ignore(subparsers):
@@ -405,17 +409,24 @@ def _add_subparser_git_ignore(subparsers):
     )
     subparser.add_argument(
         "-p",
-        "--python-pattern",
-        dest="python_pattern",
+        "--python",
+        dest="python",
         action="store_true",
         help="Gitignore patterns for Python developing."
     )
     subparser.add_argument(
         "-j",
-        "--java-pattern",
-        dest="java_pattern",
+        "--java",
+        dest="java",
         action="store_true",
         help="Gitignore patterns for Java developing."
+    )
+    subparser.add_argument(
+        "-a",
+        "--append",
+        dest="append",
+        action="store_true",
+        help="Append patterns to ignore into .gitignore rather than overwrite it."
     )
     subparser.set_defaults(func=git_ignore)
     return subparser
