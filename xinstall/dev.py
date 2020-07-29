@@ -391,71 +391,16 @@ def git_ignore(**kwargs):
     """Insert patterns to ingore into .gitignore in the current directory.
     """
     args = namespace(kwargs)
-    if args.python_pattern:
-        lines = [
-            ".DS_Store",
-            ".idea/",
-            "*.ipr",
-            "*.iws",
-            ".ipynb_checkpoints/",
-            ".coverage",
-            ".mypy",
-            ".mypy_cache",
-            "*.crc",
-            "__pycache__/",
-            "venv/",
-            ".venv/",
-            "target/",
-            "dist/",
-            "*.egg-info/",
-        ]
-        lines = [line.strip() + "\n" for line in lines]
-        with Path(".gitignore").open("a") as fout:
-            fout.writelines(lines)
-    if args.java_pattern:
-        lines = [
-            "# Java",
-            "*.class",
-            "## BlueJ files",
-            "*.ctxt",
-            "## Mobile Tools for Java (J2ME)",
-            ".mtj.tmp/",
-            "## Package Files",
-            "*.jar",
-            "*.war",
-            "*.ear",
-            "# Gradle",
-            ".gradle",
-            "/build/",
-            "/out/",
-            "## Ignore Gradle GUI config",
-            "gradle-app.setting",
-            "## Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)",
-            "!gradle-wrapper.jar",
-            "## Cache of project",
-            ".gradletasknamecache",
-            "# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml",
-            "hs_err_pid*",
-            "# Mac",
-            ".DS_Store",
-            "# IDE",
-            ".idea/",
-            "*.ipr",
-            "*.iws",
-            "# Misc",
-            "core",
-            "*.log",
-            "deprecated",
-        ]
-        lines = [line.strip() + "\n" for line in lines]
-        with Path(".gitignore").open("a") as fout:
-            fout.writelines(lines)
+    if args.python:
+        shutil.copy2(BASE_DIR / "git/gitignore_python", args.dest / ".gitignore")
+    if args.java:
+        shutil.copy2(BASE_DIR / "git/gitignore_java", args.dest / ".gitignore")
 
 
 def _add_subparser_git_ignore(subparsers):
     subparser = subparsers.add_parser(
         "git_ignore",
-        aliases=["gig", "gignore"],
+        aliases=["gig", "gignore", "ignore"],
         help="Append patterns to ignore into .gitignore in the current directory."
     )
     subparser.add_argument(
