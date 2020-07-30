@@ -263,12 +263,24 @@ def visual_studio_code(**kwargs) -> None:
             run_cmd("yum remove vscode")
     if args.config:
         src_file = f"{BASE_DIR}/vscode/settings.json"
-        dst_dir = f"{HOME}/.config/Code/User/"
-        if is_macos():
-            dst_dir = "{HOME}/Library/Application Support/Code/User/"
+        if not args.dst_dir:
+            dst_dir = f"{HOME}/.config/Code/User/"
+            if is_macos():
+                dst_dir = f"{HOME}/Library/Application Support/Code/User/"
         os.makedirs(dst_dir, exist_ok=True)
-        os.symlink(src_file, dst_dir, target_is_directory=True)
-        run_cmd(f"ln -svf {src_file} {dst_dir}")
+        shutil.copy2(src_file, dst_dir)
+
+
+def _visual_studio_code_args(subparser) -> None:
+    subparser.add_argument(
+        "-d",
+        "--destination-dir",
+        "--dst-dir",
+        dest="dst_dir",
+        default="",
+        help="Enable true color (default true) for SpaceVim."
+    )
+    option_user(subparser)
 
 
 def _add_subparser_visual_studio_code(subparsers) -> None:
@@ -276,7 +288,8 @@ def _add_subparser_visual_studio_code(subparsers) -> None:
         subparsers,
         "Visual Studio Code",
         func=visual_studio_code,
-        aliases=["vscode", "code"]
+        aliases=["vscode", "code"],
+        add_argument=_visual_studio_code_args
     )
 
 
