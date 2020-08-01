@@ -59,10 +59,11 @@ def docker(**kwargs):
         elif is_centos_series():
             run_cmd("yum install docker docker-compose")
     if args.config:
-        run_cmd(f"gpasswd -a {args.user} docker")
-        logging.warning(
-            "Please run the command 'newgrp docker' or logout/login to make the group 'docker' effective!"
-        )
+        if args.user_to_docker:
+            run_cmd(f"gpasswd -a {args.user_to_docker} docker")
+            logging.warning(
+                "Please run the command 'newgrp docker' or logout/login to make the group 'docker' effective!"
+            )
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(f"apt-get purge {args.yes_s} docker docker-compose", )
@@ -76,10 +77,9 @@ def docker(**kwargs):
 
 def _docker_args(subparser):
     subparser.add_argument(
-        "-u",
-        "--user",
-        dest="user",
-        required=True,
+        "--user-to-docker",
+        dest="user_to_docker",
+        default="",
         help="The user to add to the docker group.",
     )
 
