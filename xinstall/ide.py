@@ -264,11 +264,11 @@ def visual_studio_code(**kwargs) -> None:
     if args.config:
         src_file = f"{BASE_DIR}/vscode/settings.json"
         if not args.dst_dir:
-            dst_dir = f"{HOME}/.config/Code/User/"
+            args.dst_dir = f"{HOME}/.config/Code/User/"
             if is_macos():
-                dst_dir = f"{HOME}/Library/Application Support/Code/User/"
-        os.makedirs(dst_dir, exist_ok=True)
-        shutil.copy2(src_file, dst_dir)
+                args.dst_dir = f"{HOME}/Library/Application Support/Code/User/"
+        os.makedirs(args.dst_dir, exist_ok=True)
+        shutil.copy2(src_file, args.dst_dir)
 
 
 def _visual_studio_code_args(subparser) -> None:
