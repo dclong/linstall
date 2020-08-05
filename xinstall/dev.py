@@ -447,7 +447,6 @@ def git(**kwargs) -> None:
 
 def _git_args(subparser):
     subparser.add_argument(
-        "-p",
         "--proxy",
         dest="proxy",
         default="",
