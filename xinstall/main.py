@@ -43,7 +43,6 @@ from .github import (
 )
 from .dev import (
     _add_subparser_git,
-    _add_subparser_git_ignore,
     _add_subparser_poetry,
     _add_subparser_nodejs,
     _add_subparser_python3,
@@ -153,7 +152,6 @@ def parse_args(args=None, namespace=None):
     _add_subparser_bash_lsp(subparsers)
     # ------------------------- development related  ------------------------------
     _add_subparser_git(subparsers)
-    _add_subparser_git_ignore(subparsers)
     _add_subparser_nodejs(subparsers)
     _add_subparser_evcxr_jupyter(subparsers)
     _add_subparser_python3(subparsers)
