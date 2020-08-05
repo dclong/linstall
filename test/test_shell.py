@@ -1,4 +1,3 @@
-
 """Test the shell module.
 """
 import subprocess as sp
