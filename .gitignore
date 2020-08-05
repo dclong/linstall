@@ -12,6 +12,7 @@ dist/
 .coverage
 .mypy
 .mypy_cache
+.pytype/
 *.crc
 *.egg-info/
 .theia

@@ -6,7 +6,7 @@
     "autoDocstring.docstringFormat": "sphinx",
     "keyboard.dispatch": "keyCode",
     "workbench.startupEditor": "newUntitledFile",
-    "python.linting.mypyEnabled": true,
+    "python.linting.mypyEnabled": false,
     "python.linting.pylintArgs": [
         "--extension-pkg-whitelist=numpy,cv2,pyspark",
         "--generated-members=cv2.*,pyspark.*",
