@@ -363,9 +363,6 @@ def add_subparser(
         action="store_true",
         help="Print the command to run."
     )
-    option_python(subparser)
-    option_ipython(subparser)
-    option_pip(subparser)
     if add_argument:
         add_argument(subparser)
     subparser.set_defaults(func=func)

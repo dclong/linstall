@@ -16,4 +16,3 @@ def test_proxychains():
     """
     cmd = "sudo xinstall -y pc -ic"
     sp.run(cmd, shell=True, check=True)
-

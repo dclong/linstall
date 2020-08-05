@@ -19,6 +19,8 @@ from .utils import (
     namespace,
     add_subparser,
     option_user,
+    option_pip,
+    option_python,
 )
 from .web import ssh_client
 
@@ -193,6 +195,7 @@ def _ipython_args(subparser):
         default=HOME / ".ipython",
         help="The directory for storing IPython configuration files.",
     )
+    option_pip(subparser)
 
 
 def _add_subparser_ipython(subparsers):
@@ -205,8 +208,8 @@ def _add_subparser_ipython(subparsers):
     )
 
 
-def python3(**kwargs):
-    """Install and configure Python 3.
+def python(**kwargs):
+    """Install and configure Python (3).
     """
     args = namespace(kwargs)
     if args.install:
@@ -232,13 +235,18 @@ def python3(**kwargs):
             run_cmd("yum remove python3")
 
 
+def _python_args(subparser):
+    option_user(subparser)
+    option_pip(subparser)
+
+
 def _add_subparser_python3(subparsers):
     add_subparser(
         subparsers,
-        "Python3",
-        func=python3,
-        aliases=["py3", "py", "python"],
-        add_argument=option_user
+        "Python",
+        func=python,
+        aliases=["py", "py3", "python3"],
+        add_argument=_python_args
     )
 
 
@@ -295,6 +303,7 @@ def _poetry_args(subparser):
         default="",
         help="The version of Python Poetry to install."
     )
+    option_python(subparser)
 
 
 def _add_subparser_poetry(subparsers):
@@ -316,9 +325,18 @@ def pyjnius(**kwargs):
         pass
 
 
+def _pyjnius_args(subparser):
+    option_user(subparser)
+    option_pip(subparser)
+
+
 def _add_subparser_pyjnius(subparsers):
     add_subparser(
-        subparsers, "pyjnius", func=pyjnius, aliases=["pyj"], add_argument=option_user
+        subparsers,
+        "pyjnius",
+        func=pyjnius,
+        aliases=["pyj"],
+        add_argument=_pyjnius_args
     )
 
 
@@ -531,13 +549,18 @@ def jpype1(**kwargs):
         run_cmd(cmd)
 
 
+def _jpype1_args(subparser):
+    option_pip(subparser)
+    option_user(subparser)
+
+
 def _add_subparser_jpype1(subparsers):
     add_subparser(
         subparsers,
         "JPype1",
         func=jpype1,
         aliases=["jpype", "jp"],
-        add_argument=option_user
+        add_argument=_jpype1_args
     )
 
 
@@ -568,5 +591,12 @@ def sphinx(**kwargs):
         run_cmd(cmd)
 
 
+def _sphinx_args(subparser):
+    option_pip(subparser)
+    option_user(subparser)
+
+
 def _add_subparser_sphinx(subparsers):
-    add_subparser(subparsers, "sphinx", func=sphinx, aliases=[])
+    add_subparser(
+        subparsers, "sphinx", func=sphinx, aliases=[], add_argument=_sphinx_args
+    )
