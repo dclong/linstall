@@ -51,6 +51,7 @@ from .dev import (
     _add_subparser_pyjnius,
     _add_subparser_ipython,
     _add_subparser_yapf,
+    _add_subparser_pylint,
     _add_subparser_openjdk,
     _add_subparser_sdkman,
     _add_subparser_rust,
