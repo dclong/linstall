@@ -3,6 +3,7 @@
 import logging
 import shutil
 from pathlib import Path
+from argparse import Namespace
 from .utils import (
     HOME,
     BASE_DIR,
@@ -106,11 +107,10 @@ def pylint(**kwargs):
     if args.install:
         run_cmd(f"{args.pip} install {args.user_s} pylint")
     if args.config:
-        if args.dst_dir:
-            src_file = BASE_DIR / "pylint/pylintrc"
-            des_file = args.dst_dir / ".pylintrc"
-            shutil.copy2(src_file, des_file)
-            logging.info("%s is copied to %s.", src_file, des_file)
+        src_file = BASE_DIR / "pylint/pylintrc"
+        des_file = args.dst_dir / ".pylintrc"
+        shutil.copy2(src_file, des_file)
+        logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall pylint")
 
@@ -121,7 +121,7 @@ def _pylint_args(subparser):
         "--dest-dir",
         dest="dst_dir",
         type=Path,
-        default=None,
+        default=Path(),
         help="The destination directory to copy the pylint configuration file to.",
     )
     option_user(subparser)
@@ -391,57 +391,18 @@ def _add_subparser_rustpython(subparsers):
     add_subparser(subparsers, "RustPython", func=rustpython, aliases=["rustpy"])
 
 
-def git_ignore(**kwargs):
+def _git_ignore(args: Namespace) -> None:
     """Insert patterns to ingore into .gitignore in the current directory.
     """
-    args = namespace(kwargs)
-    dst_dir = args.dst_dir / ".gitignore"
+    if not args.language:
+        return
+    srcfile = BASE_DIR / f"git/gitignore_{args.language}"
+    dstfile = args.dst_dir / ".gitignore"
     mode = "a" if args.append else "w"
-    if args.python:
-        with dst_dir.open(mode) as fout:
-            fout.write((BASE_DIR / "git/gitignore_python").read_text())
-    if args.java:
-        with dst_dir.open(mode) as fout:
-            fout.write((BASE_DIR / "git/gitignore_java").read_text())
-
-
-def _add_subparser_git_ignore(subparsers):
-    subparser = subparsers.add_parser(
-        "git_ignore",
-        aliases=["gig", "gignore", "ignore"],
-        help="Append patterns to ignore into .gitignore in the current directory."
-    )
-    subparser.add_argument(
-        "-d",
-        "--dest-dir",
-        dest="dst_dir",
-        type=Path,
-        default=Path(),
-        help="The destination directory to copy the YAPF configuration file to.",
-    )
-    subparser.add_argument(
-        "-p",
-        "--python",
-        dest="python",
-        action="store_true",
-        help="Gitignore patterns for Python developing."
-    )
-    subparser.add_argument(
-        "-j",
-        "--java",
-        dest="java",
-        action="store_true",
-        help="Gitignore patterns for Java developing."
-    )
-    subparser.add_argument(
-        "-a",
-        "--append",
-        dest="append",
-        action="store_true",
-        help="Append patterns to ignore into .gitignore rather than overwrite it."
-    )
-    subparser.set_defaults(func=git_ignore)
-    return subparser
+    with dstfile.open(mode) as fout:
+        fout.write(srcfile.read_text())
+    msg = f"%s is {'appended into' if mode == 'a' else 'copied to'} %s."
+    logging.info(msg, srcfile, dstfile)
 
 
 def git(**kwargs) -> None:
@@ -472,16 +433,13 @@ def git(**kwargs) -> None:
         remove_file_safe(gitconfig)
         shutil.copy2(BASE_DIR / "git/gitconfig", gitconfig)
         logging.info("%s is copied to %s", BASE_DIR / "git/gitconfig", gitconfig)
-        gitignore = HOME / ".gitignore"
-        remove_file_safe(gitignore)
-        shutil.copy2(BASE_DIR / "git/gitignore", gitignore)
-        logging.info("%s is copied to %s", BASE_DIR / "git/gitignore", gitignore)
         if is_macos():
             file = "/usr/local/etc/bash_completion.d/git-completion.bash"
             bashrc = f"\n# Git completion\n[ -f {file} ] &&  . {file}"
             with (HOME / ".bash_profile").open("a") as fout:
                 fout.write(bashrc)
             logging.info("Bash completion is enabled for Git.")
+    _git_ignore(args)
     if "proxy" in kwargs and args.proxy:
         run_cmd(f"git config --global http.proxy {args.proxy}")
         run_cmd(f"git config --global https.proxy {args.proxy}")
@@ -494,6 +452,38 @@ def _git_args(subparser):
         dest="proxy",
         default="",
         help="Configure Git to use the specified proxy."
+    )
+    subparser.add_argument(
+        "-d",
+        "--dest-dir",
+        dest="dst_dir",
+        type=Path,
+        default=Path(),
+        help="The destination directory to copy the YAPF configuration file to.",
+    )
+    subparser.add_argument(
+        "-p",
+        "--python",
+        dest="language",
+        action="store_const",
+        const="python",
+        default="",
+        help="Gitignore patterns for Python developing."
+    )
+    subparser.add_argument(
+        "-j",
+        "--java",
+        dest="java",
+        action="store_const",
+        const="java",
+        help="Gitignore patterns for Java developing."
+    )
+    subparser.add_argument(
+        "-a",
+        "--append",
+        dest="append",
+        action="store_true",
+        help="Append patterns to ignore into .gitignore rather than overwrite it."
     )
 
 
