@@ -42,6 +42,7 @@ def dsutil(**kwargs) -> None:
 
 def _dsutil_args(subparser) -> None:
     option_user(subparser)
+    option_pip(subparser)
 
 
 def _add_subparser_dsutil(subparsers) -> None:
