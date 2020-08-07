@@ -21,6 +21,7 @@ from .utils import (
     intellij_idea_plugin,
     option_user,
     option_option,
+    option_pip
 )
 
 
@@ -161,6 +162,7 @@ def _spacevim_args(subparser) -> None:
         help="disable true color (default true) for SpaceVim."
     )
     option_user(subparser)
+    option_pip(subparser)
 
 
 def _add_subparser_spacevim(subparsers) -> None:
