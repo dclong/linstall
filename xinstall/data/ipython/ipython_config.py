@@ -5,6 +5,7 @@ c = get_config()
 c.AliasManager.user_aliases = [
     ("mvi", "mv -i"),
     ("cpi", "cp -ir"),
+    ("rm.ipynb_checkpoints", "find . -type d -name .ipynb_checkpoints -print0 | xargs -0 rm -rf"),
     ("rsync.progress", "rsync -avh --info=progress2"),
     ("rsync.progress.pc", "proxychains rsync -avh --info=progress2"),
     ("scp.rp", "scp -rp"),
