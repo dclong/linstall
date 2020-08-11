@@ -23,6 +23,7 @@ from .utils import (
     option_python,
 )
 from .web import ssh_client
+logging.basicConfig(level=20)
 
 
 def openjdk8(**kwargs):
