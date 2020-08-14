@@ -600,3 +600,23 @@ def _add_subparser_sphinx(subparsers):
     add_subparser(
         subparsers, "sphinx", func=sphinx, aliases=[], add_argument=_sphinx_args
     )
+
+
+def pyenv(**kwargs):
+    args = namespace(kwargs)
+    if args.install:
+        cmd = "curl -sSL https://pyenv.run | bash"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = "rm -rf {HOME}/.pyenv/"
+        # TODO: remove lines from .bashrc
+        # You might have to write Python function to do this ...
+        run_cmd(cmd)
+
+
+def _add_subparser_pyenv(subparsers):
+    add_subparser(
+        subparsers, "pyenv", func=pyenv, aliases=[],
+    )
