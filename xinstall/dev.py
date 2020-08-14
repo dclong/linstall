@@ -78,11 +78,10 @@ def yapf(**kwargs):
     if args.install:
         run_cmd(f"{args.pip} install {args.user_s} yapf")
     if args.config:
-        if args.dst_dir:
-            src_file = BASE_DIR / "yapf/style.yapf"
-            des_file = args.dst_dir / ".style.yapf"
-            shutil.copy2(src_file, des_file)
-            logging.info("%s is copied to %s.", src_file, des_file)
+        src_file = BASE_DIR / "yapf/style.yapf"
+        des_file = args.dst_dir / ".style.yapf"
+        shutil.copy2(src_file, des_file)
+        logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall yapf")
 
@@ -93,7 +92,7 @@ def _yapf_args(subparser):
         "--dest-dir",
         dest="dst_dir",
         type=Path,
-        default=None,
+        default=Path(),
         help="The destination directory to copy the YAPF configuration file to.",
     )
     option_user(subparser)
@@ -301,7 +300,7 @@ def _poetry_args(subparser):
         "-v",
         "--version",
         dest="version",
-        default="",
+        default="1.0.9",
         help="The version of Python Poetry to install."
     )
     option_python(subparser)
