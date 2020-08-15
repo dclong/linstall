@@ -51,6 +51,7 @@ from .dev import (
     _add_subparser_ipython,
     _add_subparser_yapf,
     _add_subparser_pylint,
+    _add_subparser_pyenv,
     _add_subparser_openjdk,
     _add_subparser_sdkman,
     _add_subparser_rust,
@@ -160,6 +161,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_ipython(subparsers)
     _add_subparser_yapf(subparsers)
     _add_subparser_pylint(subparsers)
+    _add_subparser_pyenv(subparsers)
     _add_subparser_openjdk(subparsers)
     _add_subparser_sdkman(subparsers)
     _add_subparser_poetry(subparsers)

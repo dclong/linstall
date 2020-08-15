@@ -21,6 +21,7 @@ from .utils import (
     option_user,
     option_pip,
     option_python,
+    update_file,
 )
 from .web import ssh_client
 logging.basicConfig(level=20)
@@ -599,4 +600,35 @@ def _sphinx_args(subparser):
 def _add_subparser_sphinx(subparsers):
     add_subparser(
         subparsers, "sphinx", func=sphinx, aliases=[], add_argument=_sphinx_args
+    )
+
+
+def pyenv(**kwargs):
+    """Install and configure pyenv.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = "curl -sSL https://pyenv.run | bash"
+        run_cmd(cmd)
+    if args.config:
+        if is_ubuntu_debian():
+            update_apt_source()
+            cmd = "apt-get install libffi-dev"
+            run_cmd(cmd)
+    if args.uninstall:
+        cmd = "rm -rf {HOME}/.pyenv/"
+        update_file(HOME / ".bashrc", exact={
+            'export PATH="$HOME/.pyenv/bin:$PATH"\n': "",
+            'eval "$(pyenv init -)"\n': "",
+            'eval "$(pyenv virtualenv-init -)"\n': "",
+        })
+        run_cmd(cmd)
+
+
+def _add_subparser_pyenv(subparsers):
+    add_subparser(
+        subparsers,
+        "pyenv",
+        func=pyenv,
+        aliases=[],
     )
