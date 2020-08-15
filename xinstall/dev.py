@@ -617,11 +617,14 @@ def pyenv(**kwargs):
             run_cmd(cmd)
     if args.uninstall:
         cmd = "rm -rf {HOME}/.pyenv/"
-        update_file(HOME / ".bashrc", exact={
-            'export PATH="$HOME/.pyenv/bin:$PATH"\n': "",
-            'eval "$(pyenv init -)"\n': "",
-            'eval "$(pyenv virtualenv-init -)"\n': "",
-        })
+        update_file(
+            HOME / ".bashrc",
+            exact={
+                'export PATH="$HOME/.pyenv/bin:$PATH"\n': "",
+                'eval "$(pyenv init -)"\n': "",
+                'eval "$(pyenv virtualenv-init -)"\n': "",
+            }
+        )
         run_cmd(cmd)
 
 
