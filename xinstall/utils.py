@@ -211,8 +211,9 @@ def install_py_github(url: str, user: bool = False, pip: str = "pip3") -> None:
     This option is equivalant to 'pip install --user'.
     :param pip: The path (pip3 by default) to the pip executable. 
     """
-    version = _github_version(url)
-    url = f"{url}/releases/download/{version}/{Path(url).name}-{re.sub('[a-zA-Z]', '', version)}-py3-none-any.whl"
+    ver = _github_version(url)
+    ver_no_letter = re.sub("[a-zA-Z]", "", ver)
+    url = f"{url}/releases/download/{ver}/{Path(url).name}-{ver_no_letter}-py3-none-any.whl"
     cmd = f"{pip} install {'--user' if user else ''} --upgrade {url}"
     run_cmd(cmd)
 
@@ -248,6 +249,10 @@ def namespace(dic: Dict) -> Namespace:
 
 
 def option_user(subparser):
+    """Add the option --user to the subparser.
+
+    :param subparser: A sub parser.
+    """
     subparser.add_argument(
         "--user",
         dest="user",
@@ -367,3 +372,24 @@ def add_subparser(
         add_argument(subparser)
     subparser.set_defaults(func=func)
     return subparser
+
+
+def update_file(
+    path: Path, regex: Dict[str, str] = None, exact: Dict[str, str] = None
+) -> None:
+    """Update a text file using regular expression substitution.
+
+    :param regex: A dict containing regular expression patterns
+    and the corresponding replacement text.
+    :param exact: A dict containing exact patterns and the corresponding replacement text.
+    """
+    if isinstance(path, str):
+        path = Path(path)
+    text = path.read_text()
+    if regex:
+        for pattern, replace in regex.items():
+            text = re.sub(pattern, replace, text)
+    if exact:
+        for pattern, replace in exact.items():
+            text = text.replace(pattern, replace)
+    path.write_text(text)

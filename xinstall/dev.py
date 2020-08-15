@@ -21,6 +21,7 @@ from .utils import (
     option_user,
     option_pip,
     option_python,
+    update_file,
 )
 from .web import ssh_client
 logging.basicConfig(level=20)
@@ -603,20 +604,31 @@ def _add_subparser_sphinx(subparsers):
 
 
 def pyenv(**kwargs):
+    """Install and configure pyenv.
+    """
     args = namespace(kwargs)
     if args.install:
         cmd = "curl -sSL https://pyenv.run | bash"
         run_cmd(cmd)
     if args.config:
-        pass
+        if is_ubuntu_debian():
+            update_apt_source()
+            cmd = "apt-get install libffi-dev"
+            run_cmd(cmd)
     if args.uninstall:
         cmd = "rm -rf {HOME}/.pyenv/"
-        # TODO: remove lines from .bashrc
-        # You might have to write Python function to do this ...
+        update_file(HOME / ".bashrc", exact={
+            'export PATH="$HOME/.pyenv/bin:$PATH"\n': "",
+            'eval "$(pyenv init -)"\n': "",
+            'eval "$(pyenv virtualenv-init -)"\n': "",
+        })
         run_cmd(cmd)
 
 
 def _add_subparser_pyenv(subparsers):
     add_subparser(
-        subparsers, "pyenv", func=pyenv, aliases=[],
+        subparsers,
+        "pyenv",
+        func=pyenv,
+        aliases=[],
     )
