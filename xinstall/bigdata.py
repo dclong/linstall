@@ -10,6 +10,7 @@ from .utils import (
     namespace,
     add_subparser,
     option_user,
+    option_pip,
 )
 
 
@@ -43,7 +44,8 @@ def spark(**kwargs):
         os.umask(mask)
         shutil.copy2(BASE_DIR / "spark/spark-defaults.conf", dir_ / "spark/conf/")
         logging.info(
-            f"Spark is configured to use {metastore_db} as the metastore database and {warehouse} as the Hive warehouse."
+            "Spark is configured to use %s as the metastore database and %s as the Hive warehouse.",
+            metastore_db, warehouse
         )
     if args.uninstall:
         cmd = f"rm -rf {dir_}/spark*"
@@ -104,8 +106,13 @@ def pyspark(**kwargs):
         run_cmd(cmd)
 
 
+def _pyspark_args(subparser):
+    option_user(subparser)
+    option_pip(subparser)
+
+
 def _add_subparser_pyspark(subparsers):
-    add_subparser(subparsers, "PySpark", func=pyspark, add_argument=option_user)
+    add_subparser(subparsers, "PySpark", func=pyspark, add_argument=_pyspark_args)
 
 
 def optimuspyspark(**kwargs):
