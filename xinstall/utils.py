@@ -15,7 +15,11 @@ import datetime
 import subprocess as sp
 import pwd
 import logging
-logging.basicConfig(format="%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s", level=logging.INFO)
+logging.basicConfig(
+    format=
+    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
+    level=logging.INFO
+)
 HOME = Path.home()
 USER = HOME.name
 GROUP = pwd.getpwnam(USER).pw_gid

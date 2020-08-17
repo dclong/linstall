@@ -12,7 +12,11 @@ from .utils import (
     option_user,
     option_pip,
 )
-logging.basicConfig(format="%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s", level=logging.INFO)
+logging.basicConfig(
+    format=
+    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
+    level=logging.INFO
+)
 
 
 def spark(**kwargs):
@@ -30,7 +34,7 @@ def spark(**kwargs):
         dir_.mkdir(exist_ok=True)
         spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
         url = f"{args.mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
-        logging.info("Downloading Spark from the URL: {}", url)
+        logging.info("Downloading Spark from the URL: %s", url)
         cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
                 && tar -zxf /tmp/{spark_hdp}.tgz -C {dir_} \
                 && ln -svf {dir_}/{spark_hdp} {spark_home} \
