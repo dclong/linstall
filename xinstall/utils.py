@@ -1,6 +1,6 @@
 """Helper functions.
 """
-from typing import Union, List, Sequence, Any, Sized, Dict, Callable
+from typing import Union, List, Tuple, Sequence, Any, Sized, Dict, Callable
 from argparse import Namespace
 import os
 import sys
@@ -380,7 +380,7 @@ def add_subparser(
 
 
 def update_file(
-    path: Path, regex: Dict[str, str] = None, exact: Dict[str, str] = None
+    path: Path, regex: List[Tuple[str, str]] = None, exact: List[Tuple[str, str]] = None
 ) -> None:
     """Update a text file using regular expression substitution.
 
@@ -392,9 +392,9 @@ def update_file(
         path = Path(path)
     text = path.read_text()
     if regex:
-        for pattern, replace in regex.items():
+        for pattern, replace in regex:
             text = re.sub(pattern, replace, text)
     if exact:
-        for pattern, replace in exact.items():
+        for pattern, replace in exact:
             text = text.replace(pattern, replace)
     path.write_text(text)
