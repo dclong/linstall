@@ -628,6 +628,11 @@ def pyenv(**kwargs):
             update_apt_source(prefix=args.prefix, seconds=1E-10)
             cmd = f"{args.prefix} apt-get install {args.yes_s} libffi-dev"
             run_cmd(cmd)
+        update_file(HOME / ".bashrc", regex={
+            "$": 'export PATH="/home/gitpod/.pyenv/bin:$PATH"\n',
+            "$": 'eval "$(pyenv init -)"\n',
+            "$": 'eval "$(pyenv virtualenv-init -)"\n',
+        })
     if args.uninstall:
         run_cmd(f"rm -rf {HOME}/.pyenv/")
         update_file(
