@@ -624,12 +624,15 @@ def pyenv(**kwargs):
         cmd = f"rm -rf {HOME}/.pyenv/ && curl -sSL https://pyenv.run | bash"
         run_cmd(cmd)
     if args.config:
-        update_file(HOME / ".bashrc", append=[
-            "\n\n# pyenv",
-            'export PATH="/home/gitpod/.pyenv/bin:$PATH"',
-            'eval "$(pyenv init -)"',
-            'eval "$(pyenv virtualenv-init -)"\n',
-        ])
+        update_file(
+            HOME / ".bashrc",
+            append=[
+                "\n\n# pyenv",
+                'export PATH="/home/gitpod/.pyenv/bin:$PATH"',
+                'eval "$(pyenv init -)"',
+                'eval "$(pyenv virtualenv-init -)"\n',
+            ]
+        )
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix, seconds=1E-10)
             cmd = f"{args.prefix} apt-get install {args.yes_s} libffi-dev"
