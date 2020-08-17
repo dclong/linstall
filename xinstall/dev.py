@@ -621,12 +621,12 @@ def pyenv(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = "curl -sSL https://pyenv.run | bash"
+        cmd = f"rm -rf {HOME}/.pyenv/ && curl -sSL https://pyenv.run | bash"
         run_cmd(cmd)
     if args.config:
         if is_ubuntu_debian():
-            update_apt_source(prefix=args.prefix)
-            cmd = f"{args.prefix} apt-get install libffi-dev"
+            update_apt_source(prefix=args.prefix, seconds=1E-10)
+            cmd = f"{args.prefix} apt-get install {args.yes_s} libffi-dev"
             run_cmd(cmd)
     if args.uninstall:
         run_cmd(f"rm -rf {HOME}/.pyenv/")
