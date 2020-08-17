@@ -1,6 +1,7 @@
 """Install IDE related tools.
 """
 from typing import Union
+import logging
 import os
 import shutil
 import re
@@ -9,6 +10,7 @@ from .utils import (
     update_apt_source, brew_install_safe, is_macos, run_cmd, namespace, add_subparser,
     intellij_idea_plugin, option_user, option_option, option_pip
 )
+logging.basicConfig(format="%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s", level=logging.INFO)
 
 
 def vim(**kwargs) -> None:

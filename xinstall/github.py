@@ -1,7 +1,9 @@
 """GitHub related utils.
 """
+import logging
 from .utils import option_pip, option_python, option_user, namespace, add_subparser, run_cmd
 from . import utils
+logging.basicConfig(format="%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s", level=logging.INFO)
 
 
 def install_py_github(**kwargs) -> None:
