@@ -9,6 +9,8 @@ from .utils import (
     run_cmd,
     namespace,
     add_subparser,
+    option_pip,
+    option_jupyter,
 )
 logging.basicConfig(
     format=
@@ -38,11 +40,11 @@ def itypescript(**kwargs) -> None:
     """
     args = namespace(kwargs)
     if args.install:
-        run_cmd("npm install -g --unsafe-perm itypescript")
-        run_cmd("its --ts-hide-undefined --install=global")
+        run_cmd(f"{args.prefix} npm install -g --unsafe-perm itypescript")
+        run_cmd(f"{args.prefix} its --ts-hide-undefined --install=global")
     if args.uninstall:
-        run_cmd("jupyter kernelspec uninstall typescript")
-        run_cmd("npm uninstall itypescript")
+        run_cmd(f"{args.prefix} jupyter kernelspec uninstall typescript")
+        run_cmd(f"{args.prefix} npm uninstall itypescript")
     if args.config:
         pass
 
@@ -56,8 +58,8 @@ def jupyterlab_lsp(**kwargs) -> None:
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = """{args.pip} install jupyter-lsp \
-                && {args.jupyter} labextension install @krassowski/jupyterlab-lsp \
+        cmd = f"""{args.pip} install jupyter-lsp \
+                && {args.prefix} {args.jupyter} labextension install @krassowski/jupyterlab-lsp \
                 && {args.pip} install python-language-server[all] pyls-mypy"""
         run_cmd(cmd)
     if args.config:
@@ -66,12 +68,18 @@ def jupyterlab_lsp(**kwargs) -> None:
         pass
 
 
+def _jupyterlab_lsp_args(subparser) -> None:
+    option_pip(subparser)
+    option_jupyter(subparser)
+
+
 def _add_subparser_jupyterlab_lsp(subparsers) -> None:
     add_subparser(
         subparsers,
         "jupyterlab-lsp",
         func=jupyterlab_lsp,
-        aliases=["jlab-lsp", "jlab_lsp"]
+        aliases=["jlab-lsp", "jlab_lsp"],
+        add_argument=_jupyterlab_lsp_args,
     )
 
 
@@ -81,16 +89,16 @@ def beakerx(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         run_cmd(f"{args.pip} install --user beakerx")
-        run_cmd("beakerx install")
-        run_cmd("jupyter labextension install @jupyter-widgets/jupyterlab-manager", )
-        run_cmd("jupyter labextension install beakerx-jupyterlab")
+        run_cmd(f"{args.prefix} beakerx install")
+        run_cmd(f"{args.prefix} jupyter labextension install @jupyter-widgets/jupyterlab-manager", )
+        run_cmd(f"{args.prefix} jupyter labextension install beakerx-jupyterlab")
     if args.uninstall:
-        run_cmd("jupyter labextension uninstall beakerx-jupyterlab")
-        run_cmd("jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager")
-        run_cmd("beakerx uninstall")
+        run_cmd(f"{args.prefix} jupyter labextension uninstall beakerx-jupyterlab")
+        run_cmd(f"{args.prefix} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager")
+        run_cmd(f"{args.prefix} beakerx uninstall")
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:
-        run_cmd(f"chown -R {USER}:{GROUP} {HOME}")
+        run_cmd(f"{args.prefix} chown -R {USER}:{GROUP} {HOME}")
 
 
 def _add_subparser_beakerx(subparsers) -> None:
@@ -101,26 +109,19 @@ def almond(**kwargs) -> None:
     """Install/uninstall/configure the Almond Scala kernel.
     """
     args = namespace(kwargs)
-    if args.almond_version is None:
-        args.almond_version = "0.4.0"
-    else:
+    if args.almond_version:
         args.install = True
-    if args.scala_version is None:
-        args.scala_version = "2.12.12"
-    else:
+        if not args.almond_version.startswith(":"):
+            args.almond_version = ":" + args.almond_version
+    if args.scala_version:
         args.install = True
+        args.scala_version = f"--scala {args.scala_version}"
     if args.install:
         coursier = BIN_DIR / "coursier"
-        almond_bin = BIN_DIR / "almond"
-        run_cmd(f"curl -L -o {coursier} https://git.io/coursier-cli")
-        run_cmd(f"chmod +x {coursier}")
+        run_cmd(f"curl -L -o {coursier} https://git.io/coursier-cli && chmod +x {coursier}")
         run_cmd(
-            f"""{coursier} bootstrap -f -r jitpack -i user \
-                -I user:sh.almond:scala-kernel-api_{args.scala_version}:{args.almond_version} \
-                -o {almond_bin} \
-                sh.almond:scala-kernel_{args.scala_version}:{args.almond_version}""",
+            f"{args.prefix} /usr/local/bin/coursier launch almond{args.almond_version} {args.scala_version} --quiet -- --install --global"
         )
-        run_cmd(f"{almond_bin} --install --global --force")
     if args.config:
         pass
 
@@ -130,15 +131,15 @@ def _almond_args(subparser) -> None:
         "-a",
         "--almond-version",
         dest="almond_version",
-        default=None,
-        help="the version (0.4.0 by default) of Almond to install."
+        default="",
+        help="The version (the latest supported by default) of Almond to install."
     )
     subparser.add_argument(
         "-s",
         "--scala-version",
         dest="scala_version",
-        default=None,
-        help="the version (2.12.8 by default) of Scala to install."
+        default="",
+        help="The version (the latest supported by default) of Scala to install."
     )
 
 
@@ -157,7 +158,7 @@ def evcxr_jupyter(**kwargs) -> None:
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"""apt-get install {args.yes_s} cmake cargo \
+        cmd = f"""{args.prefix} apt-get install {args.yes_s} cmake cargo \
             && cargo install --force evcxr_jupyter \
             && {HOME}/.cargo/bin/evcxr_jupyter --install"""
         run_cmd(cmd)

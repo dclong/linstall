@@ -2,6 +2,7 @@
 """
 import logging
 from argparse import ArgumentParser
+from .utils import USER
 from .ai import (
     _add_subparser_kaggle,
     _add_subparser_lightgbm,
@@ -101,6 +102,7 @@ logging.basicConfig(
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
     level=logging.INFO
 )
+PREFIX = "" if USER == "root" else "sudo"
 __version__ = "0.17.6"
 
 
@@ -125,7 +127,7 @@ def parse_args(args=None, namespace=None):
         description="Easy installation and configuration for Unix/Linux"
     )
     parser.add_argument(
-        "-l", "--level", dest="level", default="WARNING", help="The level of logging."
+        "-l", "--level", dest="level", default="INFO", help="The level of logging."
     )
     parser.add_argument(
         "-y",
@@ -133,6 +135,12 @@ def parse_args(args=None, namespace=None):
         dest="yes",
         action="store_true",
         help="Automatical yes (default no) to prompt questions."
+    )
+    parser.add_argument(
+        "--prefix",
+        dest="prefix",
+        default=PREFIX,
+        help="The prefix command (e.g., sudo) to use."
     )
     subparsers = parser.add_subparsers(dest="sub_cmd", help="Sub commands.")
     # ------------------------ command-line tools ----------------------------

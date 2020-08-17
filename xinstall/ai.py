@@ -210,7 +210,7 @@ def computer_vision(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_linux():
-            cmd = f"""apt-get install {args.yes_s} \
+            cmd = f"""{args.prefix} apt-get install {args.yes_s} \
                         libsm6 libxrender-dev libaec-dev \
                         libblosc-dev libbrotli-dev libghc-bzlib-dev libgif-dev \
                         libopenjp2-7-dev liblcms2-dev libjxr-dev liblz4-dev \

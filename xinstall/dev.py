@@ -6,6 +6,7 @@ from pathlib import Path
 from argparse import Namespace
 from .utils import (
     HOME,
+    USER,
     BASE_DIR,
     BIN_DIR,
     is_ubuntu_debian,
@@ -37,8 +38,8 @@ def openjdk8(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} openjdk-jdk-8 maven gradle", )
+            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} openjdk-jdk-8 maven gradle")
         if is_macos():
             cmd = "brew tap AdoptOpenJDK/openjdk && brew cask install adoptopenjdk8"
             run_cmd(cmd)
@@ -48,7 +49,7 @@ def openjdk8(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} openjdk-jdk-8 maven gradle", )
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} openjdk-jdk-8 maven gradle")
         if is_macos():
             run_cmd("brew cask uninstall adoptopenjdk8")
         if is_centos_series():
@@ -65,7 +66,7 @@ def sdkman(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        run_cmd("""curl -s https://get.sdkman.io | bash""")
+        run_cmd("curl -s https://get.sdkman.io | bash")
     if args.config:
         pass
     if args.uninstall:
@@ -146,22 +147,22 @@ def nodejs(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            cmd = f"""apt-get install {args.yes_s} nodejs npm"""
+            update_apt_source(prefix=args.prefix)
+            cmd = f"{args.prefix} apt-get install {args.yes_s} nodejs npm"
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["nodejs"])
         if is_centos_series():
-            run_cmd(f"yum install {args.yes_s} nodejs")
+            run_cmd(f"{args.prefix} yum install {args.yes_s} nodejs")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} nodejs")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} nodejs")
         if is_macos():
             run_cmd("brew uninstall nodejs")
         if is_centos_series():
-            run_cmd("yum remove nodejs")
+            run_cmd(f"{args.prefix} yum remove nodejs")
 
 
 def _add_subparser_nodejs(subparsers):
@@ -219,25 +220,27 @@ def python(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            cmd = f"apt-get install {args.yes_s} python3 python3-dev python3-pip python3-setuptools python3-venv"
+            update_apt_source(prefix=args.prefix)
+            cmd = f"""{args.prefix} apt-get install {args.yes_s} \
+                python3 python3-dev python3-pip python3-setuptools python3-venv"""
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["python3"])
         if is_centos_series():
-            run_cmd(f"yum install {args.yes_s} python3 python3-devel python3-pip", )
+            run_cmd(f"""{args.prefix} yum install {args.yes_s} \
+                python3 python3-devel python3-pip""")
             run_cmd(f"{args.pip} install {args.user_s} setuptools")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            cmd = f"""apt-get purge {args.yes_s} \
+            cmd = f"""{args.prefix} apt-get purge {args.yes_s} \
                 python3 python3-dev python3-setuptools python3-pip python3-venv"""
             run_cmd(cmd)
         if is_macos():
             run_cmd("brew uninstall python3")
         if is_centos_series():
-            run_cmd("yum remove python3")
+            run_cmd(f"{args.prefix} yum remove python3")
 
 
 def _python_args(subparser):
@@ -370,11 +373,11 @@ def rust(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            cmd = f"apt-get install {args.yes_s} cmake rustc cargo"
+            update_apt_source(prefix=args.prefix)
+            cmd = f"{args.prefix} apt-get install {args.yes_s} cmake rustc cargo"
             run_cmd(cmd)
         if is_centos_series():
-            cmd = f"yum install {args.yes_s} cmake rustc cargo"
+            cmd = f"{args.prefix} yum install {args.yes_s} cmake rustc cargo"
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["cmake", "rustc", "cargo"])
@@ -382,10 +385,10 @@ def rust(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            cmd = f"apt-get purge {args.yes_s} rustc cargo"
+            cmd = f"{args.prefix} apt-get purge {args.yes_s} rustc cargo"
             run_cmd(cmd)
         if is_centos_series():
-            run_cmd("yum remove rustc cargo")
+            run_cmd(f"{args.prefix} yum remove rustc cargo")
         if is_macos():
             cmd = "brew uninstall rustc cargo"
             run_cmd(cmd)
@@ -434,21 +437,21 @@ def git(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} git git-lfs")
+            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} git git-lfs")
         elif is_macos():
             brew_install_safe(["git", "git-lfs", "bash-completion@2"])
         elif is_centos_series():
-            run_cmd("yum install git")
+            run_cmd(f"{args.prefix} yum install git")
         run_cmd("git lfs install")
     if args.uninstall:
         run_cmd("git lfs uninstall")
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} git git-lfs")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} git git-lfs")
         elif is_macos():
             run_cmd("brew uninstall git git-lfs")
         elif is_centos_series():
-            run_cmd("yum remove git")
+            run_cmd(f"{args.prefix} yum remove git")
     if args.config:
         ssh_client(config=True)
         gitconfig = HOME / ".gitconfig"
@@ -519,21 +522,21 @@ def antlr(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} antlr4")
+            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} antlr4")
         elif is_macos():
             brew_install_safe(["antlr4"])
         elif is_centos_series():
-            run_cmd("yum install antlr")
+            run_cmd(f"{args.prefix} yum install antlr")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} antlr4")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} antlr4")
         elif is_macos():
             run_cmd("brew uninstall antlr4")
         elif is_centos_series():
-            run_cmd("yum remove antlr")
+            run_cmd(f"{args.prefix} yum remove antlr")
 
 
 def _add_subparser_antlr(subparsers):
@@ -587,12 +590,12 @@ def _add_subparser_deno(subparsers):
 def sphinx(**kwargs):
     args = namespace(kwargs)
     if args.install:
-        cmd = "{args.pip} install {args.user_s} sphinx sphinx-autodoc-typehints"
+        cmd = f"{args.pip} install {args.user_s} sphinx sphinx-autodoc-typehints"
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = "{args.pip} uninstall sphinx sphinx-autodoc-typehints"
+        cmd = f"{args.pip} uninstall sphinx sphinx-autodoc-typehints"
         run_cmd(cmd)
 
 
@@ -616,11 +619,11 @@ def pyenv(**kwargs):
         run_cmd(cmd)
     if args.config:
         if is_ubuntu_debian():
-            update_apt_source()
-            cmd = "apt-get install libffi-dev"
+            update_apt_source(prefix=args.prefix)
+            cmd = f"{args.prefix} apt-get install libffi-dev"
             run_cmd(cmd)
     if args.uninstall:
-        cmd = "rm -rf {HOME}/.pyenv/"
+        run_cmd(f"rm -rf {HOME}/.pyenv/")
         update_file(
             HOME / ".bashrc",
             exact={
@@ -629,7 +632,6 @@ def pyenv(**kwargs):
                 'eval "$(pyenv virtualenv-init -)"\n': "",
             }
         )
-        run_cmd(cmd)
 
 
 def _add_subparser_pyenv(subparsers):

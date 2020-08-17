@@ -36,8 +36,8 @@ def spark(**kwargs):
         url = f"{args.mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         logging.info("Downloading Spark from the URL: %s", url)
         cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
-                && tar -zxf /tmp/{spark_hdp}.tgz -C {dir_} \
-                && ln -svf {dir_}/{spark_hdp} {spark_home} \
+                && {args.prefix} tar -zxf /tmp/{spark_hdp}.tgz -C {dir_} \
+                && {args.prefix} ln -svf {dir_}/{spark_hdp} {spark_home} \
                 && rm /tmp/{spark_hdp}.tgz
             """
         run_cmd(cmd)
@@ -54,7 +54,7 @@ def spark(**kwargs):
             metastore_db, warehouse
         )
     if args.uninstall:
-        cmd = f"rm -rf {dir_}/spark*"
+        cmd = f"{args.prefix} rm -rf {dir_}/spark*"
         run_cmd(cmd)
 
 
