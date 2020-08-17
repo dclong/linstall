@@ -24,7 +24,11 @@ from .utils import (
     update_file,
 )
 from .web import ssh_client
-logging.basicConfig(level=20)
+logging.basicConfig(
+    format=
+    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
+    level=logging.INFO
+)
 
 
 def openjdk8(**kwargs):

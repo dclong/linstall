@@ -3,6 +3,7 @@
 import sys
 import tempfile
 from pathlib import Path
+import logging
 from .utils import (
     is_ubuntu_debian,
     is_linux,
@@ -10,6 +11,11 @@ from .utils import (
     run_cmd,
     namespace,
     add_subparser,
+)
+logging.basicConfig(
+    format=
+    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
+    level=logging.INFO
 )
 
 

@@ -96,7 +96,12 @@ from .desktop import (
     _add_subparser_lxqt,
     _add_subparser_pygetwindow,
 )
-__version__ = "0.17.5"
+logging.basicConfig(
+    format=
+    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
+    level=logging.INFO
+)
+__version__ = "0.17.6"
 
 
 def version(**kwargs):
