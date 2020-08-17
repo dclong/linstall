@@ -625,6 +625,7 @@ def pyenv(**kwargs):
         run_cmd(cmd)
     if args.config:
         update_file(HOME / ".bashrc", regex={
+            "$": "\n\n# pyenv\n",
             "$": 'export PATH="/home/gitpod/.pyenv/bin:$PATH"\n',
             "$": 'eval "$(pyenv init -)"\n',
             "$": 'eval "$(pyenv virtualenv-init -)"\n',
