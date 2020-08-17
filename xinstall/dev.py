@@ -451,7 +451,7 @@ def git(**kwargs) -> None:
         elif is_centos_series():
             run_cmd(f"{args.prefix} yum remove git")
     if args.config:
-        ssh_client(config=True)
+        ssh_client(**kwargs)
         gitconfig = HOME / ".gitconfig"
         # try to remove the file to avoid dead symbolic link problem
         remove_file_safe(gitconfig)
