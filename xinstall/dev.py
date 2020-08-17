@@ -275,14 +275,6 @@ def poetry(**kwargs):
         run_cmd(cmd)
     poetry_bin = HOME / ".poetry/bin/poetry"
     if args.config:
-        # symbolic link
-        desfile = BIN_DIR / "poetry"
-        try:
-            desfile.unlink()
-        except FileNotFoundError:
-            pass
-        desfile.symlink_to(poetry_bin)
-        logging.info("Symbolic link %s pointing to %s is created.", desfile, poetry_bin)
         # make poetry always create virtual environment in the root directory of the project
         run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
         logging.info(
