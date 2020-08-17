@@ -23,19 +23,19 @@ def vim(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} vim vim-nox")
+            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} vim vim-nox")
         elif is_macos():
             brew_install_safe(["vim"])
         elif is_centos_series():
-            run_cmd(f"yum install {args.yes_s} vim-enhanced")
+            run_cmd(f"{args.prefix} yum install {args.yes_s} vim-enhanced")
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} vim vim-nox")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} vim vim-nox")
         elif is_macos():
             run_cmd("brew uninstall vim")
         elif is_centos_series():
-            run_cmd("yum remove vim")
+            run_cmd(f"{args.prefix} yum remove vim")
     if args.config:
         pass
 
@@ -50,22 +50,22 @@ def neovim(**kwargs) -> None:
     args = namespace(kwargs)
     if args.ppa and is_ubuntu_debian():
         args.install = True
-        run_cmd("add-apt-repository -y ppa:neovim-ppa/stable")
-        update_apt_source()
+        run_cmd(f"{args.prefix} add-apt-repository -y ppa:neovim-ppa/stable")
     if args.install:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get install {args.yes_s} neovim")
+            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} neovim")
         elif is_macos():
             brew_install_safe(["neovim"])
         elif is_centos_series():
-            run_cmd("yum install neovim")
+            run_cmd(f"{args.prefix} yum install neovim")
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} neovim")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} neovim")
         elif is_macos():
             run_cmd("brew uninstall neovim")
         elif is_centos_series():
-            run_cmd("yum remove neovim")
+            run_cmd(f"{args.prefix} yum remove neovim")
     if args.config:
         pass
 
@@ -127,7 +127,7 @@ def spacevim(**kwargs) -> None:
             # npm install -g bash-language-server javascript-typescript-langserver
             run_cmd(cmd)
     if args.uninstall:
-        run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall", )
+        run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall")
     if args.config:
         _svim_gen_config()
     _svim_true_color(args.true_colors)
@@ -172,7 +172,7 @@ def bash_lsp(**kwargs) -> None:
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = "npm install -g bash-language-server"
+        cmd = f"{args.prefix} npm install -g bash-language-server"
         run_cmd(cmd)
     if args.config:
         _svim_gen_config()
@@ -185,7 +185,7 @@ def bash_lsp(**kwargs) -> None:
         with toml.open("w") as fout:
             fout.writelines(lines)
     if args.uninstall:
-        cmd = "npm uninstall bash-language-server"
+        cmd = f"{args.prefix} npm uninstall bash-language-server"
         run_cmd(cmd)
 
 
@@ -211,13 +211,13 @@ def intellij_idea(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
+            update_apt_source(prefix=args.prefix)
             des_dir = f"{LOCAL_DIR}/share/ide/idea"
             executable = f"{BIN_DIR}/idea"
             if USER == "root":
                 des_dir = "/opt/idea"
                 executable = "/opt/idea/bin/idea.sh"
-            cmd = f"""apt-get install -y ubuntu-make \
+            cmd = f"""{args.prefix} apt-get install -y ubuntu-make \
                 && umake ide idea {des_dir} \
                 && ln -s {des_dir}/bin/idea.sh {executable}"""
             run_cmd(cmd)
@@ -227,7 +227,7 @@ def intellij_idea(**kwargs) -> None:
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} intellij-idea-ce")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} intellij-idea-ce")
         elif is_macos():
             run_cmd("brew cask uninstall intellij-idea-ce")
         elif is_centos_series():
@@ -242,19 +242,19 @@ def visual_studio_code(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} vscode")
+            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} vscode")
         elif is_macos():
             run_cmd("brew cask install visual-studio-code")
         elif is_centos_series():
-            run_cmd("yum install vscode")
+            run_cmd(f"{args.prefix} yum install vscode")
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} vscode")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} vscode")
         elif is_macos():
             run_cmd("brew cask uninstall visual-studio-code")
         elif is_centos_series():
-            run_cmd("yum remove vscode")
+            run_cmd(f"{args.prefix} yum remove vscode")
     if args.config:
         src_file = f"{BASE_DIR}/vscode/settings.json"
         if not args.dst_dir:

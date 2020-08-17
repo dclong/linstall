@@ -4,7 +4,6 @@ from typing import Union, List, Sequence, Any, Sized, Dict, Callable
 from argparse import Namespace
 import os
 import sys
-import distro
 import json
 from pathlib import Path
 import urllib.request
@@ -15,6 +14,7 @@ import datetime
 import subprocess as sp
 import pwd
 import logging
+import distro
 logging.basicConfig(
     format=
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
@@ -28,9 +28,9 @@ BASE_DIR = FILE.parent / "data"
 LOCAL_DIR = HOME / ".local"
 BIN_DIR = LOCAL_DIR / "bin"
 BIN_DIR.mkdir(0o700, parents=True, exist_ok=True)
-
 DISTRO_ID = distro.id()
-SETTINGS_FILE = HOME / ".linstall.json"
+# settings of xinstall
+SETTINGS_FILE = HOME / ".xinstall.json"
 SETTINGS = {}
 if os.path.isfile(SETTINGS_FILE):
     with open(SETTINGS_FILE) as fin:
@@ -182,10 +182,11 @@ def to_bool(value: Any) -> bool:
     return False
 
 
-def update_apt_source(yes: bool = True, seconds: float = 3600 * 12):
+def update_apt_source(prefix: str = "", yes: str = "--yes", seconds: float = 3600 * 12):
     """Run apt-get update if necessary.
 
-    :param yes: If True, automatically yes to prompt questions.
+    :param prefix: The prefix command (e.g., sudo) to use.
+    :param yes: The yes flag (-y, --yes or an empty string).
     :param seconds: Do not run if this function has already been run `seconds` seconds ago.
     """
     fmt = "%Y-%m-%d %H:%M:%S.%f"
@@ -195,8 +196,7 @@ def update_apt_source(yes: bool = True, seconds: float = 3600 * 12):
     )
     now = datetime.datetime.now()
     if (now - time).seconds > seconds:
-        yes = "--yes" if yes else ""
-        run_cmd(f"apt-get update {yes}")
+        run_cmd(f"{prefix} apt-get update {yes}")
         SETTINGS[key] = now.strftime(fmt)
         with open(SETTINGS_FILE, "w") as fout:
             json.dump(SETTINGS, fout)

@@ -32,19 +32,19 @@ def coreutils(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} coreutils")
+            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} coreutils")
         elif is_macos():
             brew_install_safe("coreutils")
         elif is_centos_series():
-            run_cmd("yum install coreutils")
+            run_cmd(f"{args.prefix} yum install coreutils")
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} coreutils")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} coreutils")
         elif is_macos():
             run_cmd("brew uninstall coreutils")
         elif is_centos_series():
-            run_cmd("yum remove coreutils")
+            run_cmd(f"{args.prefix} yum remove coreutils")
     if args.config:
         if is_macos():
             cmd = """export PATH=/usr/local/opt/findutils/libexec/gnubin:"$PATH" \
@@ -64,23 +64,27 @@ def shell_utils(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
+            update_apt_source(prefix=args.prefix)
             run_cmd(
-                f"apt-get install {args.yes_s} bash-completion command-not-found man-db",
+                f"{args.prefix} apt-get install {args.yes_s} bash-completion command-not-found man-db",
             )
         elif is_macos():
             brew_install_safe(["bash-completion@2", "man-db"])
         elif is_centos_series():
-            run_cmd("yum install bash-completion command-not-found man-db")
+            run_cmd(
+                f"{args.prefix} yum install bash-completion command-not-found man-db"
+            )
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f"apt-get purge {args.yes_s} bash-completion command-not-found man-db",
+                f"{args.prefix} apt-get purge {args.yes_s} bash-completion command-not-found man-db",
             )
         elif is_macos():
             run_cmd("brew uninstall bash-completion man-db")
         elif is_centos_series():
-            run_cmd("yum remove bash-completion command-not-found man-db", )
+            run_cmd(
+                f"{args.prefix} yum remove bash-completion command-not-found man-db"
+            )
     if args.config:
         pass
 
@@ -101,7 +105,7 @@ def change_shell(**kwargs) -> None:
     if is_linux():
         pass
     elif is_macos():
-        run_cmd(f"chsh -s {args.shell}")
+        run_cmd(f"{args.prefix} chsh -s {args.shell}")
 
 
 def _change_shell_args(subparser) -> None:
@@ -141,13 +145,15 @@ def homebrew(**kwargs) -> None:
     if args.dep:
         args.install = True
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} build-essential curl file git", )
+            update_apt_source(prefix=args.prefix)
+            run_cmd(
+                f"{args.prefix} apt-get install {args.yes_s} build-essential curl file git"
+            )
         elif is_centos_series():
-            run_cmd("yum groupinstall 'Development Tools'")
-            run_cmd("yum install curl file git")
+            run_cmd(f"{args.prefix} yum groupinstall 'Development Tools'")
+            run_cmd(f"{args.prefix} yum install curl file git")
             if is_fedora():
-                run_cmd("yum install libxcrypt-compat")
+                run_cmd(f"{args.prefix} yum install libxcrypt-compat")
     cmd_brew = 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'
     if args.install:
         run_cmd(cmd_brew)
@@ -191,8 +197,7 @@ def hyper(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            #!apt-get install {args.yes_s} hyper
+            update_apt_source(prefix=args.prefix)
         elif is_macos():
             run_cmd("brew cask install hyper")
         elif is_centos_series():
@@ -298,21 +303,21 @@ def bash_completion(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} bash-completion", )
+            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} bash-completion")
         elif is_macos():
             brew_install_safe(["bash-completion@2"])
         elif is_centos_series():
-            run_cmd("yum install bash-completion")
+            run_cmd(f"{args.prefix} yum install bash-completion")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd("apt-get purge bash-completion")
+            run_cmd(f"{args.prefix} apt-get purge bash-completion")
         elif is_macos():
             run_cmd("brew uninstall bash-completion")
         elif is_centos_series():
-            run_cmd("yum remove bash-completion")
+            run_cmd(f"{args.prefix} yum remove bash-completion")
 
 
 def _add_subparser_bash_complete(subparsers) -> None:
@@ -356,25 +361,25 @@ def osquery(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            cmd = f"""apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
-                    && add-apt-repository "deb [arch=amd64] https://pkg.osquery.io/deb deb main" \
-                    && apt-get update {args.yes_s} \
-                    && apt-get {args.yes_s} install osquery
+            update_apt_source(prefix=args.prefix)
+            cmd = f"""{args.prefix} apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
+                    && {args.prefix} add-apt-repository "deb [arch=amd64] https://pkg.osquery.io/deb deb main" \
+                    && {args.prefix} apt-get {args.yes_s} install osquery
                 """
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(["osquery"])
         elif is_centos_series():
-            run_cmd("yum install osquery")
+            run_cmd(f"{args.prefix} yum install osquery")
     if args.config:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} osquery")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} osquery")
         elif is_macos():
             run_cmd("brew uninstall osquery")
         elif is_centos_series():
-            run_cmd("yum remove osquery")
+            run_cmd(f"{args.prefix} yum remove osquery")
 
 
 def _add_subparser_osquery(subparsers) -> None:
@@ -388,15 +393,16 @@ def wajig(**kwargs) -> None:
     if not is_ubuntu_debian():
         return
     if args.install:
-        update_apt_source()
-        run_cmd(f"apt-get install {args.yes_s} wajig")
+        update_apt_source(prefix=args.prefix)
+        run_cmd(f"{args.prefix} apt-get install {args.yes_s} wajig")
     if args.config:
         pass
     if args.proxy:
-        cmd = f"""echo '\nAcquire::http::Proxy "{args.proxy}";\nAcquire::https::Proxy "{args.proxy}";' | tee -a /etc/apt/apt.conf"""
+        cmd = f"""echo '\nAcquire::http::Proxy "{args.proxy}";\nAcquire::https::Proxy "{args.proxy}";' \
+            | {args.prefix} tee -a /etc/apt/apt.conf"""
         run_cmd(cmd)
     if args.uninstall:
-        run_cmd(f"apt-get purge {args.yes_s} wajig")
+        run_cmd(f"{args.prefix} apt-get purge {args.yes_s} wajig")
 
 
 def _wajig_args(subparser) -> None:

@@ -33,8 +33,10 @@ def ssh_server(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} openssh-server fail2ban", )
+            update_apt_source(prefix=args.prefix)
+            run_cmd(
+                f"{args.prefix} apt-get install {args.yes_s} openssh-server fail2ban"
+            )
         elif is_macos():
             pass
         elif is_centos_series():
@@ -43,7 +45,7 @@ def ssh_server(**kwargs) -> None:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} openssh-server fail2ban", )
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} openssh-server fail2ban")
         elif is_macos():
             pass
         elif is_centos_series():
@@ -76,7 +78,7 @@ def ssh_client(**kwargs) -> None:
         shutil.copy2(src, des)
         logging.info("%s is copied to %s.", ssh_src, ssh_dst)
         # file permissions
-        cmd = f"chown -R {USER}:{GROUP} {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
+        cmd = f"{args.prefix} chown -R {USER}:{GROUP} {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
         run_cmd(cmd)
         logging.info("The permissions of ~/.ssh and its contents are corrected set.")
 
@@ -92,14 +94,14 @@ def proxychains(**kwargs) -> None:
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            cmd = f"""apt-get install {args.yes_s} proxychains4 \
+            update_apt_source(prefix=args.prefix)
+            cmd = f"""{args.prefix} apt-get install {args.yes_s} proxychains4 \
                     && ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(["proxychains-ng"])
         elif is_centos_series():
-            run_cmd("yum install proxychains")
+            run_cmd(f"{args.prefix} yum install proxychains")
     if args.config:
         print("Configuring proxychains ...")
         src_file = BASE_DIR / "proxychains/proxychains.conf"
@@ -109,11 +111,11 @@ def proxychains(**kwargs) -> None:
         logging.info("%s is copied to the directory %s.", src_file, des_dir)
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd("apt-get purge proxychains4")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} proxychains4")
         elif is_macos():
             run_cmd("brew uninstall proxychains-ng")
         elif is_centos_series():
-            run_cmd("yum remove proxychains")
+            run_cmd(f"{args.prefix} yum remove proxychains")
 
 
 def _add_subparser_proxychains(subparsers):
@@ -128,8 +130,8 @@ def dryscrape(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            cmd = f"""apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
+            update_apt_source(prefix=args.prefix)
+            cmd = f"""{args.pefix} apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
                 && {args.pip} install --user dryscrape
                 """
             run_cmd(cmd)
@@ -191,8 +193,8 @@ def download_tools(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            run_cmd(f"apt-get install {args.yes_s} wget curl aria2", )
+            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} wget curl aria2", )
         elif is_macos():
             brew_install_safe(["wget", "curl", "aria2"])
         elif is_centos_series():
@@ -201,7 +203,7 @@ def download_tools(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"apt-get purge {args.yes_s} wget curl aria2")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} wget curl aria2")
         elif is_macos():
             run_cmd("brew uninstall wget curl aria2")
         elif is_centos_series():

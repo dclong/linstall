@@ -63,8 +63,8 @@ def lxqt(**kwargs):
     args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source()
-            cmd = "apt-get install lxqt"
+            update_apt_source(prefix=args.prefix)
+            cmd = f"{args.prefix} apt-get install lxqt"
             run_cmd(cmd)
     if args.config:
         pass
