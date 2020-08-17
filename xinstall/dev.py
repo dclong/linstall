@@ -628,7 +628,7 @@ def pyenv(**kwargs):
             HOME / ".bashrc",
             append=[
                 "\n\n# pyenv",
-                'export PATH="/home/gitpod/.pyenv/bin:$PATH"',
+                'export PATH="$HOME/.pyenv/bin:$PATH"',
                 'eval "$(pyenv init -)"',
                 'eval "$(pyenv virtualenv-init -)"\n',
             ]
