@@ -624,11 +624,11 @@ def pyenv(**kwargs):
         cmd = f"rm -rf {HOME}/.pyenv/ && curl -sSL https://pyenv.run | bash"
         run_cmd(cmd)
     if args.config:
-        update_file(HOME / ".bashrc", regex=[
-            ("$", "\n\n# pyenv\n"),
-            ("$", 'export PATH="/home/gitpod/.pyenv/bin:$PATH"\n'),
-            ("$", 'eval "$(pyenv init -)"\n'),
-            ("$", 'eval "$(pyenv virtualenv-init -)"\n'),
+        update_file(HOME / ".bashrc", append=[
+            "\n\n# pyenv",
+            'export PATH="/home/gitpod/.pyenv/bin:$PATH"',
+            'eval "$(pyenv init -)"',
+            'eval "$(pyenv virtualenv-init -)"\n',
         ])
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix, seconds=1E-10)
