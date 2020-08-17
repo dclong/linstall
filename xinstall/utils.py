@@ -380,7 +380,9 @@ def add_subparser(
 
 
 def update_file(
-    path: Path, regex: List[Tuple[str, str]] = None, exact: List[Tuple[str, str]] = None,
+    path: Path,
+    regex: List[Tuple[str, str]] = None,
+    exact: List[Tuple[str, str]] = None,
     append: Union[str, Iterable[str]] = None,
 ) -> None:
     """Update a text file using regular expression substitution.
