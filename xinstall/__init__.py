@@ -1,7 +1,6 @@
 from . import ai
 from . import virtualization
 from . import dev
-from . import github_release
 from . import github
 from . import ide
 from . import jupyter
