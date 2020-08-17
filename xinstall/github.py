@@ -71,6 +71,7 @@ def xinstall(**kwargs) -> None:
 
 
 def _xinstall_args(subparser) -> None:
+    option_pip(subparser)
     option_user(subparser)
 
 
