@@ -17,7 +17,7 @@ sudo pip3 install -U git+https://github.com/dclong/xinstall@master
 
 2. Update xinstall.
 
-        sudo xinstall xinstall -ic
+        xinstall xinstall -ic
         
 2. Below is an example of install SpaceVim and configure it.
 
