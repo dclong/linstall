@@ -39,7 +39,9 @@ def openjdk8(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            run_cmd(f"{args.prefix} apt-get install {args.yes_s} openjdk-jdk-8 maven gradle")
+            run_cmd(
+                f"{args.prefix} apt-get install {args.yes_s} openjdk-jdk-8 maven gradle"
+            )
         if is_macos():
             cmd = "brew tap AdoptOpenJDK/openjdk && brew cask install adoptopenjdk8"
             run_cmd(cmd)
@@ -49,7 +51,9 @@ def openjdk8(**kwargs):
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} openjdk-jdk-8 maven gradle")
+            run_cmd(
+                f"{args.prefix} apt-get purge {args.yes_s} openjdk-jdk-8 maven gradle"
+            )
         if is_macos():
             run_cmd("brew cask uninstall adoptopenjdk8")
         if is_centos_series():
@@ -227,8 +231,10 @@ def python(**kwargs):
         if is_macos():
             brew_install_safe(["python3"])
         if is_centos_series():
-            run_cmd(f"""{args.prefix} yum install {args.yes_s} \
-                python3 python3-devel python3-pip""")
+            run_cmd(
+                f"""{args.prefix} yum install {args.yes_s} \
+                python3 python3-devel python3-pip"""
+            )
             run_cmd(f"{args.pip} install {args.user_s} setuptools")
     if args.config:
         pass

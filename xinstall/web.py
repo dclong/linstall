@@ -34,7 +34,9 @@ def ssh_server(**kwargs) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            run_cmd(f"{args.prefix} apt-get install {args.yes_s} openssh-server fail2ban", )
+            run_cmd(
+                f"{args.prefix} apt-get install {args.yes_s} openssh-server fail2ban"
+            )
         elif is_macos():
             pass
         elif is_centos_series():
@@ -43,7 +45,7 @@ def ssh_server(**kwargs) -> None:
         pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} openssh-server fail2ban", )
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} openssh-server fail2ban")
         elif is_macos():
             pass
         elif is_centos_series():

@@ -103,7 +103,7 @@ logging.basicConfig(
     level=logging.INFO
 )
 PREFIX = "" if USER == "root" else "sudo"
-__version__ = "0.17.6"
+__version__ = "0.18.0"
 
 
 def version(**kwargs):

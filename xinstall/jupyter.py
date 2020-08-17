@@ -90,11 +90,15 @@ def beakerx(**kwargs) -> None:
     if args.install:
         run_cmd(f"{args.pip} install --user beakerx")
         run_cmd(f"{args.prefix} beakerx install")
-        run_cmd(f"{args.prefix} jupyter labextension install @jupyter-widgets/jupyterlab-manager", )
+        run_cmd(
+            f"{args.prefix} jupyter labextension install @jupyter-widgets/jupyterlab-manager",
+        )
         run_cmd(f"{args.prefix} jupyter labextension install beakerx-jupyterlab")
     if args.uninstall:
         run_cmd(f"{args.prefix} jupyter labextension uninstall beakerx-jupyterlab")
-        run_cmd(f"{args.prefix} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager")
+        run_cmd(
+            f"{args.prefix} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager"
+        )
         run_cmd(f"{args.prefix} beakerx uninstall")
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:
@@ -118,7 +122,9 @@ def almond(**kwargs) -> None:
         args.scala_version = f"--scala {args.scala_version}"
     if args.install:
         coursier = BIN_DIR / "coursier"
-        run_cmd(f"curl -L -o {coursier} https://git.io/coursier-cli && chmod +x {coursier}")
+        run_cmd(
+            f"curl -L -o {coursier} https://git.io/coursier-cli && chmod +x {coursier}"
+        )
         run_cmd(
             f"{args.prefix} /usr/local/bin/coursier launch almond{args.almond_version} {args.scala_version} --quiet -- --install --global"
         )

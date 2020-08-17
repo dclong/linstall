@@ -53,7 +53,9 @@ def docker(**kwargs):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            run_cmd(f"{args.prefix} apt-get install {args.yes_s} docker.io docker-compose")
+            run_cmd(
+                f"{args.prefix} apt-get install {args.yes_s} docker.io docker-compose"
+            )
         elif is_macos():
             brew_install_safe(
                 [

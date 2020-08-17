@@ -71,7 +71,9 @@ def shell_utils(**kwargs) -> None:
         elif is_macos():
             brew_install_safe(["bash-completion@2", "man-db"])
         elif is_centos_series():
-            run_cmd(f"{args.prefix} yum install bash-completion command-not-found man-db")
+            run_cmd(
+                f"{args.prefix} yum install bash-completion command-not-found man-db"
+            )
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
@@ -80,7 +82,9 @@ def shell_utils(**kwargs) -> None:
         elif is_macos():
             run_cmd("brew uninstall bash-completion man-db")
         elif is_centos_series():
-            run_cmd(f"{args.prefix} yum remove bash-completion command-not-found man-db")
+            run_cmd(
+                f"{args.prefix} yum remove bash-completion command-not-found man-db"
+            )
     if args.config:
         pass
 
@@ -142,7 +146,9 @@ def homebrew(**kwargs) -> None:
         args.install = True
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            run_cmd(f"{args.prefix} apt-get install {args.yes_s} build-essential curl file git")
+            run_cmd(
+                f"{args.prefix} apt-get install {args.yes_s} build-essential curl file git"
+            )
         elif is_centos_series():
             run_cmd(f"{args.prefix} yum groupinstall 'Development Tools'")
             run_cmd(f"{args.prefix} yum install curl file git")
