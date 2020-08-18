@@ -384,12 +384,15 @@ def update_file(
     regex: List[Tuple[str, str]] = None,
     exact: List[Tuple[str, str]] = None,
     append: Union[str, Iterable[str]] = None,
+    exist_skip: bool = True,
 ) -> None:
     """Update a text file using regular expression substitution.
-
-    :param regex: A dict containing regular expression patterns
+    :param regex: A list of tuples containing regular expression patterns
     and the corresponding replacement text.
-    :param exact: A dict containing exact patterns and the corresponding replacement text.
+    :param exact: A list of tuples containing exact patterns and the corresponding replacement text.
+    :param append: A string of a list of lines to append.
+    When append is a list of lines, "\n" is automatically added to each line.
+    :param exist_skip: Skip appending if already exists.
     """
     if isinstance(path, str):
         path = Path(path)
@@ -403,5 +406,6 @@ def update_file(
     if append:
         if not isinstance(append, str):
             append = "\n".join(append)
-        text += append
+        if not exist_skip or append not in text:
+            text += append
     path.write_text(text)
