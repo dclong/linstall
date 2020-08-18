@@ -29,15 +29,14 @@ def spark(**kwargs):
     """
     args = namespace(kwargs)
     dir_ = Path(args.location)
-    spark_home = dir_ / "spark"
+    spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
+    spark_home = dir_ / spark_hdp
     if args.install:
         dir_.mkdir(exist_ok=True)
-        spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
         url = f"{args.mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         logging.info("Downloading Spark from the URL: %s", url)
         cmd = f"""curl {url} -o /tmp/{spark_hdp}.tgz \
                 && {args.prefix} tar -zxf /tmp/{spark_hdp}.tgz -C {dir_} \
-                && {args.prefix} ln -svf {dir_}/{spark_hdp} {spark_home} \
                 && rm /tmp/{spark_hdp}.tgz
             """
         run_cmd(cmd)
