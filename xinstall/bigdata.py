@@ -47,13 +47,13 @@ def spark(**kwargs):
         warehouse = spark_home / "warehouse"
         warehouse.mkdir(parents=True, exist_ok=True)
         os.umask(mask)
-        shutil.copy2(BASE_DIR / "spark/spark-defaults.conf", dir_ / "spark/conf/")
+        shutil.copy2(BASE_DIR / "spark/spark-defaults.conf", spark_home / "conf")
         logging.info(
             "Spark is configured to use %s as the metastore database and %s as the Hive warehouse.",
             metastore_db, warehouse
         )
     if args.uninstall:
-        cmd = f"{args.prefix} rm -rf {dir_}/spark*"
+        cmd = f"{args.prefix} rm -rf {spark_home}"
         run_cmd(cmd)
 
 
