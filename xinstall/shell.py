@@ -122,7 +122,7 @@ def _add_subparser_change_shell(subparsers) -> None:
     add_subparser(
         subparsers,
         "change shell",
-        func="change_shell",
+        func=change_shell,
         aliases=["chsh", "cs"],
         add_argument=_change_shell_args
     )
@@ -185,7 +185,7 @@ def _add_subparser_homebrew(subparsers) -> None:
     add_subparser(
         subparsers,
         "Homebrew",
-        func="homebrew",
+        func=homebrew,
         aliases=["brew"],
         add_argument=_homebrew_args
     )
