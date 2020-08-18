@@ -18,3 +18,4 @@ dist/
 *.egg-info/
 doc*/_build/
 *.prof
+core
