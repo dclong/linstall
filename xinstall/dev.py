@@ -613,9 +613,11 @@ def pyenv(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
+        logging.info("Installing pyenv ...")
         cmd = f"rm -rf {HOME}/.pyenv/ && curl -sSL https://pyenv.run | bash"
         run_cmd(cmd)
         if is_ubuntu_debian():
+            logging.info("Installing libffi-dev (required to build Python 3.7) ...")
             update_apt_source(prefix=args.prefix, seconds=1E-10)
             cmd = f"{args.prefix} apt-get install {args.yes_s} libffi-dev"
             run_cmd(cmd)
