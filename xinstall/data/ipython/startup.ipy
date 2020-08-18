@@ -149,10 +149,10 @@ symlink_blog()
 # -------------------------------------------------------------------------
 # use dict to dedup while keep the original order!!!
 os.environ["PATH"] = ":".join({str(path): None for path in
-    [HOME / ".pyenv/shims"] + \
     list(HOME.glob(".*/bin")) + \
     list(HOME.glob("Library/Python/3.*/bin")) + \
     list(Path("/").glob("apache/hadoop/bin")) + \
-    os.environ["PATH"].split(":")
+    os.environ["PATH"].split(":") + \
+    [HOME / ".pyenv/shims"]
 })
 %rehashx
