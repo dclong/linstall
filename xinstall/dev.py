@@ -275,14 +275,6 @@ def poetry(**kwargs):
         run_cmd(cmd)
     poetry_bin = HOME / ".poetry/bin/poetry"
     if args.config:
-        # symbolic link
-        desfile = BIN_DIR / "poetry"
-        try:
-            desfile.unlink()
-        except FileNotFoundError:
-            pass
-        desfile.symlink_to(poetry_bin)
-        logging.info("Symbolic link %s pointing to %s is created.", desfile, poetry_bin)
         # make poetry always create virtual environment in the root directory of the project
         run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
         logging.info(
@@ -459,7 +451,7 @@ def git(**kwargs) -> None:
         elif is_centos_series():
             run_cmd(f"{args.prefix} yum remove git")
     if args.config:
-        ssh_client(config=True)
+        ssh_client(**kwargs)
         gitconfig = HOME / ".gitconfig"
         # try to remove the file to avoid dead symbolic link problem
         remove_file_safe(gitconfig)
@@ -623,6 +615,10 @@ def pyenv(**kwargs):
     if args.install:
         cmd = f"rm -rf {HOME}/.pyenv/ && curl -sSL https://pyenv.run | bash"
         run_cmd(cmd)
+        if is_ubuntu_debian():
+            update_apt_source(prefix=args.prefix, seconds=1E-10)
+            cmd = f"{args.prefix} apt-get install {args.yes_s} libffi-dev"
+            run_cmd(cmd)
     if args.config:
         update_file(
             HOME / ".bashrc",
@@ -633,10 +629,6 @@ def pyenv(**kwargs):
                 'eval "$(pyenv virtualenv-init -)"\n',
             ]
         )
-        if is_ubuntu_debian():
-            update_apt_source(prefix=args.prefix, seconds=1E-10)
-            cmd = f"{args.prefix} apt-get install {args.yes_s} libffi-dev"
-            run_cmd(cmd)
     if args.uninstall:
         run_cmd(f"rm -rf {HOME}/.pyenv/")
         update_file(
