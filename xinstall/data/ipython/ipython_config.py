@@ -7,7 +7,7 @@ c.AliasManager.user_aliases = [
     ("cpi", "cp -ir"),
     (
         "rm.ipynb_checkpoints",
-        "find . -type d -name .ipynb_checkpoints -print0 | xargs -0 rm -rf"
+        "find . -type d -name '*.ipynb_checkpoints*' -print0 | xargs -0 rm -rf"
     ),
     ("rsync.progress", "rsync -avh --info=progress2"),
     ("rsync.progress.pc", "proxychains rsync -avh --info=progress2"),
@@ -159,7 +159,8 @@ c.AliasManager.user_aliases = [
     ("find.header", "find . -type f -iname '*.hpp' -o -iname '*.h'"),
     ("find.html", "find . -type f -iname '*.html'"),
     ("find.hidden", "find . -name '.[^/]*'"),
-    ("find.ipynb", "find . -type f -iname '*.ipynb'"),
+    ("find.ipynb", "find . -type f -iname '*.ipynb' -not -path '*.ipynb_checkpoints*'"),
+    ("find.ipynb_checkpoints", "find . -type f -iname '*.ipynb_checkpoints*'"),
     ("find.inf", "find . -name '*.inf'"),
     ("find.jpg", "find . -name '*.jpg'"),
     ("find.jpeg", "find . -name '*.jpeg'"),
