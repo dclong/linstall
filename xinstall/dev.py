@@ -113,7 +113,7 @@ def _add_subparser_yapf(subparsers):
 
 
 def pylint(**kwargs):
-    """Install pylint.
+    """Install and configure pylint.
     """
     args = namespace(kwargs)
     if args.install:
@@ -142,6 +142,39 @@ def _pylint_args(subparser):
 def _add_subparser_pylint(subparsers):
     add_subparser(
         subparsers, "pylint", func=pylint, aliases=[], add_argument=_pylint_args
+    )
+
+
+def pytype(**kwargs):
+    """Install and configure pytype.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        run_cmd(f"{args.pip} install {args.user_s} pytype")
+    if args.config:
+        src_file = BASE_DIR / "pytype/setup.cfg"
+        des_file = args.dst_dir / "setup.cfg"
+        shutil.copy2(src_file, des_file)
+        logging.info("%s is copied to %s.", src_file, des_file)
+    if args.uninstall:
+        run_cmd(f"{args.pip} uninstall pytype")
+
+
+def _pytype_args(subparser):
+    subparser.add_argument(
+        "-d",
+        "--dest-dir",
+        dest="dst_dir",
+        type=Path,
+        default=Path(),
+        help="The destination directory to copy the pytype configuration file to.",
+    )
+    option_user(subparser)
+
+
+def _add_subparser_pytype(subparsers):
+    add_subparser(
+        subparsers, "pytype", func=pytype, aliases=[], add_argument=_pytype_args
     )
 
 
