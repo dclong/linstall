@@ -28,7 +28,7 @@ def spark(**kwargs):
     :param version:
     """
     args = namespace(kwargs)
-    dir_ = Path(args.location)
+    dir_ = args.location.resolve()
     spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
     spark_home = dir_ / spark_hdp
     if args.install:
@@ -86,6 +86,7 @@ def _spark_args(subparser):
         "--loc",
         "--location",
         dest="location",
+        type=Path,
         default="/opt",
         help="The location to install Spark to."
     )
