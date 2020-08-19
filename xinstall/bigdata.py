@@ -21,30 +21,30 @@ logging.basicConfig(
 
 def _download_spark(args: Namespace, spark_hdp: str):
     mirrors = args.mirrors + (
-            "http://apache.mirrors.hoobly.com/spark",
-            "http://apache.spinellicreations.com/spark",
-            "http://mirror.cc.columbia.edu/pub/software/apache/spark",
-            "http://mirror.cogentco.com/pub/apache/spark",
-            "http://mirror.metrocast.net/apache/spark",
-            "http://mirrors.advancedhosters.com/apache/spark",
-            "http://mirrors.ibiblio.org/apache/spark",
-            "http://apache.claz.org/spark",
-            "http://apache.osuosl.org/spark",
-            "http://ftp.wayne.edu/apache/spark",
-            "http://mirror.olnevhost.net/pub/apache/spark",
-            "http://mirrors.gigenet.com/apache/spark",
-            "http://mirrors.koehn.com/apache/spark",
-            "http://mirrors.ocf.berkeley.edu/apache/spark",
-            "http://mirrors.sonic.net/apache/spark",
-            "http://us.mirrors.quenda.co/apache/spark",
-            "http://archive.apache.org/dist/spark",
+        "http://apache.mirrors.hoobly.com/spark",
+        "http://apache.spinellicreations.com/spark",
+        "http://mirror.cc.columbia.edu/pub/software/apache/spark",
+        "http://mirror.cogentco.com/pub/apache/spark",
+        "http://mirror.metrocast.net/apache/spark",
+        "http://mirrors.advancedhosters.com/apache/spark",
+        "http://mirrors.ibiblio.org/apache/spark",
+        "http://apache.claz.org/spark",
+        "http://apache.osuosl.org/spark",
+        "http://ftp.wayne.edu/apache/spark",
+        "http://mirror.olnevhost.net/pub/apache/spark",
+        "http://mirrors.gigenet.com/apache/spark",
+        "http://mirrors.koehn.com/apache/spark",
+        "http://mirrors.ocf.berkeley.edu/apache/spark",
+        "http://mirrors.sonic.net/apache/spark",
+        "http://us.mirrors.quenda.co/apache/spark",
+        "http://archive.apache.org/dist/spark",
     )
     desfile = f"/tmp/{spark_hdp}.tgz"
     for mirror in mirrors:
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         try:
             logging.info("Downloading Spark from: %s", url)
-            urllib.urlretrieve(url, desfile)
+            urllib.urlretrieve(url, spark_hdp)
         except:
             logging.info("Failed to download Spark from: %s", url)
 
@@ -63,7 +63,7 @@ def spark(**kwargs):
     spark_home = dir_ / spark_hdp
     if args.install:
         dir_.mkdir(exist_ok=True)
-        _download_spark(args)
+        _download_spark(args, desfile)
         cmd = f"""{args.prefix} tar -zxf /tmp/{spark_hdp}.tgz -C {dir_} \
                 && rm /tmp/{spark_hdp}.tgz
             """
