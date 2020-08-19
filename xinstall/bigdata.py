@@ -47,7 +47,10 @@ def spark(**kwargs):
         warehouse = spark_home / "warehouse"
         warehouse.mkdir(parents=True, exist_ok=True)
         os.umask(mask)
-        shutil.copy2(BASE_DIR / "spark/spark-defaults.conf", spark_home / "conf")
+        (spark_home / "conf/spark-defaults.conf").write_text(
+            f"spark.driver.extraJavaOptions -Dderby.system.home={spark_home}/metastore_db\n"
+            f"spark.sql.warehouse.dir {spark_home}/warehouse"
+        )
         logging.info(
             "Spark is configured to use %s as the metastore database and %s as the Hive warehouse.",
             metastore_db, warehouse
