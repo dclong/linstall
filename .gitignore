@@ -17,4 +17,4 @@ dist/
 *.egg-info/
 .theia
 doc*/_build/
-core.Microsoft.*
+core.*
