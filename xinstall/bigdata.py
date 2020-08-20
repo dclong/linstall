@@ -7,6 +7,7 @@ from urllib.request import urlretrieve
 from argparse import Namespace
 from tqdm import tqdm
 from .utils import (
+    BASE_DIR,
     run_cmd,
     namespace,
     add_subparser,
@@ -90,11 +91,8 @@ def spark(**kwargs):
         run_cmd(f"{args.prefix} mkdir -p {warehouse} && "
             f"{args.prefix} chmod -R 777 {warehouse}")
         # spark-defaults.conf
-        conf = (
-            f"spark.driver.extraJavaOptions -Dderby.system.home={spark_home}/metastore_db\n"
-            f"spark.sql.warehouse.dir {spark_home}/warehouse"
-        )
-        run_cmd(f"{args.prefix} echo '{conf}' > {spark_home / 'conf/spark-defaults.conf'}")
+        conf = (BASE_DIR / "spark/spark-defaults.conf").read_text().replace("$SPARK_HOME", spark_home)
+        run_cmd(f"echo '{conf}' | {args.prefix} tee {spark_home / 'conf/spark-defaults.conf'} > /dev/null")
         logging.info(
             "Spark is configured to use %s as the metastore database and %s as the Hive warehouse.",
             metastore_db, warehouse
