@@ -96,7 +96,7 @@ def spark(**kwargs):
         )
         # spark-defaults.conf
         conf = (BASE_DIR / "spark/spark-defaults.conf"
-               ).read_text().replace("$SPARK_HOME", spark_home)
+               ).read_text().replace("$SPARK_HOME", str(spark_home))
         run_cmd(
             f"echo '{conf}' | {args.prefix} tee {spark_home / 'conf/spark-defaults.conf'} > /dev/null"
         )
