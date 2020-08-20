@@ -5,6 +5,7 @@ import logging
 from pathlib import Path
 from urllib.request import urlretrieve
 from argparse import Namespace
+from tqdm import tqdm
 from .utils import (
     run_cmd,
     namespace,
@@ -17,6 +18,17 @@ logging.basicConfig(
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
     level=logging.INFO
 )
+
+
+class ProgressBar(tqdm):
+    """A class for reporting progress with urlretrieve.
+    """
+    def update_progress(self, block_num=1, block_size=1, total_size=None):
+        """Update progress.
+        """
+        if total_size is not None:
+            self.total = total_size
+        self.update(block_num * block_size - self.n)
 
 
 def _download_spark(args: Namespace, spark_hdp: str, desfile: str):
@@ -43,8 +55,10 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: str):
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         try:
             logging.info("Downloading Spark from: %s", url)
-            urlretrieve(url, desfile)
-        except:
+            with ProgressBar(unit="B", unit_scale=True, miniters=1) as progress:
+                urlretrieve(url, desfile, progress.update_progress)
+            return
+        except Exception:
             logging.info("Failed to download Spark from: %s", url)
 
 
