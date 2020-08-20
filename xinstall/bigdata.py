@@ -81,12 +81,12 @@ def spark(**kwargs):
         cmd = f"{args.prefix} tar -zxf {desfile} -C {dir_} && rm {desfile}"
         run_cmd(cmd)
     if args.config:
-        mask = os.umask(0)
         metastore_db = spark_home / "metastore_db"
-        metastore_db.mkdir(parents=True, exist_ok=True)
+        run_cmd(f"{args.prefix} mkdir -p {metastore_db} && "
+            f"{args.prefix} chmod -R 777 {metastore_db}")
         warehouse = spark_home / "warehouse"
-        warehouse.mkdir(parents=True, exist_ok=True)
-        os.umask(mask)
+        run_cmd(f"{args.prefix} mkdir -p {warehouse} && "
+            f"{args.prefix} chmod -R 777 {warehouse}")
         (spark_home / "conf/spark-defaults.conf").write_text(
             f"spark.driver.extraJavaOptions -Dderby.system.home={spark_home}/metastore_db\n"
             f"spark.sql.warehouse.dir {spark_home}/warehouse"

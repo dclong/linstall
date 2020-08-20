@@ -103,7 +103,6 @@ logging.basicConfig(
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
     level=logging.INFO
 )
-PREFIX = "" if USER == "root" else "sudo"
 __version__ = "0.19.1"
 
 
@@ -140,7 +139,14 @@ def parse_args(args=None, namespace=None):
     parser.add_argument(
         "--prefix",
         dest="prefix",
-        default=PREFIX,
+        default="",
+        help="The prefix command (e.g., sudo) to use."
+    )
+    parser.add_argument(
+        "--sudo",
+        dest="prefix",
+        action="store_const",
+        const="sudo",
         help="The prefix command (e.g., sudo) to use."
     )
     subparsers = parser.add_subparsers(dest="sub_cmd", help="Sub commands.")
