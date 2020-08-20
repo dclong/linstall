@@ -19,7 +19,7 @@ logging.basicConfig(
 )
 
 
-def _download_spark(args: Namespace, spark_hdp: str):
+def _download_spark(args: Namespace, spark_hdp: str, desfile: str):
     mirrors = args.mirrors + (
         "http://apache.mirrors.hoobly.com/spark",
         "http://apache.spinellicreations.com/spark",
@@ -39,12 +39,11 @@ def _download_spark(args: Namespace, spark_hdp: str):
         "http://us.mirrors.quenda.co/apache/spark",
         "http://archive.apache.org/dist/spark",
     )
-    desfile = f"/tmp/{spark_hdp}.tgz"
     for mirror in mirrors:
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         try:
             logging.info("Downloading Spark from: %s", url)
-            urllib.urlretrieve(url, spark_hdp)
+            urllib.urlretrieve(url, desfile)
         except:
             logging.info("Failed to download Spark from: %s", url)
 
@@ -61,12 +60,11 @@ def spark(**kwargs):
     dir_ = args.location.resolve()
     spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
     spark_home = dir_ / spark_hdp
+    desfile = f"/tmp/{spark_hdp}.tgz"
     if args.install:
         dir_.mkdir(exist_ok=True)
-        _download_spark(args, desfile)
-        cmd = f"""{args.prefix} tar -zxf /tmp/{spark_hdp}.tgz -C {dir_} \
-                && rm /tmp/{spark_hdp}.tgz
-            """
+        _download_spark(args, spark_hdp, desfile)
+        cmd = f"{args.prefix} tar -zxf {desfile} -C {dir_} && rm {desfile}"
         run_cmd(cmd)
     if args.config:
         mask = os.umask(0)
