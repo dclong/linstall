@@ -84,15 +84,22 @@ def spark(**kwargs):
     if args.config:
         # metastore db
         metastore_db = spark_home / "metastore_db"
-        run_cmd(f"{args.prefix} mkdir -p {metastore_db} && "
-            f"{args.prefix} chmod -R 777 {metastore_db}")
+        run_cmd(
+            f"{args.prefix} mkdir -p {metastore_db} && "
+            f"{args.prefix} chmod -R 777 {metastore_db}"
+        )
         # warehouse
         warehouse = spark_home / "warehouse"
-        run_cmd(f"{args.prefix} mkdir -p {warehouse} && "
-            f"{args.prefix} chmod -R 777 {warehouse}")
+        run_cmd(
+            f"{args.prefix} mkdir -p {warehouse} && "
+            f"{args.prefix} chmod -R 777 {warehouse}"
+        )
         # spark-defaults.conf
-        conf = (BASE_DIR / "spark/spark-defaults.conf").read_text().replace("$SPARK_HOME", spark_home)
-        run_cmd(f"echo '{conf}' | {args.prefix} tee {spark_home / 'conf/spark-defaults.conf'} > /dev/null")
+        conf = (BASE_DIR / "spark/spark-defaults.conf"
+               ).read_text().replace("$SPARK_HOME", spark_home)
+        run_cmd(
+            f"echo '{conf}' | {args.prefix} tee {spark_home / 'conf/spark-defaults.conf'} > /dev/null"
+        )
         logging.info(
             "Spark is configured to use %s as the metastore database and %s as the Hive warehouse.",
             metastore_db, warehouse
