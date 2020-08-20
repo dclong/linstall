@@ -3,7 +3,7 @@
 import os
 import logging
 from pathlib import Path
-import urllib
+from urllib.request import urlretrieve
 from argparse import Namespace
 from .utils import (
     run_cmd,
@@ -43,7 +43,7 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: str):
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         try:
             logging.info("Downloading Spark from: %s", url)
-            urllib.urlretrieve(url, desfile)
+            urlretrieve(url, desfile)
         except:
             logging.info("Failed to download Spark from: %s", url)
 
