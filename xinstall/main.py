@@ -145,7 +145,8 @@ def parse_args(args=None, namespace=None):
     parser.add_argument(
         "--sudo",
         dest="prefix",
-        default="sudo",
+        action="store_const",
+        const="sudo",
         help="The prefix command (e.g., sudo) to use."
     )
     subparsers = parser.add_subparsers(dest="sub_cmd", help="Sub commands.")
