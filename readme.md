@@ -4,7 +4,7 @@
 Note: It is best to install `xinstall` into a system-wide location rather than users' local directories.
 You can download a copy of the latest release and install it using pip.
 ```
-sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.19.0/xinstall-0.19.0-py3-none-any.whl
+sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.19.1/xinstall-0.19.1-py3-none-any.whl
 ```
 Or you can use the following command to install the latest master branch
 if you have pip 20.0+.
