@@ -21,7 +21,11 @@ logging.basicConfig(
 
 
 class ProgressBar(tqdm):
+    """A class for reporting progress with urlretrieve.
+    """
     def update_progress(self, block_num=1, block_size=1, total_size=None):
+        """Update progress.
+        """
         if total_size is not None:
             self.total = total_size
         self.update(block_num * block_size - self.n)
