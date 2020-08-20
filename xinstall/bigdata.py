@@ -132,7 +132,7 @@ def _spark_args(subparser):
         "--location",
         dest="location",
         type=Path,
-        default="/opt",
+        default=Path(),
         help="The location to install Spark to."
     )
 
