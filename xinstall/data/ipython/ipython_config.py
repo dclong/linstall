@@ -3,19 +3,8 @@ from pathlib import Path
 PLATFORM = platform.platform().lower()
 c = get_config()
 c.AliasManager.user_aliases = [
-    ("mvi", "mv -i"),
-    ("cpi", "cp -ir"),
-    (
-        "rm.ipynb_checkpoints",
-        "find . -type d -name '*.ipynb_checkpoints*' -print0 | xargs -0 rm -rf"
-    ),
-    ("rsync.progress", "rsync -avh --info=progress2"),
-    ("rsync.progress.pc", "proxychains rsync -avh --info=progress2"),
-    ("scp.rp", "scp -rp"),
-    ("scp.rp.pc", "proxychains scp -rp"),
-    ("hdfs.count", "hdfs dfs -count -q -v"),
-    ("hdfs.ls", "hdfs dfs -ls"),
     ("blog", "python3 $HOME/archives/blog/main.py"),
+    ("cpi", "cp -ir"),
     # du
     ("du.0", "du -hd 0"),
     ("du.1", "du -hd 1"),
@@ -221,6 +210,21 @@ c.AliasManager.user_aliases = [
     ("find.word", "find . -type f -iname '*.doc' -o -iname '*.docx' -o iname"),
     ("find.word", "find . -type f -iname '*.doc' -o -iname '*.docx'"),
     ("find.xml", "find . -type f -iname '*.xml'"),
+    # hdfs
+    ("hdfs.count", "hdfs dfs -count -q -v"),
+    ("hdfs.ls", "hdfs dfs -ls"),
+    # ls
+    ("ls.media", "ls *.jpg *.jpeg *.png *.mp3 *.avi *.mkv *.mov *.mp4 *.wmv"),
+    ("ls.excel", "ls *.xls *.xlsx"),
+    ("ls.word", "ls *.doc *.docx"),
+    ("ls.spreadsheet", "ls *.xls *.xlsx *.csv"),
+    ("ls.data", "ls *.xls *.xlsx *.csv *.tsv"),
+    ("ls.archive", "ls *.zip *.tar.gz *.tar.xz *.tar"),
+    ("ls.zip", "ls.archive"),
+    ("ls.package", "ls *.air *.deb *.jar *.apk"),
+    ("ls.pkg", "ls *.air *.deb *.jar *.apk"),
+    ("ls.tex.aux", "ls *.aux *.bbl *.blg *.log *.toc *.synctex.gz"),
+    ("mvi", "mv -i"),
     # mount
     (
         "mount.ntfs.sdb1",
@@ -268,16 +272,18 @@ c.AliasManager.user_aliases = [
         "mount.vboxsf.gdrive",
         "sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 gdrive ${HOME}/gdrive"
     ),
-    ("ls.media", "ls *.jpg *.jpeg *.png *.mp3 *.avi *.mkv *.mov *.mp4 *.wmv"),
-    ("ls.excel", "ls *.xls *.xlsx"),
-    ("ls.word", "ls *.doc *.docx"),
-    ("ls.spreadsheet", "ls *.xls *.xlsx *.csv"),
-    ("ls.data", "ls *.xls *.xlsx *.csv *.tsv"),
-    ("ls.archive", "ls *.zip *.tar.gz *.tar.xz *.tar"),
-    ("ls.zip", "ls.archive"),
-    ("ls.package", "ls *.air *.deb *.jar *.apk"),
-    ("ls.pkg", "ls *.air *.deb *.jar *.apk"),
-    ("ls.tex.aux", "ls *.aux *.bbl *.blg *.log *.toc *.synctex.gz"),
+    ("ps.ssh", "ps aux | grep -i ssh"),
+    ("ps.python", "ps aux | grep -i python"),
+    ("ps.ipython", "ps aux | grep -i ipython"),
+    ("ps.jupyter", "ps aux | grep -i jupyter"),
+    (
+        "rm.ipynb_checkpoints",
+        "find . -type d -name '*.ipynb_checkpoints*' -print0 | xargs -0 rm -rf"
+    ),
+    ("rsync.progress", "rsync -avh --info=progress2"),
+    ("rsync.progress.pc", "proxychains rsync -avh --info=progress2"),
+    ("scp.rp", "scp -rp"),
+    ("scp.rp.pc", "proxychains scp -rp"),
 ]
 if "darwin" in PLATFORM:
     c.AliasManager.user_aliases.extend(
