@@ -652,7 +652,7 @@ def pyenv(**kwargs):
         if is_ubuntu_debian():
             logging.info("Installing libffi-dev (required to build Python 3.7) ...")
             update_apt_source(prefix=args.prefix, seconds=1E-10)
-            cmd = f"{args.prefix} apt-get install {args.yes_s} libffi-dev"
+            cmd = f"{args.prefix} apt-get install {args.yes_s} libssl-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev"
             run_cmd(cmd)
     if args.config:
         update_file(

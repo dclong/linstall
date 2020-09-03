@@ -118,6 +118,7 @@ c.AliasManager.user_aliases = [
     ("find.dylib", "find . -type f -iname '*.dylib'"),
     ("find.dat", "find . -type f -iname '*.dat'"),
     ("find.deb", "find . -name '*.deb'"),
+    ("find.ds_store", "find . -name .DS_Store"),
     (
         "find.data",
         "find . -type f -iname '*.xls' -o -iname '*.xlsx' -o -iname '*.csv' -o -iname '*.tsv'"
