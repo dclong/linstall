@@ -1,5 +1,6 @@
 """Installing dev related tools.
 """
+import os
 import logging
 import shutil
 from pathlib import Path
@@ -647,10 +648,10 @@ def pyenv(**kwargs):
     args = namespace(kwargs)
     if args.install:
         logging.info("Installing pyenv ...")
-        cmd = f"rm -rf {HOME}/.pyenv/ && curl -sSL https://pyenv.run | bash"
+        cmd = f"{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run | PYENV_ROOT={args.root} bash"
         run_cmd(cmd)
         if is_ubuntu_debian():
-            logging.info("Installing libffi-dev (required to build Python 3.7) ...")
+            logging.info("Installing header files (for building Python and Python packages) ...")
             update_apt_source(prefix=args.prefix, seconds=1E-10)
             cmd = f"{args.prefix} apt-get install {args.yes_s} libssl-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev"
             run_cmd(cmd)
@@ -674,6 +675,17 @@ def pyenv(**kwargs):
                 ('eval "$(pyenv virtualenv-init -)"\n', ""),
             ]
         )
+
+
+def _pyenv_args(subparser):
+    subparser.add_argument(
+        "-r", "-d",
+        "--root",
+        "--pyenv-root",
+        dest="root",
+        default=os.environ.get("PYENV_ROOT", HOME / ".pyenv"),
+        help="Configure Git to use the specified proxy."
+    )
 
 
 def _add_subparser_pyenv(subparsers):
