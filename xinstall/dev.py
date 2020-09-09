@@ -93,6 +93,10 @@ def yapf(**kwargs):
         des_file = args.dst_dir / ".style.yapf"
         shutil.copy2(src_file, des_file)
         logging.info("%s is copied to %s.", src_file, des_file)
+        src_file = BASE_DIR / "yapf/yapfignore"
+        des_file = args.dst_dir / ".yapfignore"
+        shutil.copy2(src_file, des_file)
+        logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall yapf")
 
