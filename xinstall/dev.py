@@ -655,7 +655,9 @@ def pyenv(**kwargs):
         cmd = f"{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run | PYENV_ROOT={args.root} bash"
         run_cmd(cmd)
         if is_ubuntu_debian():
-            logging.info("Installing header files (for building Python and Python packages) ...")
+            logging.info(
+                "Installing header files (for building Python and Python packages) ..."
+            )
             update_apt_source(prefix=args.prefix, seconds=1E-10)
             cmd = f"{args.prefix} apt-get install {args.yes_s} libssl-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev"
             run_cmd(cmd)
@@ -683,7 +685,8 @@ def pyenv(**kwargs):
 
 def _pyenv_args(subparser):
     subparser.add_argument(
-        "-r", "-d",
+        "-r",
+        "-d",
         "--root",
         "--pyenv-root",
         dest="root",
