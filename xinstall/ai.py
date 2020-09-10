@@ -2,7 +2,7 @@
 """
 from pathlib import Path
 import logging
-from .utils import HOME, USER, run_cmd, namespace, add_subparser, is_linux, is_macos
+from .utils import HOME, USER, run_cmd, namespace, add_subparser, is_linux, is_macos, option_pip
 logging.basicConfig(
     format=
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
@@ -149,12 +149,17 @@ def tensorflow(**kwargs):
         pass
 
 
+def _tensorflow_args(subparser):
+    option_pip(subparser)
+
+
 def _add_subparser_tensorflow(subparsers):
     add_subparser(
         subparsers,
         "tensorflow",
         func=tensorflow,
         aliases=["tf"],
+        add_argument=_tensorflow_args
     )
 
 

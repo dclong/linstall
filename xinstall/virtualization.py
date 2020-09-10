@@ -2,6 +2,7 @@
 """
 import logging
 from .utils import (
+    USER,
     run_cmd,
     namespace,
     add_subparser,
@@ -86,7 +87,7 @@ def _docker_args(subparser):
     subparser.add_argument(
         "--user-to-docker",
         dest="user_to_docker",
-        default="",
+        default="" if USER == "root" else USER,
         help="The user to add to the docker group.",
     )
 
