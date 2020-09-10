@@ -690,7 +690,7 @@ def _pyenv_args(subparser):
         "--root",
         "--pyenv-root",
         dest="root",
-        default=os.environ.get("PYENV_ROOT", HOME / ".pyenv"),
+        default=os.environ.get("PYENV_ROOT", str(HOME / ".pyenv")),
         help="Configure Git to use the specified proxy."
     )
 
@@ -701,4 +701,5 @@ def _add_subparser_pyenv(subparsers):
         "pyenv",
         func=pyenv,
         aliases=[],
+        add_argument=_pyenv_args,
     )
