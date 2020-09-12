@@ -28,8 +28,8 @@ jobs:
         python3 -m pip install --upgrade pip
         pip3 install -U git+https://github.com/dclong/xinstall@master
         xinstall pt -ic
-        poetry env use python3
-        poetry install
+        ~/.poetry/bin/poetry env use python3
+        ~/.poetry/bin/poetry install
     - name: Lint with pylint
       run: |
         # stop the build if there are Python syntax errors or undefined names
