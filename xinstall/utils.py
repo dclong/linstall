@@ -103,7 +103,7 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
     proc = sp.run(f"brew ls --versions {pkgs}", shell=True, check=False, stdout=sp.PIPE)
     if not proc.stdout:
         run_cmd(f"brew install {pkgs}")
-    run_cmd(f"brew link {pkgs}")
+    run_cmd(f"brew link --overwrite {pkgs}")
 
 
 def is_ubuntu_debian():
