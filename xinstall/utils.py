@@ -96,14 +96,15 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
 
     :param pkgs: A (list of) package(s) to install using Homebrew.
     """
-    if isinstance(pkgs, list):
-        for pkg in pkgs:
-            brew_install_safe(pkg)
-        return
-    proc = sp.run(f"brew ls --versions {pkgs}", shell=True, check=False, stdout=sp.PIPE)
-    if not proc.stdout:
-        run_cmd(f"brew install {pkgs}")
-    run_cmd(f"brew link --overwrite {pkgs}")
+    if isinstance(pkgs, str):
+        pkgs = [pkgs]
+    for pkg in pkgs:
+        version = ""
+        if "@" in pkg:
+            pkg, version = pkg.split("@")
+        proc = sp.run(f"brew ls --versions {pkg}", shell=True, check=False, stdout=sp.PIPE)
+        if version not in proc.stdout or proc.stdout == "":
+            run_cmd(f"brew install {pkg} && brew link --overwrite {pkg}")
 
 
 def is_ubuntu_debian():
