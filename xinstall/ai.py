@@ -59,8 +59,12 @@ def lightgbm(**kwargs):
         pass
 
 
+def _lightgbm_args(subparser):
+    option_pip(subparser)
+
+
 def _add_subparser_lightgbm(subparsers):
-    add_subparser(subparsers, "lightgbm", func=lightgbm, aliases=[])
+    add_subparser(subparsers, "lightgbm", func=lightgbm, aliases=[], add_argument=_lightgbm_args)
 
 
 def pytorch(**kwargs):
