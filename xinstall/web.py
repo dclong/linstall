@@ -6,19 +6,8 @@ import logging
 import shutil
 from pathlib import Path
 from .utils import (
-    HOME,
-    USER,
-    GROUP,
-    BASE_DIR,
-    BIN_DIR,
-    run_cmd,
-    add_subparser,
-    update_apt_source,
-    brew_install_safe,
-    is_ubuntu_debian,
-    is_macos,
-    is_centos_series,
-    namespace,
+    HOME, USER, GROUP, BASE_DIR, BIN_DIR, run_cmd, add_subparser, update_apt_source,
+    brew_install_safe, is_ubuntu_debian, is_macos, is_centos_series, namespace,
     option_pip
 )
 logging.basicConfig(

@@ -212,7 +212,10 @@ c.AliasManager.user_aliases = [
     ("find.word", "find . -type f -iname '*.doc' -o -iname '*.docx'"),
     ("find.xml", "find . -type f -iname '*.xml'"),
     # git
-    ("git.submodule", "git submodule init && git submodule update --recursive --remote"),
+    (
+        "git.submodule",
+        "git submodule init && git submodule update --recursive --remote"
+    ),
     # hdfs
     ("hdfs.count", "hdfs dfs -count -q -v"),
     ("hdfs.ls", "hdfs dfs -ls"),
