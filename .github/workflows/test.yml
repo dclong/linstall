@@ -5,9 +5,9 @@ name: Python package
 
 on:
   push:
-    branches: [ dev, master ]
+    branches: [ master ]
   pull_request:
-    branches: [ dev, master ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -17,8 +17,11 @@ jobs:
       matrix:
         os: 
           - ubuntu-latest
-          #- macOS-latest
-        python-version: [3.6, 3.7, 3.8]
+          - macOS-latest
+        python-version: 
+          - 3.6
+          - 3.7
+          - 3.8
 
     steps:
     - uses: actions/checkout@v2
@@ -32,10 +35,6 @@ jobs:
         xinstall pt -ic
         ~/.poetry/bin/poetry env use python3
         ~/.poetry/bin/poetry install
-    - name: Lint with pylint
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        ~/.poetry/bin/poetry run pylint -E xinstall/
     - name: Test with pytest
       run: |
         ~/.poetry/bin/poetry run pytest
