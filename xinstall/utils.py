@@ -99,9 +99,11 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
     if isinstance(pkgs, str):
         pkgs = [pkgs]
     for pkg in pkgs:
-        run_cmd(f"""brew install {pkg} \
+        run_cmd(
+            f"""brew install {pkg} \
             && brew unlink {pkg} \
-            && brew link --force --overwrite {pkg}""")
+            && brew link --force --overwrite {pkg}"""
+        )
 
 
 def is_ubuntu_debian():
