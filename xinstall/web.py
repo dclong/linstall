@@ -86,7 +86,7 @@ def proxychains(**kwargs) -> None:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
             cmd = f"""{args.prefix} apt-get install {args.yes_s} proxychains4 \
-                    && ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
+                    && {args.prefix} ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(["proxychains-ng"])
