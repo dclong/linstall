@@ -25,7 +25,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        sudo -H pip3 install -U git+https://github.com/dclong/xinstall@master
+        pip3 install -U git+https://github.com/dclong/xinstall@master
         xinstall pt -ic
         ~/.poetry/bin/poetry env use python3
         ~/.poetry/bin/poetry install
