@@ -155,45 +155,6 @@ def _add_subparser_dryscrape(subparsers):
     add_subparser(subparsers, "dryscrape", func=dryscrape, aliases=[])
 
 
-def blogging(**kwargs):
-    """Install blogging tools.
-    """
-    args = namespace(kwargs)
-    if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} pelican markdown")
-        archives = HOME / "archives"
-        archives.mkdir(0o700, exist_ok=True)
-        blog = archives / "blog"
-        if blog.is_dir():
-            run_cmd(f"git -C {blog} pull origin master")
-        else:
-            run_cmd(f"git clone git@github.com:dclong/blog.git {blog}")
-        cmd = f"""git -C {blog} submodule init \
-                && git -C {blog} submodule update --recursive --remote
-                """
-        run_cmd(cmd)
-    if args.config:
-        blog_bin = BIN_DIR / "blog"
-        main_py = archives / "blog/main.py"
-        try:
-            blog_bin.symlink_to(main_py)
-            logging.info(
-                "Symbolic link %s pointing to %s is created.", blog_bin, main_py
-            )
-        except FileExistsError:
-            pass
-    if args.uninstall:
-        run_cmd(f"{args.pip} uninstall pelican markdown")
-
-
-def _blogging_args(subparser):
-    option_pip(subparser)
-
-
-def _add_subparser_blogging(subparsers):
-    add_subparser(subparsers, "blogging", func=blogging, aliases=["blog"], add_argument=_blogging_args)
-
-
 def download_tools(**kwargs):
     args = namespace(kwargs)
     if args.install:
