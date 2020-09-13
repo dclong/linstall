@@ -38,8 +38,12 @@ def kaggle(**kwargs):
         pass
 
 
+def _kaggle_args(subparser):
+    option_pip(subparser)
+
+
 def _add_subparser_kaggle(subparsers):
-    add_subparser(subparsers, "kaggle", func=kaggle, aliases=[])
+    add_subparser(subparsers, "kaggle", func=kaggle, aliases=[], add_argument=_kaggle_args)
 
 
 def lightgbm(**kwargs):
