@@ -193,7 +193,7 @@ def nodejs(**kwargs):
             cmd = f"{args.prefix} apt-get install {args.yes_s} nodejs npm"
             run_cmd(cmd)
         if is_macos():
-            brew_install_safe(["nodejs"])
+            brew_install_safe(["node"])
         if is_centos_series():
             run_cmd(f"{args.prefix} yum install {args.yes_s} nodejs")
     if args.config:
