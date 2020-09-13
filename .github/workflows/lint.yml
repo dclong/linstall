@@ -35,4 +35,4 @@ jobs:
         ~/.poetry/bin/poetry run pytype xinstall/ tests/
     - name: Check code format
       run: |
-        ~/.poetry/bin/poetry yapf -dr xinstall/ tests/
+        ~/.poetry/bin/poetry run yapf -dr xinstall/ tests/
