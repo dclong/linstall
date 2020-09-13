@@ -19,6 +19,7 @@ from .utils import (
     is_macos,
     is_centos_series,
     namespace,
+    option_pip
 )
 logging.basicConfig(
     format=
@@ -185,8 +186,12 @@ def blogging(**kwargs):
         run_cmd(f"{args.pip} uninstall pelican markdown")
 
 
+def _blogging_args(subparser):
+    option_pip(subparser)
+
+
 def _add_subparser_blogging(subparsers):
-    add_subparser(subparsers, "blogging", func=blogging, aliases=["blog"])
+    add_subparser(subparsers, "blogging", func=blogging, aliases=["blog"], add_argument=_blogging_args)
 
 
 def download_tools(**kwargs):
