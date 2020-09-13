@@ -6,19 +6,9 @@ import logging
 import shutil
 from pathlib import Path
 from .utils import (
-    HOME,
-    USER,
-    GROUP,
-    BASE_DIR,
-    BIN_DIR,
-    run_cmd,
-    add_subparser,
-    update_apt_source,
-    brew_install_safe,
-    is_ubuntu_debian,
-    is_macos,
-    is_centos_series,
-    namespace,
+    HOME, USER, GROUP, BASE_DIR, BIN_DIR, run_cmd, add_subparser, update_apt_source,
+    brew_install_safe, is_ubuntu_debian, is_macos, is_centos_series, namespace,
+    option_pip
 )
 logging.basicConfig(
     format=
@@ -96,7 +86,7 @@ def proxychains(**kwargs) -> None:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
             cmd = f"""{args.prefix} apt-get install {args.yes_s} proxychains4 \
-                    && ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
+                    && {args.prefix} ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(["proxychains-ng"])
@@ -152,41 +142,6 @@ def dryscrape(**kwargs):
 
 def _add_subparser_dryscrape(subparsers):
     add_subparser(subparsers, "dryscrape", func=dryscrape, aliases=[])
-
-
-def blogging(**kwargs):
-    """Install blogging tools.
-    """
-    args = namespace(kwargs)
-    if args.install:
-        run_cmd(f"{args.pip} install --user pelican markdown")
-        archives = HOME / "archives"
-        archives.mkdir(0o700, exist_ok=True)
-        blog = archives / "blog"
-        if blog.is_dir():
-            run_cmd(f"git -C {blog} pull origin master")
-        else:
-            run_cmd(f"git clone git@github.com:dclong/blog.git {blog}")
-        cmd = f"""git -C {blog} submodule init \
-                && git -C {blog} submodule update --recursive --remote
-                """
-        run_cmd(cmd)
-    if args.config:
-        blog_bin = BIN_DIR / "blog"
-        main_py = archives / "blog/main.py"
-        try:
-            blog_bin.symlink_to(main_py)
-            logging.info(
-                "Symbolic link %s pointing to %s is created.", blog_bin, main_py
-            )
-        except FileExistsError:
-            pass
-    if args.uninstall:
-        run_cmd(f"{args.pip} uninstall pelican markdown")
-
-
-def _add_subparser_blogging(subparsers):
-    add_subparser(subparsers, "blogging", func=blogging, aliases=["blog"])
 
 
 def download_tools(**kwargs):

@@ -12,5 +12,6 @@
         "--generated-members=cv2.*,pyspark.*",
         "--ignored-modules=pyspark.sql.functions"
     ],
-    "extensions.autoUpdate": false
+    "extensions.autoUpdate": false,
+    "workbench.colorTheme": "Default Dark+"
 }

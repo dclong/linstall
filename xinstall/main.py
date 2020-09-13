@@ -86,7 +86,6 @@ from .virtualization import (
     _add_subparser_microk8s,
 )
 from .web import (
-    _add_subparser_blogging,
     _add_subparser_download_tools,
     _add_subparser_dryscrape,
     _add_subparser_proxychains,
@@ -221,7 +220,6 @@ def parse_args(args=None, namespace=None):
     # ------------------------- web related ------------------------------
     _add_subparser_ssh_server(subparsers)
     _add_subparser_ssh_client(subparsers)
-    _add_subparser_blogging(subparsers)
     _add_subparser_proxychains(subparsers)
     _add_subparser_dryscrape(subparsers)
     _add_subparser_download_tools(subparsers)

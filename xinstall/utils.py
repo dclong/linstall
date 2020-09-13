@@ -96,18 +96,18 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
 
     :param pkgs: A (list of) package(s) to install using Homebrew.
     """
-    if isinstance(pkgs, list):
-        for pkg in pkgs:
-            brew_install_safe(pkg)
-        return
-    proc = sp.run(f"brew ls --versions {pkgs}", shell=True, check=False, stdout=sp.PIPE)
-    if not proc.stdout:
-        run_cmd(f"brew install {pkgs}")
-    run_cmd(f"brew link {pkgs}")
+    if isinstance(pkgs, str):
+        pkgs = [pkgs]
+    for pkg in pkgs:
+        proc = sp.run(
+            f"brew ls --versions {pkg}", shell=True, check=False, stdout=sp.PIPE
+        )
+        if not proc.stdout:
+            run_cmd(f"brew install {pkg} && brew link --overwrite {pkg}")
 
 
 def is_ubuntu_debian():
-    """Check whehter the current OS is Ubuntu/Debian. 
+    """Check whehter the current OS is Ubuntu/Debian.
     """
     return DISTRO_ID in ("ubuntu", "debian")
 
@@ -250,6 +250,8 @@ def namespace(dic: Dict) -> Namespace:
     dic["yes_s"] = "--yes" if dic["yes"] else ""
     dic.setdefault("user", False)
     dic["user_s"] = "--user" if dic["user"] else ""
+    if USER == "root":
+        dic["prefix"] = ""
     return Namespace(**dic)
 
 
