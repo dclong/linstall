@@ -250,6 +250,8 @@ def namespace(dic: Dict) -> Namespace:
     dic["yes_s"] = "--yes" if dic["yes"] else ""
     dic.setdefault("user", False)
     dic["user_s"] = "--user" if dic["user"] else ""
+    if USER == "root":
+        dic["prefix"] = ""
     return Namespace(**dic)
 
 
