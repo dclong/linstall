@@ -160,7 +160,7 @@ def blogging(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        run_cmd(f"{args.pip} install --user pelican markdown")
+        run_cmd(f"{args.pip} install {args.user_s} pelican markdown")
         archives = HOME / "archives"
         archives.mkdir(0o700, exist_ok=True)
         blog = archives / "blog"
