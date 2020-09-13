@@ -1,7 +1,6 @@
 """Test the github module.
 """
 import subprocess as sp
-sp.run("sudo apt-get update", shell=True, check=True)
 
 
 def test_install_py_github():
