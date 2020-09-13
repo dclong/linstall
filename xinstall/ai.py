@@ -15,7 +15,7 @@ def kaggle(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install --user kaggle"
+        cmd = f"{args.pip} install {args.user_s} kaggle"
         run_cmd(cmd)
     if args.config:
         home_host = Path(f"/home_host/{USER}/")
