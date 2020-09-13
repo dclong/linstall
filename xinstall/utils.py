@@ -104,11 +104,13 @@ def brew_install_safe(pkgs: Union[str, List]) -> None:
             pkg, version = pkg.split("@")
         proc = sp.run(f"brew ls --versions {pkg}", shell=True, check=False, stdout=sp.PIPE)
         if version not in proc.stdout or proc.stdout == "":
-            run_cmd(f"brew install {pkg} && brew link --overwrite {pkg}")
+            run_cmd(f"""brew install {pkg}{'@' + version if version else ''} \
+                && brew link --overwrite {pkg}
+                """)
 
 
 def is_ubuntu_debian():
-    """Check whehter the current OS is Ubuntu/Debian. 
+    """Check whehter the current OS is Ubuntu/Debian.
     """
     return DISTRO_ID in ("ubuntu", "debian")
 
