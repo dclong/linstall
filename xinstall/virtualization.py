@@ -67,10 +67,14 @@ def docker(**kwargs):
             run_cmd(f"{args.prefix} yum install docker docker-compose")
     if args.config:
         if args.user_to_docker:
-            run_cmd(f"{args.prefix} gpasswd -a {args.user_to_docker} docker")
-            logging.warning(
-                "Please run the command 'newgrp docker' or logout/login to make the group 'docker' effective!"
-            )
+            if is_ubuntu_debian():
+                run_cmd(f"{args.prefix} gpasswd -a {args.user_to_docker} docker")
+                logging.warning(
+                    "Please run the command 'newgrp docker' or logout/login to make the group 'docker' effective!"
+                )
+            elif is_macos():
+                cmd = f"{args.prefix} dseditgroup -o edit -a {args.user_to_docker} -t user staff"
+                run_cmd(cmd)
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} docker docker-compose", )
