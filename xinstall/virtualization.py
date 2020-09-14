@@ -73,7 +73,7 @@ def docker(**kwargs):
                     "Please run the command 'newgrp docker' or logout/login to make the group 'docker' effective!"
                 )
             elif is_macos():
-                cmd = f"{args.prefix} dseditgroup -o edit -a {args.user_to_docker} -t user docker"
+                cmd = f"{args.prefix} dseditgroup -o edit -a {args.user_to_docker} -t user staff"
                 run_cmd(cmd)
     if args.uninstall:
         if is_ubuntu_debian():
