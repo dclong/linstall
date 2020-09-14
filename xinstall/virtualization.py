@@ -58,12 +58,11 @@ def docker(**kwargs):
                 f"{args.prefix} apt-get install {args.yes_s} docker.io docker-compose"
             )
         elif is_macos():
-            brew_install_safe(
-                [
-                    "docker", "docker-compose", "bash-completion@2",
-                    "docker-completion", "docker-compose-completion"
-                ]
-            )
+            brew_install_safe([
+                "docker",
+                "docker-compose",
+                "bash-completion@2",
+            ])
         elif is_centos_series():
             run_cmd(f"{args.prefix} yum install docker docker-compose")
     if args.config:
