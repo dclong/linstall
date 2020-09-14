@@ -10,7 +10,7 @@ on:
     branches: [ dev, master ]
 
 jobs:
-  lint_code_ubuntu_py3.7:
+  lint_code:
     runs-on: ubuntu-latest
     strategy:
       matrix:
