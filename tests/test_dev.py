@@ -1,13 +1,12 @@
 """Test the dev module.
 """
 import subprocess as sp
-sp.run("sudo apt-get update", shell=True, check=True)
 
 
 def test_git():
     """Test installing and configuring Git.
     """
-    cmd = "sudo xinstall -y git -ic"
+    cmd = "xinstall --sudo -y git -ic"
     sp.run(cmd, shell=True, check=True)
 
 
@@ -21,7 +20,7 @@ def test_pyjnius():
 def test_nodejs():
     """Test installing nodejs.
     """
-    cmd = "sudo xinstall -y nodejs -ic"
+    cmd = "xinstall --sudo -y nodejs -ic"
     sp.run(cmd, shell=True, check=True)
 
 
@@ -35,7 +34,7 @@ def test_bash_lsp():
 def test_spark():
     """Test installing Spark.
     """
-    cmd = "sudo xinstall spark -ic"
+    cmd = "xinstall --sudo spark -ic --loc /opt"
     sp.run(cmd, shell=True, check=True)
 
 
@@ -49,7 +48,7 @@ def test_pyspark():
 def test_rust():
     """Test installing the Rust programming language.
     """
-    cmd = "sudo xinstall -y rust -ic"
+    cmd = "xinstall --sudo -y rust -ic"
     sp.run(cmd, shell=True, check=True)
 
 

@@ -193,7 +193,7 @@ def nodejs(**kwargs):
             cmd = f"{args.prefix} apt-get install {args.yes_s} nodejs npm"
             run_cmd(cmd)
         if is_macos():
-            brew_install_safe(["nodejs"])
+            brew_install_safe(["node"])
         if is_centos_series():
             run_cmd(f"{args.prefix} yum install {args.yes_s} nodejs")
     if args.config:
@@ -655,7 +655,9 @@ def pyenv(**kwargs):
         cmd = f"{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run | PYENV_ROOT={args.root} bash"
         run_cmd(cmd)
         if is_ubuntu_debian():
-            logging.info("Installing header files (for building Python and Python packages) ...")
+            logging.info(
+                "Installing header files (for building Python and Python packages) ..."
+            )
             update_apt_source(prefix=args.prefix, seconds=1E-10)
             cmd = f"{args.prefix} apt-get install {args.yes_s} libssl-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev"
             run_cmd(cmd)
@@ -683,11 +685,12 @@ def pyenv(**kwargs):
 
 def _pyenv_args(subparser):
     subparser.add_argument(
-        "-r", "-d",
+        "-r",
+        "-d",
         "--root",
         "--pyenv-root",
         dest="root",
-        default=os.environ.get("PYENV_ROOT", HOME / ".pyenv"),
+        default=os.environ.get("PYENV_ROOT", str(HOME / ".pyenv")),
         help="Configure Git to use the specified proxy."
     )
 
@@ -698,4 +701,5 @@ def _add_subparser_pyenv(subparsers):
         "pyenv",
         func=pyenv,
         aliases=[],
+        add_argument=_pyenv_args,
     )

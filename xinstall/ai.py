@@ -15,7 +15,7 @@ def kaggle(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install --user kaggle"
+        cmd = f"{args.pip} install {args.user_s} kaggle"
         run_cmd(cmd)
     if args.config:
         home_host = Path(f"/home_host/{USER}/")
@@ -38,8 +38,14 @@ def kaggle(**kwargs):
         pass
 
 
+def _kaggle_args(subparser):
+    option_pip(subparser)
+
+
 def _add_subparser_kaggle(subparsers):
-    add_subparser(subparsers, "kaggle", func=kaggle, aliases=[])
+    add_subparser(
+        subparsers, "kaggle", func=kaggle, aliases=[], add_argument=_kaggle_args
+    )
 
 
 def lightgbm(**kwargs):
@@ -47,7 +53,7 @@ def lightgbm(**kwargs):
     """
     args = namespace(kwargs)
     if args.install:
-        cmd = f"{args.pip} install --user lightgbm scikit-learn pandas matplotlib scipy graphviz"
+        cmd = f"{args.pip} install {args.user_s} lightgbm scikit-learn pandas matplotlib scipy graphviz"
         run_cmd(cmd)
     if args.config:
         pass
@@ -55,8 +61,14 @@ def lightgbm(**kwargs):
         pass
 
 
+def _lightgbm_args(subparser):
+    option_pip(subparser)
+
+
 def _add_subparser_lightgbm(subparsers):
-    add_subparser(subparsers, "lightgbm", func=lightgbm, aliases=[])
+    add_subparser(
+        subparsers, "lightgbm", func=lightgbm, aliases=[], add_argument=_lightgbm_args
+    )
 
 
 def pytorch(**kwargs):
