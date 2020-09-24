@@ -12,9 +12,6 @@ import tempfile
 import re
 import datetime
 import subprocess as sp
-if sys.platform != "win32":
-    import pwd
-    GROUP = pwd.getpwnam(USER).pw_gid
 import logging
 import distro
 logging.basicConfig(

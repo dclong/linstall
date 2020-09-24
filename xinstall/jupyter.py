@@ -5,7 +5,6 @@ from .utils import (
     USER,
     HOME,
     BIN_DIR,
-    GROUP,
     run_cmd,
     namespace,
     add_subparser,
@@ -102,7 +101,7 @@ def beakerx(**kwargs) -> None:
         run_cmd(f"{args.prefix} beakerx uninstall")
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:
-        run_cmd(f"{args.prefix} chown -R {USER}:{GROUP} {HOME}")
+        run_cmd(f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}")
 
 
 def _add_subparser_beakerx(subparsers) -> None:

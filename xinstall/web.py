@@ -6,7 +6,7 @@ import logging
 import shutil
 from pathlib import Path
 from .utils import (
-    HOME, USER, GROUP, BASE_DIR, BIN_DIR, run_cmd, add_subparser, update_apt_source,
+    HOME, USER, BASE_DIR, BIN_DIR, run_cmd, add_subparser, update_apt_source,
     brew_install_safe, is_ubuntu_debian, is_macos, is_centos_series, namespace,
     option_pip
 )
@@ -68,7 +68,7 @@ def ssh_client(**kwargs) -> None:
         shutil.copy2(src, des)
         logging.info("%s is copied to %s.", ssh_src, ssh_dst)
         # file permissions
-        cmd = f"{args.prefix} chown -R {USER}:{GROUP} {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
+        cmd = f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
         run_cmd(cmd)
         logging.info("The permissions of ~/.ssh and its contents are corrected set.")
 
