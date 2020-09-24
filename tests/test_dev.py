@@ -1,7 +1,7 @@
 """Test the dev module.
 """
 import subprocess as sp
-from xinstall.utils import is_ubuntu_debian
+from xinstall.utils import is_ubuntu_debian, update_apt_source
 if is_ubuntu_debian():
     update_apt_source(prefix=args.prefix)
 
