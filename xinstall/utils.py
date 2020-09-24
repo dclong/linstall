@@ -12,8 +12,6 @@ import tempfile
 import re
 import datetime
 import subprocess as sp
-if sys.platform != "win32":
-    import pwd
 import logging
 import distro
 logging.basicConfig(
@@ -23,7 +21,6 @@ logging.basicConfig(
 )
 HOME = Path.home()
 USER = HOME.name
-GROUP = pwd.getpwnam(USER).pw_gid
 FILE = Path(__file__).resolve()
 BASE_DIR = FILE.parent / "data"
 LOCAL_DIR = HOME / ".local"
