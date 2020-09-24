@@ -12,7 +12,8 @@ import tempfile
 import re
 import datetime
 import subprocess as sp
-import pwd
+if sys.platform != "win32":
+    import pwd
 import logging
 import distro
 logging.basicConfig(
