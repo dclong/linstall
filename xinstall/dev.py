@@ -221,9 +221,7 @@ def jupyter_book(**kwargs):
     if args.config:
         src_file = BASE_DIR / "jupyter-book/_config.yml"
         shutil.copy2(src_file, ".")
-        logging.info(
-            "%s is copied to the current directory.", src_file
-        )
+        logging.info("%s is copied to the current directory.", src_file)
     if args.uninstall:
         pass
 
