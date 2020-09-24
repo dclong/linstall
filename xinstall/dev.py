@@ -211,6 +211,35 @@ def _add_subparser_nodejs(subparsers):
     add_subparser(subparsers, "NodeJS", func=nodejs, aliases=["node"])
 
 
+def jupyter_book(**kwargs):
+    """Install jupyter-book.
+    """
+    args = namespace(kwargs)
+    if args.install:
+        cmd = f"{args.pip} install {args.user_s} jupyter-book"
+        run_cmd(cmd)
+    if args.config:
+        src_file = BASE_DIR / "jupyter-book/_config.yml"
+        shutil.copy2(src_file, ".")
+        logging.info("%s is copied to the current directory.", src_file)
+    if args.uninstall:
+        pass
+
+
+def _jupyter_book_args(subparser):
+    option_pip(subparser)
+
+
+def _add_subparser_jupyter_book(subparsers):
+    add_subparser(
+        subparsers,
+        "jupyter_book",
+        func=jupyter_book,
+        aliases=["jb", "jbook"],
+        add_argument=_jupyter_book_args,
+    )
+
+
 def ipython(**kwargs):
     """Install IPython for Python 3.
     """

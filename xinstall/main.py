@@ -62,6 +62,7 @@ from .dev import (
     _add_subparser_deno,
     _add_subparser_antlr,
     _add_subparser_jpype1,
+    _add_subparser_jupyter_book,
 )
 from .bigdata import (
     _add_subparser_pyspark,
@@ -178,6 +179,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_sphinx(subparsers)
     _add_subparser_pyjnius(subparsers)
     _add_subparser_ipython(subparsers)
+    _add_subparser_jupyter_book(subparsers)
     _add_subparser_yapf(subparsers)
     _add_subparser_pylint(subparsers)
     _add_subparser_pytype(subparsers)

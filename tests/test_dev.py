@@ -1,6 +1,9 @@
 """Test the dev module.
 """
 import subprocess as sp
+from xinstall.utils import is_ubuntu_debian, update_apt_source
+if is_ubuntu_debian():
+    update_apt_source(prefix="sudo", seconds=0)
 
 
 def test_git():
