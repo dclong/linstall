@@ -12,6 +12,7 @@ from .utils import (
     option_jupyter,
     is_ubuntu_debian,
     is_macos,
+    brew_install_safe,
 )
 logging.basicConfig(
     format=
@@ -178,8 +179,8 @@ def evcxr_jupyter(args) -> None:
                 && {HOME}/.cargo/bin/evcxr_jupyter --install"""
             run_cmd(cmd)
         elif is_macos():
-            cmd = f"""brew install cmake cargo \
-                && cargo install --force evcxr_jupyter \
+            brew_install_safe(["cmake", "rust"])
+            cmd = f"""cargo install --force evcxr_jupyter \
                 && {HOME}/.cargo/bin/evcxr_jupyter --install"""
             run_cmd(cmd)
     if args.config:
