@@ -30,8 +30,8 @@ jobs:
       run: |
         pip3 install -U git+https://github.com/dclong/xinstall@master
         xinstall pt -ic
-        $HOME\.poetry\bin\poetry env use python3
-        $HOME\.poetry\bin\poetry install
+        $HOME/.poetry/bin/poetry env use python3
+        $HOME/.poetry/bin/poetry install
     - name: Test with pytest
       run: |
-        $HOME\.poetry\bin\poetry run pytest
+        $HOME/.poetry/bin/poetry run pytest
