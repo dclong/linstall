@@ -5,6 +5,7 @@ import os
 import logging
 import shutil
 from pathlib import Path
+from argparse import Namespace
 from .utils import (
     HOME,
     USER,
