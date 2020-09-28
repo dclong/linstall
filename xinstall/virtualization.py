@@ -4,7 +4,6 @@ import logging
 from .utils import (
     USER,
     run_cmd,
-    namespace,
     add_subparser,
     is_macos,
     is_centos_series,
@@ -20,10 +19,9 @@ logging.basicConfig(
 )
 
 
-def virtualbox(**kwargs) -> None:
+def virtualbox(args) -> None:
     """Install VirtualBox.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -47,10 +45,9 @@ def _add_subparser_virtualbox(subparsers):
     add_subparser(subparsers, "VirtualBox", func=virtualbox, aliases=["vbox"])
 
 
-def docker(**kwargs):
+def docker(args):
     """Install and configure Docker container.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -105,10 +102,9 @@ def _add_subparser_docker(subparsers):
     )
 
 
-def kubernetes(**kwargs):
+def kubernetes(args):
     """Install and configure kubernetes command-line interface.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             run_cmd(
@@ -146,12 +142,11 @@ def _minikube_linux(args):
     print("VT-x/AMD-v virtualization must be enabled in BIOS.")
 
 
-def minikube(**kwargs) -> None:
+def minikube(args) -> None:
     """Install MiniKube.
     """
-    args = namespace(kwargs)
-    virtualbox(**kwargs)
-    kubernetes(**kwargs)
+    virtualbox(args)
+    kubernetes(args)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix, seconds=-1E10)
@@ -178,10 +173,9 @@ def _add_subparser_minikube(subparsers):
     add_subparser(subparsers, "Minikube", func=minikube, aliases=["mkb"])
 
 
-def multipass(**kwargs) -> None:
+def multipass(args) -> None:
     """Install Multipass.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             cmd = f"{args.prefix} snap install multipass --classic"
@@ -209,10 +203,9 @@ def _add_subparser_multipass(subparsers):
     add_subparser(subparsers, "Multipass", func=multipass, aliases=["mp"])
 
 
-def microk8s(**kwargs) -> None:
+def microk8s(args) -> None:
     """Install MicroK8S.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             cmd = f"""{args.prefix} snap install microk8s --classic \

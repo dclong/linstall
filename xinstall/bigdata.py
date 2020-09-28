@@ -1,6 +1,5 @@
 """Install big data related tools.
 """
-import os
 import logging
 from pathlib import Path
 from urllib.request import urlretrieve
@@ -9,7 +8,6 @@ from tqdm import tqdm
 from .utils import (
     BASE_DIR,
     run_cmd,
-    namespace,
     add_subparser,
     option_user,
     option_pip,
@@ -63,7 +61,7 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: str):
             logging.info("Failed to download Spark from: %s", url)
 
 
-def spark(**kwargs):
+def spark(args):
     """Install Spark.
     :param yes:
     :param install:
@@ -71,7 +69,6 @@ def spark(**kwargs):
     :param uninstall:
     :param version:
     """
-    args = namespace(kwargs)
     dir_ = args.location.resolve()
     spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
     spark_home = dir_ / spark_hdp
@@ -146,7 +143,7 @@ def _add_subparser_spark(subparsers):
     add_subparser(subparsers, "Spark", func=spark, add_argument=_spark_args)
 
 
-def pyspark(**kwargs):
+def pyspark(args):
     """Install PySpark.
     :param yes:
     :param install:
@@ -154,7 +151,6 @@ def pyspark(**kwargs):
     :param uninstall:
     :param version:
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install {args.user_s} pyspark findspark"
         run_cmd(cmd)
@@ -174,7 +170,7 @@ def _add_subparser_pyspark(subparsers):
     add_subparser(subparsers, "PySpark", func=pyspark, add_argument=_pyspark_args)
 
 
-def optimuspyspark(**kwargs):
+def optimuspyspark(args):
     """Install Optimus (a PySpark package for data profiling).
     :param yes:
     :param install:
@@ -182,7 +178,6 @@ def optimuspyspark(**kwargs):
     :param uninstall:
     :param version:
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install {args.user_s} optimuspyspark"
         run_cmd(cmd)
@@ -197,14 +192,13 @@ def _add_subparser_optimuspyspark(subparsers):
     add_subparser(subparsers, "Optimus", func=optimuspyspark, add_argument=option_user)
 
 
-def dask(**kwargs):
+def dask(args):
     """Install the Python module dask.
     :param yes:
     :param install:
     :param config:
     :param uninstall:
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install {args.user_s} dask[complete]"
         run_cmd(cmd)

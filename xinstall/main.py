@@ -103,10 +103,10 @@ logging.basicConfig(
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
     level=logging.INFO
 )
-__version__ = "0.20.0"
+__version__ = "0.21.0"
 
 
-def version(**kwargs):
+def version(args):
     """Print the version of xinstall.
     """
     print(__version__)
@@ -237,7 +237,13 @@ def parse_args(args=None, namespace=None):
     _add_subparser_lxqt(subparsers)
     _add_subparser_pygetwindow(subparsers)
     # --------------------------------------------------------
-    return parser.parse_args(args=args, namespace=namespace)
+    args = parser.parse_args(args=args, namespace=namespace)
+    args.yes_s = "--yes" if args.yes else ""
+    if "user" in args:
+        args.user_s = "--user" if args.user else ""
+    if USER == "root":
+        args.prefix = ""
+    return args
 
 
 def main():
@@ -245,7 +251,7 @@ def main():
     """
     args = parse_args()
     logging.basicConfig(level=getattr(logging, args.level.upper()))
-    args.func(**vars(args))
+    args.func(args)
 
 
 if __name__ == "__main__":

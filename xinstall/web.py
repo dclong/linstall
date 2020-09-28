@@ -5,10 +5,20 @@ import os
 import logging
 import shutil
 from pathlib import Path
+from argparse import Namespace
 from .utils import (
-    HOME, USER, BASE_DIR, BIN_DIR, run_cmd, add_subparser, update_apt_source,
-    brew_install_safe, is_ubuntu_debian, is_macos, is_centos_series, namespace,
-    option_pip
+    HOME,
+    USER,
+    BASE_DIR,
+    run_cmd,
+    add_subparser,
+    update_apt_source,
+    brew_install_safe,
+    is_ubuntu_debian,
+    is_macos,
+    is_centos_series,
+    option_pip,
+    option_user,
 )
 logging.basicConfig(
     format=
@@ -17,10 +27,9 @@ logging.basicConfig(
 )
 
 
-def ssh_server(**kwargs) -> None:
+def ssh_server(args) -> None:
     """Install and configure SSH server.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -46,11 +55,10 @@ def _add_subparser_ssh_server(subparsers):
     add_subparser(subparsers, "SSH server", func=ssh_server, aliases=["sshs"])
 
 
-def ssh_client(**kwargs) -> None:
+def ssh_client(args) -> None:
     """Configure SSH client.
     :param kwargs: Keyword arguments.
     """
-    args = namespace(kwargs)
     if args.config:
         ssh_src = Path(f"/home_host/{USER}/.ssh")
         ssh_dst = HOME / ".ssh"
@@ -77,11 +85,10 @@ def _add_subparser_ssh_client(subparsers):
     add_subparser(subparsers, "SSH client", func=ssh_client, aliases=["sshc"])
 
 
-def proxychains(**kwargs) -> None:
+def proxychains(args) -> None:
     """Install and configure ProxyChains.
     :param kwargs: Keyword arguments.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -114,15 +121,14 @@ def _add_subparser_proxychains(subparsers):
     )
 
 
-def dryscrape(**kwargs):
+def dryscrape(args):
     """Install and configure dryscrape.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            cmd = f"""{args.pefix} apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
-                && {args.pip} install --user dryscrape
+            cmd = f"""{args.prefix} apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
+                && {args.pip} install {args.user_s} dryscrape
                 """
             run_cmd(cmd)
         elif is_macos():
@@ -140,12 +146,26 @@ def dryscrape(**kwargs):
             pass
 
 
+def _dryscrape_args(subparser) -> None:
+    option_pip(subparser)
+    option_user(subparser)
+
+
 def _add_subparser_dryscrape(subparsers):
-    add_subparser(subparsers, "dryscrape", func=dryscrape, aliases=[])
+    add_subparser(
+        subparsers,
+        "dryscrape",
+        func=dryscrape,
+        aliases=[],
+        add_argument=_dryscrape_args
+    )
 
 
-def download_tools(**kwargs):
-    args = namespace(kwargs)
+def download_tools(args: Namespace):
+    """Install downloading tools.
+
+    :param args: An instance of Namespace containing arguments.
+    """
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)

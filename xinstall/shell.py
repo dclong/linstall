@@ -16,8 +16,9 @@ from .utils import (
     brew_install_safe,
     is_macos,
     run_cmd,
-    namespace,
     add_subparser,
+    option_pip,
+    option_user,
 )
 logging.basicConfig(
     format=
@@ -26,10 +27,9 @@ logging.basicConfig(
 )
 
 
-def coreutils(**kwargs) -> None:
+def coreutils(args) -> None:
     """Install CoreUtils.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -58,10 +58,9 @@ def _add_subparser_coreutils(subparsers) -> None:
     add_subparser(subparsers, "CoreUtils", func=coreutils, aliases=["cu"])
 
 
-def shell_utils(**kwargs) -> None:
+def shell_utils(args) -> None:
     """Install Shell-related utils.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -98,10 +97,9 @@ def _add_subparser_shell_utils(subparsers) -> None:
     )
 
 
-def change_shell(**kwargs) -> None:
+def change_shell(args) -> None:
     """Change the default shell.
     """
-    args = namespace(kwargs)
     if is_linux():
         pass
     elif is_macos():
@@ -138,10 +136,9 @@ def _homebrew_args(subparser) -> None:
     )
 
 
-def homebrew(**kwargs) -> None:
+def homebrew(args) -> None:
     """Install Homebrew.
     """
-    args = namespace(kwargs)
     if args.dep:
         args.install = True
         if is_ubuntu_debian():
@@ -191,10 +188,9 @@ def _add_subparser_homebrew(subparsers) -> None:
     )
 
 
-def hyper(**kwargs) -> None:
+def hyper(args) -> None:
     """Install the hyper.js terminal.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -231,10 +227,9 @@ def _add_subparser_hyper(subparsers) -> None:
     add_subparser(subparsers, "Hyper", func=hyper, aliases=["hp"])
 
 
-def openinterminal(**kwargs) -> None:
+def openinterminal(args) -> None:
     """Install openinterminal.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_macos():
             run_cmd("brew cask install openinterminal")
@@ -249,12 +244,11 @@ def _add_subparser_openinterminal(subparsers) -> None:
     add_subparser(subparsers, "OpenInTerminal", func=openinterminal, aliases=["oit"])
 
 
-def xonsh(**kwargs) -> None:
+def xonsh(args) -> None:
     """Install xonsh, a Python based shell.
     """
-    args = namespace(kwargs)
     if args.install:
-        run_cmd(f"{args.pip} install --user xonsh")
+        run_cmd(f"{args.pip} install {args.user_s} xonsh")
     if args.config:
         src = f"{BASE_DIR}/xonsh/xonshrc"
         dst = HOME / ".xonshrc"
@@ -268,15 +262,19 @@ def xonsh(**kwargs) -> None:
         run_cmd(f"{args.pip} uninstall xonsh")
 
 
+def _xonsh_args(subparser) -> None:
+    option_pip(subparser)
+    option_user(subparser)
+
+
 def _add_subparser_xonsh(subparsers) -> None:
-    add_subparser(subparsers, "xonsh", func=xonsh)
+    add_subparser(subparsers, "xonsh", func=xonsh, add_argument=_xonsh_args)
 
 
-def bash_it(**kwargs) -> None:
+def bash_it(args) -> None:
     """Install Bash-it, a community Bash framework.
     For more details, please refer to https://github.com/Bash-it/bash-it#installation.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = """rm -rf ~/.bash_it \
                 && git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it \
@@ -299,8 +297,7 @@ def _add_subparser_bash_it(subparsers) -> None:
     )
 
 
-def bash_completion(**kwargs) -> None:
-    args = namespace(kwargs)
+def bash_completion(args) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -329,10 +326,9 @@ def _add_subparser_bash_complete(subparsers) -> None:
     )
 
 
-def exa(**kwargs) -> None:
+def exa(args) -> None:
     """Install exa which is an Rust-implemented alternative to ls.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             run_cmd("cargo install --root /usr/local/ exa")
@@ -355,10 +351,9 @@ def _add_subparser_exa(subparsers) -> None:
     add_subparser(subparsers, "exa", func=exa)
 
 
-def osquery(**kwargs) -> None:
+def osquery(args) -> None:
     """Install osquery for Linux admin.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -386,10 +381,9 @@ def _add_subparser_osquery(subparsers) -> None:
     add_subparser(subparsers, "osquery", func=osquery, aliases=["osq"])
 
 
-def wajig(**kwargs) -> None:
+def wajig(args) -> None:
     """Install wajig.
     """
-    args = namespace(kwargs)
     if not is_ubuntu_debian():
         return
     if args.install:
