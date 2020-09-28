@@ -10,10 +10,9 @@ logging.basicConfig(
 )
 
 
-def install_py_github(**kwargs) -> None:
+def install_py_github(args) -> None:
     """Install a Python package from GitHub.
     """
-    args = namespace(kwargs)
     utils.install_py_github(url=args.url, user=args.user, pip=args.pip)
 
 
@@ -33,10 +32,9 @@ def _add_subparser_install_py_github(subparsers) -> None:
     return subparser
 
 
-def dsutil(**kwargs) -> None:
+def dsutil(args) -> None:
     """Install the Python package dsutil.
     """
-    args = namespace(kwargs)
     if args.install:
         url = "https://github.com/dclong/dsutil"
         utils.install_py_github(url=url, pip=args.pip, user=args.user)
@@ -57,10 +55,9 @@ def _add_subparser_dsutil(subparsers) -> None:
     )
 
 
-def xinstall(**kwargs) -> None:
+def xinstall(args) -> None:
     """Install xonsh, a Python based shell.
     """
-    args = namespace(kwargs)
     if args.install:
         url = "https://github.com/dclong/xinstall"
         utils.install_py_github(url=url, user=args.user, pip=args.pip)

@@ -18,10 +18,9 @@ logging.basicConfig(
 )
 
 
-def nbdime(**kwargs) -> None:
+def nbdime(args) -> None:
     """Install and configure nbdime for comparing difference of notebooks.
     """
-    args = namespace(kwargs)
     if args.install:
         run_cmd(f"{args.pip} install --user nbdime")
     if args.uninstall:
@@ -34,10 +33,9 @@ def _add_subparser_nbdime(subparsers) -> None:
     add_subparser(subparsers, "nbdime", func=nbdime, aliases=["nbd"])
 
 
-def itypescript(**kwargs) -> None:
+def itypescript(args) -> None:
     """Install and configure the ITypeScript kernel.
     """
-    args = namespace(kwargs)
     if args.install:
         run_cmd(f"{args.prefix} npm install -g --unsafe-perm itypescript")
         run_cmd(f"{args.prefix} its --ts-hide-undefined --install=global")
@@ -52,10 +50,9 @@ def _add_subparser_itypescript(subparsers) -> None:
     add_subparser(subparsers, "iTypeScript", func=itypescript, aliases=["its"])
 
 
-def jupyterlab_lsp(**kwargs) -> None:
+def jupyterlab_lsp(args) -> None:
     """Install jupyterlab-lsp.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"""{args.pip} install jupyter-lsp \
                 && {args.prefix} {args.jupyter} labextension install @krassowski/jupyterlab-lsp \
@@ -82,10 +79,9 @@ def _add_subparser_jupyterlab_lsp(subparsers) -> None:
     )
 
 
-def beakerx(**kwargs) -> None:
+def beakerx(args) -> None:
     """Install/uninstall/configure the BeakerX kernels.
     """
-    args = namespace(kwargs)
     if args.install:
         run_cmd(f"{args.pip} install --user beakerx")
         run_cmd(f"{args.prefix} beakerx install")
@@ -108,10 +104,9 @@ def _add_subparser_beakerx(subparsers) -> None:
     add_subparser(subparsers, "BeakerX", func=beakerx, aliases=["bkx", "bk"])
 
 
-def almond(**kwargs) -> None:
+def almond(args) -> None:
     """Install/uninstall/configure the Almond Scala kernel.
     """
-    args = namespace(kwargs)
     if args.almond_version:
         args.install = True
         if not args.almond_version.startswith(":"):
@@ -158,10 +153,9 @@ def _add_subparser_almond(subparsers) -> None:
     )
 
 
-def evcxr_jupyter(**kwargs) -> None:
+def evcxr_jupyter(args) -> None:
     """Install the evcxr Rust kernel for Jupyter/Lab server.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"""{args.prefix} apt-get install {args.yes_s} cmake cargo \
             && cargo install --force evcxr_jupyter \

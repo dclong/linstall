@@ -103,10 +103,10 @@ logging.basicConfig(
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
     level=logging.INFO
 )
-__version__ = "0.20.0"
+__version__ = "0.21.0"
 
 
-def version(**kwargs):
+def version(args):
     """Print the version of xinstall.
     """
     print(__version__)
@@ -245,7 +245,7 @@ def main():
     """
     args = parse_args()
     logging.basicConfig(level=getattr(logging, args.level.upper()))
-    args.func(**vars(args))
+    args.func(args)
 
 
 if __name__ == "__main__":

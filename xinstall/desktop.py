@@ -19,10 +19,9 @@ logging.basicConfig(
 )
 
 
-def nomachine(**kwargs):
+def nomachine(args):
     """Install NoMachine.
     """
-    args = namespace(kwargs)
     if args.install:
         ver = args.version[:args.version.rindex(".")]
         if is_ubuntu_debian():
@@ -57,10 +56,9 @@ def _add_subparser_nomachine(subparsers):
     )
 
 
-def lxqt(**kwargs):
+def lxqt(args):
     """Install the LXQt desktop environment.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -80,10 +78,9 @@ def _add_subparser_lxqt(subparsers):
     )
 
 
-def pygetwindow(**kwargs):
+def pygetwindow(args):
     """Install and configure the Python package PyGetWindow.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_linux():
             sys.exit("PyGetWindow is not supported on Linux currently!")

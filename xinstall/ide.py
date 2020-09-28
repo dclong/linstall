@@ -17,10 +17,9 @@ logging.basicConfig(
 )
 
 
-def vim(**kwargs) -> None:
+def vim(args) -> None:
     """Install Vim.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -44,10 +43,9 @@ def _add_subparser_vim(subparsers) -> None:
     add_subparser(subparsers, "Vim", func=vim)
 
 
-def neovim(**kwargs) -> None:
+def neovim(args) -> None:
     """Install NeoVim.
     """
-    args = namespace(kwargs)
     if args.ppa and is_ubuntu_debian():
         args.install = True
         run_cmd(f"{args.prefix} add-apt-repository -y ppa:neovim-ppa/stable")
@@ -114,10 +112,9 @@ def _svim_gen_config() -> None:
         shutil.copy2(BASE_DIR / "SpaceVim/init.toml", des_dir)
 
 
-def spacevim(**kwargs) -> None:
+def spacevim(args) -> None:
     """Install and configure SpaceVim.
     """
-    args = namespace(kwargs)
     if args.install:
         run_cmd("curl -sLf https://spacevim.org/install.sh | bash")
         if shutil.which("nvim"):
@@ -167,10 +164,9 @@ def _add_subparser_spacevim(subparsers) -> None:
     )
 
 
-def bash_lsp(**kwargs) -> None:
+def bash_lsp(args) -> None:
     """Install Bash Language Server.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.prefix} npm install -g bash-language-server"
         run_cmd(cmd)
@@ -193,10 +189,9 @@ def _add_subparser_bash_lsp(subparsers) -> None:
     add_subparser(subparsers, "Bash LSP", func=bash_lsp, aliases=["blsp"])
 
 
-def ideavim(**kwargs) -> None:
+def ideavim(args) -> None:
     """Install IdeaVim for IntelliJ.
     """
-    args = namespace(kwargs)
     if args.config:
         shutil.copy2(BASE_DIR / "ideavim/ideavimrc", HOME / ".ideavimrc")
 
@@ -205,10 +200,9 @@ def _add_subparser_ideavim(subparsers) -> None:
     add_subparser(subparsers, "IdeaVim", func=ideavim, aliases=["ivim"])
 
 
-def intellij_idea(**kwargs) -> None:
+def intellij_idea(args) -> None:
     """Install IntelliJ IDEA.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -236,10 +230,9 @@ def intellij_idea(**kwargs) -> None:
         pass
 
 
-def visual_studio_code(**kwargs) -> None:
+def visual_studio_code(args) -> None:
     """Install Visual Studio Code.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -287,10 +280,9 @@ def _add_subparser_visual_studio_code(subparsers) -> None:
     )
 
 
-def intellij_idea_scala(**kwargs) -> None:
+def intellij_idea_scala(args) -> None:
     """Install the Scala plugin for IntelliJ IDEA Community Edition.
     """
-    args = namespace(kwargs)
     url = "http://plugins.jetbrains.com/files/1347/73157/scala-intellij-bin-2019.3.17.zip"
     intellij_idea_plugin(version=args.version, url=url)
 

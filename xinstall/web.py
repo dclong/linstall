@@ -17,10 +17,9 @@ logging.basicConfig(
 )
 
 
-def ssh_server(**kwargs) -> None:
+def ssh_server(args) -> None:
     """Install and configure SSH server.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -46,11 +45,10 @@ def _add_subparser_ssh_server(subparsers):
     add_subparser(subparsers, "SSH server", func=ssh_server, aliases=["sshs"])
 
 
-def ssh_client(**kwargs) -> None:
+def ssh_client(args) -> None:
     """Configure SSH client.
     :param kwargs: Keyword arguments.
     """
-    args = namespace(kwargs)
     if args.config:
         ssh_src = Path(f"/home_host/{USER}/.ssh")
         ssh_dst = HOME / ".ssh"
@@ -77,11 +75,10 @@ def _add_subparser_ssh_client(subparsers):
     add_subparser(subparsers, "SSH client", func=ssh_client, aliases=["sshc"])
 
 
-def proxychains(**kwargs) -> None:
+def proxychains(args) -> None:
     """Install and configure ProxyChains.
     :param kwargs: Keyword arguments.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -114,10 +111,9 @@ def _add_subparser_proxychains(subparsers):
     )
 
 
-def dryscrape(**kwargs):
+def dryscrape(args):
     """Install and configure dryscrape.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -144,8 +140,7 @@ def _add_subparser_dryscrape(subparsers):
     add_subparser(subparsers, "dryscrape", func=dryscrape, aliases=[])
 
 
-def download_tools(**kwargs):
-    args = namespace(kwargs)
+def download_tools(args):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)

@@ -10,10 +10,9 @@ logging.basicConfig(
 )
 
 
-def kaggle(**kwargs):
+def kaggle(args):
     """Insert the Python package kaggle.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install {args.user_s} kaggle"
         run_cmd(cmd)
@@ -48,10 +47,9 @@ def _add_subparser_kaggle(subparsers):
     )
 
 
-def lightgbm(**kwargs):
+def lightgbm(args):
     """Insert the Python package kaggle.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install {args.user_s} lightgbm scikit-learn pandas matplotlib scipy graphviz"
         run_cmd(cmd)
@@ -71,10 +69,9 @@ def _add_subparser_lightgbm(subparsers):
     )
 
 
-def pytorch(**kwargs):
+def pytorch(args):
     """Insert PyTorch.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_linux():
             cmd = f"{args.pip} install torch==1.5.1+cpu torchvision==0.6.1+cpu -f https://download.pytorch.org/whl/torch_stable.html"
@@ -105,10 +102,9 @@ def _add_subparser_pytorch(subparsers):
     )
 
 
-def autogluon(**kwargs):
+def autogluon(args):
     """Insert the Python package AutoGluon.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install mxnet autogluon"
         if args.cuda_version:
@@ -142,7 +138,7 @@ def _add_subparser_autogluon(subparsers):
     )
 
 
-def tensorflow(**kwargs):
+def tensorflow(args):
     """Install the Python package TensorFlow.
     Since the most common to use TensorFlow is to install it into a Docker image 
     that already come with Nvidia CUDA support, 
@@ -151,7 +147,6 @@ def tensorflow(**kwargs):
     For more details,
     please refer to https://www.tensorflow.org/install/gpu.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install tensorflow"
         run_cmd(cmd)
@@ -175,10 +170,9 @@ def _add_subparser_tensorflow(subparsers):
     )
 
 
-def gensim(**kwargs):
+def gensim(args):
     """Insert the Python package GenSim.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install gensim"
         if args.cuda_version:
@@ -198,10 +192,9 @@ def _add_subparser_gensim(subparsers):
     )
 
 
-def pytext(**kwargs):
+def pytext(args):
     """Insert the Python package PyText.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install pytext-nlp"
         if args.cuda_version:
@@ -221,10 +214,9 @@ def _add_subparser_pytext(subparsers):
     )
 
 
-def computer_vision(**kwargs):
+def computer_vision(args):
     """Insert computer vision Python packages: opencv-python, scikit-image and Pillow.
     """
-    args = namespace(kwargs)
     if args.install:
         if is_linux():
             cmd = f"""{args.prefix} apt-get install {args.yes_s} \
@@ -253,10 +245,9 @@ def _add_subparser_computer_vision(subparsers):
     )
 
 
-def nlp(**kwargs):
+def nlp(args):
     """Install Python packages (PyTorch, transformers, pytext-nlp and fasttext) for NLP.
     """
-    args = namespace(kwargs)
     if args.install:
         cmd = f"{args.pip} install torch torchvision transformers pytext-nlp fasttext"
         run_cmd(cmd)
