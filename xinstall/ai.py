@@ -2,7 +2,7 @@
 """
 from pathlib import Path
 import logging
-from .utils import HOME, USER, run_cmd, namespace, add_subparser, is_linux, is_macos, option_pip
+from .utils import HOME, USER, run_cmd, add_subparser, is_linux, is_macos, option_pip
 logging.basicConfig(
     format=
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",

@@ -4,7 +4,6 @@ import logging
 from .utils import (
     USER,
     run_cmd,
-    namespace,
     add_subparser,
     is_macos,
     is_centos_series,

@@ -16,7 +16,6 @@ from .utils import (
     brew_install_safe,
     is_macos,
     run_cmd,
-    namespace,
     add_subparser,
 )
 logging.basicConfig(

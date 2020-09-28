@@ -6,7 +6,6 @@ from .utils import (
     HOME,
     BIN_DIR,
     run_cmd,
-    namespace,
     add_subparser,
     option_pip,
     option_jupyter,

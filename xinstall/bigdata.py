@@ -9,7 +9,6 @@ from tqdm import tqdm
 from .utils import (
     BASE_DIR,
     run_cmd,
-    namespace,
     add_subparser,
     option_user,
     option_pip,

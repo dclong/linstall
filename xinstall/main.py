@@ -243,7 +243,7 @@ def parse_args(args=None, namespace=None):
         args.user_s = "--user" if args.user else ""
     if USER == "root":
         args.prefix = ""
-    return args 
+    return args
 
 
 def main():

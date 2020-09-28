@@ -1,7 +1,7 @@
 """GitHub related utils.
 """
 import logging
-from .utils import option_pip, option_python, option_user, namespace, add_subparser, run_cmd
+from .utils import option_pip, option_python, option_user, add_subparser, run_cmd
 from . import utils
 logging.basicConfig(
     format=

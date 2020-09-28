@@ -9,7 +9,6 @@ from .utils import (
     is_linux,
     update_apt_source,
     run_cmd,
-    namespace,
     add_subparser,
 )
 logging.basicConfig(

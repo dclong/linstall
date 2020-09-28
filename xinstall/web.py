@@ -7,8 +7,7 @@ import shutil
 from pathlib import Path
 from .utils import (
     HOME, USER, BASE_DIR, BIN_DIR, run_cmd, add_subparser, update_apt_source,
-    brew_install_safe, is_ubuntu_debian, is_macos, is_centos_series, namespace,
-    option_pip
+    brew_install_safe, is_ubuntu_debian, is_macos, is_centos_series, option_pip
 )
 logging.basicConfig(
     format=

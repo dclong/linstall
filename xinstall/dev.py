@@ -18,7 +18,6 @@ from .utils import (
     is_macos,
     remove_file_safe,
     run_cmd,
-    namespace,
     add_subparser,
     option_user,
     option_pip,
