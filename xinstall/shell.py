@@ -17,6 +17,8 @@ from .utils import (
     is_macos,
     run_cmd,
     add_subparser,
+    option_pip,
+    option_user,
 )
 logging.basicConfig(
     format=
@@ -246,7 +248,7 @@ def xonsh(args) -> None:
     """Install xonsh, a Python based shell.
     """
     if args.install:
-        run_cmd(f"{args.pip} install --user xonsh")
+        run_cmd(f"{args.pip} install {args.user_s} xonsh")
     if args.config:
         src = f"{BASE_DIR}/xonsh/xonshrc"
         dst = HOME / ".xonshrc"
@@ -260,8 +262,13 @@ def xonsh(args) -> None:
         run_cmd(f"{args.pip} uninstall xonsh")
 
 
+def _xonsh_args(subparser) -> None:
+    option_pip(subparser)
+    option_user(subparser)
+
+
 def _add_subparser_xonsh(subparsers) -> None:
-    add_subparser(subparsers, "xonsh", func=xonsh)
+    add_subparser(subparsers, "xonsh", func=xonsh, add_argument=_xonsh_args)
 
 
 def bash_it(args) -> None:

@@ -8,6 +8,7 @@ from .utils import (
     run_cmd,
     add_subparser,
     option_pip,
+    option_user,
     option_jupyter,
 )
 logging.basicConfig(
@@ -21,15 +22,20 @@ def nbdime(args) -> None:
     """Install and configure nbdime for comparing difference of notebooks.
     """
     if args.install:
-        run_cmd(f"{args.pip} install --user nbdime")
+        run_cmd(f"{args.pip} install {args.user_s} nbdime")
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall nbdime")
     if args.config:
         run_cmd("nbdime config-git --enable --global")
 
 
+def _nbdime_args(subparser) -> None:
+    option_pip(subparser)
+    option_user(subparser)
+
+
 def _add_subparser_nbdime(subparsers) -> None:
-    add_subparser(subparsers, "nbdime", func=nbdime, aliases=["nbd"])
+    add_subparser(subparsers, "nbdime", func=nbdime, aliases=["nbd"], add_argument=_nbdime_args)
 
 
 def itypescript(args) -> None:
@@ -53,9 +59,9 @@ def jupyterlab_lsp(args) -> None:
     """Install jupyterlab-lsp.
     """
     if args.install:
-        cmd = f"""{args.pip} install jupyter-lsp \
+        cmd = f"""{args.pip} install {args.user_s} jupyter-lsp \
                 && {args.prefix} {args.jupyter} labextension install @krassowski/jupyterlab-lsp \
-                && {args.pip} install python-language-server[all] pyls-mypy"""
+                && {args.pip} install {args.user_s} python-language-server[all] pyls-mypy"""
         run_cmd(cmd)
     if args.config:
         pass
@@ -65,6 +71,7 @@ def jupyterlab_lsp(args) -> None:
 
 def _jupyterlab_lsp_args(subparser) -> None:
     option_pip(subparser)
+    option_user(subparser)
     option_jupyter(subparser)
 
 
@@ -82,7 +89,7 @@ def beakerx(args) -> None:
     """Install/uninstall/configure the BeakerX kernels.
     """
     if args.install:
-        run_cmd(f"{args.pip} install --user beakerx")
+        run_cmd(f"{args.pip} install {args.user_s} beakerx")
         run_cmd(f"{args.prefix} beakerx install")
         run_cmd(
             f"{args.prefix} jupyter labextension install @jupyter-widgets/jupyterlab-manager",
@@ -97,6 +104,11 @@ def beakerx(args) -> None:
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:
         run_cmd(f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}")
+
+
+def _beakerx_args(subparser) -> None:
+    option_pip(subparser)
+    option_user(subparser)
 
 
 def _add_subparser_beakerx(subparsers) -> None:

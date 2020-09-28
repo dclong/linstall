@@ -16,6 +16,8 @@ from .utils import (
     is_ubuntu_debian,
     is_macos,
     is_centos_series,
+    option_pip,
+    option_user,
 )
 logging.basicConfig(
     format=
@@ -124,8 +126,8 @@ def dryscrape(args):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            cmd = f"""{args.pefix} apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
-                && {args.pip} install --user dryscrape
+            cmd = f"""{args.prefix} apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
+                && {args.pip} install {args.user_s} dryscrape
                 """
             run_cmd(cmd)
         elif is_macos():
@@ -143,8 +145,13 @@ def dryscrape(args):
             pass
 
 
+def _dryscrape_args(subparser) -> None:
+    option_pip(subparser)
+    option_user(subparser)
+
+
 def _add_subparser_dryscrape(subparsers):
-    add_subparser(subparsers, "dryscrape", func=dryscrape, aliases=[])
+    add_subparser(subparsers, "dryscrape", func=dryscrape, aliases=[], add_argument=_dryscrape_args)
 
 
 def download_tools(args):
