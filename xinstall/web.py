@@ -152,7 +152,13 @@ def _dryscrape_args(subparser) -> None:
 
 
 def _add_subparser_dryscrape(subparsers):
-    add_subparser(subparsers, "dryscrape", func=dryscrape, aliases=[], add_argument=_dryscrape_args)
+    add_subparser(
+        subparsers,
+        "dryscrape",
+        func=dryscrape,
+        aliases=[],
+        add_argument=_dryscrape_args
+    )
 
 
 def download_tools(args: Namespace):

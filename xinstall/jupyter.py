@@ -35,7 +35,9 @@ def _nbdime_args(subparser) -> None:
 
 
 def _add_subparser_nbdime(subparsers) -> None:
-    add_subparser(subparsers, "nbdime", func=nbdime, aliases=["nbd"], add_argument=_nbdime_args)
+    add_subparser(
+        subparsers, "nbdime", func=nbdime, aliases=["nbd"], add_argument=_nbdime_args
+    )
 
 
 def itypescript(args) -> None:
