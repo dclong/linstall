@@ -262,6 +262,7 @@ def _ipython_args(subparser):
         help="The directory for storing IPython configuration files.",
     )
     option_pip(subparser)
+    option_user(subparser)
 
 
 def _add_subparser_ipython(subparsers):

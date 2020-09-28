@@ -2,7 +2,7 @@
 """
 from pathlib import Path
 import logging
-from .utils import HOME, USER, run_cmd, add_subparser, is_linux, is_macos, option_pip
+from .utils import HOME, USER, run_cmd, add_subparser, is_linux, is_macos, option_pip, option_user
 logging.basicConfig(
     format=
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
@@ -39,6 +39,7 @@ def kaggle(args):
 
 def _kaggle_args(subparser):
     option_pip(subparser)
+    option_user(subparser)
 
 
 def _add_subparser_kaggle(subparsers):
@@ -61,6 +62,7 @@ def lightgbm(args):
 
 def _lightgbm_args(subparser):
     option_pip(subparser)
+    option_user(subparser)
 
 
 def _add_subparser_lightgbm(subparsers):
