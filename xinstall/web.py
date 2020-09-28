@@ -154,7 +154,11 @@ def _add_subparser_dryscrape(subparsers):
     add_subparser(subparsers, "dryscrape", func=dryscrape, aliases=[], add_argument=_dryscrape_args)
 
 
-def download_tools(args):
+def download_tools(args: Namespace):
+    """Install downloading tools.
+
+    :param args: An instance of Namespace containing arguments.
+    """
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
