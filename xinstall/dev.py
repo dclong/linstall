@@ -430,7 +430,7 @@ def rust(args):
             cmd = f"{args.prefix} yum install {args.yes_s} cmake rustc cargo"
             run_cmd(cmd)
         if is_macos():
-            brew_install_safe(["cmake", "rustc", "cargo"])
+            brew_install_safe(["cmake", "rust", "cargo"])
     if args.config:
         pass
     if args.uninstall:
