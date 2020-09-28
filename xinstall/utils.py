@@ -238,21 +238,6 @@ def intellij_idea_plugin(version: str, url: str):
     run_cmd(cmd)
 
 
-def namespace(dic: Dict) -> Namespace:
-    """Convert a dictionary object to an argpase Namespace.
-
-    :param dic: A dictionary object.
-    :return: An argparse Namespace.
-    """
-    dic.setdefault("yes", False)
-    dic["yes_s"] = "--yes" if dic["yes"] else ""
-    dic.setdefault("user", False)
-    dic["user_s"] = "--user" if dic["user"] else ""
-    if USER == "root":
-        dic["prefix"] = ""
-    return Namespace(**dic)
-
-
 def option_user(subparser):
     """Add the option --user to the subparser.
 

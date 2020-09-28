@@ -237,7 +237,13 @@ def parse_args(args=None, namespace=None):
     _add_subparser_lxqt(subparsers)
     _add_subparser_pygetwindow(subparsers)
     # --------------------------------------------------------
-    return parser.parse_args(args=args, namespace=namespace)
+    args = parser.parse_args(args=args, namespace=namespace)
+    args.yes_s = "--yes" if args.yes else ""
+    if "user" in args:
+        args.user_s = "--user" if args.user else ""
+    if USER == "root":
+        args.prefix = ""
+    return args 
 
 
 def main():
