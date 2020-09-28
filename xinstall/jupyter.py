@@ -10,6 +10,8 @@ from .utils import (
     option_pip,
     option_user,
     option_jupyter,
+    is_ubuntu_debian,
+    is_macos,
 )
 logging.basicConfig(
     format=
@@ -170,10 +172,16 @@ def evcxr_jupyter(args) -> None:
     """Install the evcxr Rust kernel for Jupyter/Lab server.
     """
     if args.install:
-        cmd = f"""{args.prefix} apt-get install {args.yes_s} cmake cargo \
-            && cargo install --force evcxr_jupyter \
-            && {HOME}/.cargo/bin/evcxr_jupyter --install"""
-        run_cmd(cmd)
+        if is_ubuntu_debian():
+            cmd = f"""{args.prefix} apt-get install {args.yes_s} cmake cargo \
+                && cargo install --force evcxr_jupyter \
+                && {HOME}/.cargo/bin/evcxr_jupyter --install"""
+            run_cmd(cmd)
+        elif is_macos():
+            cmd = f"""brew install cmake cargo \
+                && cargo install --force evcxr_jupyter \
+                && {HOME}/.cargo/bin/evcxr_jupyter --install"""
+            run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
