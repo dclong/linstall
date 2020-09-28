@@ -7,9 +7,7 @@ from pathlib import Path
 from argparse import Namespace
 from .utils import (
     HOME,
-    USER,
     BASE_DIR,
-    BIN_DIR,
     is_ubuntu_debian,
     is_centos_series,
     is_linux,

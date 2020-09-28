@@ -1,7 +1,6 @@
 """Helper functions.
 """
 from typing import Union, List, Tuple, Sequence, Iterable, Any, Sized, Dict, Callable
-from argparse import Namespace
 import os
 import sys
 import json

@@ -1,6 +1,5 @@
 """Install big data related tools.
 """
-import os
 import logging
 from pathlib import Path
 from urllib.request import urlretrieve

@@ -8,7 +8,7 @@ import re
 from .utils import (
     USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, is_ubuntu_debian, is_centos_series,
     update_apt_source, brew_install_safe, is_macos, run_cmd, add_subparser,
-    intellij_idea_plugin, option_user, option_option, option_pip
+    intellij_idea_plugin, option_user, option_pip
 )
 logging.basicConfig(
     format=
