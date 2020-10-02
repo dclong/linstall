@@ -79,7 +79,9 @@ def ssh_client(args) -> None:
         if is_linux() or is_macos():
             cmd = f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
             run_cmd(cmd)
-            logging.info("The permissions of ~/.ssh and its contents are corrected set.")
+            logging.info(
+                "The permissions of ~/.ssh and its contents are corrected set."
+            )
 
 
 def _add_subparser_ssh_client(subparsers):
