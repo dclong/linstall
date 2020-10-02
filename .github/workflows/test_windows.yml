@@ -30,7 +30,7 @@ jobs:
       run: |
         pip3 install -U git+https://github.com/dclong/xinstall@master
         xinstall pt -ic --python python
-        echo "::add-path::$HOME\.poetry\bin"
+        $env:Path += ";$env:Userprofile\.poetry\bin"
         #echo "::set-env PATH=TEMP::$env:USERPROFILE\AppData\Local\Temp"
         #%USERPROFILE%\.poetry\bin\poetry env use python3
         #$HOME\.poetry\bin\poetry env use python3
