@@ -110,7 +110,7 @@ def is_ubuntu_debian():
 
 
 def is_linux():
-    """Check whehter the current OS is Linux. 
+    """Check whehter the current OS is Linux.
     """
     return sys.platform == "linux"
 
