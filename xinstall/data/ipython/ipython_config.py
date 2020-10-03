@@ -11,6 +11,10 @@ c.AliasManager.user_aliases = [
     ("du.1s", "du -d 1 | sort -n"),
     # docker
     (
+        "docker.httpd",
+        "docker run --hostname httpd -dit -p 80:80 -v $(pwd):/usr/local/apache2/htdocs/ httpd"
+    ),
+    (
         "docker.jupyterhub_ds",
         "docker run -d --hostname jupyterhub-ds --log-opt max-size=50m -p 8000:8000 -p 5006:5006 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ds /scripts/sys/init.sh"
     ),
