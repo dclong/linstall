@@ -34,20 +34,6 @@ def test_bash_lsp():
     sp.run(cmd, shell=True, check=True)
 
 
-def test_spark():
-    """Test installing Spark.
-    """
-    cmd = "xinstall --sudo spark -ic --loc /opt"
-    sp.run(cmd, shell=True, check=True)
-
-
-def test_pyspark():
-    """Test installing PySpark.
-    """
-    cmd = "xinstall pyspark -ic"
-    sp.run(cmd, shell=True, check=True)
-
-
 def test_rust():
     """Test installing the Rust programming language.
     """
