@@ -361,7 +361,7 @@ def _poetry_args(subparser):
         "-v",
         "--version",
         dest="version",
-        default="1.0.9",
+        default="",
         help="The version of Python Poetry to install."
     )
     option_python(subparser)
