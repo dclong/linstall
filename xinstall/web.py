@@ -15,6 +15,7 @@ from .utils import (
     update_apt_source,
     brew_install_safe,
     is_ubuntu_debian,
+    is_linux,
     is_macos,
     is_centos_series,
     option_pip,
@@ -75,10 +76,12 @@ def ssh_client(args) -> None:
         des = HOME / ".ssh/config"
         shutil.copy2(src, des)
         logging.info("%s is copied to %s.", ssh_src, ssh_dst)
-        # file permissions
-        cmd = f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
-        run_cmd(cmd)
-        logging.info("The permissions of ~/.ssh and its contents are corrected set.")
+        if is_linux() or is_macos():
+            cmd = f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
+            run_cmd(cmd)
+            logging.info(
+                "The permissions of ~/.ssh and its contents are corrected set."
+            )
 
 
 def _add_subparser_ssh_client(subparsers):
