@@ -330,6 +330,14 @@ def poetry(args):
         run_cmd(cmd)
     poetry_bin = HOME / ".poetry/bin/poetry"
     if args.config:
+        # link executable to ~/.local/bin
+        home_bin = HOME / ".local/bin/poetry"
+        try:
+            home_bin.unlink()
+        except:
+            pass
+        home_bin.symlink_to(poetry_bin)
+        logging.info("The poetry executable is symbolicly linked to %s", home_bin)
         # make poetry always create virtual environment in the root directory of the project
         run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
         logging.info(
