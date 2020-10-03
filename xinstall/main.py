@@ -2,7 +2,7 @@
 """
 import logging
 from argparse import ArgumentParser
-from .utils import USER
+from .utils import USER, is_win
 from .ai import (
     _add_subparser_kaggle,
     _add_subparser_lightgbm,
@@ -241,7 +241,7 @@ def parse_args(args=None, namespace=None):
     args.yes_s = "--yes" if args.yes else ""
     if "user" in args:
         args.user_s = "--user" if args.user else ""
-    if USER == "root":
+    if USER == "root" or is_win():
         args.prefix = ""
     return args
 
