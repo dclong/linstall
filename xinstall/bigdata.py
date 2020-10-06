@@ -31,7 +31,7 @@ class ProgressBar(tqdm):
         self.update(block_num * block_size - self.n)
 
 
-def _download_spark(args: Namespace, spark_hdp: str, desfile: str):
+def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
     mirrors = args.mirrors + (
         "http://apache.mirrors.hoobly.com/spark",
         "http://apache.spinellicreations.com/spark",
