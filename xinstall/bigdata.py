@@ -90,7 +90,7 @@ def spark(args):
         # warehouse
         warehouse = spark_home / "warehouse"
         if is_win():
-            run_cmd(f"mkdir /S {warehouse}")
+            run_cmd(f"md /s {warehouse}")
         else:
             run_cmd(
                 f"{args.prefix} mkdir -p {warehouse} && "
