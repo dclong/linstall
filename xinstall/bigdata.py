@@ -12,6 +12,7 @@ from .utils import (
     add_subparser,
     option_user,
     option_pip,
+    is_win,
 )
 logging.basicConfig(
     format=
@@ -55,9 +56,8 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         try:
             logging.info("Downloading Spark from: %s", url)
-            #with ProgressBar(unit="B", unit_scale=True, miniters=1) as progress:
-            #    urlretrieve(url, desfile, progress.update_progress)
-            urlretrieve(url, desfile)
+            with ProgressBar(unit="B", unit_scale=True, miniters=1) as progress:
+                urlretrieve(url, desfile, progress.update_progress)
             return
         except Exception:
             logging.info("Failed to download Spark from: %s", url)
@@ -89,10 +89,13 @@ def spark(args):
         )
         # warehouse
         warehouse = spark_home / "warehouse"
-        run_cmd(
-            f"{args.prefix} mkdir -p {warehouse} && "
-            f"{args.prefix} chmod -R 777 {warehouse}"
-        )
+        if is_win():
+            run_cmd(f"mkdir /S {warehouse}")
+        else:
+            run_cmd(
+                f"{args.prefix} mkdir -p {warehouse} && "
+                f"{args.prefix} chmod -R 777 {warehouse}"
+            )
         # spark-defaults.conf
         conf = (BASE_DIR / "spark/spark-defaults.conf"
                ).read_text().replace("$SPARK_HOME", str(spark_home))
