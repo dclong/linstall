@@ -3,6 +3,7 @@
 import logging
 from pathlib import Path
 from urllib.request import urlretrieve
+import subprocess as sp
 from argparse import Namespace
 import tempfile
 from tqdm import tqdm
