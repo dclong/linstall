@@ -54,8 +54,9 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: str):
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         try:
             logging.info("Downloading Spark from: %s", url)
-            with ProgressBar(unit="B", unit_scale=True, miniters=1) as progress:
-                urlretrieve(url, desfile, progress.update_progress)
+            #with ProgressBar(unit="B", unit_scale=True, miniters=1) as progress:
+                #urlretrieve(url, desfile, progress.update_progress)
+            urlretrieve(url, desfile)
             return
         except Exception:
             logging.info("Failed to download Spark from: %s", url)
