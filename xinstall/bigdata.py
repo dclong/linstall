@@ -90,7 +90,12 @@ def spark(args):
         # warehouse
         warehouse = spark_home / "warehouse"
         if is_win():
-            run_cmd(f"md /s {warehouse}")
+            #run_cmd(f"mkdir /S {warehouse}")
+            cmd = f"mkdir /S {warehouse}"
+            proc = sp.run(cmd, shell=True, check=False)
+            print(proc.stderr)
+            print(proc.stdout)
+            print(proc.returncode)
         else:
             run_cmd(
                 f"{args.prefix} mkdir -p {warehouse} && "
