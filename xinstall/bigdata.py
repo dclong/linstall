@@ -4,6 +4,7 @@ import logging
 from pathlib import Path
 from urllib.request import urlretrieve
 from argparse import Namespace
+import tempfile
 from tqdm import tqdm
 from .utils import (
     BASE_DIR,
@@ -55,7 +56,7 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: str):
         try:
             logging.info("Downloading Spark from: %s", url)
             #with ProgressBar(unit="B", unit_scale=True, miniters=1) as progress:
-                #urlretrieve(url, desfile, progress.update_progress)
+            #    urlretrieve(url, desfile, progress.update_progress)
             urlretrieve(url, desfile)
             return
         except Exception:
@@ -73,7 +74,7 @@ def spark(args):
     dir_ = args.location.resolve()
     spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
     spark_home = dir_ / spark_hdp
-    desfile = f"/tmp/{spark_hdp}.tgz"
+    desfile = Path(tempfile.mkdtemp()) / f"{spark_hdp}.tgz"
     if args.install:
         dir_.mkdir(exist_ok=True)
         _download_spark(args, spark_hdp, desfile)
