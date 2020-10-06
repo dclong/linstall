@@ -97,6 +97,7 @@ def spark(args):
             print(proc.stderr)
             print(proc.stdout)
             print(proc.returncode)
+            sp.run(cmd, shell=True, check=True)
         else:
             run_cmd(
                 f"{args.prefix} mkdir -p {warehouse} && "
