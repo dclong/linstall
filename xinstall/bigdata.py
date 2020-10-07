@@ -2,7 +2,7 @@
 """
 import logging
 from pathlib import Path
-from urllib.request import urlretrieve
+from urllib.request import urlopen, urlretrieve
 from argparse import Namespace
 import tempfile
 from tqdm import tqdm
@@ -30,6 +30,18 @@ class ProgressBar(tqdm):
         if total_size is not None:
             self.total = total_size
         self.update(block_num * block_size - self.n)
+
+
+def get_spark_version() -> str:
+    """Get the latest version of Spark.
+    """
+    pattern = b"Latest Release \(Spark (\d.\d.\d)\)"
+    resp = urlopen("https://spark.apache.org/downloads.html")
+    for line in resp:
+        match = re.search(pattern, line)
+        if match:
+            return match.group(1).decode()
+    return "3.0.1"
 
 
 def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
@@ -124,7 +136,7 @@ def _spark_args(subparser):
         "--sv",
         "--spark-version",
         dest="spark_version",
-        default="3.0.1",
+        default=get_spark_version(),
         help="The version of Spark to install."
     )
     subparser.add_argument(
