@@ -4,6 +4,7 @@ import logging
 from pathlib import Path
 from urllib.request import urlretrieve
 from argparse import Namespace
+import tempfile
 from tqdm import tqdm
 from .utils import (
     BASE_DIR,
@@ -11,6 +12,7 @@ from .utils import (
     add_subparser,
     option_user,
     option_pip,
+    is_win,
 )
 logging.basicConfig(
     format=
@@ -30,25 +32,25 @@ class ProgressBar(tqdm):
         self.update(block_num * block_size - self.n)
 
 
-def _download_spark(args: Namespace, spark_hdp: str, desfile: str):
+def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
     mirrors = args.mirrors + (
-        "https://apache.mirrors.hoobly.com/spark",
-        "https://apache.spinellicreations.com/spark",
-        "https://mirror.cc.columbia.edu/pub/software/apache/spark",
-        "https://mirror.cogentco.com/pub/apache/spark",
-        "https://mirror.metrocast.net/apache/spark",
-        "https://mirrors.advancedhosters.com/apache/spark",
-        "https://mirrors.ibiblio.org/apache/spark",
-        "https://apache.claz.org/spark",
-        "https://apache.osuosl.org/spark",
-        "https://ftp.wayne.edu/apache/spark",
-        "https://mirror.olnevhost.net/pub/apache/spark",
-        "https://mirrors.gigenet.com/apache/spark",
-        "https://mirrors.koehn.com/apache/spark",
-        "https://mirrors.ocf.berkeley.edu/apache/spark",
-        "https://mirrors.sonic.net/apache/spark",
-        "https://us.mirrors.quenda.co/apache/spark",
-        "https://archive.apache.org/dist/spark",
+        "http://apache.mirrors.hoobly.com/spark",
+        "http://apache.spinellicreations.com/spark",
+        "http://mirror.cc.columbia.edu/pub/software/apache/spark",
+        "http://mirror.cogentco.com/pub/apache/spark",
+        "http://mirror.metrocast.net/apache/spark",
+        "http://mirrors.advancedhosters.com/apache/spark",
+        "http://mirrors.ibiblio.org/apache/spark",
+        "http://apache.claz.org/spark",
+        "http://apache.osuosl.org/spark",
+        "http://ftp.wayne.edu/apache/spark",
+        "http://mirror.olnevhost.net/pub/apache/spark",
+        "http://mirrors.gigenet.com/apache/spark",
+        "http://mirrors.koehn.com/apache/spark",
+        "http://mirrors.ocf.berkeley.edu/apache/spark",
+        "http://mirrors.sonic.net/apache/spark",
+        "http://us.mirrors.quenda.co/apache/spark",
+        "http://archive.apache.org/dist/spark",
     )
     for mirror in mirrors:
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
@@ -72,7 +74,7 @@ def spark(args):
     dir_ = args.location.resolve()
     spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
     spark_home = dir_ / spark_hdp
-    desfile = f"/tmp/{spark_hdp}.tgz"
+    desfile = Path(tempfile.mkdtemp()) / f"{spark_hdp}.tgz"
     if args.install:
         dir_.mkdir(exist_ok=True)
         _download_spark(args, spark_hdp, desfile)
@@ -87,10 +89,13 @@ def spark(args):
         )
         # warehouse
         warehouse = spark_home / "warehouse"
-        run_cmd(
-            f"{args.prefix} mkdir -p {warehouse} && "
-            f"{args.prefix} chmod -R 777 {warehouse}"
-        )
+        if is_win():
+            warehouse.mkdir(parents=True, exist_ok=True)
+        else:
+            run_cmd(
+                f"{args.prefix} mkdir -p {warehouse} && "
+                f"{args.prefix} chmod -R 777 {warehouse}"
+            )
         # spark-defaults.conf
         conf = (BASE_DIR / "spark/spark-defaults.conf"
                ).read_text().replace("$SPARK_HOME", str(spark_home))
