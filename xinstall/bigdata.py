@@ -2,6 +2,7 @@
 """
 import logging
 from pathlib import Path
+import re
 from urllib.request import urlopen, urlretrieve
 from argparse import Namespace
 import tempfile
