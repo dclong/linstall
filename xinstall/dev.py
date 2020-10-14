@@ -691,6 +691,7 @@ def pyenv(args):
         update_file(
             HOME / ".bashrc",
             exact=[
+                ("# pyenv", ""),
                 ('export PATH="$HOME/.pyenv/bin:$PATH"\n', ""),
                 ('eval "$(pyenv init -)"\n', ""),
                 ('eval "$(pyenv virtualenv-init -)"\n', ""),
