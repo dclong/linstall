@@ -36,7 +36,7 @@ class ProgressBar(tqdm):
 def get_spark_version() -> str:
     """Get the latest version of Spark.
     """
-    pattern = b"Latest Release \(Spark (\d.\d.\d)\)"
+    pattern = br"Latest Release \(Spark (\d.\d.\d)\)"
     resp = urlopen("https://spark.apache.org/downloads.html")
     for line in resp:
         match = re.search(pattern, line)
