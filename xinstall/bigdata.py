@@ -65,6 +65,8 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
         "http://us.mirrors.quenda.co/apache/spark",
         "http://archive.apache.org/dist/spark",
     )
+    if not args.spark_version:
+        args.spark_version = get_spark_version()
     for mirror in mirrors:
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         try:
@@ -137,7 +139,6 @@ def _spark_args(subparser):
         "--sv",
         "--spark-version",
         dest="spark_version",
-        default=get_spark_version(),
         help="The version of Spark to install."
     )
     subparser.add_argument(
