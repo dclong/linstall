@@ -66,8 +66,6 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
         "http://us.mirrors.quenda.co/apache/spark",
         "http://archive.apache.org/dist/spark",
     )
-    if not args.spark_version:
-        args.spark_version = get_spark_version()
     for mirror in mirrors:
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         try:
@@ -87,6 +85,8 @@ def spark(args):
     :param uninstall:
     :param version:
     """
+    if not args.spark_version:
+        args.spark_version = get_spark_version()
     dir_ = args.location.resolve()
     spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
     spark_home = dir_ / spark_hdp
