@@ -282,10 +282,10 @@ c.AliasManager.user_aliases = [
         "mount.vboxsf.gdrive",
         "sudo mount -t vboxsf -o uid=$(whoami),gid=$(whoami),fmask=177,dmask=077 gdrive ${HOME}/gdrive"
     ),
-    ("ps.ssh", "ps aux | grep -i ssh"),
-    ("ps.python", "ps aux | grep -i python"),
-    ("ps.ipython", "ps aux | grep -i ipython"),
-    ("ps.jupyter", "ps aux | grep -i jupyter"),
+    ("ps.ssh", "ps -wwfaux | grep -i ssh"),
+    ("ps.python", "ps -wwfaux | grep -i python"),
+    ("ps.ipython", "ps -wwfaux | grep -i ipython"),
+    ("ps.jupyter", "ps -wwfaux | grep -i jupyter"),
     (
         "rm.ipynb_checkpoints",
         "find . -type d -name '*.ipynb_checkpoints*' -print0 | xargs -0 rm -rf"
