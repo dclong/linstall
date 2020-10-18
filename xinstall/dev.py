@@ -674,7 +674,9 @@ def pyenv(args):
                 "Installing header files (for building Python and Python packages) ..."
             )
             update_apt_source(prefix=args.prefix, seconds=1E-10)
-            cmd = f"{args.prefix} apt-get install {args.yes_s} libssl-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev"
+            cmd = f"""{args.prefix} apt-get install {args.yes_s} \
+                libssl-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev liblzma-dev
+                """
             run_cmd(cmd)
     if args.config:
         update_file(
