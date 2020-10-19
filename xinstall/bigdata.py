@@ -48,6 +48,7 @@ def get_spark_version() -> str:
 
 def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
     mirrors = args.mirrors + (
+        "http://archive.apache.org/dist/spark",
         "http://apache.mirrors.hoobly.com/spark",
         "http://apache.spinellicreations.com/spark",
         "http://mirror.cc.columbia.edu/pub/software/apache/spark",
@@ -64,7 +65,6 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
         "http://mirrors.ocf.berkeley.edu/apache/spark",
         "http://mirrors.sonic.net/apache/spark",
         "http://us.mirrors.quenda.co/apache/spark",
-        "http://archive.apache.org/dist/spark",
     )
     for mirror in mirrors:
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
