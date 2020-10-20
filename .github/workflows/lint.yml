@@ -2,9 +2,11 @@ name: Lint Code
 
 on:
   push:
-    branches: [ dev, master ]
+    branches:
+      - "!master"
   pull_request:
-    branches: [ dev ]
+    branches:
+      - "*"
 
 jobs:
   lint_code:
