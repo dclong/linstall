@@ -1,7 +1,9 @@
 # Easy Cross-platform Installation and Configuration of Apps
 
 ## Installation
-Note: It is best to install `xinstall` into a system-wide location rather than users' local directories.
+Note: It is best to install `xinstall` into a system-wide location 
+(rather than users' local directories)
+so that the command `xinstall` is always on `$PATH`.
 You can download a copy of the latest release and install it using pip.
 ```
 sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.21.4/xinstall-0.21.4-py3-none-any.whl
