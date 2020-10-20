@@ -29,10 +29,10 @@ sudo pip3 install -U git+https://github.com/dclong/xinstall@master
 
 xinstall has 3 levels of `sudo` permission.
 
-- Non-root user running `xinstall subcmd -ic`: no `sudo` permission
-- Non-root user running `xinstall --sudo subcmd -ic`: `sudo` is called when necessary
-- Non-root user running `sudo xinstall subcmd -ic`: root permission everywhere
-- root user running `xinstall subcmd -ic`: root permission everywhere
+- (L1) Non-root user running `xinstall subcmd -ic`: no `sudo` permission
+- (L2) Non-root user running `xinstall --sudo subcmd -ic`: `sudo` is called when necessary
+- (L3) Non-root user running `sudo xinstall subcmd -ic`: root permission everywhere
+- (L3) root user running `xinstall subcmd -ic`: root permission everywhere
 
 The suggested way is to run `xinstal --sudo subcmd -ic` using non-root user if `sudo` permission is required.
 `sudo xinstall subcmd -ic` might have side effect as some tools are installed to the local user directory,
