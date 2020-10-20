@@ -1,7 +1,9 @@
 # Easy Cross-platform Installation and Configuration of Apps
 
 ## Installation
-Note: It is best to install `xinstall` into a system-wide location rather than users' local directories.
+Note: It is best to install `xinstall` into a system-wide location 
+(rather than users' local directories)
+so that the command `xinstall` is always on `$PATH`.
 You can download a copy of the latest release and install it using pip.
 ```
 sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.21.4/xinstall-0.21.4-py3-none-any.whl
@@ -22,6 +24,20 @@ sudo pip3 install -U git+https://github.com/dclong/xinstall@master
 2. Below is an example of install SpaceVim and configure it.
 
         xinstall svim -ic
+        
+### sudo Permission
+
+xinstall has 3 levels of `sudo` permission.
+
+- (L1) Non-root user running `xinstall subcmd -ic`: no `sudo` permission
+- (L2) Non-root user running `xinstall --sudo subcmd -ic`: `sudo` is called when necessary
+- (L3) Non-root user running `sudo xinstall subcmd -ic`: root permission everywhere
+- (L3) root user running `xinstall subcmd -ic`: root permission everywhere
+
+The suggested way is to run `xinstal --sudo subcmd -ic` using non-root user if `sudo` permission is required.
+`sudo xinstall subcmd -ic` might have side effect as some tools are installed to the local user directory,
+in which case `sudo xinstall subcmd -ic` installs the tool into `/root/` 
+which might not what you wwant.
 
 ## Proxy
 
