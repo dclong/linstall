@@ -88,6 +88,7 @@ def ssh_client(args) -> None:
         _sshc_copy_from_host(ssh_home)
         ssh_home.mkdir(exist_ok=True)
         _sshc_copy_config(ssh_home)
+        (ssh_home / "control").mkdir(exist_ok=True)
         if is_linux() or is_macos():
             cmd = f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
             run_cmd(cmd)
