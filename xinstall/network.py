@@ -192,3 +192,49 @@ def _add_subparser_download_tools(subparsers):
     add_subparser(
         subparsers, "download tools", func=download_tools, aliases=["dl", "dlt"]
     )
+
+
+def iptables(args: Namespace):
+    """Install iptables.
+
+    :param args: An instance of Namespace containing arguments.
+    """
+    if args.install:
+        if is_ubuntu_debian():
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} iptables")
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_ubuntu_debian():
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} iptables")
+
+
+def _add_subparser_iptables(subparsers):
+    add_subparser(
+        subparsers, "iptables", func=iptables, aliases=["ipt"]
+    )
+
+
+def sshuttle(args: Namespace):
+    """Install sshuttle.
+
+    :param args: An instance of Namespace containing arguments.
+    """
+    if args.install:
+        iptables(args)
+        run_cmd("{args.pip} install {args.user_s} sshuttle")
+    if args.config:
+        pass
+    if args.uninstall:
+        run_cmd("{args.pip} uninstall sshuttle")
+
+
+def _sshuttle_args(subparser):
+    option_pip(subparser)
+    option_user(subparser)
+
+
+def _add_subparser_sshuttle(subparsers):
+    add_subparser(
+        subparsers, "sshuttle", func=sshuttle, aliases=["sshu"], add_argument=_sshuttle_args
+    )

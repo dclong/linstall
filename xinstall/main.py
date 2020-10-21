@@ -86,12 +86,13 @@ from .virtualization import (
     _add_subparser_multipass,
     _add_subparser_microk8s,
 )
-from .web import (
+from .network import (
     _add_subparser_download_tools,
     _add_subparser_dryscrape,
     _add_subparser_proxychains,
     _add_subparser_ssh_client,
     _add_subparser_ssh_server,
+    _add_subparser_sshuttle,
 )
 from .desktop import (
     _add_subparser_nomachine,
@@ -219,12 +220,13 @@ def parse_args(args=None, namespace=None):
     _add_subparser_gensim(subparsers)
     _add_subparser_computer_vision(subparsers)
     _add_subparser_nlp(subparsers)
-    # ------------------------- web related ------------------------------
+    # ------------------------- network related ------------------------------
     _add_subparser_ssh_server(subparsers)
     _add_subparser_ssh_client(subparsers)
     _add_subparser_proxychains(subparsers)
     _add_subparser_dryscrape(subparsers)
     _add_subparser_download_tools(subparsers)
+    _add_subparser_sshuttle(subparsers)
     # ------------------------- JupyterLab related ------------------------------
     _add_subparser_beakerx(subparsers)
     _add_subparser_jupyterlab_lsp(subparsers)
