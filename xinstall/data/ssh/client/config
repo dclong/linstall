@@ -17,6 +17,10 @@
 # ssh_config(5) man page.
 
 Host *
+# ControlMaster: persist connections for reuse
+    ControlPath ~/.ssh/control/%r@%h:%p
+    ControlMaster auto
+    ControlPersist yes
 #   ForwardAgent no
 #   ForwardX11 no
 #   ForwardX11Trusted yes
