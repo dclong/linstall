@@ -223,9 +223,7 @@ def iptables(args: Namespace):
 
 
 def _add_subparser_iptables(subparsers):
-    add_subparser(
-        subparsers, "iptables", func=iptables, aliases=["ipt"]
-    )
+    add_subparser(subparsers, "iptables", func=iptables, aliases=["ipt"])
 
 
 def sshuttle(args: Namespace):
@@ -249,5 +247,9 @@ def _sshuttle_args(subparser):
 
 def _add_subparser_sshuttle(subparsers):
     add_subparser(
-        subparsers, "sshuttle", func=sshuttle, aliases=["sshu"], add_argument=_sshuttle_args
+        subparsers,
+        "sshuttle",
+        func=sshuttle,
+        aliases=["sshu"],
+        add_argument=_sshuttle_args
     )
