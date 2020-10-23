@@ -8,5 +8,5 @@ from . import main
 from . import desktop
 from . import shell
 from . import utils
-from . import web
+from . import network
 from .main import __version__

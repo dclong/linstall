@@ -1,4 +1,4 @@
-# Easy Cross-platform Installation and Configuration of Apps
+# [xinstall](https://github.com/dclong/xinstall): Easy Cross-platform Installation and Configuration of Apps
 
 ## Installation
 Note: It is best to install `xinstall` into a system-wide location 

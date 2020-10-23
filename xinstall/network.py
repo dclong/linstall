@@ -56,26 +56,39 @@ def _add_subparser_ssh_server(subparsers):
     add_subparser(subparsers, "SSH server", func=ssh_server, aliases=["sshs"])
 
 
+def _sshc_copy_from_host(ssh_home: Path):
+    """Copy configuration files from /home_host/USER/.ssh if it exists.
+
+    :param ssh_dst: The home directory (~/.ssh) of SSH client configuration.
+    """
+    ssh_src = Path(f"/home_host/{USER}/.ssh")
+    if ssh_src.is_dir():
+        # inside a Docker container, use .ssh from host
+        try:
+            shutil.rmtree(ssh_home)
+        except FileNotFoundError:
+            pass
+        shutil.copytree(ssh_src, ssh_home)
+        logging.info("%s is copied to %s.", ssh_src, ssh_home)
+
+
+def _sshc_copy_config(ssh_home: Path):
+    src = BASE_DIR / "ssh/client/config"
+    des = ssh_home / "config"
+    shutil.copy2(src, des)
+    logging.info("%s is copied to %s.", src, ssh_home)
+
+
 def ssh_client(args) -> None:
     """Configure SSH client.
     :param kwargs: Keyword arguments.
     """
     if args.config:
-        ssh_src = Path(f"/home_host/{USER}/.ssh")
-        ssh_dst = HOME / ".ssh"
-        if ssh_src.is_dir():
-            # inside a Docker container, use .ssh from host
-            try:
-                shutil.rmtree(ssh_dst)
-            except FileNotFoundError:
-                pass
-            shutil.copytree(ssh_src, ssh_dst)
-            logging.info("%s is copied to %s.", ssh_src, ssh_dst)
-        ssh_dst.mkdir(exist_ok=True)
-        src = BASE_DIR / "ssh/client/config"
-        des = HOME / ".ssh/config"
-        shutil.copy2(src, des)
-        logging.info("%s is copied to %s.", ssh_src, ssh_dst)
+        ssh_home = HOME / ".ssh"
+        _sshc_copy_from_host(ssh_home)
+        ssh_home.mkdir(exist_ok=True)
+        _sshc_copy_config(ssh_home)
+        (ssh_home / "control").mkdir(exist_ok=True)
         if is_linux() or is_macos():
             cmd = f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
             run_cmd(cmd)
@@ -191,4 +204,52 @@ def download_tools(args: Namespace):
 def _add_subparser_download_tools(subparsers):
     add_subparser(
         subparsers, "download tools", func=download_tools, aliases=["dl", "dlt"]
+    )
+
+
+def iptables(args: Namespace):
+    """Install iptables.
+
+    :param args: An instance of Namespace containing arguments.
+    """
+    if args.install:
+        if is_ubuntu_debian():
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} iptables")
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_ubuntu_debian():
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} iptables")
+
+
+def _add_subparser_iptables(subparsers):
+    add_subparser(subparsers, "iptables", func=iptables, aliases=["ipt"])
+
+
+def sshuttle(args: Namespace):
+    """Install sshuttle.
+
+    :param args: An instance of Namespace containing arguments.
+    """
+    if args.install:
+        iptables(args)
+        run_cmd("{args.pip} install {args.user_s} sshuttle")
+    if args.config:
+        pass
+    if args.uninstall:
+        run_cmd("{args.pip} uninstall sshuttle")
+
+
+def _sshuttle_args(subparser):
+    option_pip(subparser)
+    option_user(subparser)
+
+
+def _add_subparser_sshuttle(subparsers):
+    add_subparser(
+        subparsers,
+        "sshuttle",
+        func=sshuttle,
+        aliases=["sshu"],
+        add_argument=_sshuttle_args
     )
