@@ -223,6 +223,8 @@ c.AliasManager.user_aliases = [
     # hdfs
     ("hdfs.count", "hdfs dfs -count -q -v"),
     ("hdfs.ls", "hdfs dfs -ls"),
+    # IPython
+    ("ipython.dir", "ipython --ipython-dir $HOME/.ipython"),
     # ls
     ("ls.media", "ls *.jpg *.jpeg *.png *.mp3 *.avi *.mkv *.mov *.mp4 *.wmv *.webm 2> /dev/null"),
     ("ls.excel", "ls *.xls *.xlsx"),
