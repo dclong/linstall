@@ -22,7 +22,7 @@ from .utils import (
     option_python,
     update_file,
 )
-from .web import ssh_client
+from .network import ssh_client
 logging.basicConfig(
     format=
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",

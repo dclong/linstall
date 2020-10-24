@@ -1,5 +1,6 @@
 """Helper functions.
 """
+from __future__ import annotations
 from typing import Union, List, Tuple, Sequence, Iterable, Any, Sized, Callable
 import os
 import sys
@@ -79,7 +80,7 @@ def remove_file_safe(path: Path) -> None:
         pass
 
 
-def run_cmd(cmd: Union[List, str]) -> None:
+def run_cmd(cmd: Union[list, str]) -> None:
     """Run a shell command.
 
     :param cmd: The command to run.
@@ -88,7 +89,7 @@ def run_cmd(cmd: Union[List, str]) -> None:
     logging.debug(proc.args)
 
 
-def brew_install_safe(pkgs: Union[str, List]) -> None:
+def brew_install_safe(pkgs: Union[str, list]) -> None:
     """Using Homebrew to install without throwing exceptions if a package to install already exists.
 
     :param pkgs: A (list of) package(s) to install using Homebrew.

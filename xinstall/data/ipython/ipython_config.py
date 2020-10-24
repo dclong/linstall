@@ -226,7 +226,10 @@ c.AliasManager.user_aliases = [
     # IPython
     ("ipython.dir", "ipython --ipython-dir $HOME/.ipython"),
     # ls
-    ("ls.media", "ls *.jpg *.jpeg *.png *.mp3 *.avi *.mkv *.mov *.mp4 *.wmv *.webm 2> /dev/null"),
+    (
+        "ls.media",
+        "ls *.jpg *.jpeg *.png *.mp3 *.avi *.mkv *.mov *.mp4 *.wmv *.webm 2> /dev/null"
+    ),
     ("ls.excel", "ls *.xls *.xlsx"),
     ("ls.word", "ls *.doc *.docx"),
     ("ls.spreadsheet", "ls *.xls *.xlsx *.csv"),
