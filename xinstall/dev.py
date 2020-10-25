@@ -234,7 +234,7 @@ def ipython(args):
     """Install IPython for Python 3.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} ipython"
+        cmd = f"{args.prefix} {args.pip} install {args.user_s} ipython"
         run_cmd(cmd)
     if args.config:
         src_dir = BASE_DIR / "ipython"
