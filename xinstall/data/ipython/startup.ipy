@@ -16,7 +16,6 @@ try:
 except:
     pass
 try:
-    import pybay
     from pybay.const import *
 except:
     pass
