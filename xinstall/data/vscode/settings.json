@@ -13,5 +13,6 @@
         "--ignored-modules=pyspark.sql.functions"
     ],
     "extensions.autoUpdate": false,
-    "workbench.colorTheme": "Default Dark+"
+    "workbench.colorTheme": "Default Dark+",
+    "python.formatting.provider": "yapf"
 }
