@@ -4,7 +4,7 @@ import logging
 import shutil
 import sys
 import os
-import inspect
+import textwrap
 from .utils import (
     HOME,
     BASE_DIR,
@@ -283,7 +283,7 @@ def bash_it(args) -> None:
                 """
         run_cmd(cmd)
     if args.config:
-        bash = inspect.cleandoc(
+        bash = textwrap.dedent(
             f"""
             # PATH
             if [[ ! /sbin/:/home/dclong =~ (^{BIN_DIR}:)|(:{BIN_DIR}:)|(:{BIN_DIR}$) ]]; then
@@ -296,8 +296,9 @@ def bash_it(args) -> None:
             fout.write(bash)
         logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile)
         if is_linux():
-            bash = inspect.cleandoc(
-                """
+            bash = textwrap.dedent(
+                """\
+                # source in ~/.bashrc
                 if [[ -f $HOME/.bashrc ]]; then
                     . $HOME/.bashrc
                 fi

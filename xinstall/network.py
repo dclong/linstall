@@ -126,7 +126,7 @@ def proxychains(args) -> None:
         des_dir = os.path.join(HOME, ".proxychains")
         os.makedirs(des_dir, exist_ok=True)
         shutil.copy2(src_file, des_dir)
-        logging.info("%s is copied to the directory %s.", src_file, des_dir)
+        logging.info("%s is copied to the directory %s", src_file, des_dir)
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} proxychains4")
