@@ -3,26 +3,27 @@
 import stat
 import os
 from pathlib import Path
-import subprocess as sp
+from xinstall.utils import is_win, run_cmd
 
 
 def test_proxychains():
     """Test installing the blogging tools.
     """
     cmd = "xinstall --sudo -y pc -ic"
-    sp.run(cmd, shell=True, check=True)
+    run_cmd(cmd)
 
 
 def test_ssh_client():
     """Test SSH client.
     """
     cmd = "xinstall sshc -c"
-    sp.run(cmd, shell=True, check=True)
+    run_cmd(cmd)
     RWX_ALL = stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO
     for path in (Path.home() / ".ssh").glob("**/*"):
         st = path.stat()
-        assert st.st_uid == os.getuid()
-        assert st.st_gid == os.getgid()
+        if not is_win():
+            assert st.st_uid == os.getuid()
+            assert st.st_gid == os.getgid()
         if path.is_file():
             assert st.st_mode & RWX_ALL == stat.S_IRUSR | stat.S_IWUSR
         else:
