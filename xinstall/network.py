@@ -92,11 +92,14 @@ def ssh_client(args) -> None:
         control.mkdir(exist_ok=True)
         control.chmod(0o700)
         if is_linux() or is_macos():
-            cmd = f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}/.ssh && chmod 600 {HOME}/.ssh/*"
+            cmd = f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}/.ssh"
             run_cmd(cmd)
-            logging.info(
-                "The permissions of ~/.ssh and its contents are corrected set."
-            )
+        for path in ssh_home.glob("**/*"):
+            if path.is_file():
+                path.chmod(0o600)
+            else:
+                path.chmod(0o700)
+        logging.info("The permissions of ~/.ssh and its contents are corrected set.")
 
 
 def _add_subparser_ssh_client(subparsers):
