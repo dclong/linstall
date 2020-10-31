@@ -16,12 +16,14 @@ def test_proxychains():
 def test_ssh_client():
     """Test SSH client.
     """
-    cmd = "xinstall ssh -c"
+    cmd = "xinstall sshc -c"
     sp.run(cmd, shell=True, check=True)
+    RWX_ALL = stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO
     for path in (Path.home() / ".ssh").glob("**/*"):
         st = path.stat()
-        assert st.st_mode & (
-            stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO
-        ) == stat.S_IRUSR | stat.S_IWUSR
         assert st.st_uid == os.getuid()
         assert st.st_gid == os.getgid()
+        if path.is_file():
+            assert st.st_mode & RWX_ALL == stat.S_IRUSR | stat.S_IWUSR
+        else:
+            assert st.st_mode & RWX_ALL == stat.S_IRWXU

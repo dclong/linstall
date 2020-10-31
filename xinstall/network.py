@@ -97,6 +97,8 @@ def ssh_client(args) -> None:
         for path in ssh_home.glob("**/*"):
             if path.is_file():
                 path.chmod(0o600)
+            else:
+                path.chmod(0o700)
         logging.info("The permissions of ~/.ssh and its contents are corrected set.")
 
 
