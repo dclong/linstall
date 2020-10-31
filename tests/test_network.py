@@ -3,6 +3,7 @@
 import stat
 import os
 from pathlib import Path
+import pytest
 from xinstall.utils import is_win, run_cmd
 
 
@@ -13,6 +14,7 @@ def test_proxychains():
     run_cmd(cmd)
 
 
+@pytest.mark.skipif(is_win(), reason="Skip test for Mac OS")
 def test_ssh_client():
     """Test SSH client.
     """
@@ -21,9 +23,8 @@ def test_ssh_client():
     RWX_ALL = stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO
     for path in (Path.home() / ".ssh").glob("**/*"):
         st = path.stat()
-        if not is_win():
-            assert st.st_uid == os.getuid()
-            assert st.st_gid == os.getgid()
+        assert st.st_uid == os.getuid()
+        assert st.st_gid == os.getgid()
         if path.is_file():
             assert st.st_mode & RWX_ALL == stat.S_IRUSR | stat.S_IWUSR
         else:
