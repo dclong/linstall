@@ -20,6 +20,8 @@ def test_ssh_client():
     sp.run(cmd, shell=True, check=True)
     for path in (Path.home() / ".ssh").glob("**/*"):
         st = path.stat()
-        assert st.st_mode & (stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO) == stat.S_IRUSR | stat.S_IWUSR
+        assert st.st_mode & (
+            stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO
+        ) == stat.S_IRUSR | stat.S_IWUSR
         assert st.st_uid == os.getuid()
         assert st.st_gid == os.getgid()
