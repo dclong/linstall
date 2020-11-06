@@ -235,11 +235,11 @@ def sshuttle(args: Namespace):
     """
     if args.install:
         iptables(args)
-        run_cmd("{args.pip} install {args.user_s} sshuttle")
+        run_cmd(f"{args.pip} install {args.user_s} sshuttle")
     if args.config:
         pass
     if args.uninstall:
-        run_cmd("{args.pip} uninstall sshuttle")
+        run_cmd(f"{args.pip} uninstall sshuttle")
 
 
 def _sshuttle_args(subparser):
