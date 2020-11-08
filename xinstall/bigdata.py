@@ -170,7 +170,10 @@ def _spark_args(subparser):
         dest="schema_dir",
         type=Path,
         default=None,
-        help="The location to install Spark to."
+        help="The path to a directory containing schema information." \
+            "The directory contains subdirs whose names are databases to create." \
+            "Each of those subdirs (database) contain SQL files of the format db.table.sql" \
+            "which containing SQL code for creating tables."
     )
 
 
@@ -286,7 +289,10 @@ def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> No
     """Create databases and tables belong to them.
 
     :param spark_home: The home of Spark installation.
-    :param dbs: [description]
+    :param schema_dir: The path to a directory containing schema information.
+    The directory contains subdirs whose names are databases to create.
+    Each of those subdirs (database) contain SQL files of the format db.table.sql
+    which containing SQL code for creating tables.
     """
     if isinstance(spark_home, Path):
         spark_home = str(spark_home)
