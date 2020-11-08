@@ -11,6 +11,7 @@ xinstall = "xinstall:main.main"
 python = ">=3.7,<4"
 distro = ">=1.5.0"
 tqdm = ">=4.48.2"
+findspark = ">=1.4.2"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=3.0"
