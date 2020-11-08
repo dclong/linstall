@@ -417,7 +417,7 @@ def rustup(args):
             pass
         else:
             cmd = f"""curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup.sh \
-                    sh /tmp/rustup.sh {args.yes_s}"""
+                    sh /tmp/rustup.sh {"-y" if args.yes else ""}"""
             run_cmd(cmd)
     if args.config:
         pass
