@@ -56,7 +56,6 @@ from .dev import (
     _add_subparser_pyenv,
     _add_subparser_openjdk,
     _add_subparser_sdkman,
-    _add_subparser_rust,
     _add_subparser_rustup,
     _add_subparser_rustpython,
     _add_subparser_deno,
@@ -104,7 +103,7 @@ logging.basicConfig(
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
     level=logging.INFO
 )
-__version__ = "0.23.2"
+__version__ = "0.24.0"
 
 
 def version(args):
@@ -188,7 +187,6 @@ def parse_args(args=None, namespace=None):
     _add_subparser_openjdk(subparsers)
     _add_subparser_sdkman(subparsers)
     _add_subparser_poetry(subparsers)
-    _add_subparser_rust(subparsers)
     _add_subparser_rustup(subparsers)
     _add_subparser_rustpython(subparsers)
     _add_subparser_deno(subparsers)

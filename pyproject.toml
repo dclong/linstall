@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xinstall"
-version = "0.23.2"
+version = "0.24.0"
 description = ""
 authors = ["Benjamin Du <longendu@yahoo.com>"]
 
@@ -8,15 +8,17 @@ authors = ["Benjamin Du <longendu@yahoo.com>"]
 xinstall = "xinstall:main.main"
 
 [tool.poetry.dependencies]
-python = ">=3.7"
+python = ">=3.7,<4"
 distro = ">=1.5.0"
 tqdm = ">=4.48.2"
+findspark = ">=1.4.2"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=3.0"
 pylint = ">=2.4.4"
 pytype = ">=2020.0.0"
 yapf = ">=0.30.0"
+coverage = ">=5.3"
 
 [build-system]
 requires = ["poetry>=1.0.0"]

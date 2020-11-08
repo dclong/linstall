@@ -1,5 +1,7 @@
 """Install big data related tools.
 """
+import importlib
+from typing import Union
 import logging
 from pathlib import Path
 import re
@@ -7,6 +9,7 @@ from urllib.request import urlopen, urlretrieve
 from argparse import Namespace
 import tempfile
 from tqdm import tqdm
+import findspark
 from .utils import (
     BASE_DIR,
     run_cmd,
@@ -122,6 +125,9 @@ def spark(args):
             "Spark is configured to use %s as the metastore database and %s as the Hive warehouse.",
             metastore_db, warehouse
         )
+        # create databases and tables
+        if args.schema_dir:
+            create_dbs(spark_home, args.schema_dir)
     if args.uninstall:
         cmd = f"{args.prefix} rm -rf {spark_home}"
         run_cmd(cmd)
@@ -156,6 +162,18 @@ def _spark_args(subparser):
         type=Path,
         default=Path(),
         help="The location to install Spark to."
+    )
+    subparser.add_argument(
+        "-s",
+        "--schema",
+        "--schema-dir",
+        dest="schema_dir",
+        type=Path,
+        default=None,
+        help="The path to a directory containing schema information." \
+            "The directory contains subdirs whose names are databases to create." \
+            "Each of those subdirs (database) contain SQL files of the format db.table.sql" \
+            "which containing SQL code for creating tables."
     )
 
 
@@ -231,3 +249,70 @@ def dask(args):
 
 def _add_subparser_dask(subparsers):
     add_subparser(subparsers, "dask", func=dask, add_argument=option_user)
+
+
+def _alter_spark_sql(path: Path, hadoop_local: Union[str, Path]) -> str:
+    """Handle special paths in SQL code so that it can be used locally.
+
+    :param path: The path to a file containing SQL code for creating a Hive table.
+    :return: The altered SQL code which can be used locally.
+    """
+    sql = path.read_text().replace(r"^viewfs://[^/]/", "/")
+    prefixes = ["/sys/", "/apps", "/user"]
+    for prefix in prefixes:
+        sql = sql.replace(prefix, f"{hadoop_local}{prefix}")
+    return sql
+
+
+def _create_db(spark_session, dbase: Union[Path, str], hadoop_local) -> None:
+    """Create a database and tables belong to the database.
+
+    :param dbase: A path containing information about the database to create.
+    The directory name of the path is the name of the database,
+    and the directory containing SQL files for creating Hive tables.
+    """
+    print("\n\n")
+    if isinstance(dbase, str):
+        dbase = Path(dbase)
+    dbase = dbase.resolve()
+    logging.info("Creating database %s...", dbase.stem)
+    spark_session.sql(f"CREATE DATABASE IF NOT EXISTS {dbase.stem}")
+    for path in dbase.glob("*.sql"):
+        if not spark_session.catalog._jcatalog.tableExists(path.stem):
+            print("\n")
+            sql = _alter_spark_sql(path, hadoop_local)
+            logging.info("Creating data table from %s:\n%s", path, sql)
+            spark_session.sql(sql)
+
+
+def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> None:
+    """Create databases and tables belong to them.
+
+    :param spark_home: The home of Spark installation.
+    :param schema_dir: The path to a directory containing schema information.
+    The directory contains subdirs whose names are databases to create.
+    Each of those subdirs (database) contain SQL files of the format db.table.sql
+    which containing SQL code for creating tables.
+    """
+    if isinstance(spark_home, Path):
+        spark_home = str(spark_home)
+    findspark.init(spark_home)
+    spark_session = importlib.import_module(".SparkSession", "pyspark.sql") \
+        .builder.appName("Create_Empty_Hive_Tables").enableHiveSupport().getOrCreate()
+    hadoop_local = Path.home() / ".hadoop"
+    if not hadoop_local.is_dir():
+        hadoop_local.mkdir(parents=True, exist_ok=True)
+    if isinstance(schema_dir, str):
+        schema_dir = Path(schema_dir)
+    for path in schema_dir.iterdir():
+        if path.is_dir():
+            _create_db(spark_session, path, hadoop_local)
+
+
+#def _permission():
+#    dirs = [
+#        "/opt/spark/metastore_db",
+#        "/opt/spark/warehouse",
+#    ]
+#    for dir_ in dirs:
+#        sp.run(f"mkdir -p {dir_} && chmod -R 777 {dir_}", shell=True, check=True)
