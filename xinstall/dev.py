@@ -14,6 +14,7 @@ from .utils import (
     update_apt_source,
     brew_install_safe,
     is_macos,
+    is_win,
     remove_file_safe,
     run_cmd,
     add_subparser,
@@ -412,8 +413,12 @@ def rustup(args):
     """Install rustup which is the version management tool for Rust.
     """
     if args.install:
-        cmd = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
-        run_cmd(cmd)
+        if is_win():
+            pass
+        else:
+            cmd = f"""curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup.sh \
+                    sh /tmp/rustup.sh {args.yes_s}"""
+            run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
@@ -422,51 +427,20 @@ def rustup(args):
 
 
 def _add_subparser_rustup(subparsers):
-    add_subparser(subparsers, "rustup", func=rustup)
-
-
-def rust(args):
-    """Install the Rust programming language (rustc and cargo) 
-        (to system-wide locations using apt-get instead of to ~/.cargo using rustup).
-    """
-    if args.install:
-        if is_ubuntu_debian():
-            update_apt_source(prefix=args.prefix)
-            cmd = f"{args.prefix} apt-get install {args.yes_s} cmake rustc cargo"
-            run_cmd(cmd)
-        if is_centos_series():
-            cmd = f"{args.prefix} yum install {args.yes_s} cmake rustc cargo"
-            run_cmd(cmd)
-        if is_macos():
-            brew_install_safe(["cmake", "rust", "cargo"])
-    if args.config:
-        pass
-    if args.uninstall:
-        if is_ubuntu_debian():
-            cmd = f"{args.prefix} apt-get purge {args.yes_s} rustc cargo"
-            run_cmd(cmd)
-        if is_centos_series():
-            run_cmd(f"{args.prefix} yum remove rustc cargo")
-        if is_macos():
-            cmd = "brew uninstall rustc cargo"
-            run_cmd(cmd)
-
-
-def _add_subparser_rust(subparsers):
-    add_subparser(subparsers, "rust", func=rust)
+    add_subparser(subparsers, "rustup", func=rustup, aliases=["rust", "cargo"])
 
 
 def rustpython(args):
     """Install and configure RustPython.
     """
-    rust(args)
+    rustup(args)
     if args.install:
-        cmd = "cargo install rustpython"
+        cmd = "/root/.cargo/bin/cargo install rustpython"
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = "cargo uninstall rustpython"
+        cmd = "/root/.cargo/bin/cargo uninstall rustpython"
         run_cmd(cmd)
 
 
