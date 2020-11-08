@@ -307,12 +307,12 @@ def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> No
     for path in schema_dir.iterdir():
         if path.is_dir():
             _create_db(spark_session, path, hadoop_local)
-        
-        
+
+
 #def _permission():
 #    dirs = [
-#        "/opt/spark/metastore_db", 
-#        "/opt/spark/warehouse",  
+#        "/opt/spark/metastore_db",
+#        "/opt/spark/warehouse",
 #    ]
 #    for dir_ in dirs:
 #        sp.run(f"mkdir -p {dir_} && chmod -R 777 {dir_}", shell=True, check=True)
