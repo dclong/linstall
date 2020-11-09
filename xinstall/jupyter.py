@@ -14,6 +14,7 @@ from .utils import (
     is_macos,
     brew_install_safe,
 )
+from .dev import rustup
 logging.basicConfig(
     format=
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
@@ -173,16 +174,10 @@ def evcxr_jupyter(args) -> None:
     """Install the evcxr Rust kernel for Jupyter/Lab server.
     """
     if args.install:
-        if is_ubuntu_debian():
-            cmd = f"""{args.prefix} apt-get install {args.yes_s} cmake cargo \
-                && cargo install --force evcxr_jupyter \
-                && {HOME}/.cargo/bin/evcxr_jupyter --install"""
-            run_cmd(cmd)
-        elif is_macos():
-            brew_install_safe(["cmake", "rust"])
-            cmd = f"""cargo install --force evcxr_jupyter \
-                && {HOME}/.cargo/bin/evcxr_jupyter --install"""
-            run_cmd(cmd)
+        rustup(args)
+        cmd = f"""{HOME}/.cargo/bin/cargo install --force evcxr_jupyter \
+            && {HOME}/.cargo/bin/evcxr_jupyter --install"""
+        run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
