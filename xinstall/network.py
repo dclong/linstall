@@ -56,6 +56,11 @@ def _add_subparser_ssh_server(subparsers):
     add_subparser(subparsers, "SSH server", func=ssh_server, aliases=["sshs"])
 
 
+def _ignore_socket(dir_, files):
+    dir_ = Path(dir_)
+    return [file for file in files if (dir_ / file).is_socket()]
+
+
 def _sshc_copy_from_host(ssh_home: Path):
     """Copy configuration files from /home_host/USER/.ssh if it exists.
 
@@ -68,7 +73,7 @@ def _sshc_copy_from_host(ssh_home: Path):
             shutil.rmtree(ssh_home)
         except FileNotFoundError:
             pass
-        shutil.copytree(ssh_src, ssh_home)
+        shutil.copytree(ssh_src, ssh_home, ignore=_ignore_socket)
         logging.info("%s is copied to %s.", ssh_src, ssh_home)
 
 
