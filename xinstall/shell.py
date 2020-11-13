@@ -286,7 +286,7 @@ def bash_it(args) -> None:
         bash = textwrap.dedent(
             f"""
             # PATH
-            if [[ ! /sbin/:/home/dclong =~ (^{BIN_DIR}:)|(:{BIN_DIR}:)|(:{BIN_DIR}$) ]]; then
+            if [[ ! "$PATH" =~ (^{BIN_DIR}:)|(:{BIN_DIR}:)|(:{BIN_DIR}$) ]]; then
                 export PATH={BIN_DIR}:$PATH
             fi
             """

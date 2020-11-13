@@ -103,7 +103,7 @@ logging.basicConfig(
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
     level=logging.INFO
 )
-__version__ = "0.24.0"
+__version__ = "0.24.1"
 
 
 def version(args):
