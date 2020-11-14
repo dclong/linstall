@@ -109,7 +109,7 @@ def beakerx(args) -> None:
         run_cmd(f"{args.prefix} beakerx uninstall")
         run_cmd(f"{args.pip} uninstall beakerx")
     if args.config:
-        run_cmd(f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}")
+        run_cmd(f"{args.prefix} chown -R {USER}:`id -g {USER}` {HOME}")
 
 
 def _beakerx_args(subparser) -> None:

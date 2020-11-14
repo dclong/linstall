@@ -97,7 +97,7 @@ def ssh_client(args) -> None:
         control.mkdir(exist_ok=True)
         control.chmod(0o700)
         if is_linux() or is_macos():
-            cmd = f"{args.prefix} chown -R {USER}:`id {USER} -g` {HOME}/.ssh"
+            cmd = f"{args.prefix} chown -R {USER}:`id -g {USER}` {HOME}/.ssh"
             run_cmd(cmd)
         for path in ssh_home.glob("**/*"):
             if path.is_file():
