@@ -294,7 +294,10 @@ def python(args):
             )
             run_cmd(f"{args.pip} install {args.user_s} setuptools")
     if args.config:
-        pass
+        if not shutil.which("python"):
+            python3 = shutil.which("python3")
+            if python3:
+                Path(python3[:-1]).symlink_to(python3)
     if args.uninstall:
         if is_ubuntu_debian():
             cmd = f"""{args.prefix} apt-get purge {args.yes_s} \
