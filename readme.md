@@ -15,10 +15,6 @@ sudo pip3 install -U git+https://github.com/dclong/xinstall@master
 ```
 ## Usage
 
-1. Update xinstall itsellf.
-
-        xinstall xinstall -ic
-        
 1. Run `xinstall -h` for the help doc.
 
 2. Update xinstall.
