@@ -100,7 +100,7 @@ def brew_install_safe(pkgs: Union[str, list]) -> None:
         run_cmd(
             f"""brew install {pkg} \
             && brew unlink {pkg} \
-            && brew link --force --overwrite {pkg}"""
+            && brew link --overwrite --force {pkg}"""
         )
 
 
