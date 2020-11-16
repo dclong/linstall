@@ -294,7 +294,10 @@ def python(args):
             )
             run_cmd(f"{args.pip} install {args.user_s} setuptools")
     if args.config:
-        pass
+        if not shutil.which("python"):
+            python3 = shutil.which("python3")
+            if python3:
+                Path(python3[:-1]).symlink_to(python3)
     if args.uninstall:
         if is_ubuntu_debian():
             cmd = f"""{args.prefix} apt-get purge {args.yes_s} \
@@ -694,4 +697,37 @@ def _add_subparser_pyenv(subparsers):
         func=pyenv,
         aliases=[],
         add_argument=_pyenv_args,
+    )
+
+
+def cmake(args):
+    """Install and configure cmake.
+    """
+    if args.install:
+        logging.info("Installing cmake ...")
+        if is_ubuntu_debian():
+            update_apt_source(prefix=args.prefix, seconds=1E-10)
+            cmd = f"{args.prefix} apt-get install {args.yes_s} cmake"
+            run_cmd(cmd)
+        elif is_macos():
+            brew_install_safe("cmake")
+        elif is_win():
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_ubuntu_debian():
+            cmd = f"{args.prefix} apt-get purge {args.yes_s} cmake"
+            run_cmd(cmd)
+        elif is_macos():
+            run_cmd("brew uninstall cmake")
+        elif is_win():
+            pass
+
+
+def _add_subparser_cmake(subparsers):
+    add_subparser(
+        subparsers,
+        "cmake",
+        func=cmake,
     )
