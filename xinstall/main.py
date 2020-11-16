@@ -43,6 +43,7 @@ from .github import (
     _add_subparser_dsutil,
 )
 from .dev import (
+    _add_subparser_cmake,
     _add_subparser_git,
     _add_subparser_poetry,
     _add_subparser_nodejs,
@@ -172,6 +173,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_intellij_idea_scala(subparsers)
     _add_subparser_bash_lsp(subparsers)
     # ------------------------- development related  ------------------------------
+    _add_subparser_cmake(subparsers)
     _add_subparser_git(subparsers)
     _add_subparser_nodejs(subparsers)
     _add_subparser_evcxr_jupyter(subparsers)

@@ -14,7 +14,7 @@ from .utils import (
     is_macos,
     brew_install_safe,
 )
-from .dev import rustup
+from .dev import rustup, cmake
 logging.basicConfig(
     format=
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
@@ -175,6 +175,7 @@ def evcxr_jupyter(args) -> None:
     """
     if args.install:
         rustup(args)
+        cmake(args)
         cmd = f"""{HOME}/.cargo/bin/cargo install --force evcxr_jupyter \
             && {HOME}/.cargo/bin/evcxr_jupyter --install"""
         run_cmd(cmd)

@@ -698,3 +698,36 @@ def _add_subparser_pyenv(subparsers):
         aliases=[],
         add_argument=_pyenv_args,
     )
+
+
+def cmake(args):
+    """Install and configure cmake.
+    """
+    if args.install:
+        logging.info("Installing cmake ...")
+        if is_ubuntu_debian():
+            update_apt_source(prefix=args.prefix, seconds=1E-10)
+            cmd = f"{args.prefix} apt-get install {args._yes_s} cmake"
+            run_cmd(cmd)
+        elif is_macos():
+            brew_install_safe("cmake")
+        elif is_win():
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_ubuntu_debian():
+            cmd = f"{args.prefix} apt-get purge {args._yes_s} cmake"
+            run_cmd(cmd)
+        elif is_macos():
+            run_cmd("brew uninstall cmake")
+        elif is_win():
+            pass
+
+
+def _add_subparser_cmake(subparsers):
+    add_subparser(
+        subparsers,
+        "cmake",
+        func=cmake,
+    )
