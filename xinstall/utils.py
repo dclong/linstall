@@ -98,7 +98,7 @@ def brew_install_safe(pkgs: Union[str, list]) -> None:
         pkgs = [pkgs]
     for pkg in pkgs:
         run_cmd(
-            f"""brew install --overwrite --force {pkg} \
+            f"""brew install --force {pkg} \
             || brew link --overwrite --force {pkg}"""
         )
 
