@@ -180,12 +180,7 @@ def _pytext_args(subparser):
 
 
 def _add_subparser_pytext(subparsers):
-    add_subparser(
-        subparsers,
-        "pytext",
-        func=pytext,
-        add_argument=_pytext_args
-    )
+    add_subparser(subparsers, "pytext", func=pytext, add_argument=_pytext_args)
 
 
 def computer_vision(args):
@@ -245,9 +240,4 @@ def _nlp_args(subparser):
 
 
 def _add_subparser_nlp(subparsers):
-    add_subparser(
-        subparsers,
-        "nlp",
-        func=nlp,
-        add_argument=_nlp_args
-    )
+    add_subparser(subparsers, "nlp", func=nlp, add_argument=_nlp_args)

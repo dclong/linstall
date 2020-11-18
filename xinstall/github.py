@@ -13,7 +13,9 @@ logging.basicConfig(
 def install_py_github(args) -> None:
     """Install a Python package from GitHub.
     """
-    utils.install_py_github(url=args.url, user=args.user, pip=args.pip, pip_option=args.pip_option)
+    utils.install_py_github(
+        url=args.url, user=args.user, pip=args.pip, pip_option=args.pip_option
+    )
 
 
 def _add_subparser_install_py_github(subparsers) -> None:
@@ -38,7 +40,9 @@ def dsutil(args) -> None:
     """
     if args.install:
         url = "https://github.com/dclong/dsutil"
-        utils.install_py_github(url=url, pip=args.pip, user=args.user, pip_option=args.pip_option)
+        utils.install_py_github(
+            url=url, pip=args.pip, user=args.user, pip_option=args.pip_option
+        )
     if args.config:
         pass
     if args.uninstall:
@@ -62,7 +66,9 @@ def xinstall(args) -> None:
     """
     if args.install:
         url = "https://github.com/dclong/xinstall"
-        utils.install_py_github(url=url, user=args.user, pip=args.pip, pip_option=args.pip_option)
+        utils.install_py_github(
+            url=url, user=args.user, pip=args.pip, pip_option=args.pip_option
+        )
     if args.config:
         pass
     if args.uninstall:
