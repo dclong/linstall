@@ -16,6 +16,7 @@ from .utils import (
     add_subparser,
     option_user,
     option_pip,
+    option_pip_option,
     is_win,
 )
 logging.basicConfig(
@@ -190,7 +191,7 @@ def pyspark(args):
     :param version:
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} pyspark findspark"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} pyspark findspark"
         run_cmd(cmd)
     if args.config:
         pass
@@ -202,32 +203,11 @@ def pyspark(args):
 def _pyspark_args(subparser):
     option_user(subparser)
     option_pip(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_pyspark(subparsers):
     add_subparser(subparsers, "PySpark", func=pyspark, add_argument=_pyspark_args)
-
-
-def optimuspyspark(args):
-    """Install Optimus (a PySpark package for data profiling).
-    :param yes:
-    :param install:
-    :param config:
-    :param uninstall:
-    :param version:
-    """
-    if args.install:
-        cmd = f"{args.pip} install {args.user_s} optimuspyspark"
-        run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        cmd = f"{args.pip} uninstall optimuspyspark"
-        run_cmd(cmd)
-
-
-def _add_subparser_optimuspyspark(subparsers):
-    add_subparser(subparsers, "Optimus", func=optimuspyspark, add_argument=option_user)
 
 
 def dask(args):
@@ -238,7 +218,7 @@ def dask(args):
     :param uninstall:
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} dask[complete]"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} dask[complete]"
         run_cmd(cmd)
     if args.config:
         pass
@@ -247,8 +227,14 @@ def dask(args):
         run_cmd(cmd)
 
 
+def _dask_args(subparser):
+    option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
+
+
 def _add_subparser_dask(subparsers):
-    add_subparser(subparsers, "dask", func=dask, add_argument=option_user)
+    add_subparser(subparsers, "dask", func=dask, add_argument=_dask_args)
 
 
 def _alter_spark_sql(path: Path, hadoop_local: Union[str, Path]) -> str:

@@ -2,7 +2,7 @@
 """
 from pathlib import Path
 import logging
-from .utils import HOME, USER, run_cmd, add_subparser, is_linux, is_macos, option_pip, option_user
+from .utils import HOME, USER, run_cmd, add_subparser, is_linux, is_macos, option_pip, option_user, option_pip_option
 logging.basicConfig(
     format=
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
@@ -14,7 +14,7 @@ def kaggle(args):
     """Insert the Python package kaggle.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} kaggle"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} kaggle"
         run_cmd(cmd)
     if args.config:
         home_host = Path(f"/home_host/{USER}/")
@@ -40,6 +40,7 @@ def kaggle(args):
 def _kaggle_args(subparser):
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_kaggle(subparsers):
@@ -52,7 +53,7 @@ def lightgbm(args):
     """Insert the Python package kaggle.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} lightgbm scikit-learn pandas matplotlib scipy graphviz"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} lightgbm scikit-learn pandas matplotlib scipy graphviz"
         run_cmd(cmd)
     if args.config:
         pass
@@ -63,6 +64,7 @@ def lightgbm(args):
 def _lightgbm_args(subparser):
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_lightgbm(subparsers):
@@ -76,12 +78,23 @@ def pytorch(args):
     """
     if args.install:
         if is_linux():
-            cmd = f"{args.pip} install torch==1.5.1+cpu torchvision==0.6.1+cpu -f https://download.pytorch.org/whl/torch_stable.html"
-            if args.gpu:
-                cmd = f"{args.pip} install torch torchvision"
+            cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
+                        torch==1.7.0+cpu \
+                        torchvision==0.8.1+cpu \
+                        torchaudio==0.7.0 \
+                        -f https://download.pytorch.org/whl/torch_stable.html"""
+            if args.cuda:
+                args.cuda = args.cuda.replace(".", "")
+                cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
+                            torch==1.7.0+cu{args.cuda} \
+                            torchvision==0.8.1+cu{args.cuda} \
+                            torchaudio==0.7.0 \
+                            -f https://download.pytorch.org/whl/torch_stable.html"""
+                if args.cuda == "102":
+                    cmd = f"{args.pip} install torch torchvision"
             run_cmd(cmd)
         elif is_macos():
-            cmd = f"{args.pip} install torch torchvision"
+            cmd = f"{args.pip} install torch torchvision torchaudio"
             run_cmd(cmd)
     if args.config:
         pass
@@ -91,11 +104,14 @@ def pytorch(args):
 
 def _pytorch_args(subparser):
     subparser.add_argument(
-        "--gpu",
-        dest="gpu",
-        action="store_true",
-        help="Install the GPU version of PyTorch."
+        "--cuda",
+        dest="cuda",
+        default="",
+        help="The version of CUDA. If not specified, the CPU version is used."
     )
+    option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_pytorch(subparsers):
@@ -108,7 +124,7 @@ def autogluon(args):
     """Insert the Python package AutoGluon.
     """
     if args.install:
-        cmd = f"{args.pip} install mxnet autogluon"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} mxnet autogluon"
         if args.cuda_version:
             version = args.cuda_version.replace(".", "")
             cmd = f"{args.pip} install mxnet-cu{version} autogluon"
@@ -128,6 +144,9 @@ def _autogluon_args(subparser):
         help=
         "If a valid version is specified, install the GPU version of AutoGluon with the specified version of CUDA."
     )
+    option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_autogluon(subparsers):
@@ -140,65 +159,11 @@ def _add_subparser_autogluon(subparsers):
     )
 
 
-def tensorflow(args):
-    """Install the Python package TensorFlow.
-    Since the most common to use TensorFlow is to install it into a Docker image 
-    that already come with Nvidia CUDA support, 
-    GPU support/dependencies (CUDA and CuDNN) is not handled here.
-    You need to manually install CUDA and CuDNN if you need GPU support.
-    For more details,
-    please refer to https://www.tensorflow.org/install/gpu.
-    """
-    if args.install:
-        cmd = f"{args.pip} install tensorflow"
-        run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
-
-
-def _tensorflow_args(subparser):
-    option_pip(subparser)
-
-
-def _add_subparser_tensorflow(subparsers):
-    add_subparser(
-        subparsers,
-        "tensorflow",
-        func=tensorflow,
-        aliases=["tf"],
-        add_argument=_tensorflow_args
-    )
-
-
-def gensim(args):
-    """Insert the Python package GenSim.
-    """
-    if args.install:
-        cmd = f"{args.pip} install gensim"
-        if args.cuda_version:
-            pass
-        run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
-
-
-def _add_subparser_gensim(subparsers):
-    add_subparser(
-        subparsers,
-        "gensim",
-        func=gensim,
-    )
-
-
 def pytext(args):
     """Insert the Python package PyText.
     """
     if args.install:
-        cmd = f"{args.pip} install pytext-nlp"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} pytext-nlp"
         if args.cuda_version:
             pass
         run_cmd(cmd)
@@ -206,6 +171,12 @@ def pytext(args):
         pass
     if args.uninstall:
         pass
+
+
+def _pytext_args(subparser):
+    option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_pytext(subparsers):
@@ -213,6 +184,7 @@ def _add_subparser_pytext(subparsers):
         subparsers,
         "pytext",
         func=pytext,
+        add_argument=_pytext_args
     )
 
 
@@ -230,12 +202,18 @@ def computer_vision(args):
                     && {args.pip} install opencv-python scikit-image pillow"""
             run_cmd(cmd)
         elif is_macos():
-            cmd = f"{args.pip} install opencv-python scikit-image pillow"
+            cmd = f"{args.pip} install {args.user_s} {args.pip_option} opencv-python scikit-image pillow"
             run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
         pass
+
+
+def _computer_vision_args(subparser):
+    option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_computer_vision(subparsers):
@@ -244,6 +222,7 @@ def _add_subparser_computer_vision(subparsers):
         "computer_vision",
         func=computer_vision,
         aliases=["vision", "cv"],
+        add_argument=_computer_vision_args
     )
 
 
@@ -251,7 +230,7 @@ def nlp(args):
     """Install Python packages (PyTorch, transformers, pytext-nlp and fasttext) for NLP.
     """
     if args.install:
-        cmd = f"{args.pip} install torch torchvision transformers pytext-nlp fasttext"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} torch torchvision transformers pytext-nlp fasttext"
         run_cmd(cmd)
     if args.config:
         pass
@@ -259,9 +238,16 @@ def nlp(args):
         pass
 
 
+def _nlp_args(subparser):
+    option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
+
+
 def _add_subparser_nlp(subparsers):
     add_subparser(
         subparsers,
         "nlp",
         func=nlp,
+        add_argument=_nlp_args
     )

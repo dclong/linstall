@@ -18,8 +18,9 @@ from .utils import (
     remove_file_safe,
     run_cmd,
     add_subparser,
-    option_user,
     option_pip,
+    option_user,
+    option_pip_option,
     option_python,
     update_file,
 )
@@ -82,7 +83,7 @@ def yapf(args):
     """Install Google's yapf (for formatting Python scripts).
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} yapf")
+        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} yapf")
     if args.config:
         src_file = BASE_DIR / "yapf/style.yapf"
         des_file = args.dst_dir / ".style.yapf"
@@ -105,7 +106,9 @@ def _yapf_args(subparser):
         default=Path(),
         help="The destination directory to copy the YAPF configuration file to.",
     )
+    option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_yapf(subparsers):
@@ -116,7 +119,7 @@ def pylint(args):
     """Install and configure pylint.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} pylint")
+        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} pylint")
     if args.config:
         src_file = BASE_DIR / "pylint/pylintrc"
         des_file = args.dst_dir / ".pylintrc"
@@ -135,7 +138,9 @@ def _pylint_args(subparser):
         default=Path(),
         help="The destination directory to copy the pylint configuration file to.",
     )
+    option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_pylint(subparsers):
@@ -148,7 +153,7 @@ def pytype(args):
     """Install and configure pytype.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} pytype")
+        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} pytype")
     if args.config:
         src_file = BASE_DIR / "pytype/setup.cfg"
         des_file = args.dst_dir / "setup.cfg"
@@ -167,7 +172,9 @@ def _pytype_args(subparser):
         default=Path(),
         help="The destination directory to copy the pytype configuration file to.",
     )
+    option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_pytype(subparsers):
@@ -207,7 +214,7 @@ def jupyter_book(args):
     """Install jupyter-book.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} jupyter-book"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} jupyter-book"
         run_cmd(cmd)
     if args.config:
         src_file = BASE_DIR / "jupyter-book/_config.yml"
@@ -219,6 +226,8 @@ def jupyter_book(args):
 
 def _jupyter_book_args(subparser):
     option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_jupyter_book(subparsers):
@@ -235,7 +244,7 @@ def ipython(args):
     """Install IPython for Python 3.
     """
     if args.install:
-        cmd = f"{args.prefix} {args.pip} install {args.user_s} ipython"
+        cmd = f"{args.prefix} {args.pip} install {args.user_s} {args.pip_option} ipython"
         run_cmd(cmd)
     if args.config:
         src_dir = BASE_DIR / "ipython"
@@ -264,6 +273,7 @@ def _ipython_args(subparser):
     )
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_ipython(subparsers):
@@ -292,7 +302,7 @@ def python(args):
                 f"""{args.prefix} yum install {args.yes_s} \
                 python3 python3-devel python3-pip"""
             )
-            run_cmd(f"{args.pip} install {args.user_s} setuptools")
+            run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} setuptools")
     if args.config:
         if not shutil.which("python"):
             python3 = shutil.which("python3")
@@ -310,8 +320,9 @@ def python(args):
 
 
 def _python_args(subparser):
-    option_user(subparser)
     option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_python3(subparsers):
@@ -389,7 +400,7 @@ def pyjnius(args):
     """Install pyjnius for calling Java from Python.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user} Cython pyjnius"
+        cmd = f"{args.pip} install {args.user} {args.pip_option} Cython pyjnius"
         run_cmd(cmd)
     if args.config:
         pass
@@ -398,8 +409,9 @@ def pyjnius(args):
 
 
 def _pyjnius_args(subparser):
-    option_user(subparser)
     option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_pyjnius(subparsers):
@@ -579,7 +591,7 @@ def jpype1(args):
     """Install the Python package JPype.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} JPype1"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} JPype1"
         run_cmd(cmd)
     if args.config:
         pass
@@ -591,6 +603,7 @@ def jpype1(args):
 def _jpype1_args(subparser):
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_jpype1(subparsers):
@@ -619,7 +632,7 @@ def _add_subparser_deno(subparsers):
 
 def sphinx(args):
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} sphinx sphinx-autodoc-typehints"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} sphinx sphinx-autodoc-typehints"
         run_cmd(cmd)
     if args.config:
         pass
@@ -631,6 +644,7 @@ def sphinx(args):
 def _sphinx_args(subparser):
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_sphinx(subparsers):

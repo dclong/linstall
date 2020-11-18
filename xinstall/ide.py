@@ -8,7 +8,7 @@ import re
 from .utils import (
     USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, is_ubuntu_debian, is_centos_series,
     update_apt_source, brew_install_safe, is_macos, run_cmd, add_subparser,
-    intellij_idea_plugin, option_user, option_pip
+    intellij_idea_plugin, option_user, option_pip, option_pip_option
 )
 logging.basicConfig(
     format=
@@ -120,7 +120,7 @@ def spacevim(args) -> None:
         if shutil.which("nvim"):
             run_cmd('nvim --headless +"call dein#install()" +qall')
         if not args.no_lsp:
-            cmd = f"{args.pip} install {args.user_s} python-language-server[all] pyls-mypy"
+            cmd = f"{args.pip} install {args.user_s} {args.pip_option} python-language-server[all] pyls-mypy"
             # npm install -g bash-language-server javascript-typescript-langserver
             run_cmd(cmd)
     if args.uninstall:
@@ -150,8 +150,9 @@ def _spacevim_args(subparser) -> None:
         action="store_true",
         help="disable true color (default true) for SpaceVim."
     )
-    option_user(subparser)
     option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_spacevim(subparsers) -> None:

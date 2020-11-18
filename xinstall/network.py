@@ -20,6 +20,7 @@ from .utils import (
     is_centos_series,
     option_pip,
     option_user,
+    option_pip_option,
 )
 logging.basicConfig(
     format=
@@ -154,7 +155,7 @@ def dryscrape(args):
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
             cmd = f"""{args.prefix} apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
-                && {args.pip} install {args.user_s} dryscrape
+                && {args.pip} install {args.user_s} {args.pip_option} dryscrape
                 """
             run_cmd(cmd)
         elif is_macos():
@@ -175,6 +176,7 @@ def dryscrape(args):
 def _dryscrape_args(subparser) -> None:
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_dryscrape(subparsers):
@@ -243,7 +245,7 @@ def sshuttle(args: Namespace):
     """
     if args.install:
         iptables(args)
-        run_cmd(f"{args.pip} install {args.user_s} sshuttle")
+        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} sshuttle")
     if args.config:
         pass
     if args.uninstall:
@@ -253,6 +255,7 @@ def sshuttle(args: Namespace):
 def _sshuttle_args(subparser):
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_sshuttle(subparsers):

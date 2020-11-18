@@ -1,7 +1,7 @@
 """GitHub related utils.
 """
 import logging
-from .utils import option_pip, option_python, option_user, add_subparser, run_cmd
+from .utils import option_pip, option_python, option_user, option_pip_option, add_subparser, run_cmd
 from . import utils
 logging.basicConfig(
     format=
@@ -13,7 +13,7 @@ logging.basicConfig(
 def install_py_github(args) -> None:
     """Install a Python package from GitHub.
     """
-    utils.install_py_github(url=args.url, user=args.user, pip=args.pip)
+    utils.install_py_github(url=args.url, user=args.user, pip=args.pip, pip_option=args.pip_option)
 
 
 def _add_subparser_install_py_github(subparsers) -> None:
@@ -25,9 +25,10 @@ def _add_subparser_install_py_github(subparsers) -> None:
     subparser.add_argument(
         dest="url", help="The URL of the Python package's GitHub repository."
     )
-    option_user(subparser)
-    option_python(subparser)
     option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
+    option_python(subparser)
     subparser.set_defaults(func=install_py_github)
     return subparser
 
@@ -37,7 +38,7 @@ def dsutil(args) -> None:
     """
     if args.install:
         url = "https://github.com/dclong/dsutil"
-        utils.install_py_github(url=url, pip=args.pip, user=args.user)
+        utils.install_py_github(url=url, pip=args.pip, user=args.user, pip_option=args.pip_option)
     if args.config:
         pass
     if args.uninstall:
@@ -45,8 +46,9 @@ def dsutil(args) -> None:
 
 
 def _dsutil_args(subparser) -> None:
-    option_user(subparser)
     option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_dsutil(subparsers) -> None:
@@ -60,7 +62,7 @@ def xinstall(args) -> None:
     """
     if args.install:
         url = "https://github.com/dclong/xinstall"
-        utils.install_py_github(url=url, user=args.user, pip=args.pip)
+        utils.install_py_github(url=url, user=args.user, pip=args.pip, pip_option=args.pip_option)
     if args.config:
         pass
     if args.uninstall:
@@ -70,6 +72,7 @@ def xinstall(args) -> None:
 def _xinstall_args(subparser) -> None:
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_xinstall(subparsers) -> None:

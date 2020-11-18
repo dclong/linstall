@@ -20,6 +20,7 @@ from .utils import (
     add_subparser,
     option_pip,
     option_user,
+    option_pip_option,
 )
 logging.basicConfig(
     format=
@@ -249,7 +250,7 @@ def xonsh(args) -> None:
     """Install xonsh, a Python based shell.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} xonsh")
+        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} xonsh")
     if args.config:
         src = f"{BASE_DIR}/xonsh/xonshrc"
         dst = HOME / ".xonshrc"
@@ -266,6 +267,7 @@ def xonsh(args) -> None:
 def _xonsh_args(subparser) -> None:
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_xonsh(subparsers) -> None:
