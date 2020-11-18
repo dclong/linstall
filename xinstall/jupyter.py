@@ -9,6 +9,7 @@ from .utils import (
     add_subparser,
     option_pip,
     option_user,
+    option_pip_option,
     option_jupyter,
     is_ubuntu_debian,
     is_macos,
@@ -26,7 +27,7 @@ def nbdime(args) -> None:
     """Install and configure nbdime for comparing difference of notebooks.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} nbdime")
+        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} nbdime")
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall nbdime")
     if args.config:
@@ -36,6 +37,7 @@ def nbdime(args) -> None:
 def _nbdime_args(subparser) -> None:
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_nbdime(subparsers) -> None:
@@ -65,9 +67,12 @@ def jupyterlab_lsp(args) -> None:
     """Install jupyterlab-lsp.
     """
     if args.install:
-        cmd = f"""{args.pip} install {args.user_s} jupyter-lsp \
-                && {args.prefix} {args.jupyter} labextension install @krassowski/jupyterlab-lsp \
-                && {args.pip} install {args.user_s} python-language-server[all] pyls-mypy"""
+        cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
+                    jupyter-lsp \
+                    python-language-server[all] \
+                    pyls-mypy \
+                && {args.prefix} {args.jupyter} labextension install @krassowski/jupyterlab-lsp
+                """
         run_cmd(cmd)
     if args.config:
         pass
@@ -78,6 +83,7 @@ def jupyterlab_lsp(args) -> None:
 def _jupyterlab_lsp_args(subparser) -> None:
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
     option_jupyter(subparser)
 
 
@@ -95,7 +101,7 @@ def beakerx(args) -> None:
     """Install/uninstall/configure the BeakerX kernels.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} beakerx")
+        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} beakerx")
         run_cmd(f"{args.prefix} beakerx install")
         run_cmd(
             f"{args.prefix} jupyter labextension install @jupyter-widgets/jupyterlab-manager",
@@ -115,6 +121,7 @@ def beakerx(args) -> None:
 def _beakerx_args(subparser) -> None:
     option_pip(subparser)
     option_user(subparser)
+    option_pip_option(subparser)
 
 
 def _add_subparser_beakerx(subparsers) -> None:

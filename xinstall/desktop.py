@@ -10,6 +10,9 @@ from .utils import (
     update_apt_source,
     run_cmd,
     add_subparser,
+    option_pip,
+    option_user,
+    option_pip_option,
 )
 logging.basicConfig(
     format=
@@ -83,7 +86,7 @@ def pygetwindow(args):
     if args.install:
         if is_linux():
             sys.exit("PyGetWindow is not supported on Linux currently!")
-        cmd = f"{args.pip} install pyobjc-framework-quartz pygetwindow"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} pyobjc-framework-quartz pygetwindow"
         run_cmd(cmd)
     if args.config:
         pass
@@ -92,10 +95,17 @@ def pygetwindow(args):
         run_cmd(cmd)
 
 
+def _pygetwindow_args(subparser):
+    option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
+
+
 def _add_subparser_pygetwindow(subparsers):
     add_subparser(
         subparsers,
         "pygetwindow",
         func=pygetwindow,
         aliases=["pgw", "getwindow", "gwin"],
+        add_argument=_pygetwindow_args
     )

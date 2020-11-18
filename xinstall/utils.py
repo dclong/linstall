@@ -205,18 +205,21 @@ def _github_version(url) -> str:
     return Path(req.url).name
 
 
-def install_py_github(url: str, user: bool = False, pip: str = "pip3") -> None:
+def install_py_github(
+    url: str, user: bool = False, pip: str = "pip3", pip_option=""
+) -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
 
     :param url: The root URL of the GitHub repository.
-    :param user: If True, install to user's local directory. 
+    :param user: If True, install to user's local directory.
     This option is equivalant to 'pip install --user'.
-    :param pip: The path (pip3 by default) to the pip executable. 
+    :param pip: The path (pip3 by default) to the pip executable.
+    :param pip_option: Extra pip options.
     """
     ver = _github_version(url)
     ver_no_letter = re.sub("[a-zA-Z]", "", ver)
     url = f"{url}/releases/download/{ver}/{Path(url).name}-{ver_no_letter}-py3-none-any.whl"
-    cmd = f"{pip} install {'--user' if user else ''} --upgrade {url}"
+    cmd = f"{pip} install {'--user' if user else ''} --upgrade {pip_option} {url}"
     run_cmd(cmd)
 
 
@@ -299,13 +302,13 @@ def option_jupyter(subparser) -> None:
     )
 
 
-def option_option(subparser) -> None:
-    """Add the option --option into the sub parser.
+def option_pip_option(subparser) -> None:
+    """Add the option --pip-option into the sub parser.
 
     :param subparser: A sub parser.
     """
     subparser.add_argument(
-        "--option", dest="option", default="", help="Additional options."
+        "--pip-option", dest="pip_option", default="", help="Additional options."
     )
 
 

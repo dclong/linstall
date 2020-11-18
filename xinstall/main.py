@@ -8,9 +8,7 @@ from .ai import (
     _add_subparser_lightgbm,
     _add_subparser_pytorch,
     _add_subparser_autogluon,
-    _add_subparser_tensorflow,
     _add_subparser_pytext,
-    _add_subparser_gensim,
     _add_subparser_computer_vision,
     _add_subparser_nlp,
 )
@@ -66,7 +64,6 @@ from .dev import (
 )
 from .bigdata import (
     _add_subparser_pyspark,
-    _add_subparser_optimuspyspark,
     _add_subparser_spark,
     _add_subparser_dask,
 )
@@ -104,7 +101,7 @@ logging.basicConfig(
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
     level=logging.INFO
 )
-__version__ = "0.24.4"
+__version__ = "0.25.0"
 
 
 def version(args):
@@ -198,7 +195,6 @@ def parse_args(args=None, namespace=None):
     _add_subparser_dask(subparsers)
     _add_subparser_spark(subparsers)
     _add_subparser_pyspark(subparsers)
-    _add_subparser_optimuspyspark(subparsers)
     # ------------------------- virtualization related  ------------------------------
     _add_subparser_docker(subparsers)
     _add_subparser_kubernetes(subparsers)
@@ -216,8 +212,6 @@ def parse_args(args=None, namespace=None):
     _add_subparser_pytorch(subparsers)
     _add_subparser_autogluon(subparsers)
     _add_subparser_pytext(subparsers)
-    _add_subparser_tensorflow(subparsers)
-    _add_subparser_gensim(subparsers)
     _add_subparser_computer_vision(subparsers)
     _add_subparser_nlp(subparsers)
     # ------------------------- network related ------------------------------
