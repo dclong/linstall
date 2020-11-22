@@ -124,7 +124,7 @@ def autogluon(args):
     """Insert the Python package AutoGluon.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} mxnet autogluon"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} 'mxnet<2.0.0' autogluon"
         if args.cuda_version:
             version = args.cuda_version.replace(".", "")
             cmd = f"{args.pip} install {args.user_s} {args.pip_option} 'mxnet_cu{version}<2.0.0' autogluon"
