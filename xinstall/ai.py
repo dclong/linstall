@@ -76,19 +76,16 @@ def pytorch(args):
     """Insert PyTorch.
     """
     if args.install:
+        url = "https://download.pytorch.org/whl/torch_stable.html"
         if is_linux():
-            cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-                        torch==1.7.0+cpu \
-                        torchvision==0.8.1+cpu \
-                        torchaudio==0.7.0 \
-                        -f https://download.pytorch.org/whl/torch_stable.html"""
+            cmd = f"""{args.pip_install} -f {url} \
+                    torch==1.7.0+cpu torchvision==0.8.1+cpu torchaudio==0.7.0"""
             if args.cuda:
                 args.cuda = args.cuda.replace(".", "")
-                cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-                            torch==1.7.0+cu{args.cuda} \
-                            torchvision==0.8.1+cu{args.cuda} \
-                            torchaudio==0.7.0 \
-                            -f https://download.pytorch.org/whl/torch_stable.html"""
+                cmd = f"""{args.pip_install} -f {url} \
+                    torch==1.7.0+cu{args.cuda} torchvision==0.8.1+cu{args.cuda} \
+                    torchaudio==0.7.0
+                    """
                 if args.cuda == "102":
                     cmd = f"{args.pip} install torch torchvision"
             run_cmd(cmd)

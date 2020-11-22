@@ -239,6 +239,9 @@ def parse_args(args=None, namespace=None):
         args.user_s = "--user" if args.user else ""
     if USER == "root" or is_win():
         args.prefix = ""
+    if "pip_option" in args:
+        args.pip_option = " ".join(f"--{option}" for option in args.pip_option.split(","))
+        args.pip_install = f"{args.pip} install {args.user_s} {args.pip_option}"
     return args
 
 
