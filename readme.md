@@ -8,10 +8,10 @@ You can download a copy of the latest release and install it using pip.
 ```
 sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.26.0/xinstall-0.26.0-py3-none-any.whl
 ```
-Or you can use the following command to install the latest master branch
+Or you can use the following command to install the latest main branch
 if you have pip 20.0+.
 ```
-sudo pip3 install -U git+https://github.com/dclong/xinstall@master
+sudo pip3 install -U git+https://github.com/dclong/xinstall@main
 ```
 ## Usage
 
