@@ -1,7 +1,7 @@
 """GitHub related utils.
 """
 import logging
-from .utils import option_pip, option_python, option_user, option_pip_option, add_subparser, run_cmd
+from .utils import (option_python, option_pip_bundle, add_subparser, run_cmd)
 from . import utils
 logging.basicConfig(
     format=
@@ -27,9 +27,7 @@ def _add_subparser_install_py_github(subparsers) -> None:
     subparser.add_argument(
         dest="url", help="The URL of the Python package's GitHub repository."
     )
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
     option_python(subparser)
     subparser.set_defaults(func=install_py_github)
     return subparser
@@ -50,9 +48,7 @@ def dsutil(args) -> None:
 
 
 def _dsutil_args(subparser) -> None:
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_dsutil(subparsers) -> None:
@@ -76,9 +72,7 @@ def xinstall(args) -> None:
 
 
 def _xinstall_args(subparser) -> None:
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_xinstall(subparsers) -> None:

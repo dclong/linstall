@@ -14,9 +14,7 @@ from .utils import (
     BASE_DIR,
     run_cmd,
     add_subparser,
-    option_user,
-    option_pip,
-    option_pip_option,
+    option_pip_bundle,
     is_win,
 )
 logging.basicConfig(
@@ -120,7 +118,8 @@ def spark(args):
         conf = (BASE_DIR / "spark/spark-defaults.conf"
                ).read_text().replace("$SPARK_HOME", str(spark_home))
         run_cmd(
-            f"echo '{conf}' | {args.prefix} tee {spark_home / 'conf/spark-defaults.conf'} > /dev/null"
+            f"""echo '{conf}' | {args.prefix} tee \
+                {spark_home / 'conf/spark-defaults.conf'} > /dev/null"""
         )
         logging.info(
             "Spark is configured to use %s as the metastore database and %s as the Hive warehouse.",
@@ -201,9 +200,7 @@ def pyspark(args):
 
 
 def _pyspark_args(subparser):
-    option_user(subparser)
-    option_pip(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_pyspark(subparsers):
@@ -228,9 +225,7 @@ def dask(args):
 
 
 def _dask_args(subparser):
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_dask(subparsers):

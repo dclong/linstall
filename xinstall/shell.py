@@ -18,9 +18,7 @@ from .utils import (
     is_macos,
     run_cmd,
     add_subparser,
-    option_pip,
-    option_user,
-    option_pip_option,
+    option_pip_bundle,
 )
 logging.basicConfig(
     format=
@@ -67,7 +65,8 @@ def shell_utils(args) -> None:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
             run_cmd(
-                f"{args.prefix} apt-get install {args.yes_s} bash-completion command-not-found man-db",
+                f"""{args.prefix} apt-get install {args.yes_s} \
+                    bash-completion command-not-found man-db""",
             )
         elif is_macos():
             brew_install_safe(["bash-completion@2", "man-db"])
@@ -78,7 +77,8 @@ def shell_utils(args) -> None:
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
-                f"{args.prefix} apt-get purge {args.yes_s} bash-completion command-not-found man-db",
+                f"""{args.prefix} apt-get purge {args.yes_s} \
+                    bash-completion command-not-found man-db""",
             )
         elif is_macos():
             run_cmd("brew uninstall bash-completion man-db")
@@ -153,7 +153,8 @@ def homebrew(args) -> None:
             run_cmd(f"{args.prefix} yum install curl file git")
             if is_fedora():
                 run_cmd(f"{args.prefix} yum install libxcrypt-compat")
-    cmd_brew = 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'
+    url = "https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
+    cmd_brew = f'sh -c "$(curl -fsSL {url})"'
     if args.install:
         run_cmd(cmd_brew)
     if args.config:
@@ -265,9 +266,7 @@ def xonsh(args) -> None:
 
 
 def _xonsh_args(subparser) -> None:
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_xonsh(subparsers) -> None:
@@ -320,6 +319,10 @@ def _add_subparser_bash_it(subparsers) -> None:
 
 
 def bash_completion(args) -> None:
+    """Install and configure bash-complete.
+
+    :param args:
+    """
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -379,8 +382,10 @@ def osquery(args) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            cmd = f"""{args.prefix} apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
-                    && {args.prefix} add-apt-repository "deb [arch=amd64] https://pkg.osquery.io/deb deb main" \
+            cmd = f"""{args.prefix} apt-key adv --keyserver keyserver.ubuntu.com \
+                        --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
+                    && {args.prefix} add-apt-repository \
+                        "deb [arch=amd64] https://pkg.osquery.io/deb deb main" \
                     && {args.prefix} apt-get {args.yes_s} install osquery
                 """
             run_cmd(cmd)

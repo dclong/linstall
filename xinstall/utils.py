@@ -140,7 +140,8 @@ def is_win():
 
 
 def copy_file(srcfile, dstfile):
-    """Copy file without throwing exceptions when a broken symbolic link already exists at the destination.
+    """Copy file without throwing exceptions
+    when a broken symbolic link already exists at the destination.
 
     :param srcfile: The source file to copy from.
     :param dstfile: The destination file to copy to.
@@ -234,8 +235,8 @@ def intellij_idea_plugin(version: str, url: str):
         plugins_dir = f"Library/Application Support/IdeaIC{version}"
     plugins_dir = Path.home() / plugins_dir
     plugins_dir.mkdir(mode=0o750, parents=True, exist_ok=True)
-    fd, file = tempfile.mkstemp(suffix=".zip")
-    os.close(fd)
+    file_dsptr, file = tempfile.mkstemp(suffix=".zip")
+    os.close(file_dsptr)
     cmd = f"curl -sSL {url} -O {file} && unzip {file} -d {plugins_dir}"
     run_cmd(cmd)
 
@@ -312,6 +313,16 @@ def option_pip_option(subparser) -> None:
     )
 
 
+def option_pip_bundle(subparser) -> None:
+    """Add the options --pip, --user and --pip-option into the sub parser.
+
+    :param subparser: A sub parser.
+    """
+    option_pip(subparser)
+    option_user(subparser)
+    option_pip_option(subparser)
+
+
 def add_subparser(
     subparsers,
     name: str,
@@ -329,7 +340,8 @@ def add_subparser(
     :type aliases: Sequence, optional
     :param help_: Help doc of the sub command. If None, then the help doc of func is used.
     :type help_: Union[str, None], optional
-    :param add_argument: A callable object to add aditional arguments (in addition to those default arguments), defaults to None
+    :param add_argument: A callable object to add aditional arguments
+    (in addition to those default arguments), defaults to None
     :type add_argument: Union[Callable, None], optional
     """
     sub_cmd = re.sub(r"(\s+)|-", "_", name.lower())
