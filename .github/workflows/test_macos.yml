@@ -2,13 +2,11 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
 name: Test Code on macOS
-
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
-
+    branches: [ main ]
 jobs:
   test_code:
     runs-on: ${{matrix.os}}
@@ -30,7 +28,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        pip3 install -U git+https://github.com/dclong/xinstall@master
+        pip3 install -U git+https://github.com/dclong/xinstall@main
         xinstall pt -ic
         ~/.poetry/bin/poetry env use python3
         ~/.poetry/bin/poetry install
