@@ -67,7 +67,8 @@ def docker(args):
             if is_ubuntu_debian():
                 run_cmd(f"{args.prefix} gpasswd -a {args.user_to_docker} docker")
                 logging.warning(
-                    "Please run the command 'newgrp docker' or logout/login to make the group 'docker' effective!"
+                    "Please run the command 'newgrp docker' or logout/login"
+                    " to make the group 'docker' effective!"
                 )
             elif is_macos():
                 cmd = f"{args.prefix} dseditgroup -o edit -a {args.user_to_docker} -t user staff"
@@ -108,10 +109,12 @@ def kubernetes(args):
     if args.install:
         if is_ubuntu_debian():
             run_cmd(
-                f"curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | {args.prefix} apt-key add -",
+                f"""curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+                    | {args.prefix} apt-key add -""",
             )
             run_cmd(
-                f'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | {args.prefix} tee -a /etc/apt/sources.list.d/kubernetes.list',
+                f'''echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" \
+                    | {args.prefix} tee -a /etc/apt/sources.list.d/kubernetes.list''',
             )
             update_apt_source(prefix=args.prefix, seconds=-1E10)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} kubectl")
@@ -135,9 +138,11 @@ def _add_subparser_kubernetes(subparsers):
 
 
 def _minikube_linux(args):
+    url = "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
     run_cmd(
-        f"""curl -L https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -o /tmp/minikube-linux-amd64 \
-            && {args.prefix} apt-get install {args.yes_s} /tmp/minikube-linux-amd64 /usr/local/bin/minikube""",
+        f"""curl -L {url} -o /tmp/minikube-linux-amd64 \
+            && {args.prefix} apt-get install {args.yes_s} \
+                /tmp/minikube-linux-amd64 /usr/local/bin/minikube""",
     )
     print("VT-x/AMD-v virtualization must be enabled in BIOS.")
 

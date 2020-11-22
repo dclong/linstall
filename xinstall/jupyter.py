@@ -7,13 +7,8 @@ from .utils import (
     BIN_DIR,
     run_cmd,
     add_subparser,
-    option_pip,
-    option_user,
-    option_pip_option,
+    option_pip_bundle,
     option_jupyter,
-    is_ubuntu_debian,
-    is_macos,
-    brew_install_safe,
 )
 from .dev import rustup, cmake
 logging.basicConfig(
@@ -35,9 +30,7 @@ def nbdime(args) -> None:
 
 
 def _nbdime_args(subparser) -> None:
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_nbdime(subparsers) -> None:
@@ -81,9 +74,7 @@ def jupyterlab_lsp(args) -> None:
 
 
 def _jupyterlab_lsp_args(subparser) -> None:
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
     option_jupyter(subparser)
 
 
@@ -119,9 +110,7 @@ def beakerx(args) -> None:
 
 
 def _beakerx_args(subparser) -> None:
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_beakerx(subparsers) -> None:
@@ -144,7 +133,9 @@ def almond(args) -> None:
             f"curl -L -o {coursier} https://git.io/coursier-cli && chmod +x {coursier}"
         )
         run_cmd(
-            f"{args.prefix} /usr/local/bin/coursier launch almond{args.almond_version} {args.scala_version} --quiet -- --install --global"
+            f"""{args.prefix} /usr/local/bin/coursier launch \
+                almond{args.almond_version} {args.scala_version} \
+                --quiet -- --install --global"""
         )
     if args.config:
         pass
