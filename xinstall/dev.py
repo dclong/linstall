@@ -18,9 +18,7 @@ from .utils import (
     remove_file_safe,
     run_cmd,
     add_subparser,
-    option_pip,
-    option_user,
-    option_pip_option,
+    option_pip_bundle,
     option_python,
     update_file,
 )
@@ -106,9 +104,7 @@ def _yapf_args(subparser):
         default=Path(),
         help="The destination directory to copy the YAPF configuration file to.",
     )
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_yapf(subparsers):
@@ -138,9 +134,7 @@ def _pylint_args(subparser):
         default=Path(),
         help="The destination directory to copy the pylint configuration file to.",
     )
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_pylint(subparsers):
@@ -172,9 +166,7 @@ def _pytype_args(subparser):
         default=Path(),
         help="The destination directory to copy the pytype configuration file to.",
     )
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_pytype(subparsers):
@@ -225,9 +217,7 @@ def jupyter_book(args):
 
 
 def _jupyter_book_args(subparser):
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_jupyter_book(subparsers):
@@ -271,9 +261,7 @@ def _ipython_args(subparser):
         default=HOME / ".ipython",
         help="The directory for storing IPython configuration files.",
     )
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_ipython(subparsers):
@@ -320,9 +308,7 @@ def python(args):
 
 
 def _python_args(subparser):
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_python3(subparsers):
@@ -339,7 +325,8 @@ def poetry(args):
     """Install and configure Python poetry.
     """
     if args.install:
-        cmd = f"curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | {args.python}"
+        url = "https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py"
+        cmd = f"curl -sSL {url} | {args.python}"
         if args.version:
             cmd += f" - --version {args.version}"
         run_cmd(cmd)
@@ -361,11 +348,13 @@ def poetry(args):
         # bash completion
         if args.bash_completion:
             if is_linux():
-                cmd = f"{poetry_bin} completions bash | tee /etc/bash_completion.d/poetry.bash-completion > /dev/null"
+                cmd = f"""{poetry_bin} completions bash | tee \
+                    /etc/bash_completion.d/poetry.bash-completion > /dev/null"""
                 run_cmd(cmd)
                 return
             if is_macos():
-                cmd = f"{poetry_bin} completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion"
+                cmd = f"""{poetry_bin} completions bash > \
+                    $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion"""
                 run_cmd(cmd)
             logging.info("Bash completion is enabled for poetry.")
     if args.uninstall:
@@ -409,9 +398,7 @@ def pyjnius(args):
 
 
 def _pyjnius_args(subparser):
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_pyjnius(subparsers):
@@ -601,9 +588,7 @@ def jpype1(args):
 
 
 def _jpype1_args(subparser):
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_jpype1(subparsers):
@@ -617,6 +602,10 @@ def _add_subparser_jpype1(subparsers):
 
 
 def deno(args):
+    """Install and configure Deno.
+
+    :param args:
+    """
     if args.install:
         cmd = "curl -fsSL https://deno.land/x/install/install.sh | sh"
         run_cmd(cmd)
@@ -631,6 +620,10 @@ def _add_subparser_deno(subparsers):
 
 
 def sphinx(args):
+    """Install and configure Sphinx.
+
+    :param args:
+    """
     if args.install:
         cmd = f"{args.pip} install {args.user_s} {args.pip_option} sphinx sphinx-autodoc-typehints"
         run_cmd(cmd)
@@ -642,9 +635,7 @@ def sphinx(args):
 
 
 def _sphinx_args(subparser):
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_sphinx(subparsers):
@@ -658,7 +649,8 @@ def pyenv(args):
     """
     if args.install:
         logging.info("Installing pyenv ...")
-        cmd = f"{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run | PYENV_ROOT={args.root} bash"
+        cmd = f"""{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run \
+            | PYENV_ROOT={args.root} bash"""
         run_cmd(cmd)
         if is_ubuntu_debian():
             logging.info(

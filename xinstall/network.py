@@ -18,9 +18,7 @@ from .utils import (
     is_linux,
     is_macos,
     is_centos_series,
-    option_pip,
-    option_user,
-    option_pip_option,
+    option_pip_bundle,
 )
 logging.basicConfig(
     format=
@@ -174,9 +172,7 @@ def dryscrape(args):
 
 
 def _dryscrape_args(subparser) -> None:
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_dryscrape(subparsers):
@@ -253,9 +249,7 @@ def sshuttle(args: Namespace):
 
 
 def _sshuttle_args(subparser):
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_sshuttle(subparsers):

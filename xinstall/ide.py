@@ -8,7 +8,7 @@ import re
 from .utils import (
     USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, is_ubuntu_debian, is_centos_series,
     update_apt_source, brew_install_safe, is_macos, run_cmd, add_subparser,
-    intellij_idea_plugin, option_user, option_pip, option_pip_option
+    intellij_idea_plugin, option_pip_bundle
 )
 logging.basicConfig(
     format=
@@ -150,9 +150,7 @@ def _spacevim_args(subparser) -> None:
         action="store_true",
         help="disable true color (default true) for SpaceVim."
     )
-    option_pip(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_spacevim(subparsers) -> None:
