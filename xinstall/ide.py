@@ -266,7 +266,7 @@ def _visual_studio_code_args(subparser) -> None:
         default="",
         help="Enable true color (default true) for SpaceVim."
     )
-    option_user(subparser)
+    option_pip_bundle(subparser)
 
 
 def _add_subparser_visual_studio_code(subparsers) -> None:
