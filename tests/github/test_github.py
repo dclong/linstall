@@ -14,5 +14,5 @@ def test_install_py_github():
 def test_github():
     """Test the wajig command.
     """
-    cmd = "xinstall github -r dclong/xinstall -k whl -o /tmp/xinstall.wheel"
+    cmd = "xinstall github -r dclong/xinstall -k whl -o xinstall.wheel"
     run_cmd(cmd)
