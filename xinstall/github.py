@@ -24,7 +24,10 @@ def _github_download(args):
     spec = SpecifierSet(args.version)
     # get asserts of the first release in the specifier
     url = f"https://api.github.com/repos/{args.repo}/releases"
-    releases = requests.get(url).json()
+    resp = requests.get(url)
+    if not resp.ok:
+        resp.raise_for_status()
+    releases = resp.json()
     assets = next(
         release["assets"] for release in releases if parse(release["tag_name"]) in spec
     )
