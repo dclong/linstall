@@ -1,10 +1,18 @@
 """Test the github module.
 """
 import subprocess as sp
+from xinstall.utils import run_cmd
 
 
 def test_install_py_github():
     """Test the wajig command.
     """
     cmd = "xinstall install_py_github https://github.com/dclong/dsutil"
-    sp.run(cmd, shell=True, check=True)
+    run_cmd(cmd)
+
+
+def test_github():
+    """Test the wajig command.
+    """
+    cmd = "xinstall github -r dclong/xinstall -k whl -o /tmp/xinstall.wheel"
+    run_cmd(cmd)
