@@ -21,11 +21,15 @@ def _github_download(args):
     # get asserts of the first release in the specifier
     url = f"https://api.github.com/repos/{args.repo}/releases"
     releases = requests.get(url).json()
-    assets = next(release["assets"] for release in releases if parse(release["tag_name"]) in spec)
+    assets = next(
+        release["assets"] for release in releases if parse(release["tag_name"]) in spec
+    )
     # get download URL
     if args.keyword:
         args.filter = lambda name: all(kwd in name for kwd in args.keyword)
-    url = next(asset["browser_download_url"] for asset in assets if args.filter(asset["name"]))
+    url = next(
+        asset["browser_download_url"] for asset in assets if args.filter(asset["name"])
+    )
     # download the assert
     logging.info("Downloading assert from the URL: %s", url)
     resp = requests.get(url, stream=True)
@@ -76,7 +80,8 @@ def _github_args(subparser):
         "--filter",
         dest="filter",
         default=lambda namme: True,
-        help="The function to filter assert. It is overwritten by --keyword if specified.",
+        help=
+        "The function to filter assert. It is overwritten by --keyword if specified.",
     )
     subparser.add_argument(
         "-o",
