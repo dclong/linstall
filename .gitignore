@@ -18,3 +18,4 @@ dist/
 .theia
 doc*/_build/
 core.*
+*.wheel

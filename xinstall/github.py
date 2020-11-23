@@ -15,12 +15,19 @@ logging.basicConfig(
 
 
 def _github_download(args):
-    if args.version[0].isdigit():
-        args.version = "==" + args.version
+    if args.version:
+        v0 = args.version[0]
+        if v0.isdigit():
+            args.version = "==" + args.version
+        elif v0 == "v":
+            args.version = "==" + args.version[1:]
     spec = SpecifierSet(args.version)
     # get asserts of the first release in the specifier
     url = f"https://api.github.com/repos/{args.repo}/releases"
-    releases = requests.get(url).json()
+    resp = requests.get(url)
+    if not resp.ok:
+        resp.raise_for_status()
+    releases = resp.json()
     assets = next(
         release["assets"] for release in releases if parse(release["tag_name"]) in spec
     )
@@ -87,6 +94,13 @@ def _github_args(subparser):
         "-o",
         "--output",
         dest="output",
+        default="",
+        help="The output path for the downloaded assert.",
+    )
+    subparser.add_argument(
+        "--cmd",
+        "--install-cmd",
+        dest="install_cmd",
         default="",
         help="The output path for the downloaded assert.",
     )
