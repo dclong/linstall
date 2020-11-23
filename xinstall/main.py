@@ -37,6 +37,7 @@ from .ide import (
 )
 from .github import (
     _add_subparser_install_py_github,
+    _add_subparser_github,
     _add_subparser_xinstall,
     _add_subparser_dsutil,
 )
@@ -206,6 +207,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_dsutil(subparsers)
     _add_subparser_xinstall(subparsers)
     _add_subparser_install_py_github(subparsers)
+    _add_subparser_github(subparsers)
     # ------------------------- AI related  ------------------------------
     _add_subparser_kaggle(subparsers)
     _add_subparser_lightgbm(subparsers)
