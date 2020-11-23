@@ -37,6 +37,7 @@ from .ide import (
 )
 from .github import (
     _add_subparser_install_py_github,
+    _add_subparser_github,
     _add_subparser_xinstall,
     _add_subparser_dsutil,
 )
@@ -101,7 +102,7 @@ logging.basicConfig(
     "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
     level=logging.INFO
 )
-__version__ = "0.26.1"
+__version__ = "0.27.0"
 
 
 def version(args):
@@ -206,6 +207,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_dsutil(subparsers)
     _add_subparser_xinstall(subparsers)
     _add_subparser_install_py_github(subparsers)
+    _add_subparser_github(subparsers)
     # ------------------------- AI related  ------------------------------
     _add_subparser_kaggle(subparsers)
     _add_subparser_lightgbm(subparsers)
