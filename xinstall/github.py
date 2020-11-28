@@ -51,8 +51,7 @@ def github(args) -> None:
 
     :param args:
     """
-    if args.output:
-        _github_download(args)
+    _github_download(args)
     if args.install_cmd:
         run_cmd(f"{args.install_cmd} {args.output}")
 
@@ -94,7 +93,7 @@ def _github_args(subparser):
         "-o",
         "--output",
         dest="output",
-        default="",
+        required=True,
         help="The output path for the downloaded assert.",
     )
     subparser.add_argument(
