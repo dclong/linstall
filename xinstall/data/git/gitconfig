@@ -16,6 +16,9 @@
     process = git-lfs filter-process
     required = true
 [difftool]
-	prompt = false
+    prompt = false
 [mergetool]
-	prompt = false
+    prompt = false
+[pull]
+    rebase = false
+
