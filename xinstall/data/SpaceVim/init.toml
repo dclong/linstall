@@ -49,3 +49,7 @@ filetypes = [
 name = "shell"
 default_position = "top"
 default_height = 30
+
+[[custom_plugins]]
+name = "vim-scripts/dbext.vim"
+merged = 0
