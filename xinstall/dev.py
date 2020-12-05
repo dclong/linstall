@@ -4,6 +4,7 @@ import os
 import logging
 import shutil
 from pathlib import Path
+import tempfile
 from argparse import Namespace
 import git
 from .utils import (
