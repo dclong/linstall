@@ -5,6 +5,7 @@ import logging
 import shutil
 from pathlib import Path
 from argparse import Namespace
+import git
 from .utils import (
     HOME,
     BASE_DIR,
@@ -736,4 +737,26 @@ def _add_subparser_cmake(subparsers):
         subparsers,
         "cmake",
         func=cmake,
+    )
+
+
+def pg_formatter(args):
+    """Install and configure pgFormatter.
+    """
+    if args.install:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            git.Repo.clone_from("https://github.com/darold/pgFormatter.git", temp_dir)
+            run_cmd(f"perl Makefile.PL && make && {args.prefix} make install")
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_pg_formatter(subparsers):
+    add_subparser(
+        subparsers,
+        "pg_formatter",
+        aliases=["pgformatter", "pgfmt", "pgf"],
+        func=pg_formatter,
     )

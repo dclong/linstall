@@ -62,6 +62,7 @@ from .dev import (
     _add_subparser_antlr,
     _add_subparser_jpype1,
     _add_subparser_jupyter_book,
+    _add_subparser_pg_formatter,
 )
 from .bigdata import (
     _add_subparser_pyspark,
@@ -192,6 +193,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_deno(subparsers)
     _add_subparser_antlr(subparsers)
     _add_subparser_jpype1(subparsers)
+    _add_subparser_pg_formatter(subparsers)
     # --------------------------- big data related  --------------------------------
     _add_subparser_dask(subparsers)
     _add_subparser_spark(subparsers)
