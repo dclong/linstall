@@ -51,5 +51,5 @@ def test_ipython():
 def test_pg_formatter():
     """Test installing and configuring pgFormatter.
     """
-    cmd = "xinstall pgfmt -ic"
+    cmd = "xinstall --sudo pgfmt -ic"
     run_cmd(cmd)
