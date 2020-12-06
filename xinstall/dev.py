@@ -4,7 +4,9 @@ import os
 import logging
 import shutil
 from pathlib import Path
+import tempfile
 from argparse import Namespace
+from git import Repo
 from .utils import (
     HOME,
     BASE_DIR,
@@ -464,7 +466,7 @@ def _git_ignore(args: Namespace) -> None:
     logging.info(msg, srcfile, dstfile)
 
 
-def git(args) -> None:
+def git_(args) -> None:
     """Install and configure Git.
     """
     if args.install:
@@ -545,7 +547,7 @@ def _git_args(subparser):
 
 
 def _add_subparser_git(subparsers):
-    add_subparser(subparsers, "Git", func=git, add_argument=_git_args)
+    add_subparser(subparsers, "Git", func=git_, add_argument=_git_args)
 
 
 def antlr(args):
@@ -736,4 +738,37 @@ def _add_subparser_cmake(subparsers):
         subparsers,
         "cmake",
         func=cmake,
+    )
+
+
+def pg_formatter(args):
+    """Install and configure pgFormatter.
+    """
+    if args.install:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            Repo.clone_from("https://github.com/darold/pgFormatter.git", temp_dir)
+            if is_win():
+                run_cmd(
+                    f"""cd /d {temp_dir} \
+                        && perl Makefile.PL \
+                        && make && {args.prefix} make install"""
+                )
+            else:
+                run_cmd(
+                    f"""cd {temp_dir} \
+                        && perl Makefile.PL \
+                        && make && {args.prefix} make install"""
+                )
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_pg_formatter(subparsers):
+    add_subparser(
+        subparsers,
+        "pg_formatter",
+        aliases=["pgformatter", "pgfmt", "pgf"],
+        func=pg_formatter,
     )

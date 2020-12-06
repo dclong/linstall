@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xinstall"
-version = "0.28.0"
+version = "0.28.1"
 description = ""
 authors = ["Benjamin Du <longendu@yahoo.com>"]
 
@@ -14,6 +14,7 @@ tqdm = ">=4.48.2"
 findspark = ">=1.4.2"
 requests = ">=2.25.0"
 packaging = ">=20.4"
+GitPython = ">=3.1.11"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=3.0"
