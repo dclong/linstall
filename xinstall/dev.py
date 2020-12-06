@@ -6,7 +6,7 @@ import shutil
 from pathlib import Path
 import tempfile
 from argparse import Namespace
-import git
+from git import Repo
 from .utils import (
     HOME,
     BASE_DIR,
@@ -746,7 +746,7 @@ def pg_formatter(args):
     """
     if args.install:
         with tempfile.TemporaryDirectory() as temp_dir:
-            git.Repo.clone_from("https://github.com/darold/pgFormatter.git", temp_dir)
+            Repo.clone_from("https://github.com/darold/pgFormatter.git", temp_dir)
             run_cmd(f"perl Makefile.PL && make && {args.prefix} make install")
     if args.config:
         pass
