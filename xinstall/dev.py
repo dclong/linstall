@@ -466,7 +466,7 @@ def _git_ignore(args: Namespace) -> None:
     logging.info(msg, srcfile, dstfile)
 
 
-def git(args) -> None:
+def git_(args) -> None:
     """Install and configure Git.
     """
     if args.install:
@@ -547,7 +547,7 @@ def _git_args(subparser):
 
 
 def _add_subparser_git(subparsers):
-    add_subparser(subparsers, "Git", func=git, add_argument=_git_args)
+    add_subparser(subparsers, "Git", func=git_, add_argument=_git_args)
 
 
 def antlr(args):
