@@ -747,11 +747,18 @@ def pg_formatter(args):
     if args.install:
         with tempfile.TemporaryDirectory() as temp_dir:
             Repo.clone_from("https://github.com/darold/pgFormatter.git", temp_dir)
-            run_cmd(
-                f"""cd {temp_dir} \
-                    && perl Makefile.PL \
-                    && make && {args.prefix} make install"""
-            )
+            if is_win():
+                run_cmd(
+                    f"""cd /d {temp_dir} \
+                        && perl Makefile.PL \
+                        && make && {args.prefix} make install"""
+                )
+            else:
+                run_cmd(
+                    f"""cd {temp_dir} \
+                        && perl Makefile.PL \
+                        && make && {args.prefix} make install"""
+                )
     if args.config:
         pass
     if args.uninstall:
