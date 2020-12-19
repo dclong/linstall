@@ -48,7 +48,7 @@ def neovim(args) -> None:
     """
     if args.ppa and is_ubuntu_debian():
         args.install = True
-        run_cmd(f"{args.prefix} add-apt-repository -y ppa:neovim-ppa/stable")
+        run_cmd(f"{args.prefix} add-apt-repository -y ppa:neovim-ppa/unstable")
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
@@ -73,7 +73,7 @@ def _neovim_args(subparser) -> None:
         "--ppa",
         dest="ppa",
         action="store_true",
-        help="Install the latest version of NeoVim from PPA."
+        help="Install the unstable version of NeoVim from PPA."
     )
 
 
