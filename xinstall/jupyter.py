@@ -1,6 +1,7 @@
 """Install and configure Jupyter/Lab related tools.
 """
 import logging
+import shutil
 from .utils import (
     USER,
     HOME,
@@ -174,8 +175,13 @@ def evcxr_jupyter(args) -> None:
     if args.install:
         rustup(args)
         cmake(args)
-        cmd = f"""{HOME}/.cargo/bin/cargo install --force evcxr_jupyter \
-            && {HOME}/.cargo/bin/evcxr_jupyter --install"""
+        cargo = shutil.which("cargo")
+        if not cargo:
+            cargo = HOME / ".local/bin/cargo"
+        evcxr_jupyter = shutil.which("evcxr_jupyter")
+        if not evcxr_jupyter:
+            evcxr_jupyter = HOME / ".cargo/bin/evcxr_jupyter"
+        cmd = f"{cargo} install --force evcxr_jupyter && {evcxr_jupyter} --install"
         run_cmd(cmd)
     if args.config:
         pass

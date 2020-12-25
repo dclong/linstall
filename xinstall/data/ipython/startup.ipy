@@ -119,6 +119,7 @@ def trash(line: str):
     if backup.exists():
         backup = backup.with_name(backup.name + "_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S%f"))
     shutil.move(path, backup)
+    print(f"The path {path} has been moved into the trash directory {trash_dir}.")
 # ------------------------------- alias -----------------------------------
 #if "linux" in PLATFORM: 
 #    %alias cs cd %l && ls --color=auto
