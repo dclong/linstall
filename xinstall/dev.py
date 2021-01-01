@@ -247,7 +247,7 @@ def nodejs(args):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            cmd = f"{args.prefix} apt-get install {args.yes_s} nodejs-dev npm"
+            cmd = f"{args.prefix} apt-get install {args.yes_s} nodejs npm"
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["node"])
