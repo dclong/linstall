@@ -145,6 +145,70 @@ def _add_subparser_pylint(subparsers):
     )
 
 
+def flake8(args):
+    """Install and configure flake8.
+    """
+    if args.install:
+        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} flake8")
+    if args.config:
+        src_file = BASE_DIR / "flake8/flake8"
+        des_file = args.dst_dir / ".flake8"
+        shutil.copy2(src_file, des_file)
+        logging.info("%s is copied to %s.", src_file, des_file)
+    if args.uninstall:
+        run_cmd(f"{args.pip} uninstall flake8")
+
+
+def _flake8_args(subparser):
+    subparser.add_argument(
+        "-d",
+        "--dest-dir",
+        dest="dst_dir",
+        type=Path,
+        default=Path(),
+        help="The destination directory to copy the flake8 configuration file to.",
+    )
+    option_pip_bundle(subparser)
+
+
+def _add_subparser_flake8(subparsers):
+    add_subparser(
+        subparsers, "flake8", func=flake8, aliases=[], add_argument=_flake8_args
+    )
+
+
+def darglint(args):
+    """Install and configure darglint.
+    """
+    if args.install:
+        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} darglint")
+    if args.config:
+        src_file = BASE_DIR / "darglint/darglint"
+        des_file = args.dst_dir / ".darglint"
+        shutil.copy2(src_file, des_file)
+        logging.info("%s is copied to %s.", src_file, des_file)
+    if args.uninstall:
+        run_cmd(f"{args.pip} uninstall darglint")
+
+
+def _darglint_args(subparser):
+    subparser.add_argument(
+        "-d",
+        "--dest-dir",
+        dest="dst_dir",
+        type=Path,
+        default=Path(),
+        help="The destination directory to copy the darglint configuration file to.",
+    )
+    option_pip_bundle(subparser)
+
+
+def _add_subparser_darglint(subparsers):
+    add_subparser(
+        subparsers, "darglint", func=darglint, aliases=[], add_argument=_darglint_args
+    )
+
+
 def pytype(args):
     """Install and configure pytype.
     """
