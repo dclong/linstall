@@ -20,6 +20,7 @@ def test_pyjnius():
     run_cmd(cmd)
 
 
+#@pytest.mark.skipif(sys.version_info >= (3, 8), reason="Doesn't work with Python 3.8 on Ubuntu LTS")
 def test_nodejs():
     """Test installing nodejs.
     """

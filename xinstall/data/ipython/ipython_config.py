@@ -44,7 +44,7 @@ c.AliasManager.user_aliases = [
     ),
     (
         "docker.vscode_server.linux.next",
-        "docker run -d --hostname vscode-server --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8080:8080 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/vscode-server /scripts/sys/init.sh"
+        "docker run -d --hostname vscode-server --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8080:8080 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/vscode-server:next /scripts/sys/init.sh"
     ),
     (
         "docker.jupyterhub_jdk",
