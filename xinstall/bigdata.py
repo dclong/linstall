@@ -9,6 +9,7 @@ from urllib.request import urlopen, urlretrieve
 from argparse import Namespace
 import tempfile
 from tqdm import tqdm
+import pandas as pd
 import findspark
 from .utils import (
     BASE_DIR,
@@ -232,13 +233,13 @@ def _add_subparser_dask(subparsers):
     add_subparser(subparsers, "dask", func=dask, add_argument=_dask_args)
 
 
-def _alter_spark_sql(path: Path, hadoop_local: Union[str, Path]) -> str:
+def _alter_spark_sql(sql: str, hadoop_local: Union[str, Path]) -> str:
     """Handle special paths in SQL code so that it can be used locally.
 
     :param path: The path to a file containing SQL code for creating a Hive table.
     :return: The altered SQL code which can be used locally.
     """
-    sql = path.read_text().replace(r"^viewfs://[^/]/", "/")
+    sql = sql.replace(r"^viewfs://[^/]/", "/")
     prefixes = ["/sys/", "/apps", "/user"]
     for prefix in prefixes:
         sql = sql.replace(prefix, f"{hadoop_local}{prefix}")
@@ -258,11 +259,12 @@ def _create_db(spark_session, dbase: Union[Path, str], hadoop_local) -> None:
     dbase = dbase.resolve()
     logging.info("Creating database %s...", dbase.stem)
     spark_session.sql(f"CREATE DATABASE IF NOT EXISTS {dbase.stem}")
-    for path in dbase.glob("*.sql"):
-        if not spark_session.catalog._jcatalog.tableExists(path.stem):
+    tables = pd.read_parquet(dbase)
+    for _, (table, sql) in tables[["full_name", "source_code"]].iterrows():
+        if not spark_session.catalog._jcatalog.tableExists(table):
             print("\n")
-            sql = _alter_spark_sql(path, hadoop_local)
-            logging.info("Creating data table from %s:\n%s", path, sql)
+            sql = _alter_spark_sql(sql, hadoop_local)
+            logging.info("Creating data table %s:\n%s", table, sql)
             spark_session.sql(sql)
 
 
