@@ -9,6 +9,7 @@ from urllib.request import urlopen, urlretrieve
 from argparse import Namespace
 import tempfile
 from tqdm import tqdm
+import pandas as pd
 import findspark
 from .utils import (
     BASE_DIR,
