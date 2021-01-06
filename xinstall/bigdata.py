@@ -278,7 +278,7 @@ def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> No
     if isinstance(spark_home, Path):
         spark_home = str(spark_home)
     findspark.init(spark_home)
-    spark_session = importlib.import_module(".SparkSession", "pyspark.sql") \
+    spark_session = importlib.import_module("pyspark").sql.SparkSession \
         .builder.appName("Create_Empty_Hive_Tables").enableHiveSupport().getOrCreate()
     hadoop_local = Path.home() / ".hadoop"
     if not hadoop_local.is_dir():
