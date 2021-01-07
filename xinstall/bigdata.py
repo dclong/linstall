@@ -264,8 +264,11 @@ def _create_db(spark_session, dbase: Union[Path, str], hadoop_local) -> None:
         if not spark_session.catalog._jcatalog.tableExists(table):
             print("\n")
             sql = _alter_spark_sql(sql, hadoop_local)
-            logging.info("Creating data table %s:\n%s", table, sql)
-            spark_session.sql(sql)
+            logging.info("Creating the data table %s:\n%s", table, sql)
+            try:
+                spark_session.sql(sql)
+            except Exception as err:
+                logging.error("Failed to create the data table %s.\n%s", table, err)
 
 
 def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> None:
