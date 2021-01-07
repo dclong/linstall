@@ -259,7 +259,6 @@ def _create_db(spark_session, dbase: Union[Path, str], hadoop_local) -> None:
     dbase = dbase.resolve()
     logging.info("Creating database %s...", dbase.stem)
     spark_session.sql(f"CREATE DATABASE IF NOT EXISTS {dbase.stem}")
-    tables = pd.read_parquet(dbase)
     for path in dbase.glob("*.txt"):
         with path.open("r") as fin:
             table = fin.readline().strip()
