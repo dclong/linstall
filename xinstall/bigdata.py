@@ -260,15 +260,29 @@ def _create_db(spark_session, dbase: Union[Path, str], hadoop_local) -> None:
     logging.info("Creating database %s...", dbase.stem)
     spark_session.sql(f"CREATE DATABASE IF NOT EXISTS {dbase.stem}")
     tables = pd.read_parquet(dbase)
-    for _, (table, sql) in tables[["full_name", "source_code"]].iterrows():
-        if not spark_session.catalog._jcatalog.tableExists(table):
+    for path in dbase.glob("*.txt"):
+        with path.open("r") as fin:
+            table = fin.readline().strip()
+            if spark_session.catalog._jcatalog.tableExists(table):
+                continue
+            fields = [line.strip() for line in fin]
+        sql = f"""
+            CREATE TABLE {table} (
+                {(",\n" + " " * 16).join(fields)}
+            ) USING PARQUET
+            """
             print("\n")
-            sql = _alter_spark_sql(sql, hadoop_local)
             logging.info("Creating the data table %s:\n%s", table, sql)
-            try:
-                spark_session.sql(sql)
-            except Exception as err:
-                logging.error("Failed to create the data table %s.\n%s", table, err)
+            spark_session.sql(sql)
+    #for _, (table, sql) in tables[["full_name", "source_code"]].iterrows():
+    #    if not spark_session.catalog._jcatalog.tableExists(table):
+    #        print("\n")
+    #        sql = _alter_spark_sql(sql, hadoop_local)
+    #        logging.info("Creating the data table %s:\n%s", table, sql)
+    #        try:
+    #            spark_session.sql(sql)
+    #        except Exception as err:
+    #            logging.error("Failed to create the data table %s.\n%s", table, err)
 
 
 def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> None:
