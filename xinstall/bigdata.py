@@ -303,7 +303,8 @@ def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> No
     if not hadoop_local.is_dir():
         hadoop_local.mkdir(parents=True, exist_ok=True)
     if isinstance(schema_dir, str):
-        schema_dir = Path(schema_dir).resolve()
+        schema_dir = Path(schema_dir)
+    schema_dir = schema_dir.resolve()
     logging.info("Reading schema from the directory: %s", schema_dir)
     for path in schema_dir.iterdir():
         if path.is_dir() and not path.name.startswith("."):
