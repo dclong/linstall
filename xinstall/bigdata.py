@@ -239,7 +239,7 @@ def _alter_spark_sql(sql: str, hadoop_local: Union[str, Path]) -> str:
     :param path: The path to a file containing SQL code for creating a Hive table.
     :return: The altered SQL code which can be used locally.
     """
-    sql = sql.replace(r"^viewfs://[^/]/", "/")
+    sql = re.sub(r"viewfs://[^/]+/", "/", sql)
     prefixes = ["/sys/", "/apps", "/user"]
     for prefix in prefixes:
         sql = sql.replace(prefix, f"{hadoop_local}{prefix}")
