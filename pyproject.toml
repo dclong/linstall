@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xinstall"
-version = "0.30.3"
+version = "0.31.0"
 description = ""
 authors = ["Benjamin Du <longendu@yahoo.com>"]
 
