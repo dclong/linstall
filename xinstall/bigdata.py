@@ -239,7 +239,7 @@ def _alter_spark_sql(sql: str, hadoop_local: Union[str, Path]) -> str:
     :param path: The path to a file containing SQL code for creating a Hive table.
     :return: The altered SQL code which can be used locally.
     """
-    sql = sql.replace(r"^viewfs://[^/]/", "/")
+    sql = re.sub(r"viewfs://[^/]+/", "/", sql)
     prefixes = ["/sys/", "/apps", "/user"]
     for prefix in prefixes:
         sql = sql.replace(prefix, f"{hadoop_local}{prefix}")
@@ -259,13 +259,30 @@ def _create_db(spark_session, dbase: Union[Path, str], hadoop_local) -> None:
     dbase = dbase.resolve()
     logging.info("Creating database %s...", dbase.stem)
     spark_session.sql(f"CREATE DATABASE IF NOT EXISTS {dbase.stem}")
-    tables = pd.read_parquet(dbase)
-    for _, (table, sql) in tables[["full_name", "source_code"]].iterrows():
-        if not spark_session.catalog._jcatalog.tableExists(table):
-            print("\n")
-            sql = _alter_spark_sql(sql, hadoop_local)
-            logging.info("Creating data table %s:\n%s", table, sql)
-            spark_session.sql(sql)
+    for path in dbase.glob("*.txt"):
+        with path.open("r") as fin:
+            table = fin.readline().strip()
+            if spark_session.catalog._jcatalog.tableExists(table):
+                logging.warning("The data table %s already exists.", table)
+                continue
+            fields = [line.strip() for line in fin]
+        fields = (",\n" + " " * 16).join(fields)
+        sql = f"""
+            CREATE TABLE {table} (
+                {fields}
+            ) USING PARQUET
+            """.rstrip()
+        logging.info("Creating the data table %s:%s", table, sql)
+        spark_session.sql(sql)
+    #for _, (table, sql) in tables[["full_name", "source_code"]].iterrows():
+    #    if not spark_session.catalog._jcatalog.tableExists(table):
+    #        print("\n")
+    #        sql = _alter_spark_sql(sql, hadoop_local)
+    #        logging.info("Creating the data table %s:\n%s", table, sql)
+    #        try:
+    #            spark_session.sql(sql)
+    #        except Exception as err:
+    #            logging.error("Failed to create the data table %s.\n%s", table, err)
 
 
 def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> None:
@@ -287,8 +304,10 @@ def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> No
         hadoop_local.mkdir(parents=True, exist_ok=True)
     if isinstance(schema_dir, str):
         schema_dir = Path(schema_dir)
+    schema_dir = schema_dir.resolve()
+    logging.info("Reading schema from the directory: %s", schema_dir)
     for path in schema_dir.iterdir():
-        if path.is_dir():
+        if path.is_dir() and not path.name.startswith("."):
             _create_db(spark_session, path, hadoop_local)
 
 
