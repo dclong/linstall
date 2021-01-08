@@ -271,8 +271,8 @@ def _create_db(spark_session, dbase: Union[Path, str], hadoop_local) -> None:
             CREATE TABLE {table} (
                 {fields}
             ) USING PARQUET
-            """.strip()
-        logging.info("Creating the data table %s:\n%s", table, sql)
+            """.rstrip()
+        logging.info("Creating the data table %s:%s", table, sql)
         spark_session.sql(sql)
     #for _, (table, sql) in tables[["full_name", "source_code"]].iterrows():
     #    if not spark_session.catalog._jcatalog.tableExists(table):
