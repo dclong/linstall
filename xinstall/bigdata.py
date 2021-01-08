@@ -263,6 +263,7 @@ def _create_db(spark_session, dbase: Union[Path, str], hadoop_local) -> None:
         with path.open("r") as fin:
             table = fin.readline().strip()
             if spark_session.catalog._jcatalog.tableExists(table):
+                logging.warning("The data table %s already exists.", table)
                 continue
             fields = [line.strip() for line in fin]
         fields = (",\n" + " " * 16).join(fields)
@@ -270,8 +271,7 @@ def _create_db(spark_session, dbase: Union[Path, str], hadoop_local) -> None:
             CREATE TABLE {table} (
                 {fields}
             ) USING PARQUET
-            """
-        print("\n")
+            """.strip()
         logging.info("Creating the data table %s:\n%s", table, sql)
         spark_session.sql(sql)
     #for _, (table, sql) in tables[["full_name", "source_code"]].iterrows():
