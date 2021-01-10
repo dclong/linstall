@@ -87,8 +87,15 @@ def spark(args):
     :param uninstall:
     :param version:
     """
+    # versions to install
     if not args.spark_version:
         args.spark_version = get_spark_version()
+    if not args.hadoop_version:
+        if args.spark_version.startswith("2."):
+            args.hadoop_version = "2.7"
+        else:
+            args.hadoop_version = "3.2"
+    # installation location
     dir_ = args.location.resolve()
     spark_hdp = f"spark-{args.spark_version}-bin-hadoop{args.hadoop_version}"
     spark_home = dir_ / spark_hdp
