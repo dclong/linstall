@@ -260,6 +260,7 @@ def main():
     """
     args = parse_args()
     logging.basicConfig(level=getattr(logging, args.level.upper()))
+    logging.debug("Command-line options:\n%s", json.dumps(vars(args), indent=True))
     args.func(args)
 
 
