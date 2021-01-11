@@ -1,7 +1,6 @@
 """The command-line interface for xinstall.
 """
 import logging
-import json
 from argparse import ArgumentParser
 from .utils import USER, is_win
 from .ai import (
@@ -261,7 +260,7 @@ def main():
     """
     args = parse_args()
     logging.basicConfig(level=getattr(logging, args.level.upper()))
-    logging.debug("Command-line options:\n%s", json.dumps(vars(args), indent=True))
+    logging.debug("Command-line options:\n%s", args)
     args.func(args)
 
 
