@@ -10,11 +10,6 @@ from .utils import (
     update_apt_source, brew_install_safe, is_macos, run_cmd, add_subparser,
     intellij_idea_plugin, option_pip_bundle
 )
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 
 
 def vim(args) -> None:

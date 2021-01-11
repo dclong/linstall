@@ -12,11 +12,6 @@ from .utils import (
     update_apt_source,
     brew_install_safe,
 )
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 
 
 def virtualbox(args) -> None:

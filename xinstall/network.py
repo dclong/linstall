@@ -20,11 +20,6 @@ from .utils import (
     is_centos_series,
     option_pip_bundle,
 )
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 
 
 def ssh_server(args) -> None:

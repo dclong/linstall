@@ -12,11 +12,6 @@ from .utils import (
     option_jupyter,
 )
 from .dev import rustup, cmake
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 
 
 def nbdime(args) -> None:

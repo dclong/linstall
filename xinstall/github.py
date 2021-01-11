@@ -7,11 +7,6 @@ from packaging.version import parse
 from packaging.specifiers import SpecifierSet
 from .utils import (option_python, option_pip_bundle, add_subparser, run_cmd)
 from . import utils
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 
 
 def _github_download(args):
