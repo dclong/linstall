@@ -20,11 +20,6 @@ from .utils import (
     add_subparser,
     option_pip_bundle,
 )
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 
 
 def coreutils(args) -> None:

@@ -14,11 +14,6 @@ import datetime
 import subprocess as sp
 import logging
 import distro
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 HOME = Path.home()
 USER = HOME.name
 FILE = Path(__file__).resolve()

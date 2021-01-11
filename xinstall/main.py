@@ -100,12 +100,7 @@ from .desktop import (
     _add_subparser_lxqt,
     _add_subparser_pygetwindow,
 )
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
-__version__ = "0.32.0"
+__version__ = "0.32.1"
 
 
 def version(args):
@@ -259,7 +254,12 @@ def main():
     """Run xinstall command-line interface.
     """
     args = parse_args()
-    logging.basicConfig(level=getattr(logging, args.level.upper()))
+    logging.basicConfig(
+        format=
+        "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
+        level=getattr(logging, args.level.upper())
+    )
+    logging.debug("Command-line options:\n%s", args)
     args.func(args)
 
 

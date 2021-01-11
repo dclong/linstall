@@ -5,11 +5,6 @@ import logging
 from .utils import (
     HOME, USER, run_cmd, add_subparser, is_linux, is_macos, option_pip_bundle
 )
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 
 
 def kaggle(args):

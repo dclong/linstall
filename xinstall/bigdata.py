@@ -17,11 +17,6 @@ from .utils import (
     option_pip_bundle,
     is_win,
 )
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 
 
 class ProgressBar(tqdm):
@@ -159,7 +154,7 @@ def _spark_args(subparser):
         "--hv",
         "--hadoop-version",
         dest="hadoop_version",
-        default="3.2",
+        default="",
         help="The version of Hadoop to use."
     )
     subparser.add_argument(

@@ -7,11 +7,6 @@ from packaging.version import parse
 from packaging.specifiers import SpecifierSet
 from .utils import (option_python, option_pip_bundle, add_subparser, run_cmd)
 from . import utils
-logging.basicConfig(
-    format=
-    "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-    level=logging.INFO
-)
 
 
 def _github_download(args):
@@ -33,9 +28,11 @@ def _github_download(args):
     )
     # get download URL
     if args.keyword:
-        args.filter = lambda name: all(kwd in name for kwd in args.keyword)
+        filter_ = lambda name: all(kwd in name for kwd in args.keyword)
+    else:
+        filter_ = lambda name: True
     url = next(
-        asset["browser_download_url"] for asset in assets if args.filter(asset["name"])
+        asset["browser_download_url"] for asset in assets if filter_(asset["name"])
     )
     # download the assert
     logging.info("Downloading assert from the URL: %s", url)
@@ -80,14 +77,6 @@ def _github_args(subparser):
         nargs="+",
         default=(),
         help="The keywords that assert's name must contain.",
-    )
-    subparser.add_argument(
-        "-f",
-        "--filter",
-        dest="filter",
-        default=lambda namme: True,
-        help=
-        "The function to filter assert. It is overwritten by --keyword if specified.",
     )
     subparser.add_argument(
         "-o",
