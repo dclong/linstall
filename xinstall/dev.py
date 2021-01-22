@@ -708,6 +708,8 @@ def _add_subparser_sphinx(subparsers):
 def pyenv(args):
     """Install and configure pyenv.
     """
+    if not (args.root.endswith("pyenv") or args.root.endswith(".pyenv")):
+        args.root = os.path.join(args.root, "pyenv")
     if args.install:
         logging.info("Installing pyenv ...")
         cmd = f"""{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run \
@@ -753,7 +755,7 @@ def _pyenv_args(subparser):
         "--pyenv-root",
         dest="root",
         default=os.environ.get("PYENV_ROOT", str(HOME / ".pyenv")),
-        help="Configure Git to use the specified proxy."
+        help="The root directory for installing pyenv, e.g., `/opt/pyenv` or `/home/dclong/.pyenv`."
     )
 
 
