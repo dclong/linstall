@@ -755,7 +755,8 @@ def _pyenv_args(subparser):
         "--pyenv-root",
         dest="root",
         default=os.environ.get("PYENV_ROOT", str(HOME / ".pyenv")),
-        help="The root directory for installing pyenv, e.g., `/opt/pyenv` or `/home/dclong/.pyenv`."
+        help=
+        "The root directory for installing pyenv, e.g., `/opt/pyenv` or `/home/dclong/.pyenv`."
     )
 
 
