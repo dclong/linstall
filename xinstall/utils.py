@@ -36,6 +36,7 @@ def copy_if_exists(src: Union[Path, str], dst: Path = HOME) -> bool:
 
     :param src: The path of the source file.
     :param dst: The path of the destination file.
+    :return: True if the copy operation succeed and false otherwise.
     """
     try:
         shutil.copy2(src, dst)
@@ -52,6 +53,8 @@ def link_if_exists(
 
     :param src: The path of the source file.
     :param dst: The path of the destination file.
+    :param target_is_directory: Please refer to https://docs.python.org/3/library/os.html#os.symlink.
+    :return: True if the link operation succeed and false otherwise.
     """
     try:
         Path(dst).unlink()
