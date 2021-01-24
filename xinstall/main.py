@@ -117,6 +117,114 @@ def _add_subparser_version(subparsers):
     return subparser
 
 
+def _add_subparser_shell(subparsers):
+    _add_subparser_coreutils(subparsers)
+    _add_subparser_change_shell(subparsers)
+    _add_subparser_shell_utils(subparsers)
+    _add_subparser_bash_it(subparsers)
+    _add_subparser_xonsh(subparsers)
+    _add_subparser_homebrew(subparsers)
+    _add_subparser_hyper(subparsers)
+    _add_subparser_openinterminal(subparsers)
+    _add_subparser_bash_complete(subparsers)
+    _add_subparser_wajig(subparsers)
+    _add_subparser_exa(subparsers)
+    _add_subparser_osquery(subparsers)
+
+
+def _add_subparser_ide(subparsers):
+    _add_subparser_vim(subparsers)
+    _add_subparser_neovim(subparsers)
+    _add_subparser_spacevim(subparsers)
+    _add_subparser_ideavim(subparsers)
+    _add_subparser_visual_studio_code(subparsers)
+    _add_subparser_intellij_idea_scala(subparsers)
+    _add_subparser_bash_lsp(subparsers)
+
+
+def _add_subparser_dev(subparsers):
+    _add_subparser_cmake(subparsers)
+    _add_subparser_git(subparsers)
+    _add_subparser_nodejs(subparsers)
+    _add_subparser_evcxr_jupyter(subparsers)
+    _add_subparser_python3(subparsers)
+    _add_subparser_sphinx(subparsers)
+    _add_subparser_pyjnius(subparsers)
+    _add_subparser_ipython(subparsers)
+    _add_subparser_jupyter_book(subparsers)
+    _add_subparser_yapf(subparsers)
+    _add_subparser_pylint(subparsers)
+    _add_subparser_flake8(subparsers)
+    _add_subparser_darglint(subparsers)
+    _add_subparser_pytype(subparsers)
+    _add_subparser_pyenv(subparsers)
+    _add_subparser_openjdk(subparsers)
+    _add_subparser_sdkman(subparsers)
+    _add_subparser_poetry(subparsers)
+    _add_subparser_rustup(subparsers)
+    _add_subparser_rustpython(subparsers)
+    _add_subparser_deno(subparsers)
+    _add_subparser_antlr(subparsers)
+    _add_subparser_jpype1(subparsers)
+    _add_subparser_pg_formatter(subparsers)
+
+
+def _add_subparser_bigdata(subparsers):
+    _add_subparser_dask(subparsers)
+    _add_subparser_spark(subparsers)
+    _add_subparser_pyspark(subparsers)
+
+
+def _add_subparser_virtualization(subparsers):
+    _add_subparser_docker(subparsers)
+    _add_subparser_kubernetes(subparsers)
+    _add_subparser_minikube(subparsers)
+    _add_subparser_virtualbox(subparsers)
+    _add_subparser_multipass(subparsers)
+    _add_subparser_microk8s(subparsers)
+
+
+def _add_subparser_github(subparsers):
+    _add_subparser_dsutil(subparsers)
+    _add_subparser_xinstall(subparsers)
+    _add_subparser_install_py_github(subparsers)
+    _add_subparser_github(subparsers)
+
+
+def _add_subparser_ai(subparsers):
+    _add_subparser_kaggle(subparsers)
+    _add_subparser_lightgbm(subparsers)
+    _add_subparser_pytorch(subparsers)
+    _add_subparser_autogluon(subparsers)
+    _add_subparser_pytext(subparsers)
+    _add_subparser_computer_vision(subparsers)
+    _add_subparser_nlp(subparsers)
+
+
+def _add_subparser_network(subparsers):
+    _add_subparser_ssh_server(subparsers)
+    _add_subparser_ssh_client(subparsers)
+    _add_subparser_proxychains(subparsers)
+    _add_subparser_dryscrape(subparsers)
+    _add_subparser_download_tools(subparsers)
+    _add_subparser_sshuttle(subparsers)
+
+
+def _add_subparser_jupyter(subparsers):
+    _add_subparser_beakerx(subparsers)
+    _add_subparser_jupyterlab_lsp(subparsers)
+    _add_subparser_itypescript(subparsers)
+    _add_subparser_nbdime(subparsers)
+    _add_subparser_almond(subparsers)
+
+
+def _add_subparser_desktop(subparsers):
+    _add_subparser_version(subparsers)
+    _add_subparser_nomachine(subparsers)
+    _add_subparser_lxqt(subparsers)
+    _add_subparser_pygetwindow(subparsers)
+
+
 def parse_args(args=None, namespace=None):
     """Parse command-line arguments for the install/configuration util.
     """
@@ -147,94 +255,16 @@ def parse_args(args=None, namespace=None):
         help="The prefix command (e.g., sudo) to use."
     )
     subparsers = parser.add_subparsers(dest="sub_cmd", help="Sub commands.")
-    # ------------------------ command-line tools ----------------------------
-    _add_subparser_coreutils(subparsers)
-    _add_subparser_change_shell(subparsers)
-    _add_subparser_shell_utils(subparsers)
-    _add_subparser_bash_it(subparsers)
-    _add_subparser_xonsh(subparsers)
-    _add_subparser_homebrew(subparsers)
-    _add_subparser_hyper(subparsers)
-    _add_subparser_openinterminal(subparsers)
-    _add_subparser_bash_complete(subparsers)
-    _add_subparser_wajig(subparsers)
-    _add_subparser_exa(subparsers)
-    _add_subparser_osquery(subparsers)
-    # ------------------------ IDEs ----------------------
-    _add_subparser_vim(subparsers)
-    _add_subparser_neovim(subparsers)
-    _add_subparser_spacevim(subparsers)
-    _add_subparser_ideavim(subparsers)
-    _add_subparser_visual_studio_code(subparsers)
-    _add_subparser_intellij_idea_scala(subparsers)
-    _add_subparser_bash_lsp(subparsers)
-    # ------------------------- development related  ------------------------------
-    _add_subparser_cmake(subparsers)
-    _add_subparser_git(subparsers)
-    _add_subparser_nodejs(subparsers)
-    _add_subparser_evcxr_jupyter(subparsers)
-    _add_subparser_python3(subparsers)
-    _add_subparser_sphinx(subparsers)
-    _add_subparser_pyjnius(subparsers)
-    _add_subparser_ipython(subparsers)
-    _add_subparser_jupyter_book(subparsers)
-    _add_subparser_yapf(subparsers)
-    _add_subparser_pylint(subparsers)
-    _add_subparser_flake8(subparsers)
-    _add_subparser_darglint(subparsers)
-    _add_subparser_pytype(subparsers)
-    _add_subparser_pyenv(subparsers)
-    _add_subparser_openjdk(subparsers)
-    _add_subparser_sdkman(subparsers)
-    _add_subparser_poetry(subparsers)
-    _add_subparser_rustup(subparsers)
-    _add_subparser_rustpython(subparsers)
-    _add_subparser_deno(subparsers)
-    _add_subparser_antlr(subparsers)
-    _add_subparser_jpype1(subparsers)
-    _add_subparser_pg_formatter(subparsers)
-    # --------------------------- big data related  --------------------------------
-    _add_subparser_dask(subparsers)
-    _add_subparser_spark(subparsers)
-    _add_subparser_pyspark(subparsers)
-    # ------------------------- virtualization related  ------------------------------
-    _add_subparser_docker(subparsers)
-    _add_subparser_kubernetes(subparsers)
-    _add_subparser_minikube(subparsers)
-    _add_subparser_virtualbox(subparsers)
-    _add_subparser_multipass(subparsers)
-    _add_subparser_microk8s(subparsers)
-    # ------------------------- GitHub related  ------------------------------
-    _add_subparser_dsutil(subparsers)
-    _add_subparser_xinstall(subparsers)
-    _add_subparser_install_py_github(subparsers)
+    _add_subparser_shell(subparsers)
+    _add_subparser_ide(subparsers)
+    _add_subparser_dev(subparsers)
+    _add_subparser_bigdata(subparsers)
+    _add_subparser_virtualization(subparsers)
     _add_subparser_github(subparsers)
-    # ------------------------- AI related  ------------------------------
-    _add_subparser_kaggle(subparsers)
-    _add_subparser_lightgbm(subparsers)
-    _add_subparser_pytorch(subparsers)
-    _add_subparser_autogluon(subparsers)
-    _add_subparser_pytext(subparsers)
-    _add_subparser_computer_vision(subparsers)
-    _add_subparser_nlp(subparsers)
-    # ------------------------- network related ------------------------------
-    _add_subparser_ssh_server(subparsers)
-    _add_subparser_ssh_client(subparsers)
-    _add_subparser_proxychains(subparsers)
-    _add_subparser_dryscrape(subparsers)
-    _add_subparser_download_tools(subparsers)
-    _add_subparser_sshuttle(subparsers)
-    # ------------------------- JupyterLab related ------------------------------
-    _add_subparser_beakerx(subparsers)
-    _add_subparser_jupyterlab_lsp(subparsers)
-    _add_subparser_itypescript(subparsers)
-    _add_subparser_nbdime(subparsers)
-    _add_subparser_almond(subparsers)
-    # ------------------------- Desktop Environment ------------------------------
-    _add_subparser_version(subparsers)
-    _add_subparser_nomachine(subparsers)
-    _add_subparser_lxqt(subparsers)
-    _add_subparser_pygetwindow(subparsers)
+    _add_subparser_ai(subparsers)
+    _add_subparser_network(subparsers)
+    _add_subparser_jupyter(subparsers)
+    _add_subparser_desktop(subparsers)
     # --------------------------------------------------------
     args = parser.parse_args(args=args, namespace=namespace)
     args.yes_s = "--yes" if args.yes else ""
