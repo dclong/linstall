@@ -46,7 +46,8 @@ def _github_download(args):
 def github(args) -> None:
     """Download packages from GitHub and then install and configure it.
 
-    :param args:
+    :param args: The arguments to parse. 
+        If None, the arguments from command-line are parsed.
     """
     _github_download(args)
     if args.install_cmd:
