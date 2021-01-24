@@ -103,7 +103,7 @@ from .desktop import (
 __version__ = "0.32.3"
 
 
-def version(args):
+def version(args):  # pylint: disable=W0613
     """Print the version of xinstall.
     """
     print(__version__)
