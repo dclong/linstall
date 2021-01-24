@@ -338,6 +338,7 @@ def add_subparser(
     :param add_argument: A callable object to add aditional arguments
     (in addition to those default arguments), defaults to None
     :type add_argument: Union[Callable, None], optional
+    :return:
     """
     sub_cmd = re.sub(r"(\s+)|-", "_", name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
@@ -374,7 +375,7 @@ def add_subparser(
 
 
 def update_file(
-    path: Path,
+    path: Union[str, Path],
     regex: List[Tuple[str, str]] = None,
     exact: List[Tuple[str, str]] = None,
     append: Union[str, Iterable[str]] = None,
@@ -382,6 +383,7 @@ def update_file(
 ) -> None:
     """Update a text file using regular expression substitution.
 
+    :param path: The path to the file to be updated.
     :param regex: A list of tuples containing regular expression patterns
         and the corresponding replacement text.
     :param exact: A list of tuples containing exact patterns and the corresponding replacement text.
