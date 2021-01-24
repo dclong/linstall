@@ -1,6 +1,6 @@
 """Install and configure Jupyter/Lab related tools.
 """
-import logging
+#import logging
 import shutil
 from .utils import (
     USER,
