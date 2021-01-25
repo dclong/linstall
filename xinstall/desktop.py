@@ -25,10 +25,6 @@ def nomachine(args):
                 file = Path(tempdir) / "nomachine.deb"
                 cmd = f"curl -sSL {url} -o {file} && dpkg -i {file}"
                 run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
 
 
 def _nomachine_args(subparser):
@@ -59,10 +55,6 @@ def lxqt(args):
             update_apt_source(prefix=args.prefix)
             cmd = f"{args.prefix} apt-get install lxqt"
             run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
 
 
 def _add_subparser_lxqt(subparsers):

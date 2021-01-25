@@ -31,12 +31,6 @@ def ssh_server(args) -> None:
             run_cmd(
                 f"{args.prefix} apt-get install {args.yes_s} openssh-server fail2ban"
             )
-        elif is_macos():
-            pass
-        elif is_centos_series():
-            pass
-    if args.config:
-        pass
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} openssh-server fail2ban")
@@ -58,7 +52,7 @@ def _ignore_socket(dir_, files):
 def _sshc_copy_from_host(ssh_home: Path):
     """Copy configuration files from /home_host/USER/.ssh if it exists.
 
-    :param ssh_dst: The home directory (~/.ssh) of SSH client configuration.
+    :param ssh_home: The home directory (~/.ssh) of SSH client configuration.
     """
     ssh_src = Path(f"/home_host/{USER}/.ssh")
     if ssh_src.is_dir():
@@ -80,7 +74,8 @@ def _sshc_copy_config(ssh_home: Path):
 
 def ssh_client(args) -> None:
     """Configure SSH client.
-    :param kwargs: Keyword arguments.
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     if args.config:
         ssh_home = HOME / ".ssh"
@@ -107,7 +102,8 @@ def _add_subparser_ssh_client(subparsers):
 
 def proxychains(args) -> None:
     """Install and configure ProxyChains.
-    :param kwargs: Keyword arguments.
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
         if is_ubuntu_debian():
@@ -193,8 +189,6 @@ def download_tools(args: Namespace):
             brew_install_safe(["wget", "curl", "aria2"])
         elif is_centos_series():
             pass
-    if args.config:
-        pass
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} wget curl aria2")

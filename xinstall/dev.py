@@ -20,6 +20,7 @@ from .utils import (
     remove_file_safe,
     run_cmd,
     add_subparser,
+    option_version,
     option_pip_bundle,
     option_python,
     update_file,
@@ -430,13 +431,7 @@ def _poetry_args(subparser):
         action="store_true",
         help="Configure Bash completion for poetry as well."
     )
-    subparser.add_argument(
-        "-v",
-        "--version",
-        dest="version",
-        default="",
-        help="The version of Python Poetry to install."
-    )
+    option_version(subparser, help="The version of Python Poetry to install.")
     option_python(subparser)
 
 
@@ -783,8 +778,6 @@ def cmake(args):
             brew_install_safe("cmake")
         elif is_win():
             pass
-    if args.config:
-        pass
     if args.uninstall:
         if is_ubuntu_debian():
             cmd = f"{args.prefix} apt-get purge {args.yes_s} cmake"

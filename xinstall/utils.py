@@ -239,6 +239,18 @@ def intellij_idea_plugin(version: str, url: str):
     run_cmd(cmd)
 
 
+def option_version(subparser, help: str = ""):
+    if not help:
+        help = "The version."
+    subparser.add_argument(
+        "-v",
+        "--version",
+        dest="version",
+        default="",
+        help=help
+    )
+
+
 def option_user(subparser):
     """Add the option --user to the subparser.
 

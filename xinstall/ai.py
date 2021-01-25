@@ -51,10 +51,6 @@ def lightgbm(args):
         cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
             lightgbm scikit-learn pandas matplotlib scipy graphviz"""
         run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
 
 
 def _lightgbm_args(subparser):
@@ -118,10 +114,6 @@ def autogluon(args):
             version = args.cuda_version.replace(".", "")
             cmd = f"{args.pip} install {args.user_s} {args.pip_option} 'mxnet-cu{version}<2.0.0' autogluon"
         run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
 
 
 def _autogluon_args(subparser):
@@ -154,10 +146,6 @@ def pytext(args):
         if args.cuda_version:
             pass
         run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
 
 
 def _pytext_args(subparser):
@@ -185,10 +173,6 @@ def computer_vision(args):
             cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
                 opencv-python scikit-image pillow"""
             run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
 
 
 def _computer_vision_args(subparser):
@@ -212,10 +196,6 @@ def nlp(args):
         cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
             torch torchvision transformers pytext-nlp fasttext"""
         run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
 
 
 def _nlp_args(subparser):

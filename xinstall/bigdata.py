@@ -76,11 +76,8 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
 
 def spark(args):
     """Install Spark.
-    :param yes:
-    :param install:
-    :param config:
-    :param uninstall:
-    :param version:
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     # versions to install
     if not args.spark_version:
@@ -185,11 +182,8 @@ def _add_subparser_spark(subparsers):
 
 def pyspark(args):
     """Install PySpark.
-    :param yes:
-    :param install:
-    :param config:
-    :param uninstall:
-    :param version:
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
         cmd = f"{args.pip} install {args.user_s} {args.pip_option} pyspark findspark"
@@ -211,10 +205,8 @@ def _add_subparser_pyspark(subparsers):
 
 def dask(args):
     """Install the Python module dask.
-    :param yes:
-    :param install:
-    :param config:
-    :param uninstall:
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
         cmd = f"{args.pip} install {args.user_s} {args.pip_option} dask[complete]"
