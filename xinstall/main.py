@@ -60,6 +60,7 @@ def parse_args(args=None, namespace=None):
         help="The prefix command (e.g., sudo) to use."
     )
     subparsers = parser.add_subparsers(dest="sub_cmd", help="Sub commands.")
+    _add_subparser_version(subparsers)
     _add_subparser_shell(subparsers)
     _add_subparser_ide(subparsers)
     _add_subparser_dev(subparsers)

@@ -96,7 +96,6 @@ def _add_subparser_pygetwindow(subparsers):
 
 
 def _add_subparser_desktop(subparsers):
-    _add_subparser_version(subparsers)
     _add_subparser_nomachine(subparsers)
     _add_subparser_lxqt(subparsers)
     _add_subparser_pygetwindow(subparsers)
