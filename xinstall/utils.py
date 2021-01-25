@@ -247,13 +247,7 @@ def option_version(subparser, help: str = ""):
     """
     if not help:
         help = "The version."
-    subparser.add_argument(
-        "-v",
-        "--version",
-        dest="version",
-        default="",
-        help=help
-    )
+    subparser.add_argument("-v", "--version", dest="version", default="", help=help)
 
 
 def option_user(subparser):

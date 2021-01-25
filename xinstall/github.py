@@ -5,7 +5,9 @@ import shutil
 import requests
 from packaging.version import parse
 from packaging.specifiers import SpecifierSet
-from .utils import (option_version, option_python, option_pip_bundle, add_subparser, run_cmd)
+from .utils import (
+    option_version, option_python, option_pip_bundle, add_subparser, run_cmd
+)
 from . import utils
 
 
@@ -63,7 +65,10 @@ def _github_args(subparser):
         required=True,
         help="The GitHub repository from which to download the package.",
     )
-    option_version(subparser, help="The version specifier of the package to download/install/configure.")
+    option_version(
+        subparser,
+        help="The version specifier of the package to download/install/configure."
+    )
     subparser.add_argument(
         "-k",
         "--kwd",
