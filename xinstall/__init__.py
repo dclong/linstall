@@ -1,3 +1,5 @@
+"""Easy Cross-platform Installation and Configuration of Apps.
+"""
 from . import ai
 from . import virtualization
 from . import dev

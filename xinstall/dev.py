@@ -20,6 +20,7 @@ from .utils import (
     remove_file_safe,
     run_cmd,
     add_subparser,
+    option_version,
     option_pip_bundle,
     option_python,
     update_file,
@@ -41,8 +42,6 @@ def openjdk8(args):
             run_cmd(cmd)
         if is_centos_series():
             pass
-    if args.config:
-        pass
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(
@@ -263,78 +262,6 @@ def _add_subparser_nodejs(subparsers):
     add_subparser(subparsers, "NodeJS", func=nodejs, aliases=["node"])
 
 
-def jupyter_book(args):
-    """Install jupyter-book.
-    """
-    if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} jupyter-book"
-        run_cmd(cmd)
-    if args.config:
-        src_file = BASE_DIR / "jupyter-book/_config.yml"
-        shutil.copy2(src_file, ".")
-        logging.info("%s is copied to the current directory.", src_file)
-    if args.uninstall:
-        pass
-
-
-def _jupyter_book_args(subparser):
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_jupyter_book(subparsers):
-    add_subparser(
-        subparsers,
-        "jupyter_book",
-        func=jupyter_book,
-        aliases=["jb", "jbook"],
-        add_argument=_jupyter_book_args,
-    )
-
-
-def ipython(args):
-    """Install IPython for Python 3.
-    """
-    if args.install:
-        cmd = f"{args.prefix} {args.pip} install {args.user_s} {args.pip_option} ipython"
-        run_cmd(cmd)
-    if args.config:
-        src_dir = BASE_DIR / "ipython"
-        dst_dir = args.profile_dir / "profile_default"
-        (dst_dir / "startup").mkdir(mode=0o755, parents=True, exist_ok=True)
-        shutil.copy2(src_dir / "ipython_config.py", dst_dir)
-        shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
-        logging.info(
-            "%s is copied to the directory %s.", src_dir / "ipython_config.py", dst_dir
-        )
-        logging.info(
-            "%s is copied to the directory %s.", src_dir / "startup.ipy",
-            dst_dir / "startup"
-        )
-    if args.uninstall:
-        pass
-
-
-def _ipython_args(subparser):
-    subparser.add_argument(
-        "--profile-dir",
-        dest="profile_dir",
-        type=Path,
-        default=HOME / ".ipython",
-        help="The directory for storing IPython configuration files.",
-    )
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_ipython(subparsers):
-    add_subparser(
-        subparsers,
-        "IPython",
-        func=ipython,
-        aliases=["ipy"],
-        add_argument=_ipython_args,
-    )
-
-
 def python(args):
     """Install and configure Python (3).
     """
@@ -430,13 +357,7 @@ def _poetry_args(subparser):
         action="store_true",
         help="Configure Bash completion for poetry as well."
     )
-    subparser.add_argument(
-        "-v",
-        "--version",
-        dest="version",
-        default="",
-        help="The version of Python Poetry to install."
-    )
+    option_version(subparser, help="The version of Python Poetry to install.")
     option_python(subparser)
 
 
@@ -708,6 +629,8 @@ def _add_subparser_sphinx(subparsers):
 def pyenv(args):
     """Install and configure pyenv.
     """
+    if not (args.root.endswith("pyenv") or args.root.endswith(".pyenv")):
+        args.root = os.path.join(args.root, "pyenv")
     if args.install:
         logging.info("Installing pyenv ...")
         cmd = f"""{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run \
@@ -753,7 +676,8 @@ def _pyenv_args(subparser):
         "--pyenv-root",
         dest="root",
         default=os.environ.get("PYENV_ROOT", str(HOME / ".pyenv")),
-        help="Configure Git to use the specified proxy."
+        help=
+        "The root directory for installing pyenv, e.g., `/opt/pyenv` or `/home/dclong/.pyenv`."
     )
 
 
@@ -780,8 +704,6 @@ def cmake(args):
             brew_install_safe("cmake")
         elif is_win():
             pass
-    if args.config:
-        pass
     if args.uninstall:
         if is_ubuntu_debian():
             cmd = f"{args.prefix} apt-get purge {args.yes_s} cmake"
@@ -831,3 +753,27 @@ def _add_subparser_pg_formatter(subparsers):
         aliases=["pgformatter", "pgfmt", "pgf"],
         func=pg_formatter,
     )
+
+
+def _add_subparser_dev(subparsers):
+    _add_subparser_cmake(subparsers)
+    _add_subparser_git(subparsers)
+    _add_subparser_nodejs(subparsers)
+    _add_subparser_python3(subparsers)
+    _add_subparser_sphinx(subparsers)
+    _add_subparser_pyjnius(subparsers)
+    _add_subparser_yapf(subparsers)
+    _add_subparser_pylint(subparsers)
+    _add_subparser_flake8(subparsers)
+    _add_subparser_darglint(subparsers)
+    _add_subparser_pytype(subparsers)
+    _add_subparser_pyenv(subparsers)
+    _add_subparser_openjdk(subparsers)
+    _add_subparser_sdkman(subparsers)
+    _add_subparser_poetry(subparsers)
+    _add_subparser_rustup(subparsers)
+    _add_subparser_rustpython(subparsers)
+    _add_subparser_deno(subparsers)
+    _add_subparser_antlr(subparsers)
+    _add_subparser_jpype1(subparsers)
+    _add_subparser_pg_formatter(subparsers)

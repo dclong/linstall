@@ -435,3 +435,18 @@ def _add_subparser_wajig(subparsers) -> None:
     add_subparser(
         subparsers, "Wajig", func=wajig, aliases=["wj"], add_argument=_wajig_args
     )
+
+
+def _add_subparser_shell(subparsers):
+    _add_subparser_coreutils(subparsers)
+    _add_subparser_change_shell(subparsers)
+    _add_subparser_shell_utils(subparsers)
+    _add_subparser_bash_it(subparsers)
+    _add_subparser_xonsh(subparsers)
+    _add_subparser_homebrew(subparsers)
+    _add_subparser_hyper(subparsers)
+    _add_subparser_openinterminal(subparsers)
+    _add_subparser_bash_complete(subparsers)
+    _add_subparser_wajig(subparsers)
+    _add_subparser_exa(subparsers)
+    _add_subparser_osquery(subparsers)

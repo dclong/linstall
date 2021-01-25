@@ -5,7 +5,9 @@ import shutil
 import requests
 from packaging.version import parse
 from packaging.specifiers import SpecifierSet
-from .utils import (option_python, option_pip_bundle, add_subparser, run_cmd)
+from .utils import (
+    option_version, option_python, option_pip_bundle, add_subparser, run_cmd
+)
 from . import utils
 
 
@@ -46,7 +48,8 @@ def _github_download(args):
 def github(args) -> None:
     """Download packages from GitHub and then install and configure it.
 
-    :param args:
+    :param args: The arguments to parse. 
+        If None, the arguments from command-line are parsed.
     """
     _github_download(args)
     if args.install_cmd:
@@ -62,12 +65,9 @@ def _github_args(subparser):
         required=True,
         help="The GitHub repository from which to download the package.",
     )
-    subparser.add_argument(
-        "-v",
-        "--version",
-        dest="version",
-        default="",
-        help="The version specifier of the package to download/install/configure.",
+    option_version(
+        subparser,
+        help="The version specifier of the package to download/install/configure."
     )
     subparser.add_argument(
         "-k",
@@ -94,7 +94,7 @@ def _github_args(subparser):
     )
 
 
-def _add_subparser_github(subparsers) -> None:
+def _add_subparser_github_(subparsers) -> None:
     add_subparser(
         subparsers,
         "github",
@@ -173,3 +173,10 @@ def _add_subparser_xinstall(subparsers) -> None:
     add_subparser(
         subparsers, "xinstall", func=xinstall, aliases=[], add_argument=_xinstall_args
     )
+
+
+def _add_subparser_github(subparsers):
+    _add_subparser_dsutil(subparsers)
+    _add_subparser_xinstall(subparsers)
+    _add_subparser_install_py_github(subparsers)
+    _add_subparser_github_(subparsers)

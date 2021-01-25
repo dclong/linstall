@@ -36,6 +36,7 @@ def copy_if_exists(src: Union[Path, str], dst: Path = HOME) -> bool:
 
     :param src: The path of the source file.
     :param dst: The path of the destination file.
+    :return: True if the copy operation succeed and false otherwise.
     """
     try:
         shutil.copy2(src, dst)
@@ -52,6 +53,8 @@ def link_if_exists(
 
     :param src: The path of the source file.
     :param dst: The path of the destination file.
+    :param target_is_directory: Please refer to https://docs.python.org/3/library/os.html#os.symlink.
+    :return: True if the link operation succeed and false otherwise.
     """
     try:
         Path(dst).unlink()
@@ -236,6 +239,17 @@ def intellij_idea_plugin(version: str, url: str):
     run_cmd(cmd)
 
 
+def option_version(subparser, help: str = ""):
+    """Add the option -v/--version to the subparser.
+
+    :param subparser: A sub parser.
+    :param help: The help doc for the option.
+    """
+    if not help:
+        help = "The version."
+    subparser.add_argument("-v", "--version", dest="version", default="", help=help)
+
+
 def option_user(subparser):
     """Add the option --user to the subparser.
 
@@ -338,6 +352,7 @@ def add_subparser(
     :param add_argument: A callable object to add aditional arguments
     (in addition to those default arguments), defaults to None
     :type add_argument: Union[Callable, None], optional
+    :return:
     """
     sub_cmd = re.sub(r"(\s+)|-", "_", name.lower())
     aliases = [alias for alias in aliases if alias != sub_cmd]
@@ -374,18 +389,20 @@ def add_subparser(
 
 
 def update_file(
-    path: Path,
+    path: Union[str, Path],
     regex: List[Tuple[str, str]] = None,
     exact: List[Tuple[str, str]] = None,
     append: Union[str, Iterable[str]] = None,
     exist_skip: bool = True,
 ) -> None:
     """Update a text file using regular expression substitution.
+
+    :param path: The path to the file to be updated.
     :param regex: A list of tuples containing regular expression patterns
-    and the corresponding replacement text.
+        and the corresponding replacement text.
     :param exact: A list of tuples containing exact patterns and the corresponding replacement text.
     :param append: A string of a list of lines to append.
-    When append is a list of lines, "\n" is automatically added to each line.
+        When append is a list of lines, "\n" is automatically added to each line.
     :param exist_skip: Skip appending if already exists.
     """
     if isinstance(path, str):

@@ -1,7 +1,7 @@
 """Install IDE related tools.
 """
 from typing import Union
-import logging
+#import logging
 import os
 import shutil
 import re
@@ -122,7 +122,14 @@ def spacevim(args) -> None:
         run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall")
     if args.config:
         _svim_gen_config()
-    _svim_true_color(args.true_colors)
+        _svim_true_color(args.true_colors)
+        _svim_filetype_shiftwidth()
+
+
+def _svim_filetype_shiftwidth():
+    vimrc = HOME / ".SpaceVim.d/vimrc"
+    with vimrc.open("a") as fout:
+        fout.write("autocmd FileType yaml set shiftwidth=2")
 
 
 def _spacevim_args(subparser) -> None:
@@ -285,3 +292,13 @@ def _add_subparser_intellij_idea_scala(subparsers) -> None:
     add_subparser(
         subparsers, "IntelliJ IDEA", func=intellij_idea, aliases=["intellij", "idea"]
     )
+
+
+def _add_subparser_ide(subparsers):
+    _add_subparser_vim(subparsers)
+    _add_subparser_neovim(subparsers)
+    _add_subparser_spacevim(subparsers)
+    _add_subparser_ideavim(subparsers)
+    _add_subparser_visual_studio_code(subparsers)
+    _add_subparser_intellij_idea_scala(subparsers)
+    _add_subparser_bash_lsp(subparsers)

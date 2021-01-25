@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "xinstall"
-version = "0.32.2"
-description = ""
+version = "0.32.3"
+description = "Easy Cross-platform Installation and Configuration of Apps."
 authors = ["Benjamin Du <longendu@yahoo.com>"]
 
 [tool.poetry.scripts]
