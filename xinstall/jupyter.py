@@ -1,11 +1,13 @@
 """Install and configure Jupyter/Lab related tools.
 """
-#import logging
+from pathlib import Path
+import logging
 import shutil
 from .utils import (
     USER,
     HOME,
     BIN_DIR,
+    BASE_DIR,
     run_cmd,
     add_subparser,
     option_pip_bundle,
@@ -272,4 +274,3 @@ def _add_subparser_jupyter(subparsers):
     _add_subparser_almond(subparsers)
     _add_subparser_evcxr_jupyter(subparsers)
     _add_subparser_jupyter_book(subparsers)
-
