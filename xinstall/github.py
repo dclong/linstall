@@ -94,7 +94,7 @@ def _github_args(subparser):
     )
 
 
-def _add_subparser_github(subparsers) -> None:
+def _add_subparser_github_(subparsers) -> None:
     add_subparser(
         subparsers,
         "github",
@@ -173,3 +173,10 @@ def _add_subparser_xinstall(subparsers) -> None:
     add_subparser(
         subparsers, "xinstall", func=xinstall, aliases=[], add_argument=_xinstall_args
     )
+
+
+def _add_subparser_github(subparsers):
+    _add_subparser_dsutil(subparsers)
+    _add_subparser_xinstall(subparsers)
+    _add_subparser_install_py_github(subparsers)
+    _add_subparser_github_(subparsers)

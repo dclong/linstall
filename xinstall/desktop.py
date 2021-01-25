@@ -93,3 +93,10 @@ def _add_subparser_pygetwindow(subparsers):
         aliases=["pgw", "getwindow", "gwin"],
         add_argument=_pygetwindow_args
     )
+
+
+def _add_subparser_desktop(subparsers):
+    _add_subparser_version(subparsers)
+    _add_subparser_nomachine(subparsers)
+    _add_subparser_lxqt(subparsers)
+    _add_subparser_pygetwindow(subparsers)

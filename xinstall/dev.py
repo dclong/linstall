@@ -825,3 +825,30 @@ def _add_subparser_pg_formatter(subparsers):
         aliases=["pgformatter", "pgfmt", "pgf"],
         func=pg_formatter,
     )
+
+
+def _add_subparser_dev(subparsers):
+    _add_subparser_cmake(subparsers)
+    _add_subparser_git(subparsers)
+    _add_subparser_nodejs(subparsers)
+    _add_subparser_evcxr_jupyter(subparsers)
+    _add_subparser_python3(subparsers)
+    _add_subparser_sphinx(subparsers)
+    _add_subparser_pyjnius(subparsers)
+    _add_subparser_ipython(subparsers)
+    _add_subparser_jupyter_book(subparsers)
+    _add_subparser_yapf(subparsers)
+    _add_subparser_pylint(subparsers)
+    _add_subparser_flake8(subparsers)
+    _add_subparser_darglint(subparsers)
+    _add_subparser_pytype(subparsers)
+    _add_subparser_pyenv(subparsers)
+    _add_subparser_openjdk(subparsers)
+    _add_subparser_sdkman(subparsers)
+    _add_subparser_poetry(subparsers)
+    _add_subparser_rustup(subparsers)
+    _add_subparser_rustpython(subparsers)
+    _add_subparser_deno(subparsers)
+    _add_subparser_antlr(subparsers)
+    _add_subparser_jpype1(subparsers)
+    _add_subparser_pg_formatter(subparsers)

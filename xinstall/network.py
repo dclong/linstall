@@ -249,3 +249,13 @@ def _add_subparser_sshuttle(subparsers):
         aliases=["sshu"],
         add_argument=_sshuttle_args
     )
+
+
+def _add_subparser_network(subparsers):
+    _add_subparser_ssh_server(subparsers)
+    _add_subparser_ssh_client(subparsers)
+    _add_subparser_proxychains(subparsers)
+    _add_subparser_dryscrape(subparsers)
+    _add_subparser_download_tools(subparsers)
+    _add_subparser_sshuttle(subparsers)
+

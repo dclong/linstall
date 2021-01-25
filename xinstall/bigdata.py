@@ -304,3 +304,9 @@ def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> No
 #    ]
 #    for dir_ in dirs:
 #        sp.run(f"mkdir -p {dir_} && chmod -R 777 {dir_}", shell=True, check=True)
+
+
+def _add_subparser_bigdata(subparsers):
+    _add_subparser_dask(subparsers)
+    _add_subparser_spark(subparsers)
+    _add_subparser_pyspark(subparsers)

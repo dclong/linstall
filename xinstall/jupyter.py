@@ -189,3 +189,12 @@ def evcxr_jupyter(args) -> None:
 
 def _add_subparser_evcxr_jupyter(subparsers) -> None:
     add_subparser(subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"])
+
+
+def _add_subparser_jupyter(subparsers):
+    _add_subparser_beakerx(subparsers)
+    _add_subparser_jupyterlab_lsp(subparsers)
+    _add_subparser_itypescript(subparsers)
+    _add_subparser_nbdime(subparsers)
+    _add_subparser_almond(subparsers)
+

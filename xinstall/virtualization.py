@@ -230,3 +230,13 @@ def microk8s(args) -> None:
 
 def _add_subparser_microk8s(subparsers):
     add_subparser(subparsers, "Microk8s", func=microk8s, aliases=["mk8s"])
+
+
+def _add_subparser_virtualization(subparsers):
+    _add_subparser_docker(subparsers)
+    _add_subparser_kubernetes(subparsers)
+    _add_subparser_minikube(subparsers)
+    _add_subparser_virtualbox(subparsers)
+    _add_subparser_multipass(subparsers)
+    _add_subparser_microk8s(subparsers)
+

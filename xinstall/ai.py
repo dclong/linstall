@@ -204,3 +204,13 @@ def _nlp_args(subparser):
 
 def _add_subparser_nlp(subparsers):
     add_subparser(subparsers, "nlp", func=nlp, add_argument=_nlp_args)
+
+
+def _add_subparser_ai(subparsers):
+    _add_subparser_kaggle(subparsers)
+    _add_subparser_lightgbm(subparsers)
+    _add_subparser_pytorch(subparsers)
+    _add_subparser_autogluon(subparsers)
+    _add_subparser_pytext(subparsers)
+    _add_subparser_computer_vision(subparsers)
+    _add_subparser_nlp(subparsers)
