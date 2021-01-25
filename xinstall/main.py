@@ -184,7 +184,7 @@ def _add_subparser_virtualization(subparsers):
     _add_subparser_microk8s(subparsers)
 
 
-def _add_subparser_github(subparsers):
+def _add_subparser_github_(subparsers):
     _add_subparser_dsutil(subparsers)
     _add_subparser_xinstall(subparsers)
     _add_subparser_install_py_github(subparsers)
@@ -260,7 +260,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_dev(subparsers)
     _add_subparser_bigdata(subparsers)
     _add_subparser_virtualization(subparsers)
-    _add_subparser_github(subparsers)
+    _add_subparser_github_(subparsers)
     _add_subparser_ai(subparsers)
     _add_subparser_network(subparsers)
     _add_subparser_jupyter(subparsers)
