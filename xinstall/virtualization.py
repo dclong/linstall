@@ -239,4 +239,3 @@ def _add_subparser_virtualization(subparsers):
     _add_subparser_virtualbox(subparsers)
     _add_subparser_multipass(subparsers)
     _add_subparser_microk8s(subparsers)
-

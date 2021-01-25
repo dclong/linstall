@@ -302,4 +302,3 @@ def _add_subparser_ide(subparsers):
     _add_subparser_visual_studio_code(subparsers)
     _add_subparser_intellij_idea_scala(subparsers)
     _add_subparser_bash_lsp(subparsers)
-

@@ -450,4 +450,3 @@ def _add_subparser_shell(subparsers):
     _add_subparser_wajig(subparsers)
     _add_subparser_exa(subparsers)
     _add_subparser_osquery(subparsers)
-

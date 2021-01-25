@@ -66,7 +66,7 @@ def parse_args(args=None, namespace=None):
     _add_subparser_dev(subparsers)
     _add_subparser_bigdata(subparsers)
     _add_subparser_virtualization(subparsers)
-    _add_subparser_github_(subparsers)
+    _add_subparser_github(subparsers)
     _add_subparser_ai(subparsers)
     _add_subparser_network(subparsers)
     _add_subparser_jupyter(subparsers)

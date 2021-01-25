@@ -262,78 +262,6 @@ def _add_subparser_nodejs(subparsers):
     add_subparser(subparsers, "NodeJS", func=nodejs, aliases=["node"])
 
 
-def jupyter_book(args):
-    """Install jupyter-book.
-    """
-    if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} jupyter-book"
-        run_cmd(cmd)
-    if args.config:
-        src_file = BASE_DIR / "jupyter-book/_config.yml"
-        shutil.copy2(src_file, ".")
-        logging.info("%s is copied to the current directory.", src_file)
-    if args.uninstall:
-        pass
-
-
-def _jupyter_book_args(subparser):
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_jupyter_book(subparsers):
-    add_subparser(
-        subparsers,
-        "jupyter_book",
-        func=jupyter_book,
-        aliases=["jb", "jbook"],
-        add_argument=_jupyter_book_args,
-    )
-
-
-def ipython(args):
-    """Install IPython for Python 3.
-    """
-    if args.install:
-        cmd = f"{args.prefix} {args.pip} install {args.user_s} {args.pip_option} ipython"
-        run_cmd(cmd)
-    if args.config:
-        src_dir = BASE_DIR / "ipython"
-        dst_dir = args.profile_dir / "profile_default"
-        (dst_dir / "startup").mkdir(mode=0o755, parents=True, exist_ok=True)
-        shutil.copy2(src_dir / "ipython_config.py", dst_dir)
-        shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
-        logging.info(
-            "%s is copied to the directory %s.", src_dir / "ipython_config.py", dst_dir
-        )
-        logging.info(
-            "%s is copied to the directory %s.", src_dir / "startup.ipy",
-            dst_dir / "startup"
-        )
-    if args.uninstall:
-        pass
-
-
-def _ipython_args(subparser):
-    subparser.add_argument(
-        "--profile-dir",
-        dest="profile_dir",
-        type=Path,
-        default=HOME / ".ipython",
-        help="The directory for storing IPython configuration files.",
-    )
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_ipython(subparsers):
-    add_subparser(
-        subparsers,
-        "IPython",
-        func=ipython,
-        aliases=["ipy"],
-        add_argument=_ipython_args,
-    )
-
-
 def python(args):
     """Install and configure Python (3).
     """
@@ -831,12 +759,9 @@ def _add_subparser_dev(subparsers):
     _add_subparser_cmake(subparsers)
     _add_subparser_git(subparsers)
     _add_subparser_nodejs(subparsers)
-    _add_subparser_evcxr_jupyter(subparsers)
     _add_subparser_python3(subparsers)
     _add_subparser_sphinx(subparsers)
     _add_subparser_pyjnius(subparsers)
-    _add_subparser_ipython(subparsers)
-    _add_subparser_jupyter_book(subparsers)
     _add_subparser_yapf(subparsers)
     _add_subparser_pylint(subparsers)
     _add_subparser_flake8(subparsers)
