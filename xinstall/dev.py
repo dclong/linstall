@@ -42,8 +42,6 @@ def openjdk8(args):
             run_cmd(cmd)
         if is_centos_series():
             pass
-    if args.config:
-        pass
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(

@@ -117,8 +117,6 @@ def kubernetes(args):
             brew_install_safe(["kubernetes-cli"])
         elif is_centos_series():
             pass
-    if args.config:
-        pass
     if args.uninstall:
         if is_ubuntu_debian():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} kubectl")
