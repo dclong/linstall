@@ -240,6 +240,11 @@ def intellij_idea_plugin(version: str, url: str):
 
 
 def option_version(subparser, help: str = ""):
+    """Add the option -v/--version to the subparser.
+
+    :param subparser: A sub parser.
+    :param help: The help doc for the option.
+    """
     if not help:
         help = "The version."
     subparser.add_argument(
