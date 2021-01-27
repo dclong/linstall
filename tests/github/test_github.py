@@ -1,6 +1,6 @@
 """Test the github module.
 """
-import subprocess as sp
+from subprocess import CalledProcessError
 from requests.exceptions import HTTPError
 from xinstall.utils import run_cmd
 
@@ -18,7 +18,7 @@ def test_github():
     cmd = "xinstall github -r dclong/xinstall -k whl -o xinstall.wheel"
     try:
         run_cmd(cmd)
-    except HTTPError as err:
+    except (CalledProcessError, HTTPError) as err:
         if "rate limit exceeded for url" in str(err):
             return
         raise err
