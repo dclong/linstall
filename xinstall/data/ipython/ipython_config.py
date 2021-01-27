@@ -312,6 +312,8 @@ if "darwin" in PLATFORM:
                 "record_screen",
                 "ffmpeg -f avfoundation -i '1' -pix_fmt yuv420p -r 25 $(date +%m%d%H%M%S).mp4"
             ),
+            ("umount", "diskutil umount"),
+            ("unmount", "diskutil umount"),
         ]
     )
 else:
