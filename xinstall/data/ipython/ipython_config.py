@@ -300,7 +300,7 @@ c.AliasManager.user_aliases = [
     ("scp.rp", "scp -rp"),
     ("scp.rp.pc", "proxychains scp -rp"),
 ]
-if "darwin" in PLATFORM:
+if "darwin" in PLATFORM or "macos" in PLATFORM:
     c.AliasManager.user_aliases.extend(
         [
             ("md5sum", "md5 -r"),
