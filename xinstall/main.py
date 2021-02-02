@@ -74,8 +74,7 @@ def parse_args(args=None, namespace=None):
     # --------------------------------------------------------
     args = parser.parse_args(args=args, namespace=namespace)
     args.yes_s = "--yes" if args.yes else ""
-    if "user" in args:
-        args.user_s = "--user" if args.user else ""
+    args.user_s = "--user" if args.user else ""
     if USER == "root" or is_win():
         args.prefix = ""
     if "pip_option" in args:
