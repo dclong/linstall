@@ -371,7 +371,7 @@ def pyjnius(args):
     """Install pyjnius for calling Java from Python.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user} {args.pip_option} Cython pyjnius"
+        cmd = f"{args.pip} install {args.user_s} {args.pip_option} Cython pyjnius"
         run_cmd(cmd)
     if args.config:
         pass

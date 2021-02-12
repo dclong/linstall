@@ -251,22 +251,21 @@ def visual_studio_code(args) -> None:
             run_cmd(f"{args.prefix} yum remove vscode")
     if args.config:
         src_file = f"{BASE_DIR}/vscode/settings.json"
-        if not args.dst_dir:
-            args.dst_dir = f"{HOME}/.config/Code/User/"
+        if not args.user_dir:
+            args.user_dir = f"{HOME}/.config/Code/User/"
             if is_macos():
-                args.dst_dir = f"{HOME}/Library/Application Support/Code/User/"
-        os.makedirs(args.dst_dir, exist_ok=True)
-        shutil.copy2(src_file, args.dst_dir)
+                args.user_dir = f"{HOME}/Library/Application Support/Code/User/"
+        os.makedirs(args.user_dir, exist_ok=True)
+        shutil.copy2(src_file, args.user_dir)
 
 
 def _visual_studio_code_args(subparser) -> None:
     subparser.add_argument(
+        "--user-dir",
         "-d",
-        "--destination-dir",
-        "--dst-dir",
-        dest="dst_dir",
+        dest="user_dir",
         default="",
-        help="Enable true color (default true) for SpaceVim."
+        help="Configuration directory."
     )
     option_pip_bundle(subparser)
 
