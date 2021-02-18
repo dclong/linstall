@@ -16,15 +16,14 @@ def test_github():
     """Test the wajig command.
     """
     cmd = "xinstall github -r dclong/xinstall -k whl -o xinstall.wheel"
+    msg = "rate limit exceeded for url"
     try:
         run_cmd(cmd, capture_output=True)
     except HTTPError as err:
-        if "rate limit exceeded for url" in str(err):
+        if msg in str(err):
             return
         raise err
-    except Exception as err:
-        print(type(err))
-        print("Error message:", err)
-        print("Standard output of the child process:", err.stdout)
-        print("Standard error of the child process:", err.stderr)
+    except CalledProcessErrorall as err:
+        if msg in err.stderr.decode():
+            return
         raise err
