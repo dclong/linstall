@@ -78,12 +78,12 @@ def remove_file_safe(path: Path) -> None:
         pass
 
 
-def run_cmd(cmd: Union[list, str], capture_output=False) -> None:
+def run_cmd(cmd: Union[list, str]) -> None:
     """Run a shell command.
 
     :param cmd: The command to run.
     """
-    proc = sp.run(cmd, shell=isinstance(cmd, str), check=True, capture_output=capture_output)
+    proc = sp.run(cmd, shell=isinstance(cmd, str), check=True, capture_output=True)
     logging.debug(proc.args)
 
 
