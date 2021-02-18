@@ -83,7 +83,7 @@ def run_cmd(cmd: Union[list, str]) -> None:
 
     :param cmd: The command to run.
     """
-    proc = sp.run(cmd, shell=isinstance(cmd, str), check=True)
+    proc = sp.run(cmd, shell=isinstance(cmd, str), check=True, capture_output=True)
     logging.debug(proc.args)
 
 
