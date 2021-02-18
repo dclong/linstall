@@ -17,7 +17,7 @@ def test_github():
     """
     cmd = "xinstall github -r dclong/xinstall -k whl -o xinstall.wheel"
     try:
-        run_cmd(cmd)
+        run_cmd(cmd, capture_output=True)
     except HTTPError as err:
         if "rate limit exceeded for url" in str(err):
             return
