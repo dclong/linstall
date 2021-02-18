@@ -23,7 +23,7 @@ def test_github():
         if msg in str(err):
             return
         raise err
-    except CalledProcessErrorall as err:
+    except CalledProcessError as err:
         if msg in err.stderr.decode():
             return
         raise err
