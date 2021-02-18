@@ -24,5 +24,7 @@ def test_github():
         raise err
     except Exception as err:
         print(type(err))
-        print(err)
+        print("Error message:", err)
+        print("Standard output of the child process:", err.stdout)
+        print("Standard error of the child process:", err.stderr)
         raise err
