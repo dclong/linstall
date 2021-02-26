@@ -129,9 +129,9 @@ def trash(line: str):
 def symlink_blog() -> None:
     dstfile = HOME / ".local/bin/blog"
     paths = [
-        HOME / "archives/blog/main.py",
-        Path("/workdir/archives/blog/main.py"),
-        Path("/workdir/blog/main.py"),
+        HOME / "archives/blog/blog.py",
+        Path("/workdir/archives/blog/blog.py"),
+        Path("/workdir/blog/blog.py"),
     ]
     for path in paths:
         if path.is_file():
