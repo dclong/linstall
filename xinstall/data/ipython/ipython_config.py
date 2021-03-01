@@ -3,7 +3,6 @@ from pathlib import Path
 PLATFORM = platform.platform().lower()
 c = get_config()
 c.AliasManager.user_aliases = [
-    ("blog", "python3 $HOME/archives/blog/main.py"),
     ("cpi", "cp -ir"),
     # du
     ("du.0", "du -hd 0"),
