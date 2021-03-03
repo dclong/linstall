@@ -1,7 +1,7 @@
 """The command-line interface for xinstall.
 """
 import logging
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 from .utils import USER, is_win
 from .ai import _add_subparser_ai
 from .shell import _add_subparser_shell
