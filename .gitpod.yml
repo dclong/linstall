@@ -6,3 +6,4 @@ tasks:
 vscode:
   extensions:
     - vscodevim.vim
+    - ms-python.python
