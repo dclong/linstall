@@ -1,7 +1,7 @@
 """The command-line interface for xinstall.
 """
 import logging
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 from .utils import USER, is_win
 from .ai import _add_subparser_ai
 from .shell import _add_subparser_shell
@@ -30,8 +30,13 @@ def _add_subparser_version(subparsers):
     return subparser
 
 
-def parse_args(args=None, namespace=None):
-    """Parse command-line arguments for the install/configuration util.
+def parse_args(args=None, namespace=None) -> Namespace:
+    """Parse command-line arguments.
+    
+    :param args: The arguments to parse. 
+        If None, the arguments from command-line are parsed.
+    :param namespace: An inital Namespace object.
+    :return: A namespace object containing parsed options.
     """
     parser = ArgumentParser(
         description="Easy installation and configuration for Unix/Linux"
