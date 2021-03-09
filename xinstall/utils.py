@@ -205,7 +205,11 @@ def _github_version(url) -> str:
 
 
 def install_py_github(
-    url: str, user: bool = False, pip: str = "pip3", pip_option=""
+    url: str,
+    user: bool = False,
+    pip: str = "pip3",
+    pip_option: str = "",
+    extras: str = ""
 ) -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
 
@@ -214,11 +218,15 @@ def install_py_github(
     This option is equivalant to 'pip install --user'.
     :param pip: The path (pip3 by default) to the pip executable.
     :param pip_option: Extra pip options.
+    :param extras: Extra components (separate by comma) of the package to install.
     """
     ver = _github_version(url)
     ver_no_letter = re.sub("[a-zA-Z]", "", ver)
-    url = f"{url}/releases/download/{ver}/{Path(url).name}-{ver_no_letter}-py3-none-any.whl"
-    cmd = f"{pip} install {'--user' if user else ''} --upgrade {pip_option} {url}"
+    name = Path(url).name
+    url = f"{url}/releases/download/{ver}/{name}-{ver_no_letter}-py3-none-any.whl"
+    if extras:
+        extras = f"{name}[{extras}]"
+    cmd = f"{pip} install {'--user' if user else ''} --upgrade {pip_option} {extras} {url}"
     run_cmd(cmd)
 
 
