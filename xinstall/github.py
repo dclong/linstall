@@ -133,7 +133,7 @@ def dsutil(args) -> None:
     if args.install:
         url = "https://github.com/dclong/dsutil"
         utils.install_py_github(
-            url=url, pip=args.pip, user=args.user, pip_option=args.pip_option
+            url=url, pip=args.pip, user=args.user, pip_option=args.pip_option, extras=args.extras
         )
     if args.config:
         pass
