@@ -218,6 +218,7 @@ def install_py_github(
     This option is equivalant to 'pip install --user'.
     :param pip: The path (pip3 by default) to the pip executable.
     :param pip_option: Extra pip options.
+    :param extras: Extra components (separate by comma) of the package to install.
     """
     ver = _github_version(url)
     ver_no_letter = re.sub("[a-zA-Z]", "", ver)
