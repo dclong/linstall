@@ -113,10 +113,19 @@ def pylint(args):
     if args.install:
         run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} pylint")
     if args.config:
-        src_file = BASE_DIR / "pylint/pylintrc"
-        des_file = args.dst_dir / ".pylintrc"
-        shutil.copy2(src_file, des_file)
-        logging.info("%s is copied to %s.", src_file, des_file)
+        src_file = BASE_DIR / "pylint/pyproject.toml"
+        with src_file.open("r") as fin:
+            dic_src = toml.load(fin)
+        des_file = args.dst_dir / "pyproject.toml"
+        if des_file.is_file():
+            with des_file.open("r") as fin:
+                dic_des = toml.load(fin)
+        else:
+            dic_des = {}
+        dic_des.update(dic_src)
+        with des_file.open("w") as fout:
+            toml.dump(des_file, fout)
+        logging.info("pylint is configured via %s.", des_file)
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall pylint")
 
