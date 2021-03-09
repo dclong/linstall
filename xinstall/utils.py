@@ -205,7 +205,11 @@ def _github_version(url) -> str:
 
 
 def install_py_github(
-    url: str, user: bool = False, pip: str = "pip3", pip_option: str = "", extras: str = ""
+    url: str,
+    user: bool = False,
+    pip: str = "pip3",
+    pip_option: str = "",
+    extras: str = ""
 ) -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
 
