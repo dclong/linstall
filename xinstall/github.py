@@ -143,7 +143,13 @@ def dsutil(args) -> None:
 
 def _dsutil_args(subparser) -> None:
     option_pip_bundle(subparser)
-    subparser.add_argument("-e", "--extras", dest="extras", default="", help="Extra components to install.")
+    subparser.add_argument(
+        "-e",
+        "--extras",
+        dest="extras",
+        default="",
+        help="Extra components to install."
+    )
 
 
 def _add_subparser_dsutil(subparsers) -> None:
