@@ -100,10 +100,13 @@ def spark(args):
     if args.config:
         # metastore db
         metastore_db = spark_home / "metastore_db"
-        run_cmd(
-            f"{args.prefix} mkdir -p {metastore_db} && "
-            f"{args.prefix} chmod -R 777 {metastore_db}"
-        )
+        if is_win():
+            metastore_db.mkdir(parents=True, exist_ok=True)
+        else:
+            run_cmd(
+                f"{args.prefix} mkdir -p {metastore_db} && "
+                f"{args.prefix} chmod -R 777 {metastore_db}"
+            )
         # warehouse
         warehouse = spark_home / "warehouse"
         if is_win():
@@ -257,17 +260,14 @@ def _create_db(spark_session, dbase: Union[Path, str]) -> None:
     for path in dbase.glob("*.txt"):
         with path.open("r") as fin:
             table = fin.readline().strip()
-            if spark_session.catalog._jcatalog.tableExists(table):  # pylint: disable=W0212
-                logging.warning("The data table %s already exists.", table)
-                continue
             fields = [line.strip() for line in fin]
         fields = (",\n" + " " * 16).join(fields)
         sql = f"""
-            CREATE TABLE {table} (
+            CREATE OR REPLACE TABLE {table} (
                 {fields}
             ) USING PARQUET
             """.rstrip()
-        logging.info("Creating the data table %s:%s", table, sql)
+        logging.info("Creating/replacing the data table %s:%s", table, sql)
         spark_session.sql(sql)
 
 
@@ -295,15 +295,6 @@ def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> No
     for path in schema_dir.iterdir():
         if path.is_dir() and not path.name.startswith("."):
             _create_db(spark_session, path)
-
-
-#def _permission():
-#    dirs = [
-#        "/opt/spark/metastore_db",
-#        "/opt/spark/warehouse",
-#    ]
-#    for dir_ in dirs:
-#        sp.run(f"mkdir -p {dir_} && chmod -R 777 {dir_}", shell=True, check=True)
 
 
 def _add_subparser_bigdata(subparsers):
