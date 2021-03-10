@@ -131,9 +131,7 @@ def spark(args):
         if args.schema_dir:
             create_dbs(spark_home, args.schema_dir)
         if not is_win():
-            run_cmd(
-                f"{args.prefix} chmod -R 777 {metastore_db}"
-            )
+            run_cmd(f"{args.prefix} chmod -R 777 {metastore_db}")
     if args.uninstall:
         cmd = f"{args.prefix} rm -rf {spark_home}"
         run_cmd(cmd)
