@@ -262,10 +262,13 @@ def _create_db(spark_session, dbase: Union[Path, str]) -> None:
     for path in dbase.glob("*.txt"):
         with path.open("r") as fin:
             table = fin.readline().strip()
+            if spark_session.catalog._jcatalog.tableExists(table):  # pylint: disable=W0212
+                logging.warning("The data table %s already exists.", table)
+                continue
             fields = [line.strip() for line in fin]
         fields = (",\n" + " " * 16).join(fields)
         sql = f"""
-            CREATE OR REPLACE TABLE {table} (
+            CREATE TABLE {table} (
                 {fields}
             ) USING PARQUET
             """.rstrip()
