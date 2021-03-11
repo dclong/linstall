@@ -13,7 +13,7 @@ from .jupyter import _add_subparser_jupyter
 from .virtualization import _add_subparser_virtualization
 from .network import _add_subparser_network
 from .desktop import _add_subparser_desktop
-__version__ = "0.34.1"
+__version__ = "0.34.2"
 
 
 def version(args):  # pylint: disable=W0613
