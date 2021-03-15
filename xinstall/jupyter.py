@@ -32,9 +32,11 @@ def _nbdime_args(subparser) -> None:
 
 
 def _add_subparser_nbdime(subparsers) -> None:
-    add_subparser(
-        subparsers, "nbdime", func=nbdime, aliases=["nbd"], add_argument=_nbdime_args
-    )
+    add_subparser(subparsers,
+                  "nbdime",
+                  func=nbdime,
+                  aliases=["nbd"],
+                  add_argument=_nbdime_args)
 
 
 def itypescript(args) -> None:
@@ -95,9 +97,11 @@ def beakerx(args) -> None:
         run_cmd(
             f"{args.prefix} jupyter labextension install @jupyter-widgets/jupyterlab-manager",
         )
-        run_cmd(f"{args.prefix} jupyter labextension install beakerx-jupyterlab")
+        run_cmd(
+            f"{args.prefix} jupyter labextension install beakerx-jupyterlab")
     if args.uninstall:
-        run_cmd(f"{args.prefix} jupyter labextension uninstall beakerx-jupyterlab")
+        run_cmd(
+            f"{args.prefix} jupyter labextension uninstall beakerx-jupyterlab")
         run_cmd(
             f"{args.prefix} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager"
         )
@@ -130,11 +134,9 @@ def almond(args) -> None:
         run_cmd(
             f"curl -L -o {coursier} https://git.io/coursier-cli && chmod +x {coursier}"
         )
-        run_cmd(
-            f"""{args.prefix} /usr/local/bin/coursier launch \
+        run_cmd(f"""{args.prefix} /usr/local/bin/coursier launch \
                 almond{args.almond_version} {args.scala_version} \
-                --quiet -- --install --global"""
-        )
+                --quiet -- --install --global""")
     if args.config:
         pass
 
@@ -145,25 +147,23 @@ def _almond_args(subparser) -> None:
         "--almond-version",
         dest="almond_version",
         default="",
-        help="The version (the latest supported by default) of Almond to install."
-    )
+        help=
+        "The version (the latest supported by default) of Almond to install.")
     subparser.add_argument(
         "-s",
         "--scala-version",
         dest="scala_version",
         default="",
-        help="The version (the latest supported by default) of Scala to install."
-    )
+        help=
+        "The version (the latest supported by default) of Scala to install.")
 
 
 def _add_subparser_almond(subparsers) -> None:
-    add_subparser(
-        subparsers,
-        "Almond",
-        func=almond,
-        aliases=["al", "amd"],
-        add_argument=_almond_args
-    )
+    add_subparser(subparsers,
+                  "Almond",
+                  func=almond,
+                  aliases=["al", "amd"],
+                  add_argument=_almond_args)
 
 
 def evcxr_jupyter(args) -> None:
@@ -190,7 +190,10 @@ def evcxr_jupyter(args) -> None:
 
 
 def _add_subparser_evcxr_jupyter(subparsers) -> None:
-    add_subparser(subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"])
+    add_subparser(subparsers,
+                  "evcxr_jupyter",
+                  func=evcxr_jupyter,
+                  aliases=["evcxr"])
 
 
 def jupyter_book(args):
@@ -233,13 +236,10 @@ def ipython(args):
         (dst_dir / "startup").mkdir(mode=0o755, parents=True, exist_ok=True)
         shutil.copy2(src_dir / "ipython_config.py", dst_dir)
         shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
-        logging.info(
-            "%s is copied to the directory %s.", src_dir / "ipython_config.py", dst_dir
-        )
-        logging.info(
-            "%s is copied to the directory %s.", src_dir / "startup.ipy",
-            dst_dir / "startup"
-        )
+        logging.info("%s is copied to the directory %s.",
+                     src_dir / "ipython_config.py", dst_dir)
+        logging.info("%s is copied to the directory %s.",
+                     src_dir / "startup.ipy", dst_dir / "startup")
     if args.uninstall:
         pass
 

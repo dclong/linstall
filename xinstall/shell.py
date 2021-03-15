@@ -61,8 +61,7 @@ def shell_utils(args) -> None:
             update_apt_source(prefix=args.prefix)
             run_cmd(
                 f"""{args.prefix} apt-get install {args.yes_s} \
-                    bash-completion command-not-found man-db""",
-            )
+                    bash-completion command-not-found man-db""", )
         elif is_macos():
             brew_install_safe(["bash-completion@2", "man-db"])
         elif is_centos_series():
@@ -73,8 +72,7 @@ def shell_utils(args) -> None:
         if is_ubuntu_debian():
             run_cmd(
                 f"""{args.prefix} apt-get purge {args.yes_s} \
-                    bash-completion command-not-found man-db""",
-            )
+                    bash-completion command-not-found man-db""", )
         elif is_macos():
             run_cmd("brew uninstall bash-completion man-db")
         elif is_centos_series():
@@ -86,12 +84,10 @@ def shell_utils(args) -> None:
 
 
 def _add_subparser_shell_utils(subparsers) -> None:
-    add_subparser(
-        subparsers,
-        "Shell utils",
-        func=shell_utils,
-        aliases=["sh_utils", "shutils", "shu", "su"]
-    )
+    add_subparser(subparsers,
+                  "Shell utils",
+                  func=shell_utils,
+                  aliases=["sh_utils", "shutils", "shu", "su"])
 
 
 def change_shell(args) -> None:
@@ -104,33 +100,27 @@ def change_shell(args) -> None:
 
 
 def _change_shell_args(subparser) -> None:
-    subparser.add_argument(
-        "-s",
-        "--shell",
-        dest="shell",
-        default="/bin/bash",
-        help="the shell to change to."
-    )
+    subparser.add_argument("-s",
+                           "--shell",
+                           dest="shell",
+                           default="/bin/bash",
+                           help="the shell to change to.")
 
 
 def _add_subparser_change_shell(subparsers) -> None:
-    add_subparser(
-        subparsers,
-        "change shell",
-        func=change_shell,
-        aliases=["chsh", "cs"],
-        add_argument=_change_shell_args
-    )
+    add_subparser(subparsers,
+                  "change shell",
+                  func=change_shell,
+                  aliases=["chsh", "cs"],
+                  add_argument=_change_shell_args)
 
 
 def _homebrew_args(subparser) -> None:
-    subparser.add_argument(
-        "-d",
-        "--install-deps",
-        dest="dep",
-        action="store_true",
-        help="Whether to install dependencies."
-    )
+    subparser.add_argument("-d",
+                           "--install-deps",
+                           dest="dep",
+                           action="store_true",
+                           help="Whether to install dependencies.")
 
 
 def homebrew(args) -> None:
@@ -155,7 +145,9 @@ def homebrew(args) -> None:
     if args.config:
         if is_linux():
             dirs = [f"{HOME}/.linuxbrew", "/home/linuxbrew/.linuxbrew"]
-            paths = [f"{dir_}/bin/brew" for dir_ in dirs if os.path.isdir(dir_)]
+            paths = [
+                f"{dir_}/bin/brew" for dir_ in dirs if os.path.isdir(dir_)
+            ]
             if paths:
                 brew = paths[-1]
                 profiles = [f"{HOME}/.bash_profile", f"{HOME}/.profile"]
@@ -163,8 +155,7 @@ def homebrew(args) -> None:
                     run_cmd(f"{brew} shellenv >> {profile}")
                 logging.info(
                     "Shell environment variables for Linuxbrew are inserted to %s.",
-                    profiles
-                )
+                    profiles)
             else:
                 sys.exit("Homebrew is not installed!")
     if args.uninstall:
@@ -177,13 +168,11 @@ def homebrew(args) -> None:
 
 
 def _add_subparser_homebrew(subparsers) -> None:
-    add_subparser(
-        subparsers,
-        "Homebrew",
-        func=homebrew,
-        aliases=["brew"],
-        add_argument=_homebrew_args
-    )
+    add_subparser(subparsers,
+                  "Homebrew",
+                  func=homebrew,
+                  aliases=["brew"],
+                  add_argument=_homebrew_args)
 
 
 def hyper(args) -> None:
@@ -239,7 +228,10 @@ def openinterminal(args) -> None:
 
 
 def _add_subparser_openinterminal(subparsers) -> None:
-    add_subparser(subparsers, "OpenInTerminal", func=openinterminal, aliases=["oit"])
+    add_subparser(subparsers,
+                  "OpenInTerminal",
+                  func=openinterminal,
+                  aliases=["oit"])
 
 
 def xonsh(args) -> None:
@@ -279,27 +271,24 @@ def bash_it(args) -> None:
                 """
         run_cmd(cmd)
     if args.config:
-        bash = textwrap.dedent(
-            f"""
+        bash = textwrap.dedent(f"""
             # PATH
             if [[ ! "$PATH" =~ (^{BIN_DIR}:)|(:{BIN_DIR}:)|(:{BIN_DIR}$) ]]; then
                 export PATH={BIN_DIR}:$PATH
             fi
-            """
-        )
+            """)
         profile = ".bashrc" if is_linux() else ".bash_profile"
         with (HOME / profile).open("a") as fout:
             fout.write(bash)
-        logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile)
+        logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR,
+                     profile)
         if is_linux():
-            bash = textwrap.dedent(
-                """\
+            bash = textwrap.dedent("""\
                 # source in ~/.bashrc
                 if [[ -f $HOME/.bashrc ]]; then
                     . $HOME/.bashrc
                 fi
-                """
-            )
+                """)
             with (HOME / ".bash_profile").open("w") as fout:
                 fout.write(bash)
     if args.uninstall:
@@ -308,9 +297,10 @@ def bash_it(args) -> None:
 
 
 def _add_subparser_bash_it(subparsers) -> None:
-    add_subparser(
-        subparsers, "Bash-it", func=bash_it, aliases=["bashit", "shit", "bit"]
-    )
+    add_subparser(subparsers,
+                  "Bash-it",
+                  func=bash_it,
+                  aliases=["bashit", "shit", "bit"])
 
 
 def bash_completion(args) -> None:
@@ -321,7 +311,8 @@ def bash_completion(args) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            run_cmd(f"{args.prefix} apt-get install {args.yes_s} bash-completion")
+            run_cmd(
+                f"{args.prefix} apt-get install {args.yes_s} bash-completion")
         elif is_macos():
             brew_install_safe(["bash-completion@2"])
         elif is_centos_series():
@@ -338,12 +329,10 @@ def bash_completion(args) -> None:
 
 
 def _add_subparser_bash_complete(subparsers) -> None:
-    add_subparser(
-        subparsers,
-        "Bash completion",
-        func=bash_completion,
-        aliases=["completion", "comp", "cp"]
-    )
+    add_subparser(subparsers,
+                  "Bash completion",
+                  func=bash_completion,
+                  aliases=["completion", "comp", "cp"])
 
 
 def exa(args) -> None:
@@ -422,19 +411,19 @@ def wajig(args) -> None:
 
 
 def _wajig_args(subparser) -> None:
-    subparser.add_argument(
-        "-p",
-        "--proxy",
-        dest="proxy",
-        default="",
-        help="Configure apt to use the specified proxy."
-    )
+    subparser.add_argument("-p",
+                           "--proxy",
+                           dest="proxy",
+                           default="",
+                           help="Configure apt to use the specified proxy.")
 
 
 def _add_subparser_wajig(subparsers) -> None:
-    add_subparser(
-        subparsers, "Wajig", func=wajig, aliases=["wj"], add_argument=_wajig_args
-    )
+    add_subparser(subparsers,
+                  "Wajig",
+                  func=wajig,
+                  aliases=["wj"],
+                  add_argument=_wajig_args)
 
 
 def _add_subparser_shell(subparsers):

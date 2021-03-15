@@ -67,7 +67,8 @@ def _download_spark(args: Namespace, spark_hdp: str, desfile: Path):
         url = f"{mirror}/spark-{args.spark_version}/{spark_hdp}.tgz"
         try:
             logging.info("Downloading Spark from: %s", url)
-            with ProgressBar(unit="B", unit_scale=True, miniters=1) as progress:
+            with ProgressBar(unit="B", unit_scale=True,
+                             miniters=1) as progress:
                 urlretrieve(url, desfile, progress.update_progress)
             return
         except Exception:
@@ -103,30 +104,23 @@ def spark(args):
         if is_win():
             metastore_db.mkdir(parents=True, exist_ok=True)
         else:
-            run_cmd(
-                f"{args.prefix} mkdir -p {metastore_db} && "
-                f"{args.prefix} chmod -R 777 {metastore_db}"
-            )
+            run_cmd(f"{args.prefix} mkdir -p {metastore_db} && "
+                    f"{args.prefix} chmod -R 777 {metastore_db}")
         # warehouse
         warehouse = spark_home / "warehouse"
         if is_win():
             warehouse.mkdir(parents=True, exist_ok=True)
         else:
-            run_cmd(
-                f"{args.prefix} mkdir -p {warehouse} && "
-                f"{args.prefix} chmod -R 777 {warehouse}"
-            )
+            run_cmd(f"{args.prefix} mkdir -p {warehouse} && "
+                    f"{args.prefix} chmod -R 777 {warehouse}")
         # spark-defaults.conf
-        conf = (BASE_DIR / "spark/spark-defaults.conf"
-               ).read_text().replace("$SPARK_HOME", str(spark_home))
-        run_cmd(
-            f"""echo '{conf}' | {args.prefix} tee \
-                {spark_home / 'conf/spark-defaults.conf'} > /dev/null"""
-        )
+        conf = (BASE_DIR / "spark/spark-defaults.conf").read_text().replace(
+            "$SPARK_HOME", str(spark_home))
+        run_cmd(f"""echo '{conf}' | {args.prefix} tee \
+                {spark_home / 'conf/spark-defaults.conf'} > /dev/null""")
         logging.info(
             "Spark is configured to use %s as the metastore database and %s as the Hive warehouse.",
-            metastore_db, warehouse
-        )
+            metastore_db, warehouse)
         # create databases and tables
         if args.schema_dir:
             create_dbs(spark_home, args.schema_dir)
@@ -138,35 +132,27 @@ def spark(args):
 
 
 def _spark_args(subparser):
-    subparser.add_argument(
-        "-m",
-        "--mirrors",
-        dest="mirrors",
-        nargs="+",
-        default=(),
-        help="The mirror of Apache Spark to use."
-    )
-    subparser.add_argument(
-        "--sv",
-        "--spark-version",
-        dest="spark_version",
-        help="The version of Spark to install."
-    )
-    subparser.add_argument(
-        "--hv",
-        "--hadoop-version",
-        dest="hadoop_version",
-        default="",
-        help="The version of Hadoop to use."
-    )
-    subparser.add_argument(
-        "--loc",
-        "--location",
-        dest="location",
-        type=Path,
-        default=Path(),
-        help="The location to install Spark to."
-    )
+    subparser.add_argument("-m",
+                           "--mirrors",
+                           dest="mirrors",
+                           nargs="+",
+                           default=(),
+                           help="The mirror of Apache Spark to use.")
+    subparser.add_argument("--sv",
+                           "--spark-version",
+                           dest="spark_version",
+                           help="The version of Spark to install.")
+    subparser.add_argument("--hv",
+                           "--hadoop-version",
+                           dest="hadoop_version",
+                           default="",
+                           help="The version of Hadoop to use.")
+    subparser.add_argument("--loc",
+                           "--location",
+                           dest="location",
+                           type=Path,
+                           default=Path(),
+                           help="The location to install Spark to.")
     subparser.add_argument(
         "-s",
         "--schema",
@@ -205,7 +191,10 @@ def _pyspark_args(subparser):
 
 
 def _add_subparser_pyspark(subparsers):
-    add_subparser(subparsers, "PySpark", func=pyspark, add_argument=_pyspark_args)
+    add_subparser(subparsers,
+                  "PySpark",
+                  func=pyspark,
+                  add_argument=_pyspark_args)
 
 
 def dask(args):
@@ -276,7 +265,8 @@ def _create_db(spark_session, dbase: Union[Path, str]) -> None:
         spark_session.sql(sql)
 
 
-def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path, str]) -> None:
+def create_dbs(spark_home: Union[str, Path], schema_dir: Union[Path,
+                                                               str]) -> None:
     """Create databases and tables belong to them.
 
     :param spark_home: The home of Spark installation.
