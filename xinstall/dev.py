@@ -80,10 +80,21 @@ def yapf(args):
     if args.install:
         run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} yapf")
     if args.config:
-        src_file = BASE_DIR / "yapf/style.yapf"
-        des_file = args.dst_dir / ".style.yapf"
-        shutil.copy2(src_file, des_file)
-        logging.info("%s is copied to %s.", src_file, des_file)
+        # configure yapf formatting via pyproject.toml
+        src_file = BASE_DIR / "pylint/pyproject.toml"
+        with src_file.open("r") as fin:
+            dic_src = toml.load(fin)
+        des_file = args.dst_dir / "pyproject.toml"
+        if des_file.is_file():
+            with des_file.open("r") as fin:
+                dic_des = toml.load(fin)
+        else:
+            dic_des = {}
+        dic_des.update(dic_src)
+        with des_file.open("w") as fout:
+            toml.dump(des_file, fout)
+        logging.info("yapf is configured via %s.", des_file)
+        # configure yapf ignore
         src_file = BASE_DIR / "yapf/yapfignore"
         des_file = args.dst_dir / ".yapfignore"
         shutil.copy2(src_file, des_file)
