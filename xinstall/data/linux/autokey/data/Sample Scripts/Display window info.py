@@ -1,5 +1,6 @@
 # Displays the information of the next window to be left-clicked
 import time
+
 mouse.wait_for_click(1)
 time.sleep(0.2)
 winTitle = window.get_active_title()

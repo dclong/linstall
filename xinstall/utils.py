@@ -14,6 +14,7 @@ import datetime
 import subprocess as sp
 import logging
 import distro
+
 HOME = Path.home()
 USER = HOME.name
 FILE = Path(__file__).resolve()

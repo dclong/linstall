@@ -1,5 +1,6 @@
 import platform
 from pathlib import Path
+
 PLATFORM = platform.platform().lower()
 c = get_config()
 c.AliasManager.user_aliases = [
