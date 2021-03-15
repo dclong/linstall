@@ -14,6 +14,7 @@ import datetime
 import subprocess as sp
 import logging
 import distro
+
 HOME = Path.home()
 USER = HOME.name
 FILE = Path(__file__).resolve()
@@ -45,9 +46,9 @@ def copy_if_exists(src: Union[Path, str], dst: Path = HOME) -> bool:
         return False
 
 
-def link_if_exists(src: Union[Path, str],
-                   dst: Path = HOME,
-                   target_is_directory: bool = True) -> bool:
+def link_if_exists(
+    src: Union[Path, str], dst: Path = HOME, target_is_directory: bool = True
+) -> bool:
     """Make a symbolic link of a file.
     No exception is thrown if the source file does not exist.
 
@@ -83,10 +84,7 @@ def run_cmd(cmd: Union[list, str]) -> None:
 
     :param cmd: The command to run.
     """
-    proc = sp.run(cmd,
-                  shell=isinstance(cmd, str),
-                  check=True,
-                  capture_output=True)
+    proc = sp.run(cmd, shell=isinstance(cmd, str), check=True, capture_output=True)
     logging.debug(proc.args)
 
 
@@ -98,8 +96,10 @@ def brew_install_safe(pkgs: Union[str, list]) -> None:
     if isinstance(pkgs, str):
         pkgs = [pkgs]
     for pkg in pkgs:
-        run_cmd(f"""brew install --force {pkg} \
-            || brew link --overwrite --force {pkg}""")
+        run_cmd(
+            f"""brew install --force {pkg} \
+            || brew link --overwrite --force {pkg}"""
+        )
 
 
 def is_ubuntu_debian():
@@ -179,9 +179,7 @@ def to_bool(value: Any) -> bool:
     return False
 
 
-def update_apt_source(prefix: str = "",
-                      yes: str = "--yes",
-                      seconds: float = 3600 * 12):
+def update_apt_source(prefix: str = "", yes: str = "--yes", seconds: float = 3600 * 12):
     """Run apt-get update if necessary.
 
     :param prefix: The prefix command (e.g., sudo) to use.
@@ -191,7 +189,8 @@ def update_apt_source(prefix: str = "",
     fmt = "%Y-%m-%d %H:%M:%S.%f"
     key = "apt_source_update_time"
     time = datetime.datetime.strptime(
-        SETTINGS.get(key, "2000-01-01 00:00:00.000000"), fmt)
+        SETTINGS.get(key, "2000-01-01 00:00:00.000000"), fmt
+    )
     now = datetime.datetime.now()
     if (now - time).seconds > seconds:
         run_cmd(f"{prefix} apt-get update {yes}")
@@ -206,11 +205,13 @@ def _github_version(url) -> str:
     return Path(req.url).name
 
 
-def install_py_github(url: str,
-                      user: bool = False,
-                      pip: str = "pip3",
-                      pip_option: str = "",
-                      extras: str = "") -> None:
+def install_py_github(
+    url: str,
+    user: bool = False,
+    pip: str = "pip3",
+    pip_option: str = "",
+    extras: str = ""
+) -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
 
     :param url: The root URL of the GitHub repository.
@@ -255,11 +256,7 @@ def option_version(subparser, help: str = ""):
     """
     if not help:
         help = "The version."
-    subparser.add_argument("-v",
-                           "--version",
-                           dest="version",
-                           default="",
-                           help=help)
+    subparser.add_argument("-v", "--version", dest="version", default="", help=help)
 
 
 def option_user(subparser):
@@ -271,7 +268,8 @@ def option_user(subparser):
         "--user",
         dest="user",
         action="store_true",
-        help="Install the Python package to user's local directory.")
+        help="Install the Python package to user's local directory."
+    )
 
 
 def option_python(subparser) -> None:
@@ -279,10 +277,12 @@ def option_python(subparser) -> None:
 
     :param subparser: A sub parser.
     """
-    subparser.add_argument("--python",
-                           dest="python",
-                           default="python3",
-                           help="Path to the python3 command.")
+    subparser.add_argument(
+        "--python",
+        dest="python",
+        default="python3",
+        help="Path to the python3 command."
+    )
 
 
 def option_ipython(subparser) -> None:
@@ -290,10 +290,12 @@ def option_ipython(subparser) -> None:
 
     :param subparser: A sub parser.
     """
-    subparser.add_argument("--ipython",
-                           dest="ipython",
-                           default="ipython3",
-                           help="Path to the ipython3 command.")
+    subparser.add_argument(
+        "--ipython",
+        dest="ipython",
+        default="ipython3",
+        help="Path to the ipython3 command."
+    )
 
 
 def option_pip(subparser) -> None:
@@ -301,10 +303,9 @@ def option_pip(subparser) -> None:
 
     :param subparser: A sub parser.
     """
-    subparser.add_argument("--pip",
-                           dest="pip",
-                           default="pip3",
-                           help="Path to the pip command.")
+    subparser.add_argument(
+        "--pip", dest="pip", default="pip3", help="Path to the pip command."
+    )
 
 
 def option_jupyter(subparser) -> None:
@@ -312,10 +313,12 @@ def option_jupyter(subparser) -> None:
 
     :param subparser: A sub parser.
     """
-    subparser.add_argument("--jupyter",
-                           dest="jupyter",
-                           default="jupyter",
-                           help="Path to the jupyter command.")
+    subparser.add_argument(
+        "--jupyter",
+        dest="jupyter",
+        default="jupyter",
+        help="Path to the jupyter command."
+    )
 
 
 def option_pip_option(subparser) -> None:
@@ -323,10 +326,9 @@ def option_pip_option(subparser) -> None:
 
     :param subparser: A sub parser.
     """
-    subparser.add_argument("--pip-option",
-                           dest="pip_option",
-                           default="",
-                           help="Additional options.")
+    subparser.add_argument(
+        "--pip-option", dest="pip_option", default="", help="Additional options."
+    )
 
 
 def option_pip_bundle(subparser) -> None:
@@ -339,12 +341,14 @@ def option_pip_bundle(subparser) -> None:
     option_pip_option(subparser)
 
 
-def add_subparser(subparsers,
-                  name: str,
-                  func: Callable,
-                  aliases: Sequence = (),
-                  help_: Union[str, None] = None,
-                  add_argument: Union[Callable, None] = None) -> None:
+def add_subparser(
+    subparsers,
+    name: str,
+    func: Callable,
+    aliases: Sequence = (),
+    help_: Union[str, None] = None,
+    add_argument: Union[Callable, None] = None
+) -> None:
     """Add a sub parser to the main parser.
 
     :param subparsers: The subparsers handler.
@@ -363,26 +367,30 @@ def add_subparser(subparsers,
     aliases = [alias for alias in aliases if alias != sub_cmd]
     help_ = help_ if help_ else func.__doc__
     subparser = subparsers.add_parser(sub_cmd, aliases=aliases, help=help_)
-    subparser.add_argument("-i",
-                           "--install",
-                           dest="install",
-                           action="store_true",
-                           help=f"install {name}.")
-    subparser.add_argument("-u",
-                           "--uninstall",
-                           dest="uninstall",
-                           action="store_true",
-                           help=f"uninstall {name}.")
-    subparser.add_argument("-c",
-                           "--configure",
-                           dest="config",
-                           action="store_true",
-                           help=f"configure {name}.")
-    subparser.add_argument("-l",
-                           "--log",
-                           dest="log",
-                           action="store_true",
-                           help="Print the command to run.")
+    subparser.add_argument(
+        "-i", "--install", dest="install", action="store_true", help=f"install {name}."
+    )
+    subparser.add_argument(
+        "-u",
+        "--uninstall",
+        dest="uninstall",
+        action="store_true",
+        help=f"uninstall {name}."
+    )
+    subparser.add_argument(
+        "-c",
+        "--configure",
+        dest="config",
+        action="store_true",
+        help=f"configure {name}."
+    )
+    subparser.add_argument(
+        "-l",
+        "--log",
+        dest="log",
+        action="store_true",
+        help="Print the command to run."
+    )
     if add_argument:
         add_argument(subparser)
     subparser.set_defaults(func=func)

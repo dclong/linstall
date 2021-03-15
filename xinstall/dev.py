@@ -110,18 +110,13 @@ def _yapf_args(subparser):
         dest="dst_dir",
         type=Path,
         default=Path(),
-        help=
-        "The destination directory to copy the YAPF configuration file to.",
+        help="The destination directory to copy the YAPF configuration file to.",
     )
     option_pip_bundle(subparser)
 
 
 def _add_subparser_yapf(subparsers):
-    add_subparser(subparsers,
-                  "yapf",
-                  func=yapf,
-                  aliases=[],
-                  add_argument=_yapf_args)
+    add_subparser(subparsers, "yapf", func=yapf, aliases=[], add_argument=_yapf_args)
 
 
 def pylint(args):
@@ -154,18 +149,15 @@ def _pylint_args(subparser):
         dest="dst_dir",
         type=Path,
         default=Path(),
-        help=
-        "The destination directory to copy the pylint configuration file to.",
+        help="The destination directory to copy the pylint configuration file to.",
     )
     option_pip_bundle(subparser)
 
 
 def _add_subparser_pylint(subparsers):
-    add_subparser(subparsers,
-                  "pylint",
-                  func=pylint,
-                  aliases=[],
-                  add_argument=_pylint_args)
+    add_subparser(
+        subparsers, "pylint", func=pylint, aliases=[], add_argument=_pylint_args
+    )
 
 
 def flake8(args):
@@ -189,18 +181,15 @@ def _flake8_args(subparser):
         dest="dst_dir",
         type=Path,
         default=Path(),
-        help=
-        "The destination directory to copy the flake8 configuration file to.",
+        help="The destination directory to copy the flake8 configuration file to.",
     )
     option_pip_bundle(subparser)
 
 
 def _add_subparser_flake8(subparsers):
-    add_subparser(subparsers,
-                  "flake8",
-                  func=flake8,
-                  aliases=[],
-                  add_argument=_flake8_args)
+    add_subparser(
+        subparsers, "flake8", func=flake8, aliases=[], add_argument=_flake8_args
+    )
 
 
 def darglint(args):
@@ -224,18 +213,15 @@ def _darglint_args(subparser):
         dest="dst_dir",
         type=Path,
         default=Path(),
-        help=
-        "The destination directory to copy the darglint configuration file to.",
+        help="The destination directory to copy the darglint configuration file to.",
     )
     option_pip_bundle(subparser)
 
 
 def _add_subparser_darglint(subparsers):
-    add_subparser(subparsers,
-                  "darglint",
-                  func=darglint,
-                  aliases=[],
-                  add_argument=_darglint_args)
+    add_subparser(
+        subparsers, "darglint", func=darglint, aliases=[], add_argument=_darglint_args
+    )
 
 
 def pytype(args):
@@ -259,18 +245,15 @@ def _pytype_args(subparser):
         dest="dst_dir",
         type=Path,
         default=Path(),
-        help=
-        "The destination directory to copy the pytype configuration file to.",
+        help="The destination directory to copy the pytype configuration file to.",
     )
     option_pip_bundle(subparser)
 
 
 def _add_subparser_pytype(subparsers):
-    add_subparser(subparsers,
-                  "pytype",
-                  func=pytype,
-                  aliases=[],
-                  add_argument=_pytype_args)
+    add_subparser(
+        subparsers, "pytype", func=pytype, aliases=[], add_argument=_pytype_args
+    )
 
 
 def nodejs(args):
@@ -312,11 +295,11 @@ def python(args):
         if is_macos():
             brew_install_safe(["python3"])
         if is_centos_series():
-            run_cmd(f"""{args.prefix} yum install {args.yes_s} \
-                python3 python3-devel python3-pip""")
             run_cmd(
-                f"{args.pip} install {args.user_s} {args.pip_option} setuptools"
+                f"""{args.prefix} yum install {args.yes_s} \
+                python3 python3-devel python3-pip"""
             )
+            run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} setuptools")
     if args.config:
         if not shutil.which("python"):
             python3 = shutil.which("python3")
@@ -338,11 +321,13 @@ def _python_args(subparser):
 
 
 def _add_subparser_python3(subparsers):
-    add_subparser(subparsers,
-                  "Python",
-                  func=python,
-                  aliases=["py", "py3", "python3"],
-                  add_argument=_python_args)
+    add_subparser(
+        subparsers,
+        "Python",
+        func=python,
+        aliases=["py", "py3", "python3"],
+        add_argument=_python_args
+    )
 
 
 def poetry(args):
@@ -363,8 +348,7 @@ def poetry(args):
         except:
             pass
         home_bin.symlink_to(poetry_bin)
-        logging.info("The poetry executable is symbolicly linked to %s",
-                     home_bin)
+        logging.info("The poetry executable is symbolicly linked to %s", home_bin)
         # make poetry always create virtual environment in the root directory of the project
         run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
         logging.info(
@@ -392,17 +376,16 @@ def _poetry_args(subparser):
         "--bash-completion",
         dest="bash_completion",
         action="store_true",
-        help="Configure Bash completion for poetry as well.")
+        help="Configure Bash completion for poetry as well."
+    )
     option_version(subparser, help="The version of Python Poetry to install.")
     option_python(subparser)
 
 
 def _add_subparser_poetry(subparsers):
-    add_subparser(subparsers,
-                  "Poetry",
-                  func=poetry,
-                  aliases=["pt"],
-                  add_argument=_poetry_args)
+    add_subparser(
+        subparsers, "Poetry", func=poetry, aliases=["pt"], add_argument=_poetry_args
+    )
 
 
 def pyjnius(args):
@@ -422,11 +405,13 @@ def _pyjnius_args(subparser):
 
 
 def _add_subparser_pyjnius(subparsers):
-    add_subparser(subparsers,
-                  "pyjnius",
-                  func=pyjnius,
-                  aliases=["pyj"],
-                  add_argument=_pyjnius_args)
+    add_subparser(
+        subparsers,
+        "pyjnius",
+        func=pyjnius,
+        aliases=["pyj"],
+        add_argument=_pyjnius_args
+    )
 
 
 def rustup(args):
@@ -465,10 +450,7 @@ def rustpython(args):
 
 
 def _add_subparser_rustpython(subparsers):
-    add_subparser(subparsers,
-                  "RustPython",
-                  func=rustpython,
-                  aliases=["rustpy"])
+    add_subparser(subparsers, "RustPython", func=rustpython, aliases=["rustpy"])
 
 
 def _git_ignore(args: Namespace) -> None:
@@ -511,8 +493,7 @@ def git_(args) -> None:
         # try to remove the file to avoid dead symbolic link problem
         remove_file_safe(gitconfig)
         shutil.copy2(BASE_DIR / "git/gitconfig", gitconfig)
-        logging.info("%s is copied to %s", BASE_DIR / "git/gitconfig",
-                     gitconfig)
+        logging.info("%s is copied to %s", BASE_DIR / "git/gitconfig", gitconfig)
         if is_macos():
             file = "/usr/local/etc/bash_completion.d/git-completion.bash"
             bashrc = f"\n# Git completion\n[ -f {file} ] &&  . {file}"
@@ -526,39 +507,44 @@ def git_(args) -> None:
 
 
 def _git_args(subparser):
-    subparser.add_argument("--proxy",
-                           dest="proxy",
-                           default="",
-                           help="Configure Git to use the specified proxy.")
+    subparser.add_argument(
+        "--proxy",
+        dest="proxy",
+        default="",
+        help="Configure Git to use the specified proxy."
+    )
     subparser.add_argument(
         "-d",
         "--dest-dir",
         dest="dst_dir",
         type=Path,
         default=Path(),
-        help=
-        "The destination directory to copy the YAPF configuration file to.",
+        help="The destination directory to copy the YAPF configuration file to.",
     )
-    subparser.add_argument("-p",
-                           "--python",
-                           dest="language",
-                           action="store_const",
-                           const="python",
-                           default="",
-                           help="Gitignore patterns for Python developing.")
-    subparser.add_argument("-j",
-                           "--java",
-                           dest="java",
-                           action="store_const",
-                           const="java",
-                           help="Gitignore patterns for Java developing.")
+    subparser.add_argument(
+        "-p",
+        "--python",
+        dest="language",
+        action="store_const",
+        const="python",
+        default="",
+        help="Gitignore patterns for Python developing."
+    )
+    subparser.add_argument(
+        "-j",
+        "--java",
+        dest="java",
+        action="store_const",
+        const="java",
+        help="Gitignore patterns for Java developing."
+    )
     subparser.add_argument(
         "-a",
         "--append",
         dest="append",
         action="store_true",
-        help=
-        "Append patterns to ignore into .gitignore rather than overwrite it.")
+        help="Append patterns to ignore into .gitignore rather than overwrite it."
+    )
 
 
 def _add_subparser_git(subparsers):
@@ -609,11 +595,13 @@ def _jpype1_args(subparser):
 
 
 def _add_subparser_jpype1(subparsers):
-    add_subparser(subparsers,
-                  "JPype1",
-                  func=jpype1,
-                  aliases=["jpype", "jp"],
-                  add_argument=_jpype1_args)
+    add_subparser(
+        subparsers,
+        "JPype1",
+        func=jpype1,
+        aliases=["jpype", "jp"],
+        add_argument=_jpype1_args
+    )
 
 
 def deno(args):
@@ -654,11 +642,9 @@ def _sphinx_args(subparser):
 
 
 def _add_subparser_sphinx(subparsers):
-    add_subparser(subparsers,
-                  "sphinx",
-                  func=sphinx,
-                  aliases=[],
-                  add_argument=_sphinx_args)
+    add_subparser(
+        subparsers, "sphinx", func=sphinx, aliases=[], add_argument=_sphinx_args
+    )
 
 
 def pyenv(args):
@@ -681,22 +667,26 @@ def pyenv(args):
                 """
             run_cmd(cmd)
     if args.config:
-        update_file(HOME / ".bashrc",
-                    append=[
-                        "\n\n# pyenv",
-                        'export PATH="$HOME/.pyenv/bin:$PATH"',
-                        'eval "$(pyenv init -)"',
-                        'eval "$(pyenv virtualenv-init -)"\n',
-                    ])
+        update_file(
+            HOME / ".bashrc",
+            append=[
+                "\n\n# pyenv",
+                'export PATH="$HOME/.pyenv/bin:$PATH"',
+                'eval "$(pyenv init -)"',
+                'eval "$(pyenv virtualenv-init -)"\n',
+            ]
+        )
     if args.uninstall:
         run_cmd(f"rm -rf {HOME}/.pyenv/")
-        update_file(HOME / ".bashrc",
-                    exact=[
-                        ("# pyenv", ""),
-                        ('export PATH="$HOME/.pyenv/bin:$PATH"\n', ""),
-                        ('eval "$(pyenv init -)"\n', ""),
-                        ('eval "$(pyenv virtualenv-init -)"\n', ""),
-                    ])
+        update_file(
+            HOME / ".bashrc",
+            exact=[
+                ("# pyenv", ""),
+                ('export PATH="$HOME/.pyenv/bin:$PATH"\n', ""),
+                ('eval "$(pyenv init -)"\n', ""),
+                ('eval "$(pyenv virtualenv-init -)"\n', ""),
+            ]
+        )
 
 
 def _pyenv_args(subparser):
@@ -758,16 +748,19 @@ def pg_formatter(args):
     """
     if args.install:
         with tempfile.TemporaryDirectory() as temp_dir:
-            Repo.clone_from("https://github.com/darold/pgFormatter.git",
-                            temp_dir)
+            Repo.clone_from("https://github.com/darold/pgFormatter.git", temp_dir)
             if is_win():
-                run_cmd(f"""cd /d {temp_dir} \
+                run_cmd(
+                    f"""cd /d {temp_dir} \
                         && perl Makefile.PL \
-                        && make && {args.prefix} make install""")
+                        && make && {args.prefix} make install"""
+                )
             else:
-                run_cmd(f"""cd {temp_dir} \
+                run_cmd(
+                    f"""cd {temp_dir} \
                         && perl Makefile.PL \
-                        && make && {args.prefix} make install""")
+                        && make && {args.prefix} make install"""
+                )
     if args.config:
         pass
     if args.uninstall:

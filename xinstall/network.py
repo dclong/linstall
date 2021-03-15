@@ -33,9 +33,7 @@ def ssh_server(args) -> None:
             )
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"{args.prefix} apt-get purge {args.yes_s} openssh-server fail2ban"
-            )
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} openssh-server fail2ban")
         elif is_macos():
             pass
         elif is_centos_series():
@@ -95,8 +93,7 @@ def ssh_client(args) -> None:
                 path.chmod(0o600)
             else:
                 path.chmod(0o700)
-        logging.info(
-            "The permissions of ~/.ssh and its contents are corrected set.")
+        logging.info("The permissions of ~/.ssh and its contents are corrected set.")
 
 
 def _add_subparser_ssh_client(subparsers):
@@ -135,10 +132,9 @@ def proxychains(args) -> None:
 
 
 def _add_subparser_proxychains(subparsers):
-    add_subparser(subparsers,
-                  "ProxyChains",
-                  func=proxychains,
-                  aliases=["pchains", "pc"])
+    add_subparser(
+        subparsers, "ProxyChains", func=proxychains, aliases=["pchains", "pc"]
+    )
 
 
 def dryscrape(args):
@@ -171,11 +167,13 @@ def _dryscrape_args(subparser) -> None:
 
 
 def _add_subparser_dryscrape(subparsers):
-    add_subparser(subparsers,
-                  "dryscrape",
-                  func=dryscrape,
-                  aliases=[],
-                  add_argument=_dryscrape_args)
+    add_subparser(
+        subparsers,
+        "dryscrape",
+        func=dryscrape,
+        aliases=[],
+        add_argument=_dryscrape_args
+    )
 
 
 def download_tools(args: Namespace):
@@ -186,17 +184,14 @@ def download_tools(args: Namespace):
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            run_cmd(
-                f"{args.prefix} apt-get install {args.yes_s} wget curl aria2",
-            )
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} wget curl aria2", )
         elif is_macos():
             brew_install_safe(["wget", "curl", "aria2"])
         elif is_centos_series():
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"{args.prefix} apt-get purge {args.yes_s} wget curl aria2")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} wget curl aria2")
         elif is_macos():
             run_cmd("brew uninstall wget curl aria2")
         elif is_centos_series():
@@ -204,10 +199,9 @@ def download_tools(args: Namespace):
 
 
 def _add_subparser_download_tools(subparsers):
-    add_subparser(subparsers,
-                  "download tools",
-                  func=download_tools,
-                  aliases=["dl", "dlt"])
+    add_subparser(
+        subparsers, "download tools", func=download_tools, aliases=["dl", "dlt"]
+    )
 
 
 def iptables(args: Namespace):
@@ -248,11 +242,13 @@ def _sshuttle_args(subparser):
 
 
 def _add_subparser_sshuttle(subparsers):
-    add_subparser(subparsers,
-                  "sshuttle",
-                  func=sshuttle,
-                  aliases=["sshu"],
-                  add_argument=_sshuttle_args)
+    add_subparser(
+        subparsers,
+        "sshuttle",
+        func=sshuttle,
+        aliases=["sshu"],
+        add_argument=_sshuttle_args
+    )
 
 
 def _add_subparser_network(subparsers):

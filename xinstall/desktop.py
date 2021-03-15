@@ -28,19 +28,23 @@ def nomachine(args):
 
 
 def _nomachine_args(subparser):
-    subparser.add_argument("-v",
-                           "--version",
-                           dest="version",
-                           default="6.9.2_1",
-                           help="The version of NoMachine to install.")
+    subparser.add_argument(
+        "-v",
+        "--version",
+        dest="version",
+        default="6.9.2_1",
+        help="The version of NoMachine to install."
+    )
 
 
 def _add_subparser_nomachine(subparsers):
-    add_subparser(subparsers,
-                  "NoMachine",
-                  func=nomachine,
-                  aliases=["nm", "nx"],
-                  add_argument=_nomachine_args)
+    add_subparser(
+        subparsers,
+        "NoMachine",
+        func=nomachine,
+        aliases=["nm", "nx"],
+        add_argument=_nomachine_args
+    )
 
 
 def lxqt(args):
@@ -82,11 +86,13 @@ def _pygetwindow_args(subparser):
 
 
 def _add_subparser_pygetwindow(subparsers):
-    add_subparser(subparsers,
-                  "pygetwindow",
-                  func=pygetwindow,
-                  aliases=["pgw", "getwindow", "gwin"],
-                  add_argument=_pygetwindow_args)
+    add_subparser(
+        subparsers,
+        "pygetwindow",
+        func=pygetwindow,
+        aliases=["pgw", "getwindow", "gwin"],
+        add_argument=_pygetwindow_args
+    )
 
 
 def _add_subparser_desktop(subparsers):

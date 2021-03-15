@@ -20,19 +20,16 @@ def virtualbox(args) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            run_cmd(
-                f"{args.prefix} apt-get install {args.yes_s} virtualbox-qt", )
+            run_cmd(f"{args.prefix} apt-get install {args.yes_s} virtualbox-qt", )
         elif is_macos():
             run_cmd("brew cask install virtualbox virtualbox-extension-pack")
         elif is_centos_series():
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"{args.prefix} apt-get purge {args.yes_s} virtualbox-qt", )
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} virtualbox-qt", )
         elif is_macos():
-            run_cmd(
-                "brew cask uninstall virtualbox virtualbox-extension-pack", )
+            run_cmd("brew cask uninstall virtualbox virtualbox-extension-pack", )
         elif is_centos_series():
             pass
     if args.config:
@@ -63,19 +60,17 @@ def docker(args):
     if args.config:
         if args.user_to_docker:
             if is_ubuntu_debian():
-                run_cmd(
-                    f"{args.prefix} gpasswd -a {args.user_to_docker} docker")
+                run_cmd(f"{args.prefix} gpasswd -a {args.user_to_docker} docker")
                 logging.warning(
                     "Please run the command 'newgrp docker' or logout/login"
-                    " to make the group 'docker' effective!")
+                    " to make the group 'docker' effective!"
+                )
             elif is_macos():
                 cmd = f"{args.prefix} dseditgroup -o edit -a {args.user_to_docker} -t user staff"
                 run_cmd(cmd)
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"{args.prefix} apt-get purge {args.yes_s} docker docker-compose",
-            )
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} docker docker-compose", )
         elif is_macos():
             run_cmd(
                 "brew uninstall docker docker-completion docker-compose docker-compose-completion",
@@ -94,11 +89,13 @@ def _docker_args(subparser):
 
 
 def _add_subparser_docker(subparsers):
-    add_subparser(subparsers,
-                  "Docker",
-                  func=docker,
-                  add_argument=_docker_args,
-                  aliases=["dock", "dk"])
+    add_subparser(
+        subparsers,
+        "Docker",
+        func=docker,
+        add_argument=_docker_args,
+        aliases=["dock", "dk"]
+    )
 
 
 def kubernetes(args):
@@ -108,7 +105,8 @@ def kubernetes(args):
         if is_ubuntu_debian():
             run_cmd(
                 f"""curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg \
-                    | {args.prefix} apt-key add -""", )
+                    | {args.prefix} apt-key add -""",
+            )
             run_cmd(
                 f'''echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" \
                     | {args.prefix} tee -a /etc/apt/sources.list.d/kubernetes.list''',
@@ -137,7 +135,8 @@ def _minikube_linux(args):
     run_cmd(
         f"""curl -L {url} -o /tmp/minikube-linux-amd64 \
             && {args.prefix} apt-get install {args.yes_s} \
-                /tmp/minikube-linux-amd64 /usr/local/bin/minikube""", )
+                /tmp/minikube-linux-amd64 /usr/local/bin/minikube""",
+    )
     print("VT-x/AMD-v virtualization must be enabled in BIOS.")
 
 

@@ -13,6 +13,7 @@ from .jupyter import _add_subparser_jupyter
 from .virtualization import _add_subparser_virtualization
 from .network import _add_subparser_network
 from .desktop import _add_subparser_desktop
+
 __version__ = "0.35.0"
 
 
@@ -24,9 +25,8 @@ def version(args):  # pylint: disable=W0613
 
 def _add_subparser_version(subparsers):
     subparser = subparsers.add_parser(
-        "version",
-        aliases=["ver", "v"],
-        help="Print version of the xinstall package.")
+        "version", aliases=["ver", "v"], help="Print version of the xinstall package."
+    )
     subparser.set_defaults(func=version)
     return subparser
 
@@ -40,27 +40,31 @@ def parse_args(args=None, namespace=None) -> Namespace:
     :return: A namespace object containing parsed options.
     """
     parser = ArgumentParser(
-        description="Easy installation and configuration for Unix/Linux")
-    parser.add_argument("-l",
-                        "--level",
-                        dest="level",
-                        default="INFO",
-                        help="The level of logging.")
+        description="Easy installation and configuration for Unix/Linux"
+    )
+    parser.add_argument(
+        "-l", "--level", dest="level", default="INFO", help="The level of logging."
+    )
     parser.add_argument(
         "-y",
         "--yes",
         dest="yes",
         action="store_true",
-        help="Automatical yes (default no) to prompt questions.")
-    parser.add_argument("--prefix",
-                        dest="prefix",
-                        default="",
-                        help="The prefix command (e.g., sudo) to use.")
-    parser.add_argument("--sudo",
-                        dest="prefix",
-                        action="store_const",
-                        const="sudo",
-                        help="The prefix command (e.g., sudo) to use.")
+        help="Automatical yes (default no) to prompt questions."
+    )
+    parser.add_argument(
+        "--prefix",
+        dest="prefix",
+        default="",
+        help="The prefix command (e.g., sudo) to use."
+    )
+    parser.add_argument(
+        "--sudo",
+        dest="prefix",
+        action="store_const",
+        const="sudo",
+        help="The prefix command (e.g., sudo) to use."
+    )
     subparsers = parser.add_subparsers(dest="sub_cmd", help="Sub commands.")
     _add_subparser_version(subparsers)
     _add_subparser_shell(subparsers)
@@ -81,8 +85,9 @@ def parse_args(args=None, namespace=None) -> Namespace:
     if USER == "root" or is_win():
         args.prefix = ""
     if "pip_option" in args:
-        args.pip_option = " ".join(f"--{option}"
-                                   for option in args.pip_option.split(","))
+        args.pip_option = " ".join(
+            f"--{option}" for option in args.pip_option.split(",")
+        )
         args.pip_install = f"{args.pip} install {args.user_s} {args.pip_option}"
     return args
 
@@ -94,7 +99,8 @@ def main():
     logging.basicConfig(
         format=
         "%(asctime)s | %(module)s.%(funcName)s: %(lineno)s | %(levelname)s: %(message)s",
-        level=getattr(logging, args.level.upper()))
+        level=getattr(logging, args.level.upper())
+    )
     logging.debug("Command-line options:\n%s", args)
     args.func(args)
 

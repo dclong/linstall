@@ -5,10 +5,11 @@ from typing import Union
 import os
 import shutil
 import re
-from .utils import (USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, is_ubuntu_debian,
-                    is_centos_series, update_apt_source, brew_install_safe,
-                    is_macos, run_cmd, add_subparser, intellij_idea_plugin,
-                    option_pip_bundle)
+from .utils import (
+    USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, is_ubuntu_debian, is_centos_series,
+    update_apt_source, brew_install_safe, is_macos, run_cmd, add_subparser,
+    intellij_idea_plugin, option_pip_bundle
+)
 
 
 def vim(args) -> None:
@@ -67,15 +68,14 @@ def _neovim_args(subparser) -> None:
         "--ppa",
         dest="ppa",
         action="store_true",
-        help="Install the unstable version of NeoVim from PPA.")
+        help="Install the unstable version of NeoVim from PPA."
+    )
 
 
 def _add_subparser_neovim(subparsers) -> None:
-    add_subparser(subparsers,
-                  "NeoVim",
-                  func=neovim,
-                  aliases=["nvim"],
-                  add_argument=_neovim_args)
+    add_subparser(
+        subparsers, "NeoVim", func=neovim, aliases=["nvim"], add_argument=_neovim_args
+    )
 
 
 def _svim_true_color(true_color: Union[bool, None]) -> None:
@@ -119,9 +119,7 @@ def spacevim(args) -> None:
             # npm install -g bash-language-server javascript-typescript-langserver
             run_cmd(cmd)
     if args.uninstall:
-        run_cmd(
-            "curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall"
-        )
+        run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall")
     if args.config:
         _svim_gen_config()
         _svim_true_color(args.true_colors)
@@ -140,26 +138,31 @@ def _spacevim_args(subparser) -> None:
         dest="true_colors",
         action="store_true",
         default=None,
-        help="enable true color (default true) for SpaceVim.")
+        help="enable true color (default true) for SpaceVim."
+    )
     subparser.add_argument(
         "--disable-true-colors",
         dest="true_colors",
         action="store_false",
-        help="disable true color (default true) for SpaceVim.")
+        help="disable true color (default true) for SpaceVim."
+    )
     subparser.add_argument(
         "--no-lsp",
         dest="no_lsp",
         action="store_true",
-        help="disable true color (default true) for SpaceVim.")
+        help="disable true color (default true) for SpaceVim."
+    )
     option_pip_bundle(subparser)
 
 
 def _add_subparser_spacevim(subparsers) -> None:
-    add_subparser(subparsers,
-                  "SpaceVim",
-                  func=spacevim,
-                  aliases=["svim"],
-                  add_argument=_spacevim_args)
+    add_subparser(
+        subparsers,
+        "SpaceVim",
+        func=spacevim,
+        aliases=["svim"],
+        add_argument=_spacevim_args
+    )
 
 
 def bash_lsp(args) -> None:
@@ -173,8 +176,7 @@ def bash_lsp(args) -> None:
         toml = HOME / ".SpaceVim.d/init.toml"
         with toml.open("r") as fin:
             lines = [
-                '  "sh",'
-                if re.search(r"^\s*#\s*(\"|')sh(\"|'),\s*$", line) else line
+                '  "sh",' if re.search(r"^\s*#\s*(\"|')sh(\"|'),\s*$", line) else line
                 for line in fin
             ]
         with toml.open("w") as fout:
@@ -220,8 +222,7 @@ def intellij_idea(args) -> None:
             pass
     if args.uninstall:
         if is_ubuntu_debian():
-            run_cmd(
-                f"{args.prefix} apt-get purge {args.yes_s} intellij-idea-ce")
+            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} intellij-idea-ce")
         elif is_macos():
             run_cmd("brew cask uninstall intellij-idea-ce")
         elif is_centos_series():
@@ -259,20 +260,24 @@ def visual_studio_code(args) -> None:
 
 
 def _visual_studio_code_args(subparser) -> None:
-    subparser.add_argument("--user-dir",
-                           "-d",
-                           dest="user_dir",
-                           default="",
-                           help="Configuration directory.")
+    subparser.add_argument(
+        "--user-dir",
+        "-d",
+        dest="user_dir",
+        default="",
+        help="Configuration directory."
+    )
     option_pip_bundle(subparser)
 
 
 def _add_subparser_visual_studio_code(subparsers) -> None:
-    add_subparser(subparsers,
-                  "Visual Studio Code",
-                  func=visual_studio_code,
-                  aliases=["vscode", "code"],
-                  add_argument=_visual_studio_code_args)
+    add_subparser(
+        subparsers,
+        "Visual Studio Code",
+        func=visual_studio_code,
+        aliases=["vscode", "code"],
+        add_argument=_visual_studio_code_args
+    )
 
 
 def intellij_idea_scala(args) -> None:
@@ -283,10 +288,9 @@ def intellij_idea_scala(args) -> None:
 
 
 def _add_subparser_intellij_idea_scala(subparsers) -> None:
-    add_subparser(subparsers,
-                  "IntelliJ IDEA",
-                  func=intellij_idea,
-                  aliases=["intellij", "idea"])
+    add_subparser(
+        subparsers, "IntelliJ IDEA", func=intellij_idea, aliases=["intellij", "idea"]
+    )
 
 
 def _add_subparser_ide(subparsers):

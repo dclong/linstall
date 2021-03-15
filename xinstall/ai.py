@@ -2,8 +2,9 @@
 """
 from pathlib import Path
 import logging
-from .utils import (HOME, USER, run_cmd, add_subparser, is_linux, is_macos,
-                    option_pip_bundle)
+from .utils import (
+    HOME, USER, run_cmd, add_subparser, is_linux, is_macos, option_pip_bundle
+)
 
 
 def kaggle(args):
@@ -20,8 +21,10 @@ def kaggle(args):
             kaggle_home_host.mkdir(exist_ok=True)
             try:
                 kaggle_home.symlink_to(kaggle_home_host)
-                logging.info("Symbolic link %s pointing to %s is created.",
-                             kaggle_home, kaggle_home_host)
+                logging.info(
+                    "Symbolic link %s pointing to %s is created.", kaggle_home,
+                    kaggle_home_host
+                )
             except FileExistsError:
                 pass
         else:
@@ -36,11 +39,9 @@ def _kaggle_args(subparser):
 
 
 def _add_subparser_kaggle(subparsers):
-    add_subparser(subparsers,
-                  "kaggle",
-                  func=kaggle,
-                  aliases=[],
-                  add_argument=_kaggle_args)
+    add_subparser(
+        subparsers, "kaggle", func=kaggle, aliases=[], add_argument=_kaggle_args
+    )
 
 
 def lightgbm(args):
@@ -57,11 +58,9 @@ def _lightgbm_args(subparser):
 
 
 def _add_subparser_lightgbm(subparsers):
-    add_subparser(subparsers,
-                  "lightgbm",
-                  func=lightgbm,
-                  aliases=[],
-                  add_argument=_lightgbm_args)
+    add_subparser(
+        subparsers, "lightgbm", func=lightgbm, aliases=[], add_argument=_lightgbm_args
+    )
 
 
 def pytorch(args):
@@ -95,16 +94,15 @@ def _pytorch_args(subparser):
         "--cuda",
         dest="cuda",
         default="",
-        help="The version of CUDA. If not specified, the CPU version is used.")
+        help="The version of CUDA. If not specified, the CPU version is used."
+    )
     option_pip_bundle(subparser)
 
 
 def _add_subparser_pytorch(subparsers):
-    add_subparser(subparsers,
-                  "PyTorch",
-                  func=pytorch,
-                  aliases=[],
-                  add_argument=_pytorch_args)
+    add_subparser(
+        subparsers, "PyTorch", func=pytorch, aliases=[], add_argument=_pytorch_args
+    )
 
 
 def autogluon(args):
@@ -182,11 +180,13 @@ def _computer_vision_args(subparser):
 
 
 def _add_subparser_computer_vision(subparsers):
-    add_subparser(subparsers,
-                  "computer_vision",
-                  func=computer_vision,
-                  aliases=["vision", "cv"],
-                  add_argument=_computer_vision_args)
+    add_subparser(
+        subparsers,
+        "computer_vision",
+        func=computer_vision,
+        aliases=["vision", "cv"],
+        add_argument=_computer_vision_args
+    )
 
 
 def nlp(args):
