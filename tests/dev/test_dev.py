@@ -1,8 +1,11 @@
 """Test the dev module.
 """
+from pathlib import Path
+import shutil
 import subprocess as sp
 from xinstall.utils import is_ubuntu_debian, update_apt_source, run_cmd
 
+BASE_DIR = Path(__file__).resolve().parent
 if is_ubuntu_debian():
     update_apt_source(prefix="sudo", seconds=0)
 
@@ -60,12 +63,18 @@ def test_pg_formatter():
 def test_pylint():
     """Test installing pylint.
     """
-    cmd = "xinstall pylint -ic"
+    dir_ = Path("/tmp/pylint")
+    dir_.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(BASE_DIR / "pyproject.toml", dir_)
+    cmd = f"xinstall pylint -ic -d {dir_}"
     sp.run(cmd, shell=True, check=True)
 
 
 def test_yapf():
     """Test installing yapf.
     """
-    cmd = "xinstall yapf -ic"
+    dir_ = Path("/tmp/yapf")
+    dir_.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(BASE_DIR / "pyproject.toml", dir_)
+    cmd = f"xinstall yapf -ic -d {dir_}"
     sp.run(cmd, shell=True, check=True)

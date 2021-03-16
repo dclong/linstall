@@ -25,6 +25,7 @@ from .utils import (
     option_pip_bundle,
     option_python,
     update_file,
+    update_dict,
 )
 from .network import ssh_client
 
@@ -90,7 +91,7 @@ def yapf(args):
                 dic_des = toml.load(fin)
         else:
             dic_des = {}
-        dic_des.update(dic_src)
+        update_dict(dic_des, dic_src, recursive=True)
         with des_file.open("w") as fout:
             toml.dump(dic_des, fout)
         logging.info("yapf is configured via %s.", des_file)
@@ -134,7 +135,7 @@ def pylint(args):
                 dic_des = toml.load(fin)
         else:
             dic_des = {}
-        dic_des.update(dic_src)
+        update_dict(dic_des, dic_src, recursive=True)
         with des_file.open("w") as fout:
             toml.dump(dic_des, fout)
         logging.info("pylint is configured via %s.", des_file)
