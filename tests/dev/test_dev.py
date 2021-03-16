@@ -2,6 +2,7 @@
 """
 import subprocess as sp
 from xinstall.utils import is_ubuntu_debian, update_apt_source, run_cmd
+
 if is_ubuntu_debian():
     update_apt_source(prefix="sudo", seconds=0)
 
@@ -54,3 +55,17 @@ def test_pg_formatter():
     """
     cmd = "xinstall --sudo pgfmt -ic"
     run_cmd(cmd)
+
+
+def test_pylint():
+    """Test installing pylint.
+    """
+    cmd = "xinstall pylint -ic"
+    sp.run(cmd, shell=True, check=True)
+
+
+def test_yapf():
+    """Test installing yapf.
+    """
+    cmd = "xinstall yapf -ic"
+    sp.run(cmd, shell=True, check=True)
