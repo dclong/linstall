@@ -6,9 +6,13 @@ import subprocess as sp
 from xinstall.utils import is_ubuntu_debian, update_apt_source, run_cmd
 
 BASE_DIR = Path(__file__).resolve().parent
-if is_ubuntu_debian():
-    update_apt_source(prefix="sudo", seconds=0)
 
+
+def setup_module():
+    """Setup for testing the dev module.
+    """
+    if is_ubuntu_debian():
+        update_apt_source(prefix="sudo", seconds=0)
 
 def test_git():
     """Test installing and configuring Git.

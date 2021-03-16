@@ -82,7 +82,7 @@ def yapf(args):
         run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} yapf")
     if args.config:
         # configure yapf formatting via pyproject.toml
-        src_file = BASE_DIR / "pylint/pyproject.toml"
+        src_file = BASE_DIR / "yapf/pyproject.toml"
         dic_src = tomlkit.loads(src_file.read_text())
         des_file = args.dst_dir / "pyproject.toml"
         if des_file.is_file():
