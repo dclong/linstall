@@ -429,3 +429,17 @@ def update_file(
         if not exist_skip or append not in text:
             text += append
     path.write_text(text)
+
+
+def update_dict(dict1, dict2, recursive: bool = False):
+    """Update dict1 using dict2.
+    """
+    if not recursive:
+        dict1.update(dict2)
+        return
+    for key, val in dict2.items():
+        if not isinstance(val, dict
+                         ) or key not in dict1 or not isinstance(dict1[key], dict):
+            dict1[key] = val
+            continue
+        update_dict(dict1[key], val)
