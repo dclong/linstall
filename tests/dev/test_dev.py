@@ -14,6 +14,7 @@ def setup_module():
     if is_ubuntu_debian():
         update_apt_source(prefix="sudo", seconds=0)
 
+
 def test_git():
     """Test installing and configuring Git.
     """
@@ -67,9 +68,16 @@ def test_pg_formatter():
 def test_pylint():
     """Test installing pylint.
     """
-    dir_ = Path("/tmp/pylint")
+    # test on 1.toml
+    dir_ = Path("/tmp/pylint/1")
     dir_.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(BASE_DIR / "pyproject.toml", dir_)
+    shutil.copy2(BASE_DIR / "1.toml", dir_ / "pyproject.toml")
+    cmd = f"xinstall pylint -ic -d {dir_}"
+    sp.run(cmd, shell=True, check=True)
+    # test on 2.toml
+    dir_ = Path("/tmp/pylint/2")
+    dir_.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(BASE_DIR / "2.toml", dir_ / "pyproject.toml")
     cmd = f"xinstall pylint -ic -d {dir_}"
     sp.run(cmd, shell=True, check=True)
 
@@ -77,8 +85,15 @@ def test_pylint():
 def test_yapf():
     """Test installing yapf.
     """
-    dir_ = Path("/tmp/yapf")
+    # test on 1.toml
+    dir_ = Path("/tmp/yapf/1")
     dir_.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(BASE_DIR / "pyproject.toml", dir_)
+    shutil.copy2(BASE_DIR / "1.toml", dir_ / "pyproject.toml")
+    cmd = f"xinstall yapf -ic -d {dir_}"
+    sp.run(cmd, shell=True, check=True)
+    # test on 2.toml
+    dir_ = Path("/tmp/yapf/2")
+    dir_.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(BASE_DIR / "2.toml", dir_ / "pyproject.toml")
     cmd = f"xinstall yapf -ic -d {dir_}"
     sp.run(cmd, shell=True, check=True)
