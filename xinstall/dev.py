@@ -92,7 +92,7 @@ def yapf(args):
             dic_des = {}
         dic_des.update(dic_src)
         with des_file.open("w") as fout:
-            toml.dump(des_file, fout)
+            toml.dump(dic_des, fout)
         logging.info("yapf is configured via %s.", des_file)
         # configure yapf ignore
         src_file = BASE_DIR / "yapf/yapfignore"
@@ -136,7 +136,7 @@ def pylint(args):
             dic_des = {}
         dic_des.update(dic_src)
         with des_file.open("w") as fout:
-            toml.dump(des_file, fout)
+            toml.dump(dic_des, fout)
         logging.info("pylint is configured via %s.", des_file)
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall pylint")
