@@ -14,7 +14,7 @@ from .virtualization import _add_subparser_virtualization
 from .network import _add_subparser_network
 from .desktop import _add_subparser_desktop
 
-__version__ = "0.35.0"
+__version__ = "0.35.1"
 
 
 def version(args):  # pylint: disable=W0613
