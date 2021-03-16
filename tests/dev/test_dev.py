@@ -76,7 +76,11 @@ def _comp_toml_cmd(src_toml, cmd) -> bool:
     shutil.copy2(src_toml, dir_ / "pyproject.toml")
     cmd = f"xinstall {cmd} -ic -d {dir_}"
     sp.run(cmd, shell=True, check=True)
-    diff = DeepDiff(tomlkit.loads(src_toml.read_text()), tomlkit.loads((dir_ / "pyproject.toml").read_text()), ignore_order=True)
+    diff = DeepDiff(
+        tomlkit.loads(src_toml.read_text()),
+        tomlkit.loads((dir_ / "pyproject.toml").read_text()),
+        ignore_order=True
+    )
     print(diff)
     return not diff
 
