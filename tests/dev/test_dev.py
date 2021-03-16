@@ -65,35 +65,30 @@ def test_pg_formatter():
     run_cmd(cmd)
 
 
+def _copy_toml(src_toml, des_dir):
+    des_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src_toml, des_dir / "pyproject.toml")
+
+
+def _comp_toml_cmd(src_toml, cmd) -> bool:
+    """Compare TOML files after running a xinstall sub-command.
+    """
+    # test on 1.toml
+    dir_ = BASE_DIR / "output" / cmd / src_toml
+    _copy_toml(src_toml, dir_)
+    cmd = f"xinstall {cmd} -ic -d {dir_}"
+    sp.run(cmd, shell=True, check=True)
+    return src_toml.read_text() == (dir_ / "pyproject.toml").read_text()
+    
 def test_pylint():
     """Test installing pylint.
     """
-    # test on 1.toml
-    dir_ = Path("/tmp/pylint/1")
-    dir_.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(BASE_DIR / "1.toml", dir_ / "pyproject.toml")
-    cmd = f"xinstall pylint -ic -d {dir_}"
-    sp.run(cmd, shell=True, check=True)
-    # test on 2.toml
-    dir_ = Path("/tmp/pylint/2")
-    dir_.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(BASE_DIR / "2.toml", dir_ / "pyproject.toml")
-    cmd = f"xinstall pylint -ic -d {dir_}"
-    sp.run(cmd, shell=True, check=True)
+    assert _comp_toml_cmd(BASE_DIR / "1.toml", "pylint")
+    assert not _comp_toml_cmd(BASE_DIR / "2.toml", "pylint")
 
 
 def test_yapf():
     """Test installing yapf.
     """
-    # test on 1.toml
-    dir_ = Path("/tmp/yapf/1")
-    dir_.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(BASE_DIR / "1.toml", dir_ / "pyproject.toml")
-    cmd = f"xinstall yapf -ic -d {dir_}"
-    sp.run(cmd, shell=True, check=True)
-    # test on 2.toml
-    dir_ = Path("/tmp/yapf/2")
-    dir_.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(BASE_DIR / "2.toml", dir_ / "pyproject.toml")
-    cmd = f"xinstall yapf -ic -d {dir_}"
-    sp.run(cmd, shell=True, check=True)
+    assert _comp_toml_cmd(BASE_DIR / "1.toml", "yapf")
+    assert not _comp_toml_cmd(BASE_DIR / "2.toml", "yapf")
