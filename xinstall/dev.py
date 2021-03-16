@@ -6,7 +6,7 @@ import shutil
 from pathlib import Path
 import tempfile
 from argparse import Namespace
-import toml
+import tomlkit
 from git import Repo
 from .utils import (
     HOME,
@@ -83,17 +83,14 @@ def yapf(args):
     if args.config:
         # configure yapf formatting via pyproject.toml
         src_file = BASE_DIR / "pylint/pyproject.toml"
-        with src_file.open("r") as fin:
-            dic_src = toml.load(fin)
+        dic_src = tomlkit.loads(src_file.read_text())
         des_file = args.dst_dir / "pyproject.toml"
         if des_file.is_file():
-            with des_file.open("r") as fin:
-                dic_des = toml.load(fin)
+            dic_des = tomlkit.loads(des_file.read_text())
         else:
             dic_des = {}
         update_dict(dic_des, dic_src, recursive=True)
-        with des_file.open("w") as fout:
-            toml.dump(dic_des, fout)
+        des_file.write_text(tomlkit.dumps(dic_des))
         logging.info("yapf is configured via %s.", des_file)
         # configure yapf ignore
         src_file = BASE_DIR / "yapf/yapfignore"
@@ -127,17 +124,14 @@ def pylint(args):
         run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} pylint")
     if args.config:
         src_file = BASE_DIR / "pylint/pyproject.toml"
-        with src_file.open("r") as fin:
-            dic_src = toml.load(fin)
+        dic_src = tomlkit.loads(src_file.read_text())
         des_file = args.dst_dir / "pyproject.toml"
         if des_file.is_file():
-            with des_file.open("r") as fin:
-                dic_des = toml.load(fin)
+            dic_des = tomlkit.loads(des_file.read_text())
         else:
             dic_des = {}
         update_dict(dic_des, dic_src, recursive=True)
-        with des_file.open("w") as fout:
-            toml.dump(dic_des, fout)
+        des_file.write_text(tomlkit.dumps(dic_des))
         logging.info("pylint is configured via %s.", des_file)
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall pylint")
