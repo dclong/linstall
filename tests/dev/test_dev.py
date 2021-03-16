@@ -79,7 +79,8 @@ def _comp_toml_cmd(src_toml, cmd) -> bool:
     cmd = f"xinstall {cmd} -ic -d {dir_}"
     sp.run(cmd, shell=True, check=True)
     return src_toml.read_text() == (dir_ / "pyproject.toml").read_text()
-    
+
+
 def test_pylint():
     """Test installing pylint.
     """
