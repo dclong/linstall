@@ -3,6 +3,8 @@
 from pathlib import Path
 import shutil
 import subprocess as sp
+import tomlkit
+from deepdiff import DeepDiff
 from xinstall.utils import is_ubuntu_debian, update_apt_source, run_cmd
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -65,20 +67,18 @@ def test_pg_formatter():
     run_cmd(cmd)
 
 
-def _copy_toml(src_toml, des_dir):
-    des_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(src_toml, des_dir / "pyproject.toml")
-
-
 def _comp_toml_cmd(src_toml, cmd) -> bool:
     """Compare TOML files after running a xinstall sub-command.
     """
     # test on 1.toml
-    dir_ = BASE_DIR / "output" / cmd / src_toml
-    _copy_toml(src_toml, dir_)
+    dir_ = BASE_DIR / "output" / cmd / src_toml.name
+    dir_.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src_toml, dir_ / "pyproject.toml")
     cmd = f"xinstall {cmd} -ic -d {dir_}"
     sp.run(cmd, shell=True, check=True)
-    return src_toml.read_text() == (dir_ / "pyproject.toml").read_text()
+    diff = DeepDiff(tomlkit.loads(src_toml.read_text()), tomlkit.loads((dir_ / "pyproject.toml").read_text()), ignore_order=True)
+    print(diff)
+    return not diff
 
 
 def test_pylint():

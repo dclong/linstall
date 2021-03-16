@@ -35,8 +35,8 @@ ignored-modules = "pyspark.sql.functions"
 [tool.pylint.typecheck]
 ignored-classes = "Namespace"
 
-[tool.pylint.message_control]
-disable = "C0103,C0200,C0301,C0302,C0303,C0330,R0902,R0903,R0904,R0911,R0912,R0913,W0621,W0622,W0702,W0703,W1116,W9016"
+[tool.pylint.messages_control]
+disable = "C0103,C0200,C0301,C0302,C0303,C0330,R0902,R0903,R0904,R0911,R0912,R0913,R0914,W0621,W0622,W0702,W0703,W1116,W9012,W9016"
 
 [tool.yapf]
 based_on_style = "facebook"
