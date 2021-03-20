@@ -27,17 +27,23 @@ def pdftotext(args):
             brew_install_safe(["pkg-config", "poppler"])
             run_cmd("{args.pip} install {args.user_s} {args.pip_option} pdftotext")
         if is_centos_series():
-            run_cmd(f"""{args.prefix} yum install {args.yes_s} gcc-c++ pkgconfig poppler-cpp-devel \
+            run_cmd(
+                f"""{args.prefix} yum install {args.yes_s} gcc-c++ pkgconfig poppler-cpp-devel \
                     && {args.pip} install {args.user_s} {args.pip_option} pdftotext
-                    """)
+                    """
+            )
     if args.uninstall:
-        run_cmd(
-            f"{args.pip} uninstall pdftotext"
-        )
+        run_cmd(f"{args.pip} uninstall pdftotext")
 
 
 def _add_subparser_pdftotext(subparsers):
-    add_subparser(subparsers, "pdftotext", func=pdftotext, aliases=["ptt", "p2t"], add_argument=_pdftotext_args)
+    add_subparser(
+        subparsers,
+        "pdftotext",
+        func=pdftotext,
+        aliases=["ptt", "p2t"],
+        add_argument=_pdftotext_args
+    )
 
 
 def _pdftotext_args(subparser):
