@@ -167,7 +167,7 @@ def computer_vision(args):
                         libopenjp2-7-dev liblcms2-dev libjxr-dev liblz4-dev \
                         liblzma-dev libpng-dev libsnappy-dev libtiff-dev \
                         libwebp-dev libzopfli-dev libzstd-dev \
-                    && {args.pip} install opencv-python scikit-image pillow"""
+                    && {args.pip} install {args.user_s} {args.pip_option} opencv-python scikit-image pillow"""
             run_cmd(cmd)
         elif is_macos():
             cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
