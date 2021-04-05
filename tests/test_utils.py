@@ -11,7 +11,7 @@ def test_install_py_github():
     sp.run(cmd, shell=True, check=True)
     utils.install_py_github(
         url="https://github.com/dclong/dsutil",
-        user=True,
+        user=False,
         pip="python3 -m pip",
         extras="docker",
     )
