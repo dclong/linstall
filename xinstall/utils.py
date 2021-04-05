@@ -225,9 +225,10 @@ def install_py_github(
     ver_no_letter = re.sub("[a-zA-Z]", "", ver)
     name = Path(url).name
     url = f"{url}/releases/download/{ver}/{name}-{ver_no_letter}-py3-none-any.whl"
-    if extras:
-        extras = f"{name}[{extras}]"
     cmd = f"{pip} install {'--user' if user else ''} --upgrade {pip_option} {extras} {url}"
+    if extras:
+        url = f"'{name}[{extras}] @ {url}'"
+    cmd = f"{pip} install {'--user' if user else ''} --upgrade {pip_option} {url}"
     run_cmd(cmd)
 
 
