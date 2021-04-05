@@ -377,7 +377,8 @@ def osquery(args) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            cmd = f"""{args.prefix} apt-key adv --keyserver keyserver.ubuntu.com \
+            cmd = f"""{args.prefix} apt-get {args.yes_s} install dirmngr \
+                    && {args.prefix} apt-key adv --keyserver keyserver.ubuntu.com \
                         --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
                     && {args.prefix} add-apt-repository \
                         "deb [arch=amd64] https://pkg.osquery.io/deb deb main" \
