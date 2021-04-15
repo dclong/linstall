@@ -287,8 +287,8 @@ def bash_it(args) -> None:
             fi
             """
         )
-        profile = ".bashrc" if is_linux() else ".bash_profile"
-        with (HOME / profile).open("a") as fout:
+        profile = HOME / (".bashrc" if is_linux() else ".bash_profile")
+        with profile.open("a") as fout:
             fout.write(bash)
         logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile)
         if is_linux():
