@@ -11,6 +11,21 @@ from .utils import (
 from . import utils
 
 
+def _github_release_url(repo: str) -> str:
+    if repo.endswith(".git"):
+        repo = repo[:-4]
+    if repo.startswith("https://api."):
+        return repo
+    if repo.startswith("https://"):
+        rindex = repo.rindex("/")
+        index = repo.rindex("/", 0, rindex)
+    elif repo.startswith("git@"):
+        index = repo.rindex(":")
+    else:
+        raise ValueError(f"Unknown GitHub URL: {repo}!")
+    repo = repo[(index+1):]
+    return f"https://api.github.com/repos/{repo}/releases"
+
 def _github_download(args):
     if args.version:
         v0 = args.version[0]
@@ -20,8 +35,7 @@ def _github_download(args):
             args.version = "==" + args.version[1:]
     spec = SpecifierSet(args.version)
     # get asserts of the first release in the specifier
-    url = f"https://api.github.com/repos/{args.repo}/releases"
-    resp = requests.get(url)
+    resp = requests.get(_github_release_url(args.repo))
     if not resp.ok:
         resp.raise_for_status()
     releases = resp.json()
