@@ -19,11 +19,10 @@ def _github_release_url(repo: str) -> str:
     if repo.startswith("https://"):
         rindex = repo.rindex("/")
         index = repo.rindex("/", 0, rindex)
+        repo = repo[(index + 1):]
     elif repo.startswith("git@"):
         index = repo.rindex(":")
-    else:
-        raise ValueError(f"Unknown GitHub URL: {repo}!")
-    repo = repo[(index + 1):]
+        repo = repo[(index + 1):]
     return f"https://api.github.com/repos/{repo}/releases"
 
 
