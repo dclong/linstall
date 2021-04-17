@@ -23,8 +23,9 @@ def _github_release_url(repo: str) -> str:
         index = repo.rindex(":")
     else:
         raise ValueError(f"Unknown GitHub URL: {repo}!")
-    repo = repo[(index+1):]
+    repo = repo[(index + 1):]
     return f"https://api.github.com/repos/{repo}/releases"
+
 
 def _github_download(args):
     if args.version:
