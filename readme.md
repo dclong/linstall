@@ -6,7 +6,7 @@ Note: It is best to install `xinstall` into a system-wide location
 so that the command `xinstall` is always on `$PATH`.
 You can download a copy of the latest release and install it using pip.
 ```
-sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.37.0/xinstall-0.37.0-py3-none-any.whl
+sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.37.1/xinstall-0.37.1-py3-none-any.whl
 ```
 Or you can use the following command to install the latest main branch
 if you have pip 20.0+.
