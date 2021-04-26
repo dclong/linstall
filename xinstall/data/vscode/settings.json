@@ -14,5 +14,12 @@
     ],
     "extensions.autoUpdate": false,
     "workbench.colorTheme": "Default Dark+",
-    "python.formatting.provider": "yapf"
+    "python.formatting.provider": "yapf",
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "python.terminal.activateEnvironment": false
 }
