@@ -418,7 +418,7 @@ def rustup(args):
         else:
             cmd = f"""curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
                 && ~/.cargo/bin/rustup component add rustfmt \
-                && {args..prefix} apt-get install -y libssl-dev pkg-config \
+                && {args.prefix} apt-get install -y libssl-dev pkg-config \
                 && ~/.cargo/bin/cargo install cargo-edit
                 """
             run_cmd(cmd)
