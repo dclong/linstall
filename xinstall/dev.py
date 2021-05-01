@@ -416,8 +416,13 @@ def rustup(args):
         if is_win():
             pass
         else:
-            cmd = f"curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y"
+            cmd = """curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
+                && ~/.cargo/bin/rustup component add rustfmt
+                """
             run_cmd(cmd)
+        if is_ubuntu_debian():
+            run_cmd(f"{args.prefix} apt-get install -y libssl-dev pkg-config")
+        run_cmd("~/.cargo/bin/cargo install cargo-edit")
     if args.config:
         pass
     if args.uninstall:

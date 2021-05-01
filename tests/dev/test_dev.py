@@ -53,6 +53,13 @@ def test_rust():
     run_cmd(cmd)
 
 
+def test_rustup():
+    """Test installing the Rust programming language.
+    """
+    cmd = "xinstall --sudo -y rustup -ic"
+    run_cmd(cmd)
+
+
 def test_ipython():
     """Test installing and configuring LightGBM.
     """
