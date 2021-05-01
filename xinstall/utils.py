@@ -210,7 +210,8 @@ def install_py_github(
     user: bool = False,
     pip: str = "pip3",
     pip_option: str = "",
-    extras: str = ""
+    extras: str = "",
+    prefix: str = "",
 ) -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
 
@@ -225,10 +226,9 @@ def install_py_github(
     ver_no_letter = re.sub("[a-zA-Z]", "", ver)
     name = Path(url).name
     url = f"{url}/releases/download/{ver}/{name}-{ver_no_letter}-py3-none-any.whl"
-    cmd = f"{pip} install {'--user' if user else ''} --upgrade {pip_option} {extras} {url}"
     if extras:
         url = f"'{name}[{extras}] @ {url}'"
-    cmd = f"{pip} install {'--user' if user else ''} --upgrade {pip_option} {url}"
+    cmd = f"{prefix} {pip} install {'--user' if user else ''} --upgrade {pip_option} {url}"
     run_cmd(cmd)
 
 
