@@ -183,7 +183,11 @@ def xinstall(args) -> None:
     if args.install:
         url = "https://github.com/dclong/xinstall"
         utils.install_py_github(
-            url=url, user=args.user, pip=args.pip, pip_option=args.pip_option, prefix=args.prefix
+            url=url,
+            user=args.user,
+            pip=args.pip,
+            pip_option=args.pip_option,
+            prefix=args.prefix
         )
     if args.config:
         pass
