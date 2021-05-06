@@ -151,12 +151,13 @@ def dsutil(args) -> None:
             pip=args.pip,
             user=args.user,
             pip_option=args.pip_option,
-            extras=args.extras
+            extras=args.extras,
+            prefix=args.prefix
         )
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall {args.yes_s} dsutil")
+        run_cmd(f"{args.prefix} {args.pip} uninstall {args.yes_s} dsutil")
 
 
 def _dsutil_args(subparser) -> None:
@@ -182,12 +183,16 @@ def xinstall(args) -> None:
     if args.install:
         url = "https://github.com/dclong/xinstall"
         utils.install_py_github(
-            url=url, user=args.user, pip=args.pip, pip_option=args.pip_option
+            url=url,
+            user=args.user,
+            pip=args.pip,
+            pip_option=args.pip_option,
+            prefix=args.prefix
         )
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall xinstall")
+        run_cmd(f"{args.prefix} {args.pip} uninstall xinstall")
 
 
 def _xinstall_args(subparser) -> None:
