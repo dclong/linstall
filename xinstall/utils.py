@@ -84,7 +84,7 @@ def run_cmd(cmd: Union[list, str]) -> None:
 
     :param cmd: The command to run.
     """
-    proc = sp.run(cmd, shell=isinstance(cmd, str), check=True, capture_output=True)
+    proc = sp.run(cmd, shell=isinstance(cmd, str), check=True, capture_output=False)
     logging.debug(proc.args)
 
 
@@ -221,6 +221,7 @@ def install_py_github(
     :param pip: The path (pip3 by default) to the pip executable.
     :param pip_option: Extra pip options.
     :param extras: Extra components (separate by comma) of the package to install.
+    :param prefix: Prefix (e.g., sudo, environment variable configuration, etc.) to the command.
     """
     ver = _github_version(url)
     ver_no_letter = re.sub("[a-zA-Z]", "", ver)

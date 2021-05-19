@@ -1,5 +1,6 @@
 """Install shell (command-line) related tools.
 """
+from pathlib import Path
 import logging
 import shutil
 import sys
@@ -273,9 +274,13 @@ def bash_it(args) -> None:
     For more details, please refer to https://github.com/Bash-it/bash-it#installation.
     """
     if args.install:
-        cmd = """rm -rf ~/.bash_it \
-                && git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it \
-                && ~/.bash_it/install.sh --silent
+        dir_ = Path.home() / ".bash_it"
+        try:
+            dir_.unlink()
+        except FileNotFoundError:
+            pass
+        cmd = f"""git clone --depth=1 https://github.com/Bash-it/bash-it.git {dir_} \
+                && {dir_}/install.sh --silent -f
                 """
         run_cmd(cmd)
     if args.config:

@@ -13,7 +13,7 @@ def test_install_py_github():
 
 
 def test_github():
-    """Test the wajig command.
+    """Test the github command.
     """
     cmd = "xinstall github -r dclong/xinstall -k whl -o xinstall.wheel"
     msg = "rate limit exceeded for url"
@@ -24,6 +24,6 @@ def test_github():
             return
         raise err
     except CalledProcessError as err:
-        if msg in err.stderr.decode():
+        if err.stderr and msg in err.stderr.decode():
             return
         raise err
