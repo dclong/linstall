@@ -24,6 +24,8 @@ def test_github():
             return
         raise err
     except CalledProcessError as err:
+        print(f"CalledProcessError.stderr: {err.stderr.decode()}")
+        print(f"CalledProcessError.stdout: {err.stdout.decode()}")
         if err.stderr and msg in err.stderr.decode():
             return
         raise err
