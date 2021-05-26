@@ -85,7 +85,9 @@ def run_cmd(cmd: Union[list, str], capture_output: bool = False) -> None:
     :param cmd: The command to run.
     :param capture_output: Whether to capture stdout and stderr of the command.
     """
-    proc = sp.run(cmd, shell=isinstance(cmd, str), check=True, capture_output=capture_output)
+    proc = sp.run(
+        cmd, shell=isinstance(cmd, str), check=True, capture_output=capture_output
+    )
     logging.debug(proc.args)
 
 
