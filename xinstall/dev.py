@@ -421,6 +421,7 @@ def rustup(args):
                 """
             run_cmd(cmd)
         if is_ubuntu_debian():
+            update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install -y libssl-dev pkg-config")
         run_cmd("~/.cargo/bin/cargo install cargo-edit")
     if args.config:
