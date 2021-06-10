@@ -297,6 +297,18 @@ def jupyterlab_vim(args):
 
 def _jupyterlab_vim_args(subparser):
     option_pip_bundle(subparser)
+    subparser.add_argument(
+        "--enable",
+        dest="enable",
+        action="store_true",
+        help="Whether to enable the jupyterla_vim extension",
+    )
+    subparser.add_argument(
+        "--disale",
+        dest="disable",
+        action="store_true",
+        help="Whether to disable the jupyterla_vim extension",
+    )
 
 
 def _add_subparser_jupyterlab_vim(subparsers):
