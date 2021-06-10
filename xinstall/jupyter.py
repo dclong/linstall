@@ -16,6 +16,18 @@ from .utils import (
 from .dev import rustup, cmake
 
 
+def _add_subparser_jupyter(subparsers):
+    _add_subparser_ipython(subparsers)
+    _add_subparser_beakerx(subparsers)
+    _add_subparser_jupyterlab_lsp(subparsers)
+    _add_subparser_itypescript(subparsers)
+    _add_subparser_nbdime(subparsers)
+    _add_subparser_almond(subparsers)
+    _add_subparser_evcxr_jupyter(subparsers)
+    _add_subparser_jupyter_book(subparsers)
+    _add_subparser_jupyterlab_vim(subparsers)
+
+
 def nbdime(args) -> None:
     """Install and configure nbdime for comparing difference of notebooks.
     """
@@ -265,12 +277,33 @@ def _add_subparser_ipython(subparsers):
     )
 
 
-def _add_subparser_jupyter(subparsers):
-    _add_subparser_ipython(subparsers)
-    _add_subparser_beakerx(subparsers)
-    _add_subparser_jupyterlab_lsp(subparsers)
-    _add_subparser_itypescript(subparsers)
-    _add_subparser_nbdime(subparsers)
-    _add_subparser_almond(subparsers)
-    _add_subparser_evcxr_jupyter(subparsers)
-    _add_subparser_jupyter_book(subparsers)
+def jupyterlab_vim(args):
+    """Install the jupyterlab_vim extension.
+    """
+    if args.install:
+        cmd = f"{args.prefix} {args.pip} install {args.user_s} {args.pip_option} jupyterlab_vim"
+        run_cmd(cmd)
+    if args.config:
+        if args.enable:
+            cmd = f"{args.prefix} jupyter labextension enable @axlair/jupyterlab_vim"
+            run_cmd(cmd)
+        if args.disable:
+            cmd = f"{args.prefix} jupyter labextension disable @axlair/jupyterlab_vim"
+            run_cmd(cmd)
+    if args.uninstall:
+        cmd = f"{args.prefix} {args.pip} uninstall {args.user_s} {args.pip_option} jupyterlab_vim"
+        run_cmd(cmd)
+
+
+def _jupyterlab_vim_args(subparser):
+    option_pip_bundle(subparser)
+
+
+def _add_subparser_jupyterlab_vim(subparsers):
+    add_subparser(
+        subparsers,
+        "jupyterlab_vim",
+        func=jupyterlab_vim,
+        aliases=["jlab_vim", "jlabvim", "jvim"],
+        add_argument=_jupyterlab_vim_args,
+    )
