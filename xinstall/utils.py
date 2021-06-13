@@ -273,7 +273,7 @@ def option_user(subparser):
         "--user",
         dest="user",
         action="store_true",
-        help="Install the Python package to user's local directory."
+        help="Install Python packages to user's local directory."
     )
 
 
