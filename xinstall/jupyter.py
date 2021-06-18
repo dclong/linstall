@@ -280,6 +280,8 @@ def _add_subparser_ipython(subparsers):
 def jupyterlab_vim(args):
     """Install the jupyterlab_vim extension.
     """
+    if args.enable or args.disable:
+        args.config = True
     if args.install:
         cmd = f"{args.prefix} {args.pip} install {args.user_s} {args.pip_option} jupyterlab_vim"
         run_cmd(cmd)
