@@ -533,10 +533,18 @@ def _git_args(subparser):
     subparser.add_argument(
         "-j",
         "--java",
-        dest="java",
+        dest="language",
         action="store_const",
         const="java",
         help="Gitignore patterns for Java developing."
+    )
+    subparser.add_argument(
+        "-r",
+        "--rust",
+        dest="language",
+        action="store_const",
+        const="rust",
+        help="Gitignore patterns for Rust developing."
     )
     subparser.add_argument(
         "-a",

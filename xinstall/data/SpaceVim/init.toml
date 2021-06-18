@@ -52,4 +52,8 @@ default_height = 30
 
 [[custom_plugins]]
 name = "vim-scripts/dbext.vim"
-merged = 0
+merged = false
+
+[[custom_plugins]]
+repo = "machakann/vim-swap"
+merged = false
