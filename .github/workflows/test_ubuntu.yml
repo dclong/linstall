@@ -29,9 +29,8 @@ jobs:
       run: |
         pip3 install -U git+https://github.com/dclong/xinstall@main
         xinstall pt -ic
-        export PATH=~/.local/bin:$PATH
-        poetry env use python3
-        poetry install
+        ~/.local/bin/poetry env use python3
+        ~/.local/bin/poetry install
     - name: Test with pytest
       run: |
-        poetry run pytest
+        ~/.local/bin/poetry run pytest
