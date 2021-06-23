@@ -24,14 +24,14 @@ jobs:
       run: |
         pip3 install -U git+https://github.com/dclong/xinstall@main
         xinstall pt -ic
-        ~/.poetry/bin/poetry env use python3
-        ~/.poetry/bin/poetry install
+        ~/.local/bin/poetry env use python3
+        ~/.local/bin/poetry install
     - name: Lint with pylint
       run: |
-        ~/.poetry/bin/poetry run pylint -E xinstall/
+        ~/.local/bin/poetry run pylint -E xinstall/
     - name: Lint with pytype
       run: |
-        ~/.poetry/bin/poetry run pytype xinstall/ tests/
+        ~/.local/bin/poetry run pytype xinstall/ tests/
     - name: Check code format
       run: |
-        ~/.poetry/bin/poetry run yapf -dr xinstall/ tests/
+        ~/.local/bin/poetry run yapf -dr xinstall/ tests/
