@@ -23,6 +23,22 @@ from .utils import (
 )
 
 
+def _add_subparser_shell(subparsers):
+    _add_subparser_coreutils(subparsers)
+    _add_subparser_change_shell(subparsers)
+    _add_subparser_shell_utils(subparsers)
+    _add_subparser_bash_it(subparsers)
+    _add_subparser_xonsh(subparsers)
+    _add_subparser_homebrew(subparsers)
+    _add_subparser_hyper(subparsers)
+    _add_subparser_openinterminal(subparsers)
+    _add_subparser_bash_complete(subparsers)
+    _add_subparser_wajig(subparsers)
+    _add_subparser_exa(subparsers)
+    _add_subparser_osquery(subparsers)
+    _add_subparser_dust(subparsers)
+
+
 def coreutils(args) -> None:
     """Install CoreUtils.
     """
@@ -443,16 +459,25 @@ def _add_subparser_wajig(subparsers) -> None:
     )
 
 
-def _add_subparser_shell(subparsers):
-    _add_subparser_coreutils(subparsers)
-    _add_subparser_change_shell(subparsers)
-    _add_subparser_shell_utils(subparsers)
-    _add_subparser_bash_it(subparsers)
-    _add_subparser_xonsh(subparsers)
-    _add_subparser_homebrew(subparsers)
-    _add_subparser_hyper(subparsers)
-    _add_subparser_openinterminal(subparsers)
-    _add_subparser_bash_complete(subparsers)
-    _add_subparser_wajig(subparsers)
-    _add_subparser_exa(subparsers)
-    _add_subparser_osquery(subparsers)
+def dust(args) -> None:
+    """Install dust which is du implemented in Rust.
+    The cargo command must be available on the search path in order to install dust.
+    """
+    if args.install:
+        if is_macos():
+            run_cmd("brew install dust")
+        else:
+            run_cmd("cargo install du-dust")
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_macos():
+            run_cmd("brew uninstall dust")
+        else:
+            run_cmd("cargo uninstall du-dust")
+
+
+def _add_subparser_dust(subparsers) -> None:
+    add_subparser(
+        subparsers, "dust", func=dust, aliases=[]
+    )
