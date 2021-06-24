@@ -36,6 +36,7 @@ hs_err_pid*
 .theia/
 .idea/
 .vscode/
+.ipynb_checkpoints/
 *.ipr
 *.iws
 
