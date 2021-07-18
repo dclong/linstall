@@ -190,9 +190,7 @@ def evcxr_jupyter(args) -> None:
             && {evcxr_jupyter} --install"""
         run_cmd(cmd)
     if args.config:
-        home_cargo_bin = HOME / ".cargo/bin"
-        for cmd in ["cargo", "rustc"]:
-            run_cmd(f"{args.prefix} ln -svf {home_cargo_bin / cmd} /usr/local/bin/")
+        pass
     if args.uninstall:
         cmd = f"""{evcxr_jupyter} --uninstall \
             && {cargo} uninstall evcxr_jupyter
@@ -200,8 +198,24 @@ def evcxr_jupyter(args) -> None:
         run_cmd(cmd)
 
 
+def _evcxr_jupyter_args(subparser) -> None:
+    subparser.add_argument(
+        "--link-to-dir",
+        dest="link_to_dir",
+        default="/usr/local/bin",
+        help=
+        "The directory (default /usr/local/bin) to link commands (cargo and rustc) to."
+    )
+
+
 def _add_subparser_evcxr_jupyter(subparsers) -> None:
-    add_subparser(subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"])
+    add_subparser(
+        subparsers,
+        "evcxr_jupyter",
+        func=evcxr_jupyter,
+        aliases=["evcxr"],
+        add_argument=_evcxr_jupyter_args
+    )
 
 
 def jupyter_book(args):
