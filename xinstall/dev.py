@@ -409,7 +409,7 @@ def rustup(args):
             pass
         else:
             cmd = """curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
-                && ~/.cargo/bin/rustup component add rustfmt
+                && ~/.cargo/bin/rustup component add rust-src rustfmt
                 """
             run_cmd(cmd)
         if is_ubuntu_debian():
@@ -417,14 +417,39 @@ def rustup(args):
             run_cmd(f"{args.prefix} apt-get install -y cmake libssl-dev pkg-config")
         run_cmd("~/.cargo/bin/cargo install cargo-edit")
     if args.config:
-        pass
+        _link_rust(args)
     if args.uninstall:
-        cmd = "rustup self uninstall"
+        cmd = "~/.cargo/bin/rustup self uninstall"
         run_cmd(cmd)
 
 
+def _rustup_args(subparser):
+    subparser.add_argument(
+        "--link-to-dir",
+        dest="link_to_dir",
+        default="",
+        help="The directory to link commands (cargo and rustc) to."
+    )
+
+
+def _link_rust(args) -> None:
+    if not args.link_to_dir:
+        return
+    home_cargo_bin = HOME / ".cargo/bin"
+    if is_win():
+        return
+    for cmd in ["rustup", "cargo", "rustc"]:
+        run_cmd(f"{args.prefix} ln -svf {home_cargo_bin / cmd} {args.link_to_dir}/")
+
+
 def _add_subparser_rustup(subparsers):
-    add_subparser(subparsers, "rustup", func=rustup, aliases=["rust", "cargo"])
+    add_subparser(
+        subparsers,
+        "rustup",
+        func=rustup,
+        aliases=["rust", "cargo"],
+        add_argument=_rustup_args
+    )
 
 
 def rustpython(args):
