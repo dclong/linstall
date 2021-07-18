@@ -409,7 +409,7 @@ def rustup(args):
             pass
         else:
             cmd = """curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
-                && ~/.cargo/bin/rustup component add rustfmt
+                && ~/.cargo/bin/rustup component add rust-src rustfmt
                 """
             run_cmd(cmd)
         if is_ubuntu_debian():
