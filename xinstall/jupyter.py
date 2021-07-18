@@ -181,22 +181,21 @@ def _add_subparser_almond(subparsers) -> None:
 def evcxr_jupyter(args) -> None:
     """Install the evcxr Rust kernel for Jupyter/Lab server.
     """
+    cargo = HOME / ".cargo/bin/cargo"
+    evcxr_jupyter = HOME / ".cargo/bin/evcxr_jupyter"
     if args.install:
         rustup(args)
         cmake(args)
-        cargo = shutil.which("cargo")
-        if not cargo:
-            cargo = HOME / ".local/bin/cargo"
-        evcxr_jupyter = shutil.which("evcxr_jupyter")
-        if not evcxr_jupyter:
-            evcxr_jupyter = HOME / ".cargo/bin/evcxr_jupyter"
-        cmd = f"{cargo} install --force evcxr_jupyter && {evcxr_jupyter} --install"
+        cmd = f"""{cargo} install --force evcxr_jupyter \
+            && {evcxr_jupyter} --install"""
         run_cmd(cmd)
     if args.config:
-        pass
+        home_cargo_bin = HOME / ".cargo/bin"
+        for cmd in ["cargo", "rustc"]:
+            run_cmd(f"{args.prefix} ln -svf {home_cargo_bin / cmd} /usr/local/bin/")
     if args.uninstall:
-        cmd = f"""{HOME}/.cargo/bin/evcxr_jupyter --uninstall \
-            && cargo uninstall evcxr_jupyter
+        cmd = f"""{evcxr_jupyter} --uninstall \
+            && {cargo} uninstall evcxr_jupyter
             """
         run_cmd(cmd)
 

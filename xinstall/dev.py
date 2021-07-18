@@ -417,14 +417,34 @@ def rustup(args):
             run_cmd(f"{args.prefix} apt-get install -y cmake libssl-dev pkg-config")
         run_cmd("~/.cargo/bin/cargo install cargo-edit")
     if args.config:
-        pass
+        if args.link_to_dir:
+            home_cargo_bin = HOME / ".cargo/bin"
+            for cmd in ["cargo", "rustc"]:
+                run_cmd(
+                    f"{args.prefix} ln -svf {home_cargo_bin / cmd} {args.link_to_dir}"
+                )
     if args.uninstall:
         cmd = "rustup self uninstall"
         run_cmd(cmd)
 
 
+def _rustup_args(subparser):
+    subparser.add_argument(
+        "--link-to-dir",
+        dest="link_to_dir",
+        default="",
+        help="The directory to link commands (cargo and rustc) to."
+    )
+
+
 def _add_subparser_rustup(subparsers):
-    add_subparser(subparsers, "rustup", func=rustup, aliases=["rust", "cargo"])
+    add_subparser(
+        subparsers,
+        "rustup",
+        func=rustup,
+        aliases=["rust", "cargo"],
+        add_argument=_rustup_args
+    )
 
 
 def rustpython(args):
