@@ -204,8 +204,8 @@ def update_apt_source(prefix: str = "", yes: str = "--yes", seconds: float = 360
 
 def _github_version(url) -> str:
     url = f"{url}/releases/latest"
-    req = urllib.request.urlopen(url)
-    return Path(req.url).name
+    with urllib.request.urlopen(url) as resp:
+        return Path(resp.url).name
 
 
 def install_py_github(
