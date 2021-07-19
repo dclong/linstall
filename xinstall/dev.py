@@ -92,11 +92,6 @@ def yapf(args):
         update_dict(dic_des, dic_src, recursive=True)
         des_file.write_text(tomlkit.dumps(dic_des))
         logging.info("yapf is configured via %s.", des_file)
-        # configure yapf ignore
-        src_file = BASE_DIR / "yapf/yapfignore"
-        des_file = args.dst_dir / ".yapfignore"
-        shutil.copy2(src_file, des_file)
-        logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall yapf")
 
