@@ -3,8 +3,8 @@
 import subprocess as sp
 
 
-def test_kubernetes():
+def test_kubectl():
     """Test the kubernetes command.
     """
-    cmd = "xinstall --sudo skubectl -ic"
+    cmd = "xinstall --sudo kubectl -ic"
     sp.run(cmd, shell=True, check=True)
