@@ -3,23 +3,24 @@
     "editor.detectIndentation": false,
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    "autoDocstring.docstringFormat": "sphinx",
     "keyboard.dispatch": "keyCode",
     "workbench.startupEditor": "newUntitledFile",
-    "python.linting.mypyEnabled": false,
-    "python.linting.pylintArgs": [
-        "--extension-pkg-whitelist=numpy,cv2,pyspark",
-        "--generated-members=cv2.*,pyspark.*",
-        "--ignored-modules=pyspark.sql.functions"
-    ],
-    "extensions.autoUpdate": false,
     "workbench.colorTheme": "Default Dark+",
-    "python.formatting.provider": "yapf",
     "workbench.editorAssociations": [
         {
             "viewType": "jupyter.notebook.ipynb",
             "filenamePattern": "*.ipynb"
         }
     ],
-    "python.terminal.activateEnvironment": false
+    "extensions.autoUpdate": false,
+    "python.linting.mypyEnabled": false,
+    "python.linting.pylintArgs": [
+        "--extension-pkg-whitelist=numpy,cv2,pyspark",
+        "--generated-members=cv2.*,pyspark.*",
+        "--ignored-modules=pyspark.sql.functions"
+    ],
+    "python.terminal.activateEnvironment": false,
+    "autoDocstring.docstringFormat": "sphinx",
+    "python.formatting.provider": "yapf",
+    "rust-analyzer.inlayHints.parameterHints": true
 }
