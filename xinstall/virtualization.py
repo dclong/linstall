@@ -104,12 +104,9 @@ def kubernetes(args):
     if args.install:
         if is_ubuntu_debian():
             run_cmd(
-                f"""curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg \
-                    | {args.prefix} apt-key add -""",
-            )
-            run_cmd(
-                f'''echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" \
-                    | {args.prefix} tee -a /etc/apt/sources.list.d/kubernetes.list''',
+                f"""{args.prefix} curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+                && echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | {args.prefix} tee /etc/apt/sources.list.d/kubernetes.list
+                """,
             )
             update_apt_source(prefix=args.prefix, seconds=-1E10)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} kubectl")
