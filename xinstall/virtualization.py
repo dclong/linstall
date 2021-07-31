@@ -98,8 +98,8 @@ def _add_subparser_docker(subparsers):
     )
 
 
-def kubernetes(args):
-    """Install and configure kubernetes command-line interface.
+def kubectl(args):
+    """Install and configure the kubernetes command-line interface kubectl.
     """
     if args.install:
         if is_ubuntu_debian():
@@ -123,8 +123,8 @@ def kubernetes(args):
             pass
 
 
-def _add_subparser_kubernetes(subparsers):
-    add_subparser(subparsers, "Kubernetes", func=kubernetes, aliases=["k8s"])
+def _add_subparser_kubectl(subparsers):
+    add_subparser(subparsers, "kubectl", func=kubectl, aliases=["k8s-cli"])
 
 
 def _minikube_linux(args):
@@ -141,7 +141,7 @@ def minikube(args) -> None:
     """Install MiniKube.
     """
     virtualbox(args)
-    kubernetes(args)
+    kubectl(args)
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix, seconds=-1E10)
@@ -231,7 +231,7 @@ def _add_subparser_microk8s(subparsers):
 
 def _add_subparser_virtualization(subparsers):
     _add_subparser_docker(subparsers)
-    _add_subparser_kubernetes(subparsers)
+    _add_subparser_kubectl(subparsers)
     _add_subparser_minikube(subparsers)
     _add_subparser_virtualbox(subparsers)
     _add_subparser_multipass(subparsers)
