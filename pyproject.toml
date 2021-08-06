@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xinstall"
-version = "0.39.1"
+version = "0.39.4"
 description = "Easy Cross-platform Installation and Configuration of Apps."
 authors = ["Benjamin Du <longendu@yahoo.com>"]
 
@@ -42,6 +42,11 @@ ignored-classes = "Namespace"
 [tool.yapf]
 based_on_style = "facebook"
 column_limit = "88"
+
+[tool.yapfignore]
+ignore_patterns = [
+    "*/.ipynb_checkpoints/",
+]
 
 [build-system]
 requires = ["poetry>=1.0.0"]

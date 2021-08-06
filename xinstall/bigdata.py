@@ -35,11 +35,11 @@ def get_spark_version() -> str:
     """
     logging.info("Parsing the latest version of Spark...")
     pattern = br"Latest Release \(Spark (\d.\d.\d)\)"
-    resp = urlopen("https://spark.apache.org/downloads.html")
-    for line in resp:
-        match = re.search(pattern, line)
-        if match:
-            return match.group(1).decode()
+    with urlopen("https://spark.apache.org/downloads.html") as resp:
+        for line in resp:
+            match = re.search(pattern, line)
+            if match:
+                return match.group(1).decode()
     return "3.0.1"
 
 

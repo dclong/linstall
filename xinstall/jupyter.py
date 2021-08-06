@@ -181,28 +181,41 @@ def _add_subparser_almond(subparsers) -> None:
 def evcxr_jupyter(args) -> None:
     """Install the evcxr Rust kernel for Jupyter/Lab server.
     """
+    cargo = HOME / ".cargo/bin/cargo"
+    evcxr_jupyter = HOME / ".cargo/bin/evcxr_jupyter"
     if args.install:
         rustup(args)
         cmake(args)
-        cargo = shutil.which("cargo")
-        if not cargo:
-            cargo = HOME / ".local/bin/cargo"
-        evcxr_jupyter = shutil.which("evcxr_jupyter")
-        if not evcxr_jupyter:
-            evcxr_jupyter = HOME / ".cargo/bin/evcxr_jupyter"
-        cmd = f"{cargo} install --force evcxr_jupyter && {evcxr_jupyter} --install"
+        cmd = f"""{cargo} install --force evcxr_jupyter \
+            && {evcxr_jupyter} --install"""
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"""{HOME}/.cargo/bin/evcxr_jupyter --uninstall \
-            && cargo uninstall evcxr_jupyter
+        cmd = f"""{evcxr_jupyter} --uninstall \
+            && {cargo} uninstall evcxr_jupyter
             """
         run_cmd(cmd)
 
 
+def _evcxr_jupyter_args(subparser) -> None:
+    subparser.add_argument(
+        "--link-to-dir",
+        dest="link_to_dir",
+        default="/usr/local/bin",
+        help=
+        "The directory (default /usr/local/bin) to link commands (cargo and rustc) to."
+    )
+
+
 def _add_subparser_evcxr_jupyter(subparsers) -> None:
-    add_subparser(subparsers, "evcxr_jupyter", func=evcxr_jupyter, aliases=["evcxr"])
+    add_subparser(
+        subparsers,
+        "evcxr_jupyter",
+        func=evcxr_jupyter,
+        aliases=["evcxr"],
+        add_argument=_evcxr_jupyter_args
+    )
 
 
 def jupyter_book(args):
