@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 from argparse import Namespace
 import tomlkit
-from git import Repo
+import dulwich
 from .utils import (
     HOME,
     BASE_DIR,
@@ -748,7 +748,9 @@ def pg_formatter(args):
     """
     if args.install:
         with tempfile.TemporaryDirectory() as temp_dir:
-            Repo.clone_from("https://github.com/darold/pgFormatter.git", temp_dir)
+            dulwich.porcelain.clone(
+                "https://github.com/darold/pgFormatter.git", temp_dir
+            )
             if is_win():
                 run_cmd(
                     f"""cd /d {temp_dir} \

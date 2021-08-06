@@ -478,6 +478,4 @@ def dust(args) -> None:
 
 
 def _add_subparser_dust(subparsers) -> None:
-    add_subparser(
-        subparsers, "dust", func=dust, aliases=[]
-    )
+    add_subparser(subparsers, "dust", func=dust, aliases=[])
