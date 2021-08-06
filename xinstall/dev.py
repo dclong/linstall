@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 from argparse import Namespace
 import tomlkit
-import dulwich
+import dulwich.porcelain
 from .utils import (
     HOME,
     BASE_DIR,
