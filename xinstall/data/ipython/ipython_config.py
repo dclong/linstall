@@ -299,6 +299,15 @@ c.AliasManager.user_aliases = [
     ("rsync.progress.pc", "proxychains rsync -avh --info=progress2"),
     ("scp.rp", "scp -rp"),
     ("scp.rp.pc", "proxychains scp -rp"),
+    # wget
+    ("wget.site", "wget --random-wait -r -p -e robots=off -U mozilla"),
+    ("wget.dir", "wget -r --no-parent -e robots=off"),
+    ("wget.folder", "wget.dir"),
+    ("wget.dir.nohtml", "wget -r --no-parent -e robots=off -R '*.html'"),
+    ("wget.folder.nohtml", "wget.dir.noindex"),
+    ("wget.no.check", "wget --no-check-certificate"),
+    ("wget.p", "proxychains wget"),
+    ("wget.p4", "proxychains4 wget"),
 ]
 if "darwin" in PLATFORM or "macos" in PLATFORM:
     c.AliasManager.user_aliases.extend(
