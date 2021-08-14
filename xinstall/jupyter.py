@@ -319,7 +319,7 @@ def _jupyterlab_vim_args(subparser):
         help="Whether to enable the jupyterla_vim extension",
     )
     subparser.add_argument(
-        "--disale",
+        "--disable",
         dest="disable",
         action="store_true",
         help="Whether to disable the jupyterla_vim extension",
