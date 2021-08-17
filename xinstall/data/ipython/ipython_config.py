@@ -220,6 +220,10 @@ c.AliasManager.user_aliases = [
         "git.submodule",
         "git submodule init && git submodule update --recursive --remote"
     ),
+    ("git.modified", "git status | grep 'modified:' | sed 's/^\s*modified:\s*//'"),
+    ("git.deleted", "git status | grep 'deleted:' | sed 's/^\s*deleted:\s*//'"),
+    ("git.renamed", "git status | grep 'renamed:' | sed 's/^\s*renamed:\s*//'"),
+    ("git.stat.fmf", "git -c filemode=false status"),
     # hdfs
     ("hdfs.count", "hdfs dfs -count -q -v"),
     ("hdfs.ls", "hdfs dfs -ls"),
