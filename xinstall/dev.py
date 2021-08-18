@@ -79,7 +79,7 @@ def yapf(args):
     """Install Google's yapf (for formatting Python scripts).
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} yapf")
+        run_cmd(f"{args.pip_install} yapf")
     if args.config:
         # configure yapf formatting via pyproject.toml
         src_file = BASE_DIR / "yapf/pyproject.toml"
@@ -116,7 +116,7 @@ def pylint(args):
     """Install and configure pylint.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} pylint")
+        run_cmd(f"{args.pip_install} pylint")
     if args.config:
         src_file = BASE_DIR / "pylint/pyproject.toml"
         dic_src = tomlkit.loads(src_file.read_text())
@@ -154,7 +154,7 @@ def flake8(args):
     """Install and configure flake8.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} flake8")
+        run_cmd(f"{args.pip_install} flake8")
     if args.config:
         src_file = BASE_DIR / "flake8/flake8"
         des_file = args.dst_dir / ".flake8"
@@ -186,7 +186,7 @@ def darglint(args):
     """Install and configure darglint.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} darglint")
+        run_cmd(f"{args.pip_install} darglint")
     if args.config:
         src_file = BASE_DIR / "darglint/darglint"
         des_file = args.dst_dir / ".darglint"
@@ -218,7 +218,7 @@ def pytype(args):
     """Install and configure pytype.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} pytype")
+        run_cmd(f"{args.pip_install} pytype")
     if args.config:
         src_file = BASE_DIR / "pytype/setup.cfg"
         des_file = args.dst_dir / "setup.cfg"
@@ -289,7 +289,7 @@ def python(args):
                 f"""{args.prefix} yum install {args.yes_s} \
                 python3 python3-devel python3-pip"""
             )
-            run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} setuptools")
+            run_cmd(f"{args.pip_install} setuptools")
     if args.config:
         if not shutil.which("python"):
             python3 = shutil.which("python3")
@@ -374,7 +374,7 @@ def pyjnius(args):
     """Install pyjnius for calling Java from Python.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} Cython pyjnius"
+        cmd = f"{args.pip_install} Cython pyjnius"
         run_cmd(cmd)
     if args.config:
         pass
@@ -601,7 +601,7 @@ def jpype1(args):
     """Install the Python package JPype.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} JPype1"
+        cmd = f"{args.pip_install} JPype1"
         run_cmd(cmd)
     if args.config:
         pass
@@ -648,7 +648,7 @@ def sphinx(args):
     :param args:
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} sphinx sphinx-autodoc-typehints"
+        cmd = f"{args.pip_install} sphinx sphinx-autodoc-typehints"
         run_cmd(cmd)
     if args.config:
         pass

@@ -32,7 +32,7 @@ def nbdime(args) -> None:
     """Install and configure nbdime for comparing difference of notebooks.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} nbdime")
+        run_cmd(f"{args.pip_install} nbdime")
     if args.uninstall:
         run_cmd(f"{args.pip} uninstall nbdime")
     if args.config:
@@ -70,10 +70,7 @@ def jupyterlab_lsp(args) -> None:
     """Install jupyterlab-lsp.
     """
     if args.install:
-        cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-                    jupyter-lsp \
-                    python-language-server[all] \
-                    pyls-mypy \
+        cmd = f"""{args.pip_install} jupyter-lsp python-language-server[all] pyls-mypy \
                 && {args.prefix} {args.jupyter} labextension install @krassowski/jupyterlab-lsp
                 """
         run_cmd(cmd)
@@ -102,7 +99,7 @@ def beakerx(args) -> None:
     """Install/uninstall/configure the BeakerX kernels.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} beakerx")
+        run_cmd(f"{args.pip_install} beakerx")
         run_cmd(f"{args.prefix} beakerx install")
         run_cmd(
             f"{args.prefix} jupyter labextension install @jupyter-widgets/jupyterlab-manager",
@@ -222,7 +219,7 @@ def jupyter_book(args):
     """Install jupyter-book.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} jupyter-book"
+        cmd = f"{args.pip_install} jupyter-book"
         run_cmd(cmd)
     if args.config:
         src_file = BASE_DIR / "jupyter-book/_config.yml"
@@ -250,7 +247,7 @@ def ipython(args):
     """Install IPython for Python 3.
     """
     if args.install:
-        cmd = f"{args.prefix} {args.pip} install {args.user_s} {args.pip_option} ipython"
+        cmd = f"{args.prefix} {args.pip_install} ipython"
         run_cmd(cmd)
     if args.config:
         src_dir = BASE_DIR / "ipython"
@@ -296,7 +293,7 @@ def jupyterlab_vim(args):
     if args.enable or args.disable:
         args.config = True
     if args.install:
-        cmd = f"{args.prefix} {args.pip} install {args.user_s} {args.pip_option} jupyterlab_vim"
+        cmd = f"{args.prefix} {args.pip_install} jupyterlab_vim"
         run_cmd(cmd)
     if args.config:
         if args.enable:
@@ -306,7 +303,7 @@ def jupyterlab_vim(args):
             cmd = f"{args.prefix} jupyter labextension disable @axlair/jupyterlab_vim"
             run_cmd(cmd)
     if args.uninstall:
-        cmd = f"{args.prefix} {args.pip} uninstall {args.user_s} {args.pip_option} jupyterlab_vim"
+        cmd = f"{args.prefix} {args.pip} uninstall jupyterlab_vim"
         run_cmd(cmd)
 
 

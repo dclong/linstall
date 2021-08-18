@@ -144,7 +144,7 @@ def dryscrape(args):
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
             cmd = f"""{args.prefix} apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
-                && {args.pip} install {args.user_s} {args.pip_option} dryscrape
+                && {args.pip_install} dryscrape
                 """
             run_cmd(cmd)
         elif is_macos():
@@ -230,7 +230,7 @@ def sshuttle(args: Namespace):
     """
     if args.install:
         iptables(args)
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} sshuttle")
+        run_cmd(f"{args.pip_install} sshuttle")
     if args.config:
         pass
     if args.uninstall:

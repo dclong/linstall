@@ -263,7 +263,7 @@ def xonsh(args) -> None:
     """Install xonsh, a Python based shell.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} xonsh")
+        run_cmd(f"{args.pip_install} xonsh")
     if args.config:
         src = f"{BASE_DIR}/xonsh/xonshrc"
         dst = HOME / ".xonshrc"

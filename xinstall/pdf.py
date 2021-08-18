@@ -20,16 +20,16 @@ def pdftotext(args):
             update_apt_source(prefix=args.prefix)
             run_cmd(
                 f"""{args.prefix} apt-get {args.yes_s} install build-essential libpoppler-cpp-dev pkg-config \
-                    && {args.pip} install {args.user_s} {args.pip_option} pdftotext
+                    && {args.pip_install} pdftotext
                 """
             )
         if is_macos():
             brew_install_safe(["pkg-config", "poppler"])
-            run_cmd("{args.pip} install {args.user_s} {args.pip_option} pdftotext")
+            run_cmd("{args.pip_install} pdftotext")
         if is_centos_series():
             run_cmd(
                 f"""{args.prefix} yum install {args.yes_s} gcc-c++ pkgconfig poppler-cpp-devel \
-                    && {args.pip} install {args.user_s} {args.pip_option} pdftotext
+                    && {args.pip_install} pdftotext
                     """
             )
     if args.uninstall:

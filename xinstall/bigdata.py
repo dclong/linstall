@@ -191,7 +191,7 @@ def pyspark(args):
     :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} pyspark findspark"
+        cmd = f"{args.pip_install} pyspark findspark"
         run_cmd(cmd)
     if args.config:
         pass
@@ -214,7 +214,7 @@ def dask(args):
     :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} dask[complete]"
+        cmd = f"{args.pip_install} dask[complete]"
         run_cmd(cmd)
     if args.config:
         pass

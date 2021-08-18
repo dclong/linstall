@@ -11,7 +11,7 @@ def kaggle(args):
     """Insert the Python package kaggle.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} kaggle"
+        cmd = f"{args.pip_install} kaggle"
         run_cmd(cmd)
     if args.config:
         home_host = Path(f"/home_host/{USER}/")
@@ -48,8 +48,7 @@ def lightgbm(args):
     """Insert the Python package kaggle.
     """
     if args.install:
-        cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-            lightgbm scikit-learn pandas matplotlib scipy graphviz"""
+        cmd = f"""{args.pip_install} lightgbm scikit-learn pandas matplotlib scipy graphviz"""
         run_cmd(cmd)
 
 
@@ -78,10 +77,10 @@ def pytorch(args):
                     torchaudio==0.7.0
                     """
                 if args.cuda == "102":
-                    cmd = f"{args.pip} install torch torchvision"
+                    cmd = f"{args.pip_install} torch torchvision"
             run_cmd(cmd)
         elif is_macos():
-            cmd = f"{args.pip} install torch torchvision torchaudio"
+            cmd = f"{args.pip_install} torch torchvision torchaudio"
             run_cmd(cmd)
     if args.config:
         pass
@@ -109,10 +108,10 @@ def autogluon(args):
     """Insert the Python package AutoGluon.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} 'mxnet<2.0.0' autogluon"
+        cmd = f"{args.pip_install} 'mxnet<2.0.0' autogluon"
         if args.cuda_version:
             version = args.cuda_version.replace(".", "")
-            cmd = f"{args.pip} install {args.user_s} {args.pip_option} 'mxnet-cu{version}<2.0.0' autogluon"
+            cmd = f"{args.pip_install} 'mxnet-cu{version}<2.0.0' autogluon"
         run_cmd(cmd)
 
 
@@ -142,7 +141,7 @@ def pytext(args):
     """Insert the Python package PyText.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} pytext-nlp"
+        cmd = f"{args.pip_install} pytext-nlp"
         if args.cuda_version:
             pass
         run_cmd(cmd)
@@ -167,11 +166,10 @@ def computer_vision(args):
                         libopenjp2-7-dev liblcms2-dev libjxr-dev liblz4-dev \
                         liblzma-dev libpng-dev libsnappy-dev libtiff-dev \
                         libwebp-dev libzopfli-dev libzstd-dev \
-                    && {args.pip} install {args.user_s} {args.pip_option} opencv-python scikit-image pillow"""
+                    && {args.pip_install} opencv-python scikit-image pillow"""
             run_cmd(cmd)
         elif is_macos():
-            cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-                opencv-python scikit-image pillow"""
+            cmd = f"""{args.pip_install} opencv-python scikit-image pillow"""
             run_cmd(cmd)
 
 
@@ -193,8 +191,7 @@ def nlp(args):
     """Install Python packages (PyTorch, transformers, pytext-nlp and fasttext) for NLP.
     """
     if args.install:
-        cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-            torch torchvision transformers pytext-nlp fasttext"""
+        cmd = f"""{args.pip_install} torch torchvision transformers pytext-nlp fasttext"""
         run_cmd(cmd)
 
 
