@@ -2,6 +2,7 @@
 """
 import sys
 import subprocess as sp
+import pytest
 PY_VER = sys.version_info
 
 
