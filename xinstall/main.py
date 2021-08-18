@@ -86,7 +86,7 @@ def parse_args(args=None, namespace=None) -> Namespace:
         args.user_s = "--user" if args.user else ""
     if USER == "root" or is_win():
         args.prefix = ""
-    if "pip_option" in args: 
+    if "pip_option" in args:
         if args.pip_option:
             args.pip_option = " ".join(
                 f"--{option}" for option in args.pip_option.split(",")
