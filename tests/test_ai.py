@@ -1,5 +1,6 @@
 """Test the ai module.
 """
+import sys
 import subprocess as sp
 PY_VER = sys.version_info
 
