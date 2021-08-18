@@ -1,6 +1,7 @@
 """Test the ai module.
 """
 import subprocess as sp
+PY_VER = sys.version_info
 
 
 def test_kaggle():
@@ -17,6 +18,7 @@ def test_lightgbm():
     sp.run(cmd, shell=True, check=True)
 
 
+@pytest.mark.skipif(PY_VER.major == 3 and PY_VER.minor == 9, "Skip test on Python 3.9.")
 def test_pytorch():
     """Test installing and configuring PyTorch.
     """
