@@ -71,8 +71,7 @@ def pygetwindow(args):
     if args.install:
         if is_linux():
             sys.exit("PyGetWindow is not supported on Linux currently!")
-        cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-                pyobjc-framework-quartz pygetwindow"""
+        cmd = f"""{args.pip_install} pyobjc-framework-quartz pygetwindow"""
         run_cmd(cmd)
     if args.config:
         pass

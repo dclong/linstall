@@ -15,3 +15,10 @@ def test_lightgbm():
     """
     cmd = "xinstall lightgbm -ic"
     sp.run(cmd, shell=True, check=True)
+
+
+def test_pytorch():
+    """Test installing and configuring PyTorch.
+    """
+    cmd = "xinstall pytorch -ic"
+    sp.run(cmd, shell=True, check=True)

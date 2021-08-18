@@ -115,7 +115,7 @@ def spacevim(args) -> None:
         if shutil.which("nvim"):
             run_cmd('nvim --headless +"call dein#install()" +qall')
         if not args.no_lsp:
-            cmd = f"{args.pip} install {args.user_s} {args.pip_option} python-language-server[all] pyls-mypy"
+            cmd = f"{args.pip_install} python-language-server[all] pyls-mypy"
             # npm install -g bash-language-server javascript-typescript-langserver
             run_cmd(cmd)
     if args.uninstall:
