@@ -4,8 +4,6 @@ import sys
 import subprocess as sp
 import pytest
 
-PY_VER = sys.version_info
-
 
 def test_kaggle():
     """Test installing the Python package kaggle.
@@ -21,7 +19,7 @@ def test_lightgbm():
     sp.run(cmd, shell=True, check=True)
 
 
-@pytest.mark.skipif(PY_VER.major == 3 and PY_VER.minor == 9, "Skip test on Python 3.9.")
+@pytest.mark.skipif(sys.version_info >= (3, 9), reason="Skip test on Python 3.9+.")
 def test_pytorch():
     """Test installing and configuring PyTorch.
     """
