@@ -19,7 +19,7 @@ def test_lightgbm():
     sp.run(cmd, shell=True, check=True)
 
 
-@pytest.mark.skipif(sys.version_info >= (3, 9), reason="Skip test on Python 3.9+.")
+#@pytest.mark.skipif(sys.version_info >= (3, 9), reason="Skip test on Python 3.9+.")
 def test_pytorch():
     """Test installing and configuring PyTorch.
     """
