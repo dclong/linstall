@@ -38,6 +38,7 @@ def _add_subparser_shell(subparsers):
     _add_subparser_exa(subparsers)
     _add_subparser_osquery(subparsers)
     _add_subparser_dust(subparsers)
+    _add_subparser_rip(subparsers)
 
 
 def coreutils(args) -> None:
