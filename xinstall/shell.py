@@ -470,3 +470,26 @@ def dust(args) -> None:
 
 def _add_subparser_dust(subparsers) -> None:
     add_subparser(subparsers, "dust", func=dust, aliases=[])
+
+
+def rip(args) -> None:
+    """Install rip which is rm improved.
+    The cargo command must be available on the search path in order to install rip.
+    """
+    if args.install:
+        if is_macos():
+            run_cmd("brew install rm-improved")
+        else:
+            run_cmd("cargo install rm-improved")
+    if args.config:
+        if is_linux():
+            run_cmd(f"{args.prefix} ln -svf ~/.cargo/bin/rip /usr/local/bin")
+    if args.uninstall:
+        if is_macos():
+            run_cmd("brew uninstall rm-improved")
+        else:
+            run_cmd("cargo uninstall rm-improved")
+
+
+def _add_subparser_rip(subparsers) -> None:
+    add_subparser(subparsers, "rip", func=rip, aliases=["trash"])
