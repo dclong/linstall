@@ -451,7 +451,9 @@ def update_dict(dict1, dict2, recursive: bool = False):
         update_dict(dict1[key], val)
 
 
-def add_path_shell(paths: Union[str, Path, list[Union[str, Path]]], config_file: Union[str, Path]):
+def add_path_shell(
+    paths: Union[str, Path, list[Union[str, Path]]], config_file: Union[str, Path]
+):
     """Configure shell to add a path into the environment variable PATH. 
 
     :param paths: Absolute paths to add into PATH.
