@@ -300,17 +300,8 @@ def bash_it(args) -> None:
                 """
         run_cmd(cmd)
     if args.config:
-        bash = textwrap.dedent(
-            f"""
-            # PATH
-            if [[ ! "$PATH" =~ (^{BIN_DIR}:)|(:{BIN_DIR}:)|(:{BIN_DIR}$) ]]; then
-                export PATH={BIN_DIR}:$PATH
-            fi
-            """
-        )
         profile = HOME / (".bashrc" if is_linux() else ".bash_profile")
-        with profile.open("a") as fout:
-            fout.write(bash)
+        add_path_shell([BIN_DIR, Path.home() / ".cargo/bin"], profile)
         logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile)
         if is_linux():
             bash = textwrap.dedent(
