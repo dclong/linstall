@@ -20,6 +20,7 @@ from .utils import (
     run_cmd,
     add_subparser,
     option_pip_bundle,
+    add_path_shell,
 )
 
 

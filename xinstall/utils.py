@@ -405,9 +405,9 @@ def add_subparser(
 
 def update_file(
     path: Union[str, Path],
-    regex: List[Tuple[str, str]] = None,
-    exact: List[Tuple[str, str]] = None,
-    append: Union[str, Iterable[str]] = None,
+    regex: Union[List[Tuple[str, str]], None] = None,
+    exact: Union[List[Tuple[str, str]], None] = None,
+    append: Union[str, Iterable[str], None] = None,
     exist_skip: bool = True,
 ) -> None:
     """Update a text file using regular expression substitution.
@@ -461,7 +461,7 @@ def add_path_shell(paths: Union[str, Path, list[Union[str, Path]]], config_file:
         paths = [paths]
     if isinstance(config_file, str):
         config_file = Path(config_file)
-    with path.open("a") as fout:
+    with config_file.open("a") as fout:
         for path in paths:
             bash = textwrap.dedent(
                 f"""
