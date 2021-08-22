@@ -20,6 +20,7 @@ from .utils import (
     run_cmd,
     add_subparser,
     option_pip_bundle,
+    add_path_shell,
 )
 
 
@@ -37,6 +38,7 @@ def _add_subparser_shell(subparsers):
     _add_subparser_exa(subparsers)
     _add_subparser_osquery(subparsers)
     _add_subparser_dust(subparsers)
+    _add_subparser_rip(subparsers)
 
 
 def coreutils(args) -> None:
@@ -300,17 +302,8 @@ def bash_it(args) -> None:
                 """
         run_cmd(cmd)
     if args.config:
-        bash = textwrap.dedent(
-            f"""
-            # PATH
-            if [[ ! "$PATH" =~ (^{BIN_DIR}:)|(:{BIN_DIR}:)|(:{BIN_DIR}$) ]]; then
-                export PATH={BIN_DIR}:$PATH
-            fi
-            """
-        )
         profile = HOME / (".bashrc" if is_linux() else ".bash_profile")
-        with profile.open("a") as fout:
-            fout.write(bash)
+        add_path_shell([BIN_DIR, Path.home() / ".cargo/bin"], profile)
         logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile)
         if is_linux():
             bash = textwrap.dedent(
@@ -479,3 +472,26 @@ def dust(args) -> None:
 
 def _add_subparser_dust(subparsers) -> None:
     add_subparser(subparsers, "dust", func=dust, aliases=[])
+
+
+def rip(args) -> None:
+    """Install rip which is rm improved.
+    The cargo command must be available on the search path in order to install rip.
+    """
+    if args.install:
+        if is_macos():
+            run_cmd("brew install rm-improved")
+        else:
+            run_cmd("cargo install rm-improved")
+    if args.config:
+        if is_linux():
+            run_cmd(f"{args.prefix} ln -svf ~/.cargo/bin/rip /usr/local/bin")
+    if args.uninstall:
+        if is_macos():
+            run_cmd("brew uninstall rm-improved")
+        else:
+            run_cmd("cargo uninstall rm-improved")
+
+
+def _add_subparser_rip(subparsers) -> None:
+    add_subparser(subparsers, "rip", func=rip, aliases=["trash"])
