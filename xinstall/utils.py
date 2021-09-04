@@ -28,7 +28,7 @@ DISTRO_ID = distro.id()
 SETTINGS_FILE = HOME / ".xinstall.json"
 SETTINGS = {}
 if os.path.isfile(SETTINGS_FILE):
-    with open(SETTINGS_FILE) as fin:
+    with open(SETTINGS_FILE, encoding="utf-8") as fin:
         SETTINGS = json.load(fin)
 
 
@@ -199,7 +199,7 @@ def update_apt_source(prefix: str = "", yes: str = "--yes", seconds: float = 360
     if (now - time).seconds > seconds:
         run_cmd(f"{prefix} apt-get update {yes}")
         SETTINGS[key] = now.strftime(fmt)
-        with open(SETTINGS_FILE, "w") as fout:
+        with open(SETTINGS_FILE, "w", encoding="utf-8") as fout:
             json.dump(SETTINGS, fout)
 
 
