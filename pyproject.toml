@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xinstall"
-version = "0.40.0"
+version = "0.41.0"
 description = "Easy Cross-platform Installation and Configuration of Apps."
 authors = ["Benjamin Du <longendu@yahoo.com>"]
 
@@ -21,7 +21,7 @@ dulwich = ">=0.20.24"
 pytest = ">=3.0"
 pylint = ">=2.4.4"
 pytype = { version = ">=2020.08.10", python = "<3.9" }
-yapf = ">=0.31.0"
+yapf = { git = "https://github.com/google/yapf.git", branch = "main" }
 coverage = ">=5.3"
 deepdiff = ">=5.2.3"
 
