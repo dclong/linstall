@@ -26,6 +26,7 @@ def _add_subparser_jupyter(subparsers):
     _add_subparser_evcxr_jupyter(subparsers)
     _add_subparser_jupyter_book(subparsers)
     _add_subparser_jupyterlab_vim(subparsers)
+    _add_subparser_jupyterlab(subparsers)
 
 
 def nbdime(args) -> None:
@@ -330,4 +331,42 @@ def _add_subparser_jupyterlab_vim(subparsers):
         func=jupyterlab_vim,
         aliases=["jlab_vim", "jlabvim", "jvim"],
         add_argument=_jupyterlab_vim_args,
+    )
+
+
+def jupyterlab(args):
+    """Install the JupyterLab.
+    """
+    if args.install:
+        cmd = f"""{args.prefix} {args.pip_install} nbdime "nbconvert==5.6.1" "jupyterlab>=2.1.0,<3.2.0" \
+                jupyterlab_widgets ipywidgets \
+                jupyterlab_vim \
+                jupyterlab-lsp python-language-server[all] \
+                jupyter-resource-usage \
+            && jupyter labextension disable @axlair/jupyterlab_vim
+            """
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"""{args.prefix} {args.pip} uninstall nbdime nbconvert jupyterlab \
+                jupyterlab_widgets ipywidgets \
+                jupyterlab_vim \
+                jupyterlab-lsp python-language-server[all] \
+                jupyter-resource-usage
+            """
+        run_cmd(cmd)
+
+
+def _jupyterlab_args(subparser):
+    option_pip_bundle(subparser)
+
+
+def _add_subparser_jupyterlab(subparsers):
+    add_subparser(
+        subparsers,
+        "jupyterlab",
+        func=jupyterlab,
+        aliases=["jlab", "jupyter"],
+        add_argument=_jupyterlab_args,
     )
