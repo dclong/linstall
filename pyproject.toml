@@ -21,7 +21,7 @@ dulwich = ">=0.20.24"
 pytest = ">=3.0"
 pylint = ">=2.4.4"
 pytype = { version = ">=2020.08.10", python = "<3.9" }
-yapf = ">=0.31.0"
+yapf = { git = "https://github.com/google/yapf.git", branch = "main" }
 coverage = ">=5.3"
 deepdiff = ">=5.2.3"
 
