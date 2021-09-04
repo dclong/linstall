@@ -67,7 +67,10 @@ def pytorch(args):
     """
     if args.install:
         url = "https://download.pytorch.org/whl/torch_stable.html"
-        if is_linux():
+        if is_macos():
+            cmd = f"{args.pip_install} torch torchvision torchaudio"
+            run_cmd(cmd)
+        else:
             cmd = f"""{args.pip_install} -f {url} \
                     torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0"""
             if args.cuda:
@@ -78,9 +81,6 @@ def pytorch(args):
                     """
                 if args.cuda == "102":
                     cmd = f"{args.pip_install} torch torchvision"
-            run_cmd(cmd)
-        elif is_macos():
-            cmd = f"{args.pip_install} torch torchvision torchaudio"
             run_cmd(cmd)
     if args.config:
         pass
