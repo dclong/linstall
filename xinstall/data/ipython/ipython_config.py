@@ -333,7 +333,7 @@ elif "win" in PLATFORM:
     c.AliasManager.user_aliases.extend(
         [
             (
-                "which", "where"
+                "which", "Get-command"
             ),
         ]
     )
