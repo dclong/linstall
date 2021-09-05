@@ -24,6 +24,13 @@ sudo pip3 install -U git+https://github.com/dclong/xinstall@main
 2. Below is an example of install SpaceVim and configure it.
 
         xinstall svim -ic
+    
+4. In case `xinstall` is not on the search path, 
+    you can use `python3 -m xinstall.main` instead. 
+    For example, 
+    to check the help doc.
+    
+        python3 -m xinstall.main -h
         
 ### sudo Permission
 
