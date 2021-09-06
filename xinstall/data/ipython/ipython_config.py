@@ -330,13 +330,9 @@ if "darwin" in PLATFORM or "macos" in PLATFORM:
         ]
     )
 elif "win" in PLATFORM:
-    c.AliasManager.user_aliases.extend(
-        [
-            (
-                "which", "Get-command"
-            ),
-        ]
-    )
+    c.AliasManager.user_aliases.extend([
+        ("which", "Get-command"),
+    ])
 else:
     c.AliasManager.user_aliases.extend(
         [
