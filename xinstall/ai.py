@@ -3,7 +3,7 @@
 from pathlib import Path
 import logging
 from .utils import (
-    HOME, USER, run_cmd, add_subparser, is_ubuntu, is_linux, is_macos, option_pip_bundle
+    HOME, USER, run_cmd, add_subparser, is_ubuntu, is_linux, is_macos, is_win, option_pip_bundle
 )
 
 
@@ -227,7 +227,7 @@ def cuda(args):
                 {args.prefix} apt-get {args.yes_s} install {pkgs}
                 """
             run_cmd(cmd)
-            logging.info(f"The package(s) {pkgs} have been installed. \nYou might have to restart your computer for it to take effect!")
+            logging.info("The package(s) {} have been installed. \nYou might have to restart your computer for it to take effect!", pkgs)
         elif is_win():
             pass
     if args.config:
