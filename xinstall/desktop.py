@@ -7,11 +7,19 @@ from pathlib import Path
 from .utils import (
     is_ubuntu_debian,
     is_linux,
+    is_ubuntu,
     update_apt_source,
     run_cmd,
     add_subparser,
     option_pip_bundle,
 )
+
+
+def _add_subparser_desktop(subparsers):
+    _add_subparser_nomachine(subparsers)
+    _add_subparser_lxqt(subparsers)
+    _add_subparser_pygetwindow(subparsers)
+    _add_subparser_shutter(subparsers)
 
 
 def nomachine(args):
@@ -94,7 +102,26 @@ def _add_subparser_pygetwindow(subparsers):
     )
 
 
-def _add_subparser_desktop(subparsers):
-    _add_subparser_nomachine(subparsers)
-    _add_subparser_lxqt(subparsers)
-    _add_subparser_pygetwindow(subparsers)
+def shutter(args):
+    """Install and configure Shutter (a screenshot app).
+    """
+    if args.install:
+        if is_ubuntu():
+            cmd = f"""{args.prefix} add-apt-repository ppa:shutter/ppa \
+                && {args.prefix} apt-get update && {args.prefix} apt-get install shutter
+                """
+            run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.prefix} apt-get purge shutter"
+        run_cmd(cmd)
+
+
+def _add_subparser_shutter(subparsers):
+    add_subparser(
+        subparsers,
+        "shutter",
+        func=shutter,
+        aliases=[],
+    )

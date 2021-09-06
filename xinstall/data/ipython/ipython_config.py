@@ -329,6 +329,10 @@ if "darwin" in PLATFORM or "macos" in PLATFORM:
             ("unmount", "diskutil umount"),
         ]
     )
+elif "win" in PLATFORM:
+    c.AliasManager.user_aliases.extend([
+        ("which", "Get-command"),
+    ])
 else:
     c.AliasManager.user_aliases.extend(
         [

@@ -106,6 +106,12 @@ def brew_install_safe(pkgs: Union[str, list]) -> None:
         )
 
 
+def is_ubuntu():
+    """Check whehter the current OS is Ubuntu.
+    """
+    return DISTRO_ID == "ubuntu"
+
+
 def is_ubuntu_debian():
     """Check whehter the current OS is Ubuntu/Debian.
     """
