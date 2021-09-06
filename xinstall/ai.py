@@ -229,7 +229,7 @@ def cuda(args):
                 """
             run_cmd(cmd)
             logging.info(
-                "The package(s) {} have been installed. \nYou might have to restart your computer for it to take effect!",
+                "The package(s) %s have been installed. \nYou might have to restart your computer for it to take effect!",
                 pkgs
             )
         elif is_win():
