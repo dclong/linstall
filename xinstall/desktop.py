@@ -7,6 +7,7 @@ from pathlib import Path
 from .utils import (
     is_ubuntu_debian,
     is_linux,
+    is_ubuntu,
     update_apt_source,
     run_cmd,
     add_subparser,
