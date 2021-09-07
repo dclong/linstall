@@ -11,7 +11,6 @@ from .utils import (
     run_cmd,
     add_subparser,
     option_pip_bundle,
-    option_jupyter,
 )
 from .dev import rustup, cmake
 

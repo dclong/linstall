@@ -3,7 +3,7 @@
 from pathlib import Path
 import logging
 from .utils import (
-    HOME, USER, run_cmd, add_subparser, is_ubuntu, is_linux, is_macos, is_win,
+    HOME, USER, run_cmd, add_subparser, is_ubuntu_debian, is_linux, is_macos, is_win,
     option_pip_bundle
 )
 
@@ -267,7 +267,9 @@ def nvidia_docker(args):
                     && {args.prefix} apt-get install -y nvidia-docker2
                 """
             run_cmd(cmd)
-            logging.info("The package nvidia-docker2 has been installed. \nPlease restart Docker (sudo service docker restart).")
+            logging.info(
+                "The package nvidia-docker2 has been installed. \nPlease restart Docker (sudo service docker restart)."
+            )
     if args.config:
         pass
     if args.uninstall:

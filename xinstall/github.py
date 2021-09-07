@@ -122,11 +122,11 @@ def install_py_github(args) -> None:
     """Install a Python package from GitHub.
     """
     utils.install_py_github(
-        url=args.url, 
-        user=args.user, 
+        url=args.url,
+        user=args.user,
         pip_option=args.pip_option,
         prefix=args.prefix,
-        python=args.python, 
+        python=args.python,
     )
 
 

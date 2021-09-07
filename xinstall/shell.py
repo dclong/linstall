@@ -10,6 +10,7 @@ from .utils import (
     HOME,
     BASE_DIR,
     BIN_DIR,
+    is_win,
     is_ubuntu_debian,
     is_centos_series,
     is_linux,
@@ -405,8 +406,8 @@ def osquery(args) -> None:
                 """
             run_cmd(cmd)
         elif is_win():
-            cmd = f"""xinstall github -r osquery/osquery -k msi -o "%temp%\osquery.msi" \
-                    && msiexec /i "%temp%\osquery.msi"
+            cmd = """xinstall github -r osquery/osquery -k msi -o "%temp%\\osquery.msi" \
+                    && msiexec /i "%temp%\\osquery.msi"
                 """
             run_cmd(cmd)
     if args.config:
@@ -513,8 +514,8 @@ def long_path(args) -> None:
         if args.value is None:
             return
         value = 1 if args.value else 0
-        cmd = f"""C:\Windows\System32\powershell.exe New-ItemProperty `
-                -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
+        cmd = f"""C:\\Windows\\System32\\powershell.exe New-ItemProperty `
+                -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem" `
                 -Name "LongPathsEnabled" `
                 -Value {value} `
                 -PropertyType DWORD `
