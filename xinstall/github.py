@@ -5,9 +5,7 @@ import shutil
 import requests
 from packaging.version import parse
 from packaging.specifiers import SpecifierSet
-from .utils import (
-    option_version, option_python, option_pip_bundle, add_subparser, run_cmd
-)
+from .utils import (option_version, option_pip_bundle, add_subparser, run_cmd)
 from . import utils
 
 
@@ -122,7 +120,11 @@ def install_py_github(args) -> None:
     """Install a Python package from GitHub.
     """
     utils.install_py_github(
-        url=args.url, user=args.user, pip=args.pip, pip_option=args.pip_option
+        url=args.url,
+        user=args.user,
+        pip_option=args.pip_option,
+        prefix=args.prefix,
+        python=args.python,
     )
 
 
@@ -136,7 +138,6 @@ def _add_subparser_install_py_github(subparsers) -> None:
         dest="url", help="The URL of the Python package's GitHub repository."
     )
     option_pip_bundle(subparser)
-    option_python(subparser)
     subparser.set_defaults(func=install_py_github)
     return subparser
 
@@ -148,16 +149,16 @@ def dsutil(args) -> None:
         url = "https://github.com/dclong/dsutil"
         utils.install_py_github(
             url=url,
-            pip=args.pip,
             user=args.user,
             pip_option=args.pip_option,
             extras=args.extras,
-            prefix=args.prefix
+            prefix=args.prefix,
+            python=args.python,
         )
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f"{args.prefix} {args.pip} uninstall {args.yes_s} dsutil")
+        run_cmd(f"{args.prefix} {args.pip_uninstall} dsutil")
 
 
 def _dsutil_args(subparser) -> None:
@@ -185,14 +186,14 @@ def xinstall(args) -> None:
         utils.install_py_github(
             url=url,
             user=args.user,
-            pip=args.pip,
             pip_option=args.pip_option,
-            prefix=args.prefix
+            prefix=args.prefix,
+            python=args.python,
         )
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f"{args.prefix} {args.pip} uninstall xinstall")
+        run_cmd(f"{args.prefix} {args.pip_uninstall} uninstall xinstall")
 
 
 def _xinstall_args(subparser) -> None:

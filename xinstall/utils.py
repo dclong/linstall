@@ -218,20 +218,20 @@ def _github_version(url) -> str:
 def install_py_github(
     url: str,
     user: bool = False,
-    pip: str = "pip3",
     pip_option: str = "",
     extras: str = "",
     prefix: str = "",
+    python: str = "python3",
 ) -> None:
     """Automatically install the latest version of a Python package from its GitHub repository.
 
     :param url: The root URL of the GitHub repository.
     :param user: If True, install to user's local directory.
-    This option is equivalant to 'pip install --user'.
-    :param pip: The path (pip3 by default) to the pip executable.
+        This option is equivalant to 'pip install --user'.
     :param pip_option: Extra pip options.
     :param extras: Extra components (separate by comma) of the package to install.
     :param prefix: Prefix (e.g., sudo, environment variable configuration, etc.) to the command.
+    :param python: The path (default python3) to the Python executable.
     """
     ver = _github_version(url)
     ver_no_letter = re.sub("[a-zA-Z]", "", ver)
@@ -239,7 +239,7 @@ def install_py_github(
     url = f"{url}/releases/download/{ver}/{name}-{ver_no_letter}-py3-none-any.whl"
     if extras:
         url = f"'{name}[{extras}] @ {url}'"
-    cmd = f"{prefix} {pip} install {'--user' if user else ''} --upgrade {pip_option} {url}"
+    cmd = f"{prefix} {python} -m pip install {'--user' if user else ''} --upgrade {pip_option} {url}"
     run_cmd(cmd)
 
 
@@ -297,42 +297,6 @@ def option_python(subparser) -> None:
     )
 
 
-def option_ipython(subparser) -> None:
-    """Add the option --ipython into the sub parser.
-
-    :param subparser: A sub parser.
-    """
-    subparser.add_argument(
-        "--ipython",
-        dest="ipython",
-        default="ipython3",
-        help="Path to the ipython3 command."
-    )
-
-
-def option_pip(subparser) -> None:
-    """Add the option --pip into the sub parser.
-
-    :param subparser: A sub parser.
-    """
-    subparser.add_argument(
-        "--pip", dest="pip", default="pip3", help="Path to the pip command."
-    )
-
-
-def option_jupyter(subparser) -> None:
-    """Add the option --jupyter into the sub parser.
-
-    :param subparser: A sub parser.
-    """
-    subparser.add_argument(
-        "--jupyter",
-        dest="jupyter",
-        default="jupyter",
-        help="Path to the jupyter command."
-    )
-
-
 def option_pip_option(subparser) -> None:
     """Add the option --pip-option into the sub parser.
 
@@ -344,11 +308,11 @@ def option_pip_option(subparser) -> None:
 
 
 def option_pip_bundle(subparser) -> None:
-    """Add the options --pip, --user and --pip-option into the sub parser.
+    """Add the options --python, --user and --pip-option into the sub parser.
 
     :param subparser: A sub parser.
     """
-    option_pip(subparser)
+    option_python(subparser)
     option_user(subparser)
     option_pip_option(subparser)
 

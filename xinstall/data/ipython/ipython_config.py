@@ -330,9 +330,19 @@ if "darwin" in PLATFORM or "macos" in PLATFORM:
         ]
     )
 elif "win" in PLATFORM:
-    c.AliasManager.user_aliases.extend([
-        ("which", "Get-command"),
-    ])
+    c.AliasManager.user_aliases.extend(
+        [
+            ("which", "Get-command"),
+            (
+                "jlab.launch",
+                'python3 -m jupyterlab --allow-root --ip="0.0.0.0" --port=8888 --no-browser --notebook-dir="%cd%"'
+            ),
+            (
+                "jupyterlab.launch",
+                'python3 -m jupyterlab --allow-root --ip="0.0.0.0" --port=8888 --no-browser --notebook-dir="%cd%"'
+            ),
+        ]
+    )
 else:
     c.AliasManager.user_aliases.extend(
         [

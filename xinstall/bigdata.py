@@ -196,7 +196,7 @@ def pyspark(args):
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"{args.pip} uninstall pyspark findspark"
+        cmd = f"{args.pip_uninstall} pyspark findspark"
         run_cmd(cmd)
 
 
@@ -219,7 +219,7 @@ def dask(args):
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"{args.pip} uninstall dask"
+        cmd = f"{args.pip_uninstall} dask"
         run_cmd(cmd)
 
 

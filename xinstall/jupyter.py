@@ -11,7 +11,6 @@ from .utils import (
     run_cmd,
     add_subparser,
     option_pip_bundle,
-    option_jupyter,
 )
 from .dev import rustup, cmake
 
@@ -35,7 +34,7 @@ def nbdime(args) -> None:
     if args.install:
         run_cmd(f"{args.pip_install} nbdime")
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall nbdime")
+        run_cmd(f"{args.pip_uninstall} nbdime")
     if args.config:
         run_cmd("nbdime config-git --enable --global")
 
@@ -83,7 +82,6 @@ def jupyterlab_lsp(args) -> None:
 
 def _jupyterlab_lsp_args(subparser) -> None:
     option_pip_bundle(subparser)
-    option_jupyter(subparser)
 
 
 def _add_subparser_jupyterlab_lsp(subparsers) -> None:
@@ -112,7 +110,7 @@ def beakerx(args) -> None:
             f"{args.prefix} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager"
         )
         run_cmd(f"{args.prefix} beakerx uninstall")
-        run_cmd(f"{args.pip} uninstall beakerx")
+        run_cmd(f"{args.pip_uninstall} beakerx")
     if args.config:
         run_cmd(f"{args.prefix} chown -R {USER}:`id -g {USER}` {HOME}")
 
@@ -304,7 +302,7 @@ def jupyterlab_vim(args):
             cmd = f"{args.prefix} jupyter labextension disable @axlair/jupyterlab_vim"
             run_cmd(cmd)
     if args.uninstall:
-        cmd = f"{args.prefix} {args.pip} uninstall jupyterlab_vim"
+        cmd = f"{args.prefix} {args.pip_uninstall} jupyterlab_vim"
         run_cmd(cmd)
 
 
@@ -349,7 +347,7 @@ def jupyterlab(args):
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"""{args.prefix} {args.pip} uninstall nbdime nbconvert jupyterlab \
+        cmd = f"""{args.prefix} {args.pip_uninstall} nbdime nbconvert jupyterlab \
                 jupyterlab_widgets ipywidgets \
                 jupyterlab_vim \
                 jupyterlab-lsp python-language-server[all] \

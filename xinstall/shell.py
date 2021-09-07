@@ -10,6 +10,7 @@ from .utils import (
     HOME,
     BASE_DIR,
     BIN_DIR,
+    is_win,
     is_ubuntu_debian,
     is_centos_series,
     is_linux,
@@ -39,6 +40,7 @@ def _add_subparser_shell(subparsers):
     _add_subparser_osquery(subparsers)
     _add_subparser_dust(subparsers)
     _add_subparser_rip(subparsers)
+    _add_subparser_long_path(subparsers)
 
 
 def coreutils(args) -> None:
@@ -276,7 +278,7 @@ def xonsh(args) -> None:
         shutil.copy2(src, dst)
         logging.info("%s is copied to %s.", src, dst)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall xonsh")
+        run_cmd(f"{args.pip_uninstall} xonsh")
 
 
 def _xonsh_args(subparser) -> None:
@@ -391,18 +393,23 @@ def osquery(args) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            cmd = f"""{args.prefix} apt-get {args.yes_s} install dirmngr \
-                    && {args.prefix} apt-key adv --keyserver keyserver.ubuntu.com \
-                        --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
-                    && {args.prefix} add-apt-repository \
-                        "deb [arch=amd64] https://pkg.osquery.io/deb deb main" \
-                    && {args.prefix} apt-get {args.yes_s} install osquery
+            cmd = f"""xinstall github -r osquery/osquery -k linux amd64 deb -o /tmp/osquery.deb \
+                    && {args.prefix} apt-get install {args.yes_s} /tmp/osquery.deb
                 """
             run_cmd(cmd)
         elif is_macos():
-            brew_install_safe(["osquery"])
+            cmd = "brew install --cask osquery"
+            run_cmd(cmd)
         elif is_centos_series():
-            run_cmd(f"{args.prefix} yum install osquery")
+            cmd = f"""xinstall github -r osquery/osquery -k linux amd64 rpm -o /tmp/osquery.rpm \
+                    && {args.prefix} yum install {args.yes_s} /tmp/osquery.rpm
+                """
+            run_cmd(cmd)
+        elif is_win():
+            cmd = """xinstall github -r osquery/osquery -k msi -o "%temp%\\osquery.msi" \
+                    && msiexec /i "%temp%\\osquery.msi"
+                """
+            run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
@@ -412,6 +419,8 @@ def osquery(args) -> None:
             run_cmd("brew uninstall osquery")
         elif is_centos_series():
             run_cmd(f"{args.prefix} yum remove osquery")
+        elif is_win():
+            pass
 
 
 def _add_subparser_osquery(subparsers) -> None:
@@ -495,3 +504,55 @@ def rip(args) -> None:
 
 def _add_subparser_rip(subparsers) -> None:
     add_subparser(subparsers, "rip", func=rip, aliases=["trash"])
+
+
+def long_path(args) -> None:
+    """Enable/disable long path support on Windows.
+    This command needs to be run in an admin CMD/PowerShell.
+    """
+    if args.config:
+        if args.value is None:
+            return
+        value = 1 if args.value else 0
+        cmd = f"""C:\\Windows\\System32\\powershell.exe New-ItemProperty `
+                -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem" `
+                -Name "LongPathsEnabled" `
+                -Value {value} `
+                -PropertyType DWORD `
+                -Force
+            """
+        run_cmd(cmd)
+
+
+def _long_path_args(subparser) -> None:
+    subparser.add_argument(
+        "--enable",
+        "--yes",
+        "-e",
+        "-y",
+        dest="value",
+        default=None,
+        action="store_const",
+        const="1",
+        help="Enable long path support on Windows."
+    )
+    subparser.add_argument(
+        "--disable",
+        "--no",
+        "-d",
+        "-n",
+        dest="value",
+        action="store_const",
+        const="0",
+        help="Disable long path support on Windows."
+    )
+
+
+def _add_subparser_long_path(subparsers) -> None:
+    add_subparser(
+        subparsers,
+        "long_path",
+        func=long_path,
+        aliases=["longp", "lpath", "lp"],
+        add_argument=_long_path_args
+    )

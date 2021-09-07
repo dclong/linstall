@@ -33,7 +33,7 @@ def pdftotext(args):
                     """
             )
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall pdftotext")
+        run_cmd(f"{args.pip_uninstall} pdftotext")
 
 
 def _add_subparser_pdftotext(subparsers):
