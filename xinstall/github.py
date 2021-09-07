@@ -5,9 +5,7 @@ import shutil
 import requests
 from packaging.version import parse
 from packaging.specifiers import SpecifierSet
-from .utils import (
-    option_version, option_pip_bundle, add_subparser, run_cmd
-)
+from .utils import (option_version, option_pip_bundle, add_subparser, run_cmd)
 from . import utils
 
 
