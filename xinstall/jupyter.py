@@ -82,7 +82,6 @@ def jupyterlab_lsp(args) -> None:
 
 def _jupyterlab_lsp_args(subparser) -> None:
     option_pip_bundle(subparser)
-    option_jupyter(subparser)
 
 
 def _add_subparser_jupyterlab_lsp(subparsers) -> None:
