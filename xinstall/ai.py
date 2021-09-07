@@ -218,7 +218,7 @@ def cuda(args):
     """Install CUDA for GPU computing.
     """
     if args.install:
-        if is_ubuntu():
+        if is_ubuntu_debian():
             pkgs = "cuda" if args.full else "cuda-drivers"
             cmd = f"""wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin -O /tmp/cuda-ubuntu2004.pin \
                 && {args.prefix} mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 \
@@ -253,3 +253,27 @@ def _cuda_args(subparser):
 
 def _add_subparser_cuda(subparsers):
     add_subparser(subparsers, "cuda", func=cuda, add_argument=_cuda_args)
+
+
+def nvidia_docker(args):
+    """Install nvidia-docker2 (on a  Linux machine).
+    """
+    if args.install:
+        if is_ubuntu_debian():
+            cmd = f"""distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+                    && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+                    && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list \
+                    && {args.prefix} apt-get update \
+                    && {args.prefix} apt-get install -y nvidia-docker2
+                """
+            run_cmd(cmd)
+            logging.info("The package nvidia-docker2 has been installed. \nPlease restart Docker (sudo service docker restart).")
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.prefix} apt-get {args.yes_s} purge nvidia-docker2"
+        run_cmd(cmd)
+
+
+def _add_subparser_nvidia_docker(subparsers):
+    add_subparser(subparsers, "nvidia_docker", func=nvidia_docker)
