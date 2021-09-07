@@ -6,7 +6,7 @@ import requests
 from packaging.version import parse
 from packaging.specifiers import SpecifierSet
 from .utils import (
-    option_version, option_python, option_pip_bundle, add_subparser, run_cmd
+    option_version, option_pip_bundle, add_subparser, run_cmd
 )
 from . import utils
 
@@ -140,7 +140,6 @@ def _add_subparser_install_py_github(subparsers) -> None:
         dest="url", help="The URL of the Python package's GitHub repository."
     )
     option_pip_bundle(subparser)
-    option_python(subparser)
     subparser.set_defaults(func=install_py_github)
     return subparser
 
