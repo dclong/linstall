@@ -39,6 +39,7 @@ def _add_subparser_shell(subparsers):
     _add_subparser_osquery(subparsers)
     _add_subparser_dust(subparsers)
     _add_subparser_rip(subparsers)
+    _add_subparser_long_path(subparsers)
 
 
 def coreutils(args) -> None:
@@ -495,3 +496,55 @@ def rip(args) -> None:
 
 def _add_subparser_rip(subparsers) -> None:
     add_subparser(subparsers, "rip", func=rip, aliases=["trash"])
+
+
+def long_path(args) -> None:
+    """Enable/disable long path support on Windows.
+    This command needs to be run in an admin CMD/PowerShell.
+    """
+    if args.config:
+        if args.value is None:
+            return
+        value = 1 if args.value else 0
+        cmd = f"""C:\Windows\System32\powershell.exe New-ItemProperty `
+                -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
+                -Name "LongPathsEnabled" `
+                -Value {value} `
+                -PropertyType DWORD `
+                -Force
+            """
+        run_cmd(cmd)
+
+
+def _long_path_args(subparser) -> None:
+    subparser.add_argument(
+        "--enable",
+        "--yes",
+        "-e",
+        "-y",
+        dest="value",
+        default=None,
+        action="store_const",
+        value="1",
+        help="Enable long path support on Windows."
+    )
+    subparser.add_argument(
+        "--disable",
+        "--no",
+        "-d",
+        "-n",
+        dest="value",
+        action="store_const",
+        lalue="0",
+        help="Disable long path support on Windows."
+    )
+
+
+def _add_subparser_long_path(subparsers) -> None:
+    add_subparser(
+        subparsers,
+        "long_path",
+        func=long_path,
+        aliases=["longp", "lpath", "lp"],
+        add_argument=_long_path_args
+    )
