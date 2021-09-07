@@ -3,8 +3,19 @@
 from pathlib import Path
 import logging
 from .utils import (
-    HOME, USER, run_cmd, add_subparser, is_linux, is_macos, option_pip_bundle
+    HOME, USER, run_cmd, add_subparser, is_ubuntu, is_linux, is_macos, is_win,
+    option_pip_bundle
 )
+
+
+def _add_subparser_ai(subparsers):
+    _add_subparser_kaggle(subparsers)
+    _add_subparser_lightgbm(subparsers)
+    _add_subparser_pytorch(subparsers)
+    _add_subparser_autogluon(subparsers)
+    _add_subparser_pytext(subparsers)
+    _add_subparser_computer_vision(subparsers)
+    _add_subparser_nlp(subparsers)
 
 
 def kaggle(args):
@@ -203,11 +214,42 @@ def _add_subparser_nlp(subparsers):
     add_subparser(subparsers, "nlp", func=nlp, add_argument=_nlp_args)
 
 
-def _add_subparser_ai(subparsers):
-    _add_subparser_kaggle(subparsers)
-    _add_subparser_lightgbm(subparsers)
-    _add_subparser_pytorch(subparsers)
-    _add_subparser_autogluon(subparsers)
-    _add_subparser_pytext(subparsers)
-    _add_subparser_computer_vision(subparsers)
-    _add_subparser_nlp(subparsers)
+def cuda(args):
+    """Install CUDA for GPU computing.
+    """
+    if args.install:
+        if is_ubuntu():
+            pkgs = "cuda" if args.full else "cuda-drivers"
+            cmd = f"""wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin -O /tmp/cuda-ubuntu2004.pin \
+                && {args.prefix} mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 \
+                {args.prefix} apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub \
+                {args.prefix} add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
+                {args.prefix} apt-get update \
+                {args.prefix} apt-get {args.yes_s} install {pkgs}
+                """
+            run_cmd(cmd)
+            logging.info(
+                "The package(s) %s have been installed. \nYou might have to restart your computer for it to take effect!",
+                pkgs
+            )
+        elif is_win():
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.prefix} apt-get {args.yes_s} purge cuda-drivers"
+        run_cmd(cmd)
+
+
+def _cuda_args(subparser):
+    subparser.add_argument(
+        "--full",
+        dest="full",
+        action="store_true",
+        help=
+        "Install the package cuda (full installation) instead of cuda-drivers (drivers only)."
+    )
+
+
+def _add_subparser_cuda(subparsers):
+    add_subparser(subparsers, "cuda", func=cuda, add_argument=_cuda_args)
