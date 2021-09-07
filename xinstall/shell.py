@@ -543,7 +543,7 @@ def _long_path_args(subparser) -> None:
         "-n",
         dest="value",
         action="store_const",
-        lalue="0",
+        const="0",
         help="Disable long path support on Windows."
     )
 
