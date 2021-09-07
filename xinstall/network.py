@@ -234,7 +234,7 @@ def sshuttle(args: Namespace):
     if args.config:
         pass
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall sshuttle")
+        run_cmd(f"{args.pip_uninstall} sshuttle")
 
 
 def _sshuttle_args(subparser):

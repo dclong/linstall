@@ -86,12 +86,16 @@ def parse_args(args=None, namespace=None) -> Namespace:
         args.user_s = "--user" if args.user else ""
     if USER == "root" or is_win():
         args.prefix = ""
-    if "pip_option" in args:
+    if "python" in args:
         if args.pip_option:
             args.pip_option = " ".join(
                 f"--{option}" for option in args.pip_option.split(",")
             )
-        args.pip_install = f"{args.pip} install {args.user_s} {args.pip_option}"
+        args.pip_install = f"{args.python} -m pip install {args.user_s} {args.pip_option}"
+        args.pip_uninstall = f"{args.python} -m pip uninstall"
+        args.jupyterlab = f"{args.python} -m jupyterlab"
+        args.jupyter = f"{args.python} -m jupyter"
+        args.ipython = f"{args.python} -m IPython"
     return args
 
 

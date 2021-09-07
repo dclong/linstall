@@ -93,7 +93,7 @@ def yapf(args):
         des_file.write_text(tomlkit.dumps(dic_des))
         logging.info("yapf is configured via %s.", des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall yapf")
+        run_cmd(f"{args.pip_uninstall} yapf")
 
 
 def _yapf_args(subparser):
@@ -129,7 +129,7 @@ def pylint(args):
         des_file.write_text(tomlkit.dumps(dic_des))
         logging.info("pylint is configured via %s.", des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall pylint")
+        run_cmd(f"{args.pip_uninstall} pylint")
 
 
 def _pylint_args(subparser):
@@ -161,7 +161,7 @@ def flake8(args):
         shutil.copy2(src_file, des_file)
         logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall flake8")
+        run_cmd(f"{args.pip_uninstall} flake8")
 
 
 def _flake8_args(subparser):
@@ -193,7 +193,7 @@ def darglint(args):
         shutil.copy2(src_file, des_file)
         logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall darglint")
+        run_cmd(f"{args.pip_uninstall} darglint")
 
 
 def _darglint_args(subparser):
@@ -225,7 +225,7 @@ def pytype(args):
         shutil.copy2(src_file, des_file)
         logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall pytype")
+        run_cmd(f"{args.pip_uninstall} pytype")
 
 
 def _pytype_args(subparser):
@@ -606,7 +606,7 @@ def jpype1(args):
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"{args.pip} uninstall JPype1"
+        cmd = f"{args.pip_uninstall} JPype1"
         run_cmd(cmd)
 
 
@@ -653,7 +653,7 @@ def sphinx(args):
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"{args.pip} uninstall sphinx sphinx-autodoc-typehints"
+        cmd = f"{args.pip_uninstall} sphinx sphinx-autodoc-typehints"
         run_cmd(cmd)
 
 

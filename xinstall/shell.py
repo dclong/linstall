@@ -277,7 +277,7 @@ def xonsh(args) -> None:
         shutil.copy2(src, dst)
         logging.info("%s is copied to %s.", src, dst)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall xonsh")
+        run_cmd(f"{args.pip_uninstall} xonsh")
 
 
 def _xonsh_args(subparser) -> None:

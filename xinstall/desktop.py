@@ -84,7 +84,7 @@ def pygetwindow(args):
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"{args.pip} uninstall pyobjc-framework-quartz pygetwindow"
+        cmd = f"{args.pip_uninstall} pyobjc-framework-quartz pygetwindow"
         run_cmd(cmd)
 
 
