@@ -12,8 +12,8 @@ def test_install_py_github():
     utils.install_py_github(
         url="https://github.com/dclong/dsutil",
         user=False,
-        pip="python3 -m pip",
         extras="docker",
+        python="python3"
     )
     cmd = "python3 -c 'import dsutil.docker'"
     sp.run(cmd, shell=True, check=True)
