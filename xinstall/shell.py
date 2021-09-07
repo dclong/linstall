@@ -392,18 +392,23 @@ def osquery(args) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            cmd = f"""{args.prefix} apt-get {args.yes_s} install dirmngr \
-                    && {args.prefix} apt-key adv --keyserver keyserver.ubuntu.com \
-                        --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
-                    && {args.prefix} add-apt-repository \
-                        "deb [arch=amd64] https://pkg.osquery.io/deb deb main" \
-                    && {args.prefix} apt-get {args.yes_s} install osquery
+            cmd = f"""xinstall github -r osquery/osquery -k linux amd64 deb -o /tmp/osquery.deb \
+                    && {args.prefix} apt-get install {args.yes_s} /tmp/osquery.deb
                 """
             run_cmd(cmd)
         elif is_macos():
-            brew_install_safe(["osquery"])
+            cmd = "brew install --cask osquery"
+            run_cmd(cmd)
         elif is_centos_series():
-            run_cmd(f"{args.prefix} yum install osquery")
+            cmd = f"""xinstall github -r osquery/osquery -k linux amd64 rpm -o /tmp/osquery.rpm \
+                    && {args.prefix} yum install {args.yes_s} /tmp/osquery.rpm
+                """
+            run_cmd(cmd)
+        elif is_win():
+            cmd = f"""xinstall github -r osquery/osquery -k msi -o "%temp%\osquery.msi" \
+                    && msiexec /i "%temp%\osquery.msi"
+                """
+            run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
@@ -413,6 +418,8 @@ def osquery(args) -> None:
             run_cmd("brew uninstall osquery")
         elif is_centos_series():
             run_cmd(f"{args.prefix} yum remove osquery")
+        elif is_win():
+            pass
 
 
 def _add_subparser_osquery(subparsers) -> None:
