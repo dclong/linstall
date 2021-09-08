@@ -412,7 +412,7 @@ def rustup(args):
             cmd = f"""{args.prefix} apt-get update \
                     && {args.prefix} apt-get install -y cmake libssl-dev pkg-config
                 """
-            run_cmd(f"{args.prefix} apt-get install -y cmake libssl-dev pkg-config")
+            run_cmd(cmd)
         run_cmd("~/.cargo/bin/cargo install cargo-edit")
     if args.config:
         _link_rust(args)
