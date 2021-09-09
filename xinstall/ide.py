@@ -1,6 +1,8 @@
 """Install IDE related tools.
 """
 from typing import Union
+from pathlib import Path
+from argparse import Namespace
 #import logging
 import os
 import shutil
@@ -110,8 +112,37 @@ def _svim_gen_config() -> None:
 def _strip_spacevim(args: Namespace) -> None:
     if not args.strip:
         return
-    # .git
-    shutil.rmtree(Path.home() / ".SpaceVim/.git")
+    dir_ = Path.home() / ".SpaceVim/"
+    paths = [
+        ".git",
+        ".SpaceVim.d/",
+        ".ci/",
+        ".github/",
+        "docker/",
+        "docs/",
+        "wiki/",
+        ".editorconfig",
+        ".gitignore",
+        "CODE_OF_CONDUCT.md",
+        "CONTRIBUTING.cn.md",
+        "CONTRIBUTING.md",
+        "Makefile",
+        "README.cn.md",
+        "README.md",
+        "codecov.yml",
+    ]
+    for path in paths:
+        path = dir_ / path
+        if path.is_file():
+            try:
+                path.unlink()
+            except FileNotFoundError:
+                pass
+        else:
+            try:
+                shutil.rmtree(path)
+            except FileNotFoundError:
+                pass
 
 
 def spacevim(args) -> None:
