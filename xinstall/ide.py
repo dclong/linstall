@@ -1,6 +1,8 @@
 """Install IDE related tools.
 """
 from typing import Union
+from pathlib import Path
+from argparse import Namespace
 #import logging
 import os
 import shutil
@@ -107,23 +109,60 @@ def _svim_gen_config() -> None:
         shutil.copy2(BASE_DIR / "SpaceVim/init.toml", des_dir)
 
 
+def _strip_spacevim(args: Namespace) -> None:
+    if not args.strip:
+        return
+    dir_ = Path.home() / ".SpaceVim/"
+    paths = [
+        ".git",
+        ".SpaceVim.d/",
+        ".ci/",
+        ".github/",
+        "docker/",
+        "docs/",
+        "wiki/",
+        ".editorconfig",
+        ".gitignore",
+        "CODE_OF_CONDUCT.md",
+        "CONTRIBUTING.cn.md",
+        "CONTRIBUTING.md",
+        "Makefile",
+        "README.cn.md",
+        "README.md",
+        "codecov.yml",
+    ]
+    for path in paths:
+        path = dir_ / path
+        if path.is_file():
+            try:
+                path.unlink()
+            except FileNotFoundError:
+                pass
+        else:
+            try:
+                shutil.rmtree(path)
+            except FileNotFoundError:
+                pass
+
+
 def spacevim(args) -> None:
     """Install and configure SpaceVim.
     """
     if args.install:
         run_cmd("curl -sLf https://spacevim.org/install.sh | bash")
+        _strip_spacevim(args)
         if shutil.which("nvim"):
             run_cmd('nvim --headless +"call dein#install()" +qall')
         if not args.no_lsp:
             cmd = f"{args.pip_install} python-language-server[all] pyls-mypy"
             # npm install -g bash-language-server javascript-typescript-langserver
             run_cmd(cmd)
-    if args.uninstall:
-        run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall")
     if args.config:
         _svim_gen_config()
         _svim_true_color(args.true_colors)
         _svim_filetype_shiftwidth()
+    if args.uninstall:
+        run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall")
 
 
 def _svim_filetype_shiftwidth():
@@ -138,19 +177,25 @@ def _spacevim_args(subparser) -> None:
         dest="true_colors",
         action="store_true",
         default=None,
-        help="enable true color (default true) for SpaceVim."
+        help="Enable true color (default true) for SpaceVim."
     )
     subparser.add_argument(
         "--disable-true-colors",
         dest="true_colors",
         action="store_false",
-        help="disable true color (default true) for SpaceVim."
+        help="Disable true color (default true) for SpaceVim."
     )
     subparser.add_argument(
         "--no-lsp",
         dest="no_lsp",
         action="store_true",
-        help="disable true color (default true) for SpaceVim."
+        help="Disable true color (default true) for SpaceVim."
+    )
+    subparser.add_argument(
+        "--strip",
+        dest="strip",
+        action="store_true",
+        help='Strip unnecessary files from "~/.SpaceVim".'
     )
     option_pip_bundle(subparser)
 
