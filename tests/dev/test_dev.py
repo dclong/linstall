@@ -70,7 +70,7 @@ def test_poetry():
 def test_ipython():
     """Test installing and configuring LightGBM.
     """
-    cmd = "xinstall ipython -ic"
+    cmd = "xinstall ipython -ic && python3 -m IPython -c ls"
     run_cmd(cmd)
 
 
