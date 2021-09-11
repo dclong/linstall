@@ -356,4 +356,8 @@ else:
             ),
         ]
     )
+#if "linux" in PLATFORM: 
+#    %alias cs cd %l && ls --color=auto
+#else:
+#    %alias cs cd %l && ls -G
 c.IPCompleter.use_jedi = False
