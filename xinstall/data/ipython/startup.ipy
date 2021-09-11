@@ -8,7 +8,6 @@ import re
 import subprocess
 import getpass
 import socket
-import platform
 from IPython.terminal.prompts import Prompts, Token
 from IPython.core.magic import (register_line_magic, register_cell_magic, register_line_cell_magic)
 try:
@@ -20,14 +19,13 @@ try:
 except:
     pass
 HOME = Path.home()
-PLATFORM = platform.platform().lower()
 USER = getpass.getuser()
 HOST = re.sub("\.local$", "", socket.gethostname())
 
 
-# ------------------------------- Command Prompt -----------------------------------
 class MyPrompt(Prompts):
-
+    """Customize command prompt for IPython.
+    """
     def _git_status(self) -> List[bytes]:
         try:
             proc = subprocess.run(["git", "status"], stdout=subprocess.PIPE)
@@ -101,18 +99,15 @@ class MyPrompt(Prompts):
         ]
 
 
-get_ipython().prompts = MyPrompt(get_ipython())
-# ------------------------------- const -----------------------------------
-if "darwin" in PLATFORM:
-    trash_dir = HOME / ".Trash"
-else:
-    trash_dir = HOME / ".local/share/Trash/"
-# ------------------------------- magic -----------------------------------
 @register_line_magic
 def trash(line: str):
+    """Define a trash magic as a better alternative to rm.
+
+    :param line: The parameter line passed to this magic.
+    """
     path = Path(line)
     trash_dir = Path.home() / ".Trash"
-    if any(dist in PLATFORM for dist in ("ubuntu", "debian")):
+    if "linux" in sys.platform:
         trash_dir = Path.home() / ".local/share/Trash/files"
     trash_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
     backup = trash_dir / path.name
@@ -120,13 +115,12 @@ def trash(line: str):
         backup = backup.with_name(backup.name + "_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S%f"))
     shutil.move(path, backup)
     print(f"The path {path} has been moved into the trash directory {trash_dir}.")
-# ------------------------------- alias -----------------------------------
-#if "linux" in PLATFORM: 
-#    %alias cs cd %l && ls --color=auto
-#else:
-#    %alias cs cd %l && ls -G
-# ------------------------------- Symbolic Links -----------------------------------
+
+
 def symlink_blog() -> None:
+    """Create symbolic link for the blog directory 
+        to make it easier to use.
+    """
     dstfile = HOME / ".local/bin/blog"
     paths = [
         HOME / "archives/blog/blog.py",
@@ -143,14 +137,22 @@ def symlink_blog() -> None:
             return
 
 
+def set_path_env() -> None:
+    """Set the PATH environment variable.
+    """
+    delimiter = ";" if "win" in sys.platform else ":"
+    paths = list(HOME.glob(".*/bin"))
+    paths.extend(HOME.glob("Library/Python/3.*/bin"))
+    paths.extend(Path("/").glob("apache/hadoop/bin"))
+    paths.extend(os.environ["PATH"].split(delimiter))
+    paths.append(HOME / ".pyenv/shims")
+    if "win" in sys.platform:
+        paths.append("C:\\Program Files\\osquery")
+    # use dict to dedup while keep the original order!!!
+    os.environ["PATH"] = delimiter.join({str(path): None for path in paths})
+
+
+get_ipython().prompts = MyPrompt(get_ipython())
 symlink_blog()
-# -------------------------------------------------------------------------
-# use dict to dedup while keep the original order!!!
-os.environ["PATH"] = ":".join({str(path): None for path in
-    list(HOME.glob(".*/bin")) + \
-    list(HOME.glob("Library/Python/3.*/bin")) + \
-    list(Path("/").glob("apache/hadoop/bin")) + \
-    os.environ["PATH"].split(":") + \
-    [HOME / ".pyenv/shims"]
-})
+set_path_env()
 %rehashx
