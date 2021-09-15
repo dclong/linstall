@@ -5,10 +5,11 @@ from .utils import (
     USER,
     run_cmd,
     add_subparser,
-    is_macos,
-    is_centos_series,
-    is_ubuntu_debian,
     is_win,
+    is_macos,
+    is_linux,
+    is_ubuntu_debian,
+    is_centos_series,
     update_apt_source,
     brew_install_safe,
 )
@@ -16,6 +17,8 @@ from .utils import (
 
 def virtualbox(args) -> None:
     """Install VirtualBox.
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
         if is_ubuntu_debian():
@@ -42,6 +45,8 @@ def _add_subparser_virtualbox(subparsers):
 
 def docker(args):
     """Install and configure Docker container.
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
         if is_ubuntu_debian():
@@ -100,6 +105,8 @@ def _add_subparser_docker(subparsers):
 
 def kubectl(args):
     """Install and configure the kubernetes command-line interface kubectl.
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
         if is_ubuntu_debian():
@@ -139,6 +146,8 @@ def _minikube_linux(args):
 
 def minikube(args) -> None:
     """Install MiniKube.
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     virtualbox(args)
     kubectl(args)
@@ -170,6 +179,8 @@ def _add_subparser_minikube(subparsers):
 
 def multipass(args) -> None:
     """Install Multipass.
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
         if is_ubuntu_debian():
@@ -199,17 +210,18 @@ def _add_subparser_multipass(subparsers):
 
 
 def microk8s(args) -> None:
-    """Install MicroK8S.
+    """Install and configure MicroK8S.
+    Note that snap must be available in order to install microk8s.
+
+    :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_linux():
             cmd = f"""{args.prefix} snap install microk8s --classic \
-                    && ln -svf /snap/bin/microk8s.kubectl /snap/bin/kubectl \
-                    && gpasswd -a $(id -un) microk8s"""
+                    && {args.prefix} ln -svf /snap/bin/microk8s.kubectl /snap/bin/kubectl \
+                    && {args.prefix} gpasswd -a $(id -un) microk8s"""
             run_cmd(cmd)
         elif is_macos():
-            pass
-        elif is_centos_series():
             pass
         elif is_win():
             pass
