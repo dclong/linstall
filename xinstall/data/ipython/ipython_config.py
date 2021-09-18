@@ -71,20 +71,20 @@ c.AliasManager.user_aliases = [
         "docker run -d --hostname jupyterhub --log-opt max-size=50m -p 8000:8000 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub:next /scripts/sys/init.sh"
     ),
     (
-        "docker.jupyterhub_ai",
-        "docker run -d --hostname jupyterhub-ai --log-opt max-size=50m -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ai /scripts/sys/init.sh"
+        "docker.jupyterhub_pytorch",
+        "docker run -d --hostname jupyterhub-pytorch --log-opt max-size=50m -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-pytorch /scripts/sys/init.sh"
     ),
     (
-        "docker.jupyterhub_ai.next",
-        "docker run -d --hostname jupyterhub-ai --log-opt max-size=50m -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ai:next /scripts/sys/init.sh"
+        "docker.jupyterhub_pytorch.next",
+        "docker run -d --hostname jupyterhub-pytorch --log-opt max-size=50m -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-pytorch:next /scripts/sys/init.sh"
     ),
     (
-        "docker.jupyterhub_ai.linux",
-        "docker run -d --hostname jupyterhub-ai --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ai /scripts/sys/init.sh"
+        "docker.jupyterhub_pytorch.linux",
+        "docker run -d --hostname jupyterhub-pytorch --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-pytorch /scripts/sys/init.sh"
     ),
     (
-        "docker.jupyterhub_ai.linux.next",
-        "docker run -d --hostname jupyterhub-ai --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ai:next /scripts/sys/init.sh"
+        "docker.jupyterhub_pytorch.linux.next",
+        "docker run -d --hostname jupyterhub-pytorch --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-pytorch:next /scripts/sys/init.sh"
     ),
     (
         "docker.jupyterlab",
