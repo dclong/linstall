@@ -3,7 +3,7 @@
 from pathlib import Path
 import logging
 from .utils import (
-    HOME, USER, run_cmd, add_subparser, is_ubuntu_debian, is_linux, is_macos, is_win,
+    HOME, USER, run_cmd, add_subparser, is_ubuntu_debian, is_macos, is_win,
     option_pip_bundle
 )
 
@@ -170,13 +170,15 @@ def computer_vision(args):
     """Insert computer vision Python packages: opencv-python, scikit-image and Pillow.
     """
     if args.install:
-        if is_linux():
-            cmd = f"""{args.prefix} apt-get install {args.yes_s} \
-                        libsm6 libxrender-dev libaec-dev \
+        if is_ubuntu_debian():
+            cmd = f"""{args.prefix} apt-get update \
+                    && {args.prefix} apt-get install {args.yes_s} \
+                        libsm6 libxrender-dev libaec-dev libxext6 \
                         libblosc-dev libbrotli-dev libghc-bzlib-dev libgif-dev \
                         libopenjp2-7-dev liblcms2-dev libjxr-dev liblz4-dev \
                         liblzma-dev libpng-dev libsnappy-dev libtiff-dev \
                         libwebp-dev libzopfli-dev libzstd-dev \
+                        ffmpeg \
                     && {args.pip_install} opencv-python scikit-image pillow"""
             run_cmd(cmd)
         elif is_macos():
