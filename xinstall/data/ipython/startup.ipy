@@ -140,7 +140,7 @@ def symlink_blog() -> None:
 def set_path_env() -> None:
     """Set the PATH environment variable.
     """
-    delimiter = ";" if "win" in sys.platform else ":"
+    delimiter = ";" if sys.platform == "win32" else ":"
     paths = list(HOME.glob(".*/bin"))
     paths.extend(HOME.glob("Library/Python/3.*/bin"))
     paths.extend(Path("/").glob("apache/hadoop/bin"))
