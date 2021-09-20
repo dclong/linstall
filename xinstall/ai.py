@@ -170,8 +170,9 @@ def computer_vision(args):
     """Insert computer vision Python packages: opencv-python, scikit-image and Pillow.
     """
     if args.install:
-        if is_linux():
-            cmd = f"""{args.prefix} apt-get install {args.yes_s} \
+        if is_ubuntu_debian():
+            cmd = f"""{args.prefix} apt-get update \
+                    && {args.prefix} apt-get install {args.yes_s} \
                         libsm6 libxrender-dev libaec-dev \
                         libblosc-dev libbrotli-dev libghc-bzlib-dev libgif-dev \
                         libopenjp2-7-dev liblcms2-dev libjxr-dev liblz4-dev \
