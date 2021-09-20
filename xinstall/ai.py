@@ -173,11 +173,12 @@ def computer_vision(args):
         if is_ubuntu_debian():
             cmd = f"""{args.prefix} apt-get update \
                     && {args.prefix} apt-get install {args.yes_s} \
-                        libsm6 libxrender-dev libaec-dev \
+                        libsm6 libxrender-dev libaec-dev libxext6 \
                         libblosc-dev libbrotli-dev libghc-bzlib-dev libgif-dev \
                         libopenjp2-7-dev liblcms2-dev libjxr-dev liblz4-dev \
                         liblzma-dev libpng-dev libsnappy-dev libtiff-dev \
                         libwebp-dev libzopfli-dev libzstd-dev \
+                        ffmpeg \
                     && {args.pip_install} opencv-python scikit-image pillow"""
             run_cmd(cmd)
         elif is_macos():
