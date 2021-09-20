@@ -3,7 +3,7 @@
 from pathlib import Path
 import logging
 from .utils import (
-    HOME, USER, run_cmd, add_subparser, is_ubuntu_debian, is_linux, is_macos, is_win,
+    HOME, USER, run_cmd, add_subparser, is_ubuntu_debian, is_macos, is_win,
     option_pip_bundle
 )
 
