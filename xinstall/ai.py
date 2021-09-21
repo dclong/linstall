@@ -74,24 +74,24 @@ def _add_subparser_lightgbm(subparsers):
 
 
 def pytorch(args):
-    """Insert PyTorch.
+    """Insert PyTorch and TensorBoard.
     """
     if args.install:
         url = "https://download.pytorch.org/whl/torch_stable.html"
         if is_macos():
-            cmd = f"{args.pip_install} torch torchvision torchaudio"
+            cmd = f"{args.pip_install} torch torchvision torchaudio tensorboard"
             run_cmd(cmd)
         else:
             cmd = f"""{args.pip_install} -f {url} \
-                    torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0"""
+                    torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 tensorboard"""
             if args.cuda:
                 args.cuda = args.cuda.replace(".", "")
                 cmd = f"""{args.pip_install} -f {url} \
                     torch==1.9.0+cu{args.cuda} torchvision==0.10.0+cu{args.cuda} \
-                    torchaudio==0.9.0
+                    torchaudio==0.9.0 tensorboard
                     """
                 if args.cuda == "102":
-                    cmd = f"{args.pip_install} torch torchvision"
+                    cmd = f"{args.pip_install} torch torchvision tensorboard"
             run_cmd(cmd)
     if args.config:
         pass
