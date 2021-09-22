@@ -74,7 +74,7 @@ def _add_subparser_lightgbm(subparsers):
 
 
 def pytorch(args):
-    """Insert PyTorch.
+    """Install PyTorch.
     """
     if args.install:
         url = "https://download.pytorch.org/whl/torch_stable.html"
