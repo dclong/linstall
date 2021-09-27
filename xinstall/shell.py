@@ -22,6 +22,7 @@ from .utils import (
     add_subparser,
     option_pip_bundle,
     add_path_shell,
+    github,
 )
 
 
@@ -212,7 +213,10 @@ def hyper(args) -> None:
     """
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get update")
+            args.output = "/tmp/hyper.deb"
+            args.install_cmd = f"{args.prefix} apt-get install {args.yes_s}"
+            github(args)
         elif is_macos():
             run_cmd("brew cask install hyper")
         elif is_centos_series():
