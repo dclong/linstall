@@ -6,6 +6,7 @@ import shutil
 import sys
 import os
 import textwrap
+from . import github
 from .utils import (
     HOME,
     BASE_DIR,
@@ -212,7 +213,10 @@ def hyper(args) -> None:
     """
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get update")
+            args.output = "/tmp/hyper.deb"
+            args.install_cmd = f"{args.prefix} apt-get install {args.yes_s}"
+            github.github(args)
         elif is_macos():
             run_cmd("brew cask install hyper")
         elif is_centos_series():

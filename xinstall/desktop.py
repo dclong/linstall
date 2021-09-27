@@ -108,7 +108,7 @@ def shutter(args):
     if args.install:
         if is_ubuntu():
             cmd = f"""{args.prefix} add-apt-repository ppa:shutter/ppa \
-                && {args.prefix} apt-get update && {args.prefix} apt-get install shutter
+                && {args.prefix} apt-get update && {args.prefix} apt-get install shutter gnome-web-photo
                 """
             run_cmd(cmd)
     if args.config:
