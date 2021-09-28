@@ -71,20 +71,20 @@ c.AliasManager.user_aliases = [
         "docker run -d --hostname jupyterhub --log-opt max-size=50m -p 8000:8000 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub:next /scripts/sys/init.sh"
     ),
     (
-        "docker.jupyterhub_ai",
-        "docker run -d --hostname jupyterhub-ai --log-opt max-size=50m -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ai /scripts/sys/init.sh"
+        "docker.jupyterhub_pytorch",
+        "docker run -d --hostname jupyterhub-pytorch --log-opt max-size=50m -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-pytorch /scripts/sys/init.sh"
     ),
     (
-        "docker.jupyterhub_ai.next",
-        "docker run -d --hostname jupyterhub-ai --log-opt max-size=50m -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ai:next /scripts/sys/init.sh"
+        "docker.jupyterhub_pytorch.next",
+        "docker run -d --hostname jupyterhub-pytorch --log-opt max-size=50m -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-pytorch:next /scripts/sys/init.sh"
     ),
     (
-        "docker.jupyterhub_ai.linux",
-        "docker run -d --hostname jupyterhub-ai --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ai /scripts/sys/init.sh"
+        "docker.jupyterhub_pytorch.linux",
+        "docker run -d --hostname jupyterhub-pytorch --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-pytorch /scripts/sys/init.sh"
     ),
     (
-        "docker.jupyterhub_ai.linux.next",
-        "docker run -d --hostname jupyterhub-ai --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-ai:next /scripts/sys/init.sh"
+        "docker.jupyterhub_pytorch.linux.next",
+        "docker run -d --hostname jupyterhub-pytorch --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8000:8000 --dns 8.8.8.8 --dns 8.8.4.4 --gpus all -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-pytorch:next /scripts/sys/init.sh"
     ),
     (
         "docker.jupyterlab",
@@ -220,6 +220,10 @@ c.AliasManager.user_aliases = [
         "git.submodule",
         "git submodule init && git submodule update --recursive --remote"
     ),
+    ("git.modified", "git status | grep 'modified:' | sed 's/^\s*modified:\s*//'"),
+    ("git.deleted", "git status | grep 'deleted:' | sed 's/^\s*deleted:\s*//'"),
+    ("git.renamed", "git status | grep 'renamed:' | sed 's/^\s*renamed:\s*//'"),
+    ("git.stat.fmf", "git -c filemode=false status"),
     # hdfs
     ("hdfs.count", "hdfs dfs -count -q -v"),
     ("hdfs.ls", "hdfs dfs -ls"),
@@ -299,6 +303,15 @@ c.AliasManager.user_aliases = [
     ("rsync.progress.pc", "proxychains rsync -avh --info=progress2"),
     ("scp.rp", "scp -rp"),
     ("scp.rp.pc", "proxychains scp -rp"),
+    # wget
+    ("wget.site", "wget --random-wait -r -p -e robots=off -U mozilla"),
+    ("wget.dir", "wget -r --no-parent -e robots=off"),
+    ("wget.folder", "wget.dir"),
+    ("wget.dir.nohtml", "wget -r --no-parent -e robots=off -R '*.html'"),
+    ("wget.folder.nohtml", "wget.dir.noindex"),
+    ("wget.no.check", "wget --no-check-certificate"),
+    ("wget.p", "proxychains wget"),
+    ("wget.p4", "proxychains4 wget"),
 ]
 if "darwin" in PLATFORM or "macos" in PLATFORM:
     c.AliasManager.user_aliases.extend(
@@ -316,6 +329,20 @@ if "darwin" in PLATFORM or "macos" in PLATFORM:
             ("unmount", "diskutil umount"),
         ]
     )
+elif "win" in PLATFORM:
+    c.AliasManager.user_aliases.extend(
+        [
+            ("which", "Get-command"),
+            (
+                "jlab.launch",
+                'python3 -m jupyterlab --allow-root --ip="0.0.0.0" --port=8888 --no-browser --notebook-dir="%cd%"'
+            ),
+            (
+                "jupyterlab.launch",
+                'python3 -m jupyterlab --allow-root --ip="0.0.0.0" --port=8888 --no-browser --notebook-dir="%cd%"'
+            ),
+        ]
+    )
 else:
     c.AliasManager.user_aliases.extend(
         [
@@ -329,4 +356,8 @@ else:
             ),
         ]
     )
+#if "linux" in PLATFORM:
+#    %alias cs cd %l && ls --color=auto
+#else:
+#    %alias cs cd %l && ls -G
 c.IPCompleter.use_jedi = False

@@ -9,6 +9,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import re
+import textwrap
 import datetime
 import subprocess as sp
 import logging
@@ -26,7 +27,7 @@ DISTRO_ID = distro.id()
 SETTINGS_FILE = HOME / ".xinstall.json"
 SETTINGS = {}
 if os.path.isfile(SETTINGS_FILE):
-    with open(SETTINGS_FILE) as fin:
+    with open(SETTINGS_FILE, encoding="utf-8") as fin:
         SETTINGS = json.load(fin)
 
 
@@ -102,6 +103,12 @@ def brew_install_safe(pkgs: Union[str, list]) -> None:
             f"""brew install --force {pkg} \
             || brew link --overwrite --force {pkg}"""
         )
+
+
+def is_ubuntu():
+    """Check whehter the current OS is Ubuntu.
+    """
+    return DISTRO_ID == "ubuntu"
 
 
 def is_ubuntu_debian():
@@ -197,7 +204,7 @@ def update_apt_source(prefix: str = "", yes: str = "--yes", seconds: float = 360
     if (now - time).seconds > seconds:
         run_cmd(f"{prefix} apt-get update {yes}")
         SETTINGS[key] = now.strftime(fmt)
-        with open(SETTINGS_FILE, "w") as fout:
+        with open(SETTINGS_FILE, "w", encoding="utf-8") as fout:
             json.dump(SETTINGS, fout)
 
 
@@ -255,42 +262,6 @@ def option_python(subparser) -> None:
     )
 
 
-def option_ipython(subparser) -> None:
-    """Add the option --ipython into the sub parser.
-
-    :param subparser: A sub parser.
-    """
-    subparser.add_argument(
-        "--ipython",
-        dest="ipython",
-        default="ipython3",
-        help="Path to the ipython3 command."
-    )
-
-
-def option_pip(subparser) -> None:
-    """Add the option --pip into the sub parser.
-
-    :param subparser: A sub parser.
-    """
-    subparser.add_argument(
-        "--pip", dest="pip", default="pip3", help="Path to the pip command."
-    )
-
-
-def option_jupyter(subparser) -> None:
-    """Add the option --jupyter into the sub parser.
-
-    :param subparser: A sub parser.
-    """
-    subparser.add_argument(
-        "--jupyter",
-        dest="jupyter",
-        default="jupyter",
-        help="Path to the jupyter command."
-    )
-
-
 def option_pip_option(subparser) -> None:
     """Add the option --pip-option into the sub parser.
 
@@ -302,11 +273,11 @@ def option_pip_option(subparser) -> None:
 
 
 def option_pip_bundle(subparser) -> None:
-    """Add the options --pip, --user and --pip-option into the sub parser.
+    """Add the options --python, --user and --pip-option into the sub parser.
 
     :param subparser: A sub parser.
     """
-    option_pip(subparser)
+    option_python(subparser)
     option_user(subparser)
     option_pip_option(subparser)
 
@@ -369,9 +340,9 @@ def add_subparser(
 
 def update_file(
     path: Union[str, Path],
-    regex: List[Tuple[str, str]] = None,
-    exact: List[Tuple[str, str]] = None,
-    append: Union[str, Iterable[str]] = None,
+    regex: Union[List[Tuple[str, str]], None] = None,
+    exact: Union[List[Tuple[str, str]], None] = None,
+    append: Union[str, Iterable[str], None] = None,
     exist_skip: bool = True,
 ) -> None:
     """Update a text file using regular expression substitution.
@@ -413,3 +384,28 @@ def update_dict(dict1, dict2, recursive: bool = False):
             dict1[key] = val
             continue
         update_dict(dict1[key], val)
+
+
+def add_path_shell(
+    paths: Union[str, Path, list[Union[str, Path]]], config_file: Union[str, Path]
+):
+    """Configure shell to add a path into the environment variable PATH. 
+
+    :param paths: Absolute paths to add into PATH.
+    :param config_file: The path of a shell's configuration file. 
+    """
+    if isinstance(paths, (str, Path)):
+        paths = [paths]
+    if isinstance(config_file, str):
+        config_file = Path(config_file)
+    with config_file.open("a") as fout:
+        for path in paths:
+            bash = textwrap.dedent(
+                f"""
+                # PATH: add {path}
+                if [[ ! "$PATH" =~ (^{path}:)|(:{path}:)|(:{path}$) ]]; then
+                    export PATH={path}:$PATH
+                fi
+                """
+            )
+            fout.write(bash)

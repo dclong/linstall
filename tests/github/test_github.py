@@ -3,13 +3,23 @@
 from subprocess import CalledProcessError
 from requests.exceptions import HTTPError
 from xinstall.utils import run_cmd
+from xinstall import github
+import subprocess as sp
 
 
 def test_install_py_github():
-    """Test the wajig command.
+    """Test the install_py_github command.
     """
-    cmd = "xinstall install_py_github https://github.com/dclong/dsutil"
-    run_cmd(cmd)
+    cmd = "xinstall dsutil -e docker"
+    sp.run(cmd, shell=True, check=True)
+    github.install_python_lib(
+        url="https://github.com/dclong/dsutil",
+        user=False,
+        extras="docker",
+        python="python3"
+    )
+    cmd = "python3 -c 'import dsutil.docker'"
+    sp.run(cmd, shell=True, check=True)
 
 
 def test_github():

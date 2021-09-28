@@ -15,7 +15,7 @@ from .network import _add_subparser_network
 from .desktop import _add_subparser_desktop
 from .pdf import _add_subparser_pdf
 
-__version__ = "0.39.4"
+__version__ = "0.43.6"
 
 
 def version(args):  # pylint: disable=W0613
@@ -87,10 +87,15 @@ def parse_args(args=None, namespace=None) -> Namespace:
     if USER == "root" or is_win():
         args.prefix = ""
     if "pip_option" in args:
-        args.pip_option = " ".join(
-            f"--{option}" for option in args.pip_option.split(",")
-        )
-        args.pip_install = f"{args.pip} install {args.user_s} {args.pip_option}"
+        if args.pip_option:
+            args.pip_option = " ".join(
+                f"--{option}" for option in args.pip_option.split(",")
+            )
+        args.pip_install = f"{args.python} -m pip install {args.user_s} {args.pip_option}"
+        args.pip_uninstall = f"{args.python} -m pip uninstall"
+        args.jupyterlab = f"{args.python} -m jupyterlab"
+        args.jupyter = f"{args.python} -m jupyter"
+        args.ipython = f"{args.python} -m IPython"
     return args
 
 

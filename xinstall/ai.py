@@ -3,15 +3,26 @@
 from pathlib import Path
 import logging
 from .utils import (
-    HOME, USER, run_cmd, add_subparser, is_linux, is_macos, option_pip_bundle
+    HOME, USER, run_cmd, add_subparser, is_ubuntu_debian, is_macos, is_win,
+    option_pip_bundle
 )
+
+
+def _add_subparser_ai(subparsers):
+    _add_subparser_kaggle(subparsers)
+    _add_subparser_lightgbm(subparsers)
+    _add_subparser_pytorch(subparsers)
+    _add_subparser_autogluon(subparsers)
+    _add_subparser_pytext(subparsers)
+    _add_subparser_computer_vision(subparsers)
+    _add_subparser_nlp(subparsers)
 
 
 def kaggle(args):
     """Insert the Python package kaggle.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} kaggle"
+        cmd = f"{args.pip_install} kaggle"
         run_cmd(cmd)
     if args.config:
         home_host = Path(f"/home_host/{USER}/")
@@ -48,8 +59,7 @@ def lightgbm(args):
     """Insert the Python package kaggle.
     """
     if args.install:
-        cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-            lightgbm scikit-learn pandas matplotlib scipy graphviz"""
+        cmd = f"""{args.pip_install} lightgbm scikit-learn pandas matplotlib scipy graphviz"""
         run_cmd(cmd)
 
 
@@ -64,24 +74,24 @@ def _add_subparser_lightgbm(subparsers):
 
 
 def pytorch(args):
-    """Insert PyTorch.
+    """Install PyTorch.
     """
     if args.install:
         url = "https://download.pytorch.org/whl/torch_stable.html"
-        if is_linux():
+        if is_macos():
+            cmd = f"{args.pip_install} torch torchvision torchaudio"
+            run_cmd(cmd)
+        else:
             cmd = f"""{args.pip_install} -f {url} \
-                    torch==1.7.0+cpu torchvision==0.8.1+cpu torchaudio==0.7.0"""
+                    torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0"""
             if args.cuda:
                 args.cuda = args.cuda.replace(".", "")
                 cmd = f"""{args.pip_install} -f {url} \
-                    torch==1.7.0+cu{args.cuda} torchvision==0.8.1+cu{args.cuda} \
-                    torchaudio==0.7.0
+                    torch==1.9.0+cu{args.cuda} torchvision==0.10.0+cu{args.cuda} \
+                    torchaudio==0.9.0
                     """
                 if args.cuda == "102":
-                    cmd = f"{args.pip} install torch torchvision"
-            run_cmd(cmd)
-        elif is_macos():
-            cmd = f"{args.pip} install torch torchvision torchaudio"
+                    cmd = f"{args.pip_install} torch torchvision"
             run_cmd(cmd)
     if args.config:
         pass
@@ -109,10 +119,10 @@ def autogluon(args):
     """Insert the Python package AutoGluon.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} 'mxnet<2.0.0' autogluon"
+        cmd = f"{args.pip_install} 'mxnet<2.0.0' autogluon"
         if args.cuda_version:
             version = args.cuda_version.replace(".", "")
-            cmd = f"{args.pip} install {args.user_s} {args.pip_option} 'mxnet-cu{version}<2.0.0' autogluon"
+            cmd = f"{args.pip_install} 'mxnet-cu{version}<2.0.0' autogluon"
         run_cmd(cmd)
 
 
@@ -142,7 +152,7 @@ def pytext(args):
     """Insert the Python package PyText.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} pytext-nlp"
+        cmd = f"{args.pip_install} pytext-nlp"
         if args.cuda_version:
             pass
         run_cmd(cmd)
@@ -160,18 +170,19 @@ def computer_vision(args):
     """Insert computer vision Python packages: opencv-python, scikit-image and Pillow.
     """
     if args.install:
-        if is_linux():
-            cmd = f"""{args.prefix} apt-get install {args.yes_s} \
-                        libsm6 libxrender-dev libaec-dev \
+        if is_ubuntu_debian():
+            cmd = f"""{args.prefix} apt-get update \
+                    && {args.prefix} apt-get install {args.yes_s} \
+                        libsm6 libxrender-dev libaec-dev libxext6 \
                         libblosc-dev libbrotli-dev libghc-bzlib-dev libgif-dev \
                         libopenjp2-7-dev liblcms2-dev libjxr-dev liblz4-dev \
                         liblzma-dev libpng-dev libsnappy-dev libtiff-dev \
                         libwebp-dev libzopfli-dev libzstd-dev \
-                    && {args.pip} install {args.user_s} {args.pip_option} opencv-python scikit-image pillow"""
+                        ffmpeg \
+                    && {args.pip_install} opencv-python scikit-image pillow"""
             run_cmd(cmd)
         elif is_macos():
-            cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-                opencv-python scikit-image pillow"""
+            cmd = f"""{args.pip_install} opencv-python scikit-image pillow"""
             run_cmd(cmd)
 
 
@@ -193,8 +204,7 @@ def nlp(args):
     """Install Python packages (PyTorch, transformers, pytext-nlp and fasttext) for NLP.
     """
     if args.install:
-        cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-            torch torchvision transformers pytext-nlp fasttext"""
+        cmd = f"""{args.pip_install} torch torchvision transformers pytext-nlp fasttext"""
         run_cmd(cmd)
 
 
@@ -206,11 +216,68 @@ def _add_subparser_nlp(subparsers):
     add_subparser(subparsers, "nlp", func=nlp, add_argument=_nlp_args)
 
 
-def _add_subparser_ai(subparsers):
-    _add_subparser_kaggle(subparsers)
-    _add_subparser_lightgbm(subparsers)
-    _add_subparser_pytorch(subparsers)
-    _add_subparser_autogluon(subparsers)
-    _add_subparser_pytext(subparsers)
-    _add_subparser_computer_vision(subparsers)
-    _add_subparser_nlp(subparsers)
+def cuda(args):
+    """Install CUDA for GPU computing.
+    """
+    if args.install:
+        if is_ubuntu_debian():
+            pkgs = "cuda" if args.full else "cuda-drivers"
+            cmd = f"""wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin -O /tmp/cuda-ubuntu2004.pin \
+                && {args.prefix} mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 \
+                {args.prefix} apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub \
+                {args.prefix} add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
+                {args.prefix} apt-get update \
+                {args.prefix} apt-get {args.yes_s} install {pkgs}
+                """
+            run_cmd(cmd)
+            logging.info(
+                "The package(s) %s have been installed. \nYou might have to restart your computer for it to take effect!",
+                pkgs
+            )
+        elif is_win():
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.prefix} apt-get {args.yes_s} purge cuda-drivers"
+        run_cmd(cmd)
+
+
+def _cuda_args(subparser):
+    subparser.add_argument(
+        "--full",
+        dest="full",
+        action="store_true",
+        help=
+        "Install the package cuda (full installation) instead of cuda-drivers (drivers only)."
+    )
+
+
+def _add_subparser_cuda(subparsers):
+    add_subparser(subparsers, "cuda", func=cuda, add_argument=_cuda_args)
+
+
+def nvidia_docker(args):
+    """Install nvidia-docker2 (on a  Linux machine).
+    """
+    if args.install:
+        if is_ubuntu_debian():
+            cmd = f"""distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+                    && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+                    && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list \
+                    && {args.prefix} apt-get update \
+                    && {args.prefix} apt-get install -y nvidia-docker2
+                """
+            run_cmd(cmd)
+            logging.info(
+                "The package nvidia-docker2 has been installed. \nPlease restart Docker (sudo service docker restart)."
+            )
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.prefix} apt-get {args.yes_s} purge nvidia-docker2"
+        run_cmd(cmd)
+
+
+def _add_subparser_nvidia_docker(subparsers):
+    add_subparser(subparsers, "nvidia_docker", func=nvidia_docker)

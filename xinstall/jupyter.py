@@ -11,7 +11,6 @@ from .utils import (
     run_cmd,
     add_subparser,
     option_pip_bundle,
-    option_jupyter,
 )
 from .dev import rustup, cmake
 
@@ -26,15 +25,16 @@ def _add_subparser_jupyter(subparsers):
     _add_subparser_evcxr_jupyter(subparsers)
     _add_subparser_jupyter_book(subparsers)
     _add_subparser_jupyterlab_vim(subparsers)
+    _add_subparser_jupyterlab(subparsers)
 
 
 def nbdime(args) -> None:
     """Install and configure nbdime for comparing difference of notebooks.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} nbdime")
+        run_cmd(f"{args.pip_install} nbdime")
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall nbdime")
+        run_cmd(f"{args.pip_uninstall} nbdime")
     if args.config:
         run_cmd("nbdime config-git --enable --global")
 
@@ -70,10 +70,7 @@ def jupyterlab_lsp(args) -> None:
     """Install jupyterlab-lsp.
     """
     if args.install:
-        cmd = f"""{args.pip} install {args.user_s} {args.pip_option} \
-                    jupyter-lsp \
-                    python-language-server[all] \
-                    pyls-mypy \
+        cmd = f"""{args.pip_install} jupyter-lsp python-language-server[all] pyls-mypy \
                 && {args.prefix} {args.jupyter} labextension install @krassowski/jupyterlab-lsp
                 """
         run_cmd(cmd)
@@ -85,7 +82,6 @@ def jupyterlab_lsp(args) -> None:
 
 def _jupyterlab_lsp_args(subparser) -> None:
     option_pip_bundle(subparser)
-    option_jupyter(subparser)
 
 
 def _add_subparser_jupyterlab_lsp(subparsers) -> None:
@@ -102,7 +98,7 @@ def beakerx(args) -> None:
     """Install/uninstall/configure the BeakerX kernels.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} beakerx")
+        run_cmd(f"{args.pip_install} beakerx")
         run_cmd(f"{args.prefix} beakerx install")
         run_cmd(
             f"{args.prefix} jupyter labextension install @jupyter-widgets/jupyterlab-manager",
@@ -114,7 +110,7 @@ def beakerx(args) -> None:
             f"{args.prefix} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager"
         )
         run_cmd(f"{args.prefix} beakerx uninstall")
-        run_cmd(f"{args.pip} uninstall beakerx")
+        run_cmd(f"{args.pip_uninstall} beakerx")
     if args.config:
         run_cmd(f"{args.prefix} chown -R {USER}:`id -g {USER}` {HOME}")
 
@@ -222,7 +218,7 @@ def jupyter_book(args):
     """Install jupyter-book.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} jupyter-book"
+        cmd = f"{args.pip_install} jupyter-book"
         run_cmd(cmd)
     if args.config:
         src_file = BASE_DIR / "jupyter-book/_config.yml"
@@ -250,7 +246,7 @@ def ipython(args):
     """Install IPython for Python 3.
     """
     if args.install:
-        cmd = f"{args.prefix} {args.pip} install {args.user_s} {args.pip_option} ipython"
+        cmd = f"{args.prefix} {args.pip_install} ipython"
         run_cmd(cmd)
     if args.config:
         src_dir = BASE_DIR / "ipython"
@@ -296,7 +292,7 @@ def jupyterlab_vim(args):
     if args.enable or args.disable:
         args.config = True
     if args.install:
-        cmd = f"{args.prefix} {args.pip} install {args.user_s} {args.pip_option} jupyterlab_vim"
+        cmd = f"{args.prefix} {args.pip_install} jupyterlab_vim"
         run_cmd(cmd)
     if args.config:
         if args.enable:
@@ -306,7 +302,7 @@ def jupyterlab_vim(args):
             cmd = f"{args.prefix} jupyter labextension disable @axlair/jupyterlab_vim"
             run_cmd(cmd)
     if args.uninstall:
-        cmd = f"{args.prefix} {args.pip} uninstall {args.user_s} {args.pip_option} jupyterlab_vim"
+        cmd = f"{args.prefix} {args.pip_uninstall} jupyterlab_vim"
         run_cmd(cmd)
 
 
@@ -319,7 +315,7 @@ def _jupyterlab_vim_args(subparser):
         help="Whether to enable the jupyterla_vim extension",
     )
     subparser.add_argument(
-        "--disale",
+        "--disable",
         dest="disable",
         action="store_true",
         help="Whether to disable the jupyterla_vim extension",
@@ -333,4 +329,42 @@ def _add_subparser_jupyterlab_vim(subparsers):
         func=jupyterlab_vim,
         aliases=["jlab_vim", "jlabvim", "jvim"],
         add_argument=_jupyterlab_vim_args,
+    )
+
+
+def jupyterlab(args):
+    """Install the JupyterLab.
+    """
+    if args.install:
+        cmd = f"""{args.prefix} {args.pip_install} nbdime "nbconvert==5.6.1" "jupyterlab>=2.1.0,<3.2.0" \
+                jupyterlab_widgets ipywidgets \
+                jupyterlab_vim \
+                jupyterlab-lsp python-language-server[all] \
+                jupyter-resource-usage \
+            && jupyter labextension disable @axlair/jupyterlab_vim
+            """
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"""{args.prefix} {args.pip_uninstall} nbdime nbconvert jupyterlab \
+                jupyterlab_widgets ipywidgets \
+                jupyterlab_vim \
+                jupyterlab-lsp python-language-server[all] \
+                jupyter-resource-usage
+            """
+        run_cmd(cmd)
+
+
+def _jupyterlab_args(subparser):
+    option_pip_bundle(subparser)
+
+
+def _add_subparser_jupyterlab(subparsers):
+    add_subparser(
+        subparsers,
+        "jupyterlab",
+        func=jupyterlab,
+        aliases=["jlab", "jupyter"],
+        add_argument=_jupyterlab_args,
     )

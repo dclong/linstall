@@ -79,7 +79,7 @@ def yapf(args):
     """Install Google's yapf (for formatting Python scripts).
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} yapf")
+        run_cmd(f"{args.pip_install} yapf")
     if args.config:
         # configure yapf formatting via pyproject.toml
         src_file = BASE_DIR / "yapf/pyproject.toml"
@@ -93,7 +93,7 @@ def yapf(args):
         des_file.write_text(tomlkit.dumps(dic_des))
         logging.info("yapf is configured via %s.", des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall yapf")
+        run_cmd(f"{args.pip_uninstall} yapf")
 
 
 def _yapf_args(subparser):
@@ -116,7 +116,7 @@ def pylint(args):
     """Install and configure pylint.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} pylint")
+        run_cmd(f"{args.pip_install} pylint")
     if args.config:
         src_file = BASE_DIR / "pylint/pyproject.toml"
         dic_src = tomlkit.loads(src_file.read_text())
@@ -129,7 +129,7 @@ def pylint(args):
         des_file.write_text(tomlkit.dumps(dic_des))
         logging.info("pylint is configured via %s.", des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall pylint")
+        run_cmd(f"{args.pip_uninstall} pylint")
 
 
 def _pylint_args(subparser):
@@ -154,14 +154,14 @@ def flake8(args):
     """Install and configure flake8.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} flake8")
+        run_cmd(f"{args.pip_install} flake8")
     if args.config:
         src_file = BASE_DIR / "flake8/flake8"
         des_file = args.dst_dir / ".flake8"
         shutil.copy2(src_file, des_file)
         logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall flake8")
+        run_cmd(f"{args.pip_uninstall} flake8")
 
 
 def _flake8_args(subparser):
@@ -186,14 +186,14 @@ def darglint(args):
     """Install and configure darglint.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} darglint")
+        run_cmd(f"{args.pip_install} darglint")
     if args.config:
         src_file = BASE_DIR / "darglint/darglint"
         des_file = args.dst_dir / ".darglint"
         shutil.copy2(src_file, des_file)
         logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall darglint")
+        run_cmd(f"{args.pip_uninstall} darglint")
 
 
 def _darglint_args(subparser):
@@ -218,14 +218,14 @@ def pytype(args):
     """Install and configure pytype.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} pytype")
+        run_cmd(f"{args.pip_install} pytype")
     if args.config:
         src_file = BASE_DIR / "pytype/setup.cfg"
         des_file = args.dst_dir / "setup.cfg"
         shutil.copy2(src_file, des_file)
         logging.info("%s is copied to %s.", src_file, des_file)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall pytype")
+        run_cmd(f"{args.pip_uninstall} pytype")
 
 
 def _pytype_args(subparser):
@@ -289,7 +289,7 @@ def python(args):
                 f"""{args.prefix} yum install {args.yes_s} \
                 python3 python3-devel python3-pip"""
             )
-            run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} setuptools")
+            run_cmd(f"{args.pip_install} setuptools")
     if args.config:
         if not shutil.which("python"):
             python3 = shutil.which("python3")
@@ -374,7 +374,7 @@ def pyjnius(args):
     """Install pyjnius for calling Java from Python.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} Cython pyjnius"
+        cmd = f"{args.pip_install} Cython pyjnius"
         run_cmd(cmd)
     if args.config:
         pass
@@ -404,12 +404,15 @@ def rustup(args):
             pass
         else:
             cmd = """curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
-                && ~/.cargo/bin/rustup component add rust-src rustfmt
+                && ~/.cargo/bin/rustup component add rust-src rustfmt \
+                && ~/.cargo/bin/cargo install cargo-cache
                 """
             run_cmd(cmd)
         if is_ubuntu_debian():
-            update_apt_source(prefix=args.prefix)
-            run_cmd(f"{args.prefix} apt-get install -y cmake libssl-dev pkg-config")
+            cmd = f"""{args.prefix} apt-get update \
+                    && {args.prefix} apt-get install -y cmake libssl-dev pkg-config
+                """
+            run_cmd(cmd)
         run_cmd("~/.cargo/bin/cargo install cargo-edit")
     if args.config:
         _link_rust(args)
@@ -601,12 +604,12 @@ def jpype1(args):
     """Install the Python package JPype.
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} JPype1"
+        cmd = f"{args.pip_install} JPype1"
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"{args.pip} uninstall JPype1"
+        cmd = f"{args.pip_uninstall} JPype1"
         run_cmd(cmd)
 
 
@@ -648,12 +651,12 @@ def sphinx(args):
     :param args:
     """
     if args.install:
-        cmd = f"{args.pip} install {args.user_s} {args.pip_option} sphinx sphinx-autodoc-typehints"
+        cmd = f"{args.pip_install} sphinx sphinx-autodoc-typehints"
         run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
-        cmd = f"{args.pip} uninstall sphinx sphinx-autodoc-typehints"
+        cmd = f"{args.pip_uninstall} sphinx sphinx-autodoc-typehints"
         run_cmd(cmd)
 
 

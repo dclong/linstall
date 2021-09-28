@@ -6,10 +6,12 @@ import shutil
 import sys
 import os
 import textwrap
+from . import github
 from .utils import (
     HOME,
     BASE_DIR,
     BIN_DIR,
+    is_win,
     is_ubuntu_debian,
     is_centos_series,
     is_linux,
@@ -20,6 +22,7 @@ from .utils import (
     run_cmd,
     add_subparser,
     option_pip_bundle,
+    add_path_shell,
 )
 
 
@@ -37,6 +40,8 @@ def _add_subparser_shell(subparsers):
     _add_subparser_exa(subparsers)
     _add_subparser_osquery(subparsers)
     _add_subparser_dust(subparsers)
+    _add_subparser_rip(subparsers)
+    _add_subparser_long_path(subparsers)
 
 
 def coreutils(args) -> None:
@@ -208,7 +213,10 @@ def hyper(args) -> None:
     """
     if args.install:
         if is_ubuntu_debian():
-            update_apt_source(prefix=args.prefix)
+            run_cmd(f"{args.prefix} apt-get update")
+            args.output = "/tmp/hyper.deb"
+            args.install_cmd = f"{args.prefix} apt-get install {args.yes_s}"
+            github.install(args)
         elif is_macos():
             run_cmd("brew cask install hyper")
         elif is_centos_series():
@@ -263,7 +271,7 @@ def xonsh(args) -> None:
     """Install xonsh, a Python based shell.
     """
     if args.install:
-        run_cmd(f"{args.pip} install {args.user_s} {args.pip_option} xonsh")
+        run_cmd(f"{args.pip_install} xonsh")
     if args.config:
         src = f"{BASE_DIR}/xonsh/xonshrc"
         dst = HOME / ".xonshrc"
@@ -274,7 +282,7 @@ def xonsh(args) -> None:
         shutil.copy2(src, dst)
         logging.info("%s is copied to %s.", src, dst)
     if args.uninstall:
-        run_cmd(f"{args.pip} uninstall xonsh")
+        run_cmd(f"{args.pip_uninstall} xonsh")
 
 
 def _xonsh_args(subparser) -> None:
@@ -300,17 +308,8 @@ def bash_it(args) -> None:
                 """
         run_cmd(cmd)
     if args.config:
-        bash = textwrap.dedent(
-            f"""
-            # PATH
-            if [[ ! "$PATH" =~ (^{BIN_DIR}:)|(:{BIN_DIR}:)|(:{BIN_DIR}$) ]]; then
-                export PATH={BIN_DIR}:$PATH
-            fi
-            """
-        )
         profile = HOME / (".bashrc" if is_linux() else ".bash_profile")
-        with profile.open("a") as fout:
-            fout.write(bash)
+        add_path_shell([BIN_DIR, Path.home() / ".cargo/bin"], profile)
         logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile)
         if is_linux():
             bash = textwrap.dedent(
@@ -398,18 +397,23 @@ def osquery(args) -> None:
     if args.install:
         if is_ubuntu_debian():
             update_apt_source(prefix=args.prefix)
-            cmd = f"""{args.prefix} apt-get {args.yes_s} install dirmngr \
-                    && {args.prefix} apt-key adv --keyserver keyserver.ubuntu.com \
-                        --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B \
-                    && {args.prefix} add-apt-repository \
-                        "deb [arch=amd64] https://pkg.osquery.io/deb deb main" \
-                    && {args.prefix} apt-get {args.yes_s} install osquery
+            cmd = f"""xinstall github -r osquery/osquery -k linux amd64 deb -o /tmp/osquery.deb \
+                    && {args.prefix} apt-get install {args.yes_s} /tmp/osquery.deb
                 """
             run_cmd(cmd)
         elif is_macos():
-            brew_install_safe(["osquery"])
+            cmd = "brew install --cask osquery"
+            run_cmd(cmd)
         elif is_centos_series():
-            run_cmd(f"{args.prefix} yum install osquery")
+            cmd = f"""xinstall github -r osquery/osquery -k linux amd64 rpm -o /tmp/osquery.rpm \
+                    && {args.prefix} yum install {args.yes_s} /tmp/osquery.rpm
+                """
+            run_cmd(cmd)
+        elif is_win():
+            cmd = """xinstall github -r osquery/osquery -k msi -o "%temp%\\osquery.msi" \
+                    && msiexec /i "%temp%\\osquery.msi"
+                """
+            run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
@@ -419,6 +423,8 @@ def osquery(args) -> None:
             run_cmd("brew uninstall osquery")
         elif is_centos_series():
             run_cmd(f"{args.prefix} yum remove osquery")
+        elif is_win():
+            pass
 
 
 def _add_subparser_osquery(subparsers) -> None:
@@ -479,3 +485,78 @@ def dust(args) -> None:
 
 def _add_subparser_dust(subparsers) -> None:
     add_subparser(subparsers, "dust", func=dust, aliases=[])
+
+
+def rip(args) -> None:
+    """Install rip which is rm improved.
+    The cargo command must be available on the search path in order to install rip.
+    """
+    if args.install:
+        if is_macos():
+            run_cmd("brew install rm-improved")
+        else:
+            run_cmd("cargo install rm-improved")
+    if args.config:
+        if is_linux():
+            run_cmd(f"{args.prefix} ln -svf ~/.cargo/bin/rip /usr/local/bin")
+    if args.uninstall:
+        if is_macos():
+            run_cmd("brew uninstall rm-improved")
+        else:
+            run_cmd("cargo uninstall rm-improved")
+
+
+def _add_subparser_rip(subparsers) -> None:
+    add_subparser(subparsers, "rip", func=rip, aliases=["trash"])
+
+
+def long_path(args) -> None:
+    """Enable/disable long path support on Windows.
+    This command needs to be run in an admin CMD/PowerShell.
+    """
+    if args.config:
+        if args.value is None:
+            return
+        value = 1 if args.value else 0
+        cmd = f"""C:\\Windows\\System32\\powershell.exe New-ItemProperty `
+                -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem" `
+                -Name "LongPathsEnabled" `
+                -Value {value} `
+                -PropertyType DWORD `
+                -Force
+            """
+        run_cmd(cmd)
+
+
+def _long_path_args(subparser) -> None:
+    subparser.add_argument(
+        "--enable",
+        "--yes",
+        "-e",
+        "-y",
+        dest="value",
+        default=None,
+        action="store_const",
+        const="1",
+        help="Enable long path support on Windows."
+    )
+    subparser.add_argument(
+        "--disable",
+        "--no",
+        "-d",
+        "-n",
+        dest="value",
+        action="store_const",
+        const="0",
+        help="Disable long path support on Windows."
+    )
+
+
+def _add_subparser_long_path(subparsers) -> None:
+    add_subparser(
+        subparsers,
+        "long_path",
+        func=long_path,
+        aliases=["longp", "lpath", "lp"],
+        add_argument=_long_path_args
+    )

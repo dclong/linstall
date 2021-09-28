@@ -60,10 +60,17 @@ def test_rustup():
     run_cmd(cmd)
 
 
+def test_poetry():
+    """Test installing and configuring Poetry.
+    """
+    cmd = "xinstall poetry -ic"
+    run_cmd(cmd)
+
+
 def test_ipython():
     """Test installing and configuring LightGBM.
     """
-    cmd = "xinstall ipython -ic"
+    cmd = "xinstall ipython -ic && python3 -m IPython -c ls"
     run_cmd(cmd)
 
 
