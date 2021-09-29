@@ -216,7 +216,7 @@ def hyper(args) -> None:
             run_cmd(f"{args.prefix} apt-get update")
             args.output = "/tmp/hyper.deb"
             args.install_cmd = f"{args.prefix} apt-get install {args.yes_s}"
-            github.github(args)
+            github.install(args)
         elif is_macos():
             run_cmd("brew cask install hyper")
         elif is_centos_series():
