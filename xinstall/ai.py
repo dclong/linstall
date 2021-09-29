@@ -83,15 +83,15 @@ def pytorch(args):
             run_cmd(cmd)
         else:
             cmd = f"""{args.pip_install} -f {url} \
-                    torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0"""
-            if args.cuda:
-                args.cuda = args.cuda.replace(".", "")
+                    torch==1.9.1+cpu torchvision==0.10.1+cpu torchaudio==0.9.1"""
+            if args.cuda_version:
+                args.cuda_version = args.cuda_version.replace(".", "")
                 cmd = f"""{args.pip_install} -f {url} \
-                    torch==1.9.0+cu{args.cuda} torchvision==0.10.0+cu{args.cuda} \
-                    torchaudio==0.9.0
+                    torch==1.9.1+cu{args.cuda_version} torchvision==0.10.1+cu{args.cuda_version} \
+                    torchaudio==0.9.1
                     """
-                if args.cuda == "102":
-                    cmd = f"{args.pip_install} torch torchvision"
+                if args.cuda_version == "102":
+                    cmd = f"{args.pip_install} torch torchvision torchaudio"
             run_cmd(cmd)
     if args.config:
         pass
@@ -101,8 +101,9 @@ def pytorch(args):
 
 def _pytorch_args(subparser):
     subparser.add_argument(
+        "--cuda-version",
         "--cuda",
-        dest="cuda",
+        dest="cuda_version",
         default="",
         help="The version of CUDA. If not specified, the CPU version is used."
     )
