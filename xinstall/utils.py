@@ -6,7 +6,6 @@ import os
 import sys
 import json
 from pathlib import Path
-import urllib.request
 import shutil
 import tempfile
 import re
@@ -207,40 +206,6 @@ def update_apt_source(prefix: str = "", yes: str = "--yes", seconds: float = 360
         SETTINGS[key] = now.strftime(fmt)
         with open(SETTINGS_FILE, "w", encoding="utf-8") as fout:
             json.dump(SETTINGS, fout)
-
-
-def _github_version(url) -> str:
-    url = f"{url}/releases/latest"
-    with urllib.request.urlopen(url) as resp:
-        return Path(resp.url).name
-
-
-def install_py_github(
-    url: str,
-    user: bool = False,
-    pip_option: str = "",
-    extras: str = "",
-    prefix: str = "",
-    python: str = "python3",
-) -> None:
-    """Automatically install the latest version of a Python package from its GitHub repository.
-
-    :param url: The root URL of the GitHub repository.
-    :param user: If True, install to user's local directory.
-        This option is equivalant to 'pip install --user'.
-    :param pip_option: Extra pip options.
-    :param extras: Extra components (separate by comma) of the package to install.
-    :param prefix: Prefix (e.g., sudo, environment variable configuration, etc.) to the command.
-    :param python: The path (default python3) to the Python executable.
-    """
-    ver = _github_version(url)
-    ver_no_letter = re.sub("[a-zA-Z]", "", ver)
-    name = Path(url).name
-    url = f"{url}/releases/download/{ver}/{name}-{ver_no_letter}-py3-none-any.whl"
-    if extras:
-        url = f"'{name}[{extras}] @ {url}'"
-    cmd = f"{prefix} {python} -m pip install {'--user' if user else ''} --upgrade {pip_option} {url}"
-    run_cmd(cmd)
 
 
 def intellij_idea_plugin(version: str, url: str):

@@ -1,15 +1,60 @@
 """GitHub related utils.
 """
+from pathlib import Path
 import logging
+import urllib.request
 import shutil
+import re
 import requests
 from packaging.version import parse
 from packaging.specifiers import SpecifierSet
 from .utils import (option_version, option_pip_bundle, add_subparser, run_cmd)
-from . import utils
 
 
-def _github_release_url(repo: str) -> str:
+def get_latest_version(url: str) -> str:
+    """Get the latest release version of a project on GitHub.
+
+    :param url: The URL of a project on GitHub.
+    :return: The latest release version of the project.
+    """
+    url = f"{url}/releases/latest"
+    with urllib.request.urlopen(url) as resp:
+        return Path(resp.url).name
+
+
+def install_python_lib(
+    url: str,
+    user: bool = False,
+    pip_option: str = "",
+    extras: str = "",
+    prefix: str = "",
+    python: str = "python3",
+) -> None:
+    """Automatically install the latest version of a Python package from its GitHub repository.
+    :param url: The root URL of the GitHub repository.
+    :param user: If True, install to user's local directory.
+        This option is equivalant to 'pip install --user'.
+    :param pip_option: Extra pip options.
+    :param extras: Extra components (separate by comma) of the package to install.
+    :param prefix: Prefix (e.g., sudo, environment variable configuration, etc.) to the command.
+    :param python: The path (default python3) to the Python executable.
+    """
+    ver = get_latest_version(url)
+    ver_no_letter = re.sub("[a-zA-Z]", "", ver)
+    name = Path(url).name
+    url = f"{url}/releases/download/{ver}/{name}-{ver_no_letter}-py3-none-any.whl"
+    if extras:
+        url = f"'{name}[{extras}] @ {url}'"
+    cmd = f"{prefix} {python} -m pip install {'--user' if user else ''} --upgrade {pip_option} {url}"
+    run_cmd(cmd)
+
+
+def get_release_url(repo: str) -> str:
+    """Get the release URL of a project on GitHub.
+
+    :param repo: The repo name of the project on GitHub.
+    :return: The release URL of the project on GitHub.
+    """
     if repo.endswith(".git"):
         repo = repo[:-4]
     if repo.startswith("https://api."):
@@ -24,7 +69,12 @@ def _github_release_url(repo: str) -> str:
     return f"https://api.github.com/repos/{repo}/releases"
 
 
-def _github_download(args):
+def download(args):
+    """Download a release from GitHub.
+
+    :param args: The arguments to parse. 
+        If None, the arguments from command-line are parsed.
+    """
     if args.version:
         v0 = args.version[0]
         if v0.isdigit():
@@ -33,7 +83,7 @@ def _github_download(args):
             args.version = "==" + args.version[1:]
     spec = SpecifierSet(args.version)
     # get asserts of the first release in the specifier
-    resp = requests.get(_github_release_url(args.repo))
+    resp = requests.get(get_release_url(args.repo))
     if not resp.ok:
         resp.raise_for_status()
     releases = resp.json()
@@ -57,18 +107,18 @@ def _github_download(args):
         shutil.copyfileobj(resp.raw, fout)
 
 
-def github(args) -> None:
+def install(args) -> None:
     """Download packages from GitHub and then install and configure it.
 
     :param args: The arguments to parse. 
         If None, the arguments from command-line are parsed.
     """
-    _github_download(args)
+    download(args)
     if args.install_cmd:
         run_cmd(f"{args.install_cmd} {args.output}")
 
 
-def _github_args(subparser):
+def _install_args(subparser):
     subparser.add_argument(
         "-r",
         "--repo",
@@ -106,40 +156,14 @@ def _github_args(subparser):
     )
 
 
-def _add_subparser_github_(subparsers) -> None:
+def _add_subparser_install(subparsers) -> None:
     add_subparser(
         subparsers,
-        "github",
-        func=github,
-        aliases=["gh"],
-        add_argument=_github_args,
+        "install_from_github",
+        func=install,
+        aliases=["from_github", "github", "gh"],
+        add_argument=_install_args,
     )
-
-
-def install_py_github(args) -> None:
-    """Install a Python package from GitHub.
-    """
-    utils.install_py_github(
-        url=args.url,
-        user=args.user,
-        pip_option=args.pip_option,
-        prefix=args.prefix,
-        python=args.python,
-    )
-
-
-def _add_subparser_install_py_github(subparsers) -> None:
-    subparser = subparsers.add_parser(
-        "install_py_github",
-        aliases=["inpygit", "pygit", "ipg"],
-        help="Install the latest version of a Python package from GitHub."
-    )
-    subparser.add_argument(
-        dest="url", help="The URL of the Python package's GitHub repository."
-    )
-    option_pip_bundle(subparser)
-    subparser.set_defaults(func=install_py_github)
-    return subparser
 
 
 def dsutil(args) -> None:
@@ -147,7 +171,7 @@ def dsutil(args) -> None:
     """
     if args.install:
         url = "https://github.com/dclong/dsutil"
-        utils.install_py_github(
+        install_python_lib(
             url=url,
             user=args.user,
             pip_option=args.pip_option,
@@ -183,7 +207,7 @@ def xinstall(args) -> None:
     """
     if args.install:
         url = "https://github.com/dclong/xinstall"
-        utils.install_py_github(
+        install_python_lib(
             url=url,
             user=args.user,
             pip_option=args.pip_option,
@@ -209,5 +233,4 @@ def _add_subparser_xinstall(subparsers) -> None:
 def _add_subparser_github(subparsers):
     _add_subparser_dsutil(subparsers)
     _add_subparser_xinstall(subparsers)
-    _add_subparser_install_py_github(subparsers)
-    _add_subparser_github_(subparsers)
+    _add_subparser_install(subparsers)
