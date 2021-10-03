@@ -404,7 +404,7 @@ def rustup(args):
             pass
         else:
             cmd = """curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
-                && ~/.cargo/bin/rustup component add rust-src rustfmt \
+                && ~/.cargo/bin/rustup component add rust-src rustfmt clippy \
                 && ~/.cargo/bin/cargo install cargo-cache
                 """
             run_cmd(cmd)
