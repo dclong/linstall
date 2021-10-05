@@ -165,7 +165,7 @@ def _spark_args(subparser):
         dest="location",
         type=Path,
         default=Path(),
-        help="The location to install Spark to."
+        help="The location (current work directory, by default) to install Spark to."
     )
     subparser.add_argument(
         "-s",
