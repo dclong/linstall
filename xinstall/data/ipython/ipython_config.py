@@ -47,6 +47,22 @@ c.AliasManager.user_aliases = [
         "docker run -d --hostname vscode-server --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 8080:8080 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/vscode-server:next /scripts/sys/init.sh"
     ),
     (
+        "docker.tensorboard",
+        "docker run -d --hostname tensorboard --log-opt max-size=50m -p 6006:6006 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/tensorboard /scripts/sys/init.sh"
+    ),
+    (
+        "docker.tensorboard.next",
+        "docker run -d --hostname tensorboard --log-opt max-size=50m -p 6006:6006 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/tensorboard:next /scripts/sys/init.sh"
+    ),
+    (
+        "docker.tensorboard.linux",
+        "docker run -d --hostname tensorboard --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 6006:6006 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/tensorboard /scripts/sys/init.sh"
+    ),
+    (
+        "docker.tensorboard.linux.next",
+        "docker run -d --hostname tensorboard --log-opt max-size=50m --memory=$(($(head -n 1 /proc/meminfo | awk '{print $2}') * 4 / 5))k --cpus=$(($(nproc) - 1)) -p 6006:6006 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/tensorboard:next /scripts/sys/init.sh"
+    ),
+    (
         "docker.jupyterhub_jdk",
         "docker run -d --hostname jupyterhub-jdk --log-opt max-size=50m -p 8000:8000 -e DOCKER_USER=$(id -un) -e DOCKER_USER_ID=$(id -u) -e DOCKER_PASSWORD=$(id -un) -e DOCKER_GROUP_ID=$(id -g) -e DOCKER_ADMIN_USER=$(id -un) -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workdir -v $(dirname $HOME):/home_host dclong/jupyterhub-jdk /scripts/sys/init.sh"
     ),
