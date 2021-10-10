@@ -282,3 +282,46 @@ def nvidia_docker(args):
 
 def _add_subparser_nvidia_docker(subparsers):
     add_subparser(subparsers, "nvidia_docker", func=nvidia_docker)
+
+
+def pandas(args):
+    """Install Python pandas and related packages.
+
+    :param args: A Namespace object containing parsed command-line options.
+    """
+    if args.install:
+        cmd = f"{args.pip_install} pandas pyarrow"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.pip_uninstall} pandas pyarrow"
+        run_cmd(cmd)
+
+
+def _add_subparser_pandas(subparsers):
+    add_subparser(subparsers, "pandas", func=pandas)
+
+
+def python_visualization(args):
+    """Install Python visualization packages.
+
+    :param args: A Namespace object containing parsed command-line options.
+    """
+    if args.install:
+        cmd = f"{args.pip_install} hvplot matplotlib"
+        run_cmd(cmd)
+    if args.config:
+        pass
+    if args.uninstall:
+        cmd = f"{args.pip_uninstall} hvplot matplotlib"
+        run_cmd(cmd)
+
+
+def _add_subparser_python_visualization(subparsers):
+    add_subparser(
+        subparsers,
+        "Python visualization packages",
+        func=python_visualization,
+        aliases=["pyvis"]
+    )
