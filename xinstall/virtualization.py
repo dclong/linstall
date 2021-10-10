@@ -1,5 +1,6 @@
 """Install virtualization related applications.
 """
+from pathlib import Path
 import logging
 from .utils import (
     USER,
@@ -47,6 +48,8 @@ def virtualbox_guest_additions(args) -> None:
     """Install VirtualBox Guest Additions in guest machine.
 
     :param args: A Namespace object containing parsed command-line options.
+    :raises RuntimeError: If a Guest Additions path is not specified
+        and it is not found at default locations.
     """
     if args.install:
         if not args.dir:
@@ -57,7 +60,7 @@ def virtualbox_guest_additions(args) -> None:
             try:
                 args.dir = next(Path(f"/media/{USER}").glob("VBox_GAs_*"))
                 logging.info("VirtualBox Guest Additions is found at {args.dir}.")
-            except StopIteration:
+            except StopIteration:  # pylint: disable=W0707
                 raise RuntimeError(
                     "No VirtualBox Guest Additions is found. Please specify its location manually."
                 )
