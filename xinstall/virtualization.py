@@ -1,5 +1,6 @@
 """Install virtualization related applications.
 """
+from pathlib import Path
 import logging
 from .utils import (
     USER,
@@ -41,6 +42,50 @@ def virtualbox(args) -> None:
 
 def _add_subparser_virtualbox(subparsers):
     add_subparser(subparsers, "VirtualBox", func=virtualbox, aliases=["vbox"])
+
+
+def virtualbox_guest_additions(args) -> None:
+    """Install VirtualBox Guest Additions in guest machine.
+
+    :param args: A Namespace object containing parsed command-line options.
+    :raises RuntimeError: If a Guest Additions path is not specified
+        and it is not found at default locations.
+    """
+    if args.install:
+        if not args.dir:
+            logging.info(
+                "Searching for VirtualBox Guest Additions in default locations ..."
+            )
+        if is_ubuntu_debian():
+            try:
+                args.dir = next(Path(f"/media/{USER}").glob("VBox_GAs_*"))
+                logging.info("VirtualBox Guest Additions is found at {args.dir}.")
+            except StopIteration:  # pylint: disable=W0707
+                raise RuntimeError(
+                    "No VirtualBox Guest Additions is found. Please specify its location manually."
+                )
+            cmd = f"""{args.prefix} apt-get update \
+                && {args.prefix} apt-get install {args.yes_s} gcc make \
+                && {args.prefix} {args.dir}/VBoxLinuxAdditions.run
+                """
+            run_cmd(cmd)
+        elif is_centos_series():
+            pass
+        elif is_macos():
+            pass
+    if args.uninstall:
+        pass
+    if args.config:
+        pass
+
+
+def _add_subparser_virtualbox_guest_additions(subparsers):
+    add_subparser(
+        subparsers,
+        "VirtualBox Guest Additions",
+        func=virtualbox_guest_additions,
+        aliases=["vbox_ga", "vboxga"]
+    )
 
 
 def docker(args):
