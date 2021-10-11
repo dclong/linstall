@@ -117,6 +117,26 @@ def trash(line: str):
     print(f"The path {path} has been moved into the trash directory {trash_dir}.")
 
 
+@register_line_magic
+def open(line: str) -> None:
+    if is_macos():
+        run_cmd(f"open {line} &")
+        return
+    if is_linux():
+        if Path("/usr/bin/dolphin").is_file():
+            cmd = f"/usr/bin/dolphin {line} &"
+        elif Path("/usr/bin/nemo").is_file():
+            cmd = f"/usr/bin/nemo {line} &"
+        elif Path("/usr/bin/nautilus").is_file():
+            cmd = f"/usr/bin/nautilus {line} &"
+        elif Path("/usr/bin/thunar").is_file():
+            cmd = f"/usr/bin/thunar {line} &"
+        else:
+            raise FileNotFoundError("No valid file manager is found!")
+        run_cmd(cmd)
+        return
+
+
 def symlink_blog() -> None:
     """Create symbolic link for the blog directory 
         to make it easier to use.

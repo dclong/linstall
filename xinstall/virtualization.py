@@ -60,8 +60,8 @@ def virtualbox_guest_additions(args) -> None:
             try:
                 args.dir = next(Path(f"/media/{USER}").glob("VBox_GAs_*"))
                 logging.info("VirtualBox Guest Additions is found at {args.dir}.")
-            except StopIteration:  # pylint: disable=W0707
-                raise RuntimeError(
+            except StopIteration:
+                raise RuntimeError(  # pylint: disable=W0707
                     "No VirtualBox Guest Additions is found. Please specify its location manually."
                 )
             cmd = f"""{args.prefix} apt-get update \
