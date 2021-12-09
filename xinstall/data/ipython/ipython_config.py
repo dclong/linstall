@@ -343,6 +343,8 @@ if "darwin" in PLATFORM or "macos" in PLATFORM:
             ),
             ("umount", "diskutil umount"),
             ("unmount", "diskutil umount"),
+            ("top.cpu", "top -o cpu"),
+            ("top.mem", "top -o mem"),
         ]
     )
 elif "win" in PLATFORM:
@@ -370,6 +372,8 @@ else:
                 "record_screen",
                 "ffmpeg -f x11grab -r 25 -s cif -i :0.0 $(date +%m%d%H%M%S).mp4"
             ),
+            ("top.cpu", "top"),
+            ("top.mem", "top -o %MEM"),
         ]
     )
 #if "linux" in PLATFORM:
