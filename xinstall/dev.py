@@ -468,6 +468,38 @@ def _add_subparser_rustpython(subparsers):
     add_subparser(subparsers, "RustPython", func=rustpython, aliases=["rustpy"])
 
 
+def flamegraph(args):
+    """Install and configure FlameGraph.
+    """
+    if args.install:
+        if is_ubuntu_debian():
+            logging.info("Installing FlameGraph ...")
+            cmd = f"""{args.prefix} apt-get update \
+                && {args.prefix} apt-get install {args.yes_s} \
+                    linux-tools-common \
+                    linux-tools-generic \
+                    linux-tools-`uname -r` \
+                && cargo install flamegraph"""
+            run_cmd(cmd)
+        else:
+            raise NotImplementedError(
+                "Installing FlameGraph is not supported on this OS."
+            )
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_flamegraph(subparsers):
+    add_subparser(
+        subparsers,
+        "flamegraph",
+        func=pyenv,
+        aliases=["flame", "flameg", "fgraph", "fg"],
+    )
+
+
 def _git_ignore(args: Namespace) -> None:
     """Insert patterns to ingore into .gitignore in the current directory.
     """
@@ -818,6 +850,7 @@ def _add_subparser_dev(subparsers):
     _add_subparser_sdkman(subparsers)
     _add_subparser_poetry(subparsers)
     _add_subparser_rustup(subparsers)
+    _add_subparser_flamegraph(subparsers)
     _add_subparser_rustpython(subparsers)
     _add_subparser_deno(subparsers)
     _add_subparser_antlr(subparsers)

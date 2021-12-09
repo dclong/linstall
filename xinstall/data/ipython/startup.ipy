@@ -10,6 +10,7 @@ import getpass
 import socket
 from IPython.terminal.prompts import Prompts, Token
 from IPython.core.magic import (register_line_magic, register_cell_magic, register_line_cell_magic)
+from xinstall.utils import is_linux, is_macos
 try:
     import dsutil
 except:
@@ -107,7 +108,7 @@ def trash(line: str):
     """
     path = Path(line)
     trash_dir = Path.home() / ".Trash"
-    if "linux" in sys.platform:
+    if is_linux():
         trash_dir = Path.home() / ".local/share/Trash/files"
     trash_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
     backup = trash_dir / path.name
@@ -118,7 +119,9 @@ def trash(line: str):
 
 
 @register_line_magic
-def open(line: str) -> None:
+def o(line: str) -> None:
+    """Open a file using the default application.
+    """
     if is_macos():
         run_cmd(f"open {line} &")
         return
