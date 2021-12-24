@@ -2,6 +2,7 @@
     "editor.fontSize": 12,
     "editor.detectIndentation": false,
     "editor.suggestSelection": "first",
+    "search.followSymlinks": false,
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "keyboard.dispatch": "keyCode",
     "workbench.startupEditor": "newUntitledFile",
