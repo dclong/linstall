@@ -175,10 +175,10 @@ def _svim_filetype_shiftwidth():
 def _svim_for_firenvim():
     file = HOME / ".SpaceVim/init.vim"
     with file.open("a") as fout:
-        fout.write('\n"' + "-" * 79)
-        fout.write("if exists('g:started_by_firenvim')")
-        fout.write("    set guifont=Monaco:h16")
-        fout.write("endif")
+        fout.write('\n"' + "-" * 79 + "\n")
+        fout.write("if exists('g:started_by_firenvim')\n")
+        fout.write("    set guifont=Monaco:h16\n")
+        fout.write("endif\n")
 
 
 def _spacevim_args(subparser) -> None:
