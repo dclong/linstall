@@ -15,7 +15,7 @@ from .network import _add_subparser_network
 from .desktop import _add_subparser_desktop
 from .pdf import _add_subparser_pdf
 
-__version__ = "0.45.1"
+__version__ = "0.45.2"
 
 
 def version(args):  # pylint: disable=W0613
