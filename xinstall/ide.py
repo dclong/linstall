@@ -161,6 +161,7 @@ def spacevim(args) -> None:
         _svim_gen_config()
         _svim_true_color(args.true_colors)
         _svim_filetype_shiftwidth()
+        _svim_for_firenvim()
     if args.uninstall:
         run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall")
 
@@ -169,6 +170,15 @@ def _svim_filetype_shiftwidth():
     vimrc = HOME / ".SpaceVim.d/vimrc"
     with vimrc.open("a") as fout:
         fout.write("autocmd FileType yaml set shiftwidth=2")
+
+
+def _svim_for_firenvim():
+    file = HOME / ".SpaceVim/init.vim"
+    with file.open("a") as fout:
+        fout.write('\n"' + "-" * 79)
+        fout.write("if exists('g:started_by_firenvim')")
+        fout.write("    set guifont=Monaco:h16")
+        fout.write("endif")
 
 
 def _spacevim_args(subparser) -> None:
