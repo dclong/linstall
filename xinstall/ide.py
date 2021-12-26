@@ -100,15 +100,6 @@ def _svim_true_color(true_color: Union[bool, None]) -> None:
         fout.writelines(lines)
 
 
-def _svim_gen_config() -> None:
-    """Generate init.toml for SpaceVim if it does not exist.
-    """
-    des_dir = HOME / ".SpaceVim.d"
-    os.makedirs(des_dir, exist_ok=True)
-    if not (des_dir / "init.toml").is_file():
-        shutil.copy2(BASE_DIR / "SpaceVim/init.toml", des_dir)
-
-
 def _strip_spacevim(args: Namespace) -> None:
     if not args.strip:
         return
@@ -158,18 +149,14 @@ def spacevim(args) -> None:
             # npm install -g bash-language-server javascript-typescript-langserver
             run_cmd(cmd)
     if args.config:
-        _svim_gen_config()
+        des_dir = HOME / ".SpaceVim.d"
+        os.makedirs(des_dir, exist_ok=True)
+        shutil.copy2(BASE_DIR / "SpaceVim/init.toml", des_dir)
+        shutil.copy2(BASE_DIR / "SpaceVim/vimrc", des_dir)
         _svim_true_color(args.true_colors)
-        _svim_filetype_shiftwidth()
         _svim_for_firenvim()
     if args.uninstall:
         run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall")
-
-
-def _svim_filetype_shiftwidth():
-    vimrc = HOME / ".SpaceVim.d/vimrc"
-    with vimrc.open("a") as fout:
-        fout.write("autocmd FileType yaml set shiftwidth=2")
 
 
 def _svim_for_firenvim():
