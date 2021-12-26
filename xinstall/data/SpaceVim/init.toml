@@ -57,3 +57,7 @@ merged = false
 [[custom_plugins]]
 repo = "machakann/vim-swap"
 merged = false
+
+[[custom_plugins]]
+repo = "glacambre/firenvim"
+merged = false
