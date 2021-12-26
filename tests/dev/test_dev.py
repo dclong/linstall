@@ -39,13 +39,6 @@ def test_nodejs():
     run_cmd(cmd)
 
 
-def test_bash_lsp():
-    """Test installing Bash Language Server.
-    """
-    cmd = "xinstall bash_lsp -c"
-    run_cmd(cmd)
-
-
 def test_rust():
     """Test installing the Rust programming language.
     """

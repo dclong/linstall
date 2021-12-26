@@ -6,5 +6,11 @@ import subprocess as sp
 def test_intellij_idea():
     """Test installing and configuring IntelliJ Idea.
     """
-    cmd = "xinstall intellij"
-    sp.run(cmd, shell=True, check=True)
+    run_cmd("xinstall intellij")
+
+
+def test_bash_lsp():
+    """Test installing Bash Language Server.
+    """
+    run_cmd("xinstall svim -ic")
+    run_cmd("xinstall bash_lsp -c")
