@@ -1,6 +1,7 @@
 """Test the ide module.
 """
 import subprocess as sp
+from xinstall.utils import run_cmd
 
 
 def test_intellij_idea():
