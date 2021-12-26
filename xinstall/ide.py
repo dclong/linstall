@@ -86,8 +86,6 @@ def _svim_true_color(true_color: Union[bool, None]) -> None:
     if true_color is None:
         return
     file = HOME / ".SpaceVim.d/init.toml"
-    if not file.is_file():
-        _svim_gen_config()
     with file.open() as fin:
         lines = fin.readlines()
     for idx, line in enumerate(lines):
@@ -208,13 +206,12 @@ def _add_subparser_spacevim(subparsers) -> None:
 
 
 def bash_lsp(args) -> None:
-    """Install Bash Language Server.
+    """Install Bash Language Server for SpaceVim.
     """
     if args.install:
         cmd = f"{args.prefix} npm install -g bash-language-server"
         run_cmd(cmd)
     if args.config:
-        _svim_gen_config()
         toml = HOME / ".SpaceVim.d/init.toml"
         with toml.open("r") as fin:
             lines = [
