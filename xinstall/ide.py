@@ -147,10 +147,16 @@ def spacevim(args) -> None:
             # npm install -g bash-language-server javascript-typescript-langserver
             run_cmd(cmd)
     if args.config:
+        # configure .SpaceVim
+        des_dir = HOME / ".SpaceVim"
+        os.makedirs(des_dir, exist_ok=True)
+        shutil.copy2(BASE_DIR / "SpaceVim/SpaceVim/init.vim", des_dir)
+        # configure .SpaceVim.d
         des_dir = HOME / ".SpaceVim.d"
         os.makedirs(des_dir, exist_ok=True)
-        shutil.copy2(BASE_DIR / "SpaceVim/init.toml", des_dir)
-        shutil.copy2(BASE_DIR / "SpaceVim/vimrc", des_dir)
+        shutil.copy2(BASE_DIR / "SpaceVim/SpaceVim.d/init.toml", des_dir)
+        shutil.copy2(BASE_DIR / "SpaceVim/SpaceVim.d/vimrc", des_dir)
+        # -----------------------------------------------------------
         _svim_true_color(args.true_colors)
         _svim_for_firenvim()
     if args.uninstall:
