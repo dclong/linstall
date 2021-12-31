@@ -158,7 +158,7 @@ def spacevim(args) -> None:
         shutil.copy2(BASE_DIR / "SpaceVim/SpaceVim.d/vimrc", des_dir)
         # -----------------------------------------------------------
         _svim_true_color(args.true_colors)
-        _svim_for_firenvim()
+        #_svim_for_firenvim()
     if args.uninstall:
         run_cmd("curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall")
 
