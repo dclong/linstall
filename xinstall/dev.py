@@ -495,7 +495,7 @@ def _add_subparser_flamegraph(subparsers):
     add_subparser(
         subparsers,
         "flamegraph",
-        func=pyenv,
+        func=flamegraph,
         aliases=["flame", "flameg", "fgraph", "fg"],
     )
 
