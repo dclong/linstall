@@ -357,7 +357,7 @@ def update_file(
     """
     if isinstance(path, str):
         path = Path(path)
-    text = path.read_text()
+    text = path.read_text(encoding="utf-8")
     if regex:
         for pattern, replace in regex:
             text = re.sub(pattern, replace, text)
@@ -369,7 +369,7 @@ def update_file(
             append = "\n".join(append)
         if not exist_skip or append not in text:
             text += append
-    path.write_text(text)
+    path.write_text(text, encoding="utf-8")
 
 
 def update_dict(dict1, dict2, recursive: bool = False):
@@ -398,7 +398,7 @@ def add_path_shell(
         paths = [paths]
     if isinstance(config_file, str):
         config_file = Path(config_file)
-    with config_file.open("a") as fout:
+    with config_file.open("a", encoding="utf-8") as fout:
         for path in paths:
             bash = textwrap.dedent(
                 f"""

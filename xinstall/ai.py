@@ -16,7 +16,7 @@ def _add_subparser_ai(subparsers):
     _add_subparser_pytext(subparsers)
     _add_subparser_computer_vision(subparsers)
     _add_subparser_nlp(subparsers)
-    _add_subparser_heic(subparser)
+    _add_subparser_heic(subparsers)
 
 
 def kaggle(args):
@@ -212,7 +212,7 @@ def heic(args):
                         heif-gdk-pixbuf libheif-examples
                     """
             run_cmd(cmd)
-        elif is_windows():
+        elif is_win():
             pass
         elif is_macos():
             pass
