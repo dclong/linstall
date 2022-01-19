@@ -16,10 +16,11 @@ def _add_subparser_ai(subparsers):
     _add_subparser_pytext(subparsers)
     _add_subparser_computer_vision(subparsers)
     _add_subparser_nlp(subparsers)
+    _add_subparser_heic(subparsers)
 
 
 def kaggle(args):
-    """Insert the Python package kaggle.
+    """Install the Python package kaggle.
     """
     if args.install:
         cmd = f"{args.pip_install} kaggle"
@@ -56,7 +57,7 @@ def _add_subparser_kaggle(subparsers):
 
 
 def lightgbm(args):
-    """Insert the Python package kaggle.
+    """Install the Python package kaggle.
     """
     if args.install:
         cmd = f"""{args.pip_install} lightgbm scikit-learn pandas matplotlib scipy graphviz"""
@@ -117,7 +118,7 @@ def _add_subparser_pytorch(subparsers):
 
 
 def autogluon(args):
-    """Insert the Python package AutoGluon.
+    """Install the Python package AutoGluon.
     """
     if args.install:
         cmd = f"{args.pip_install} 'mxnet<2.0.0' autogluon"
@@ -150,7 +151,7 @@ def _add_subparser_autogluon(subparsers):
 
 
 def pytext(args):
-    """Insert the Python package PyText.
+    """Install the Python package PyText.
     """
     if args.install:
         cmd = f"{args.pip_install} pytext-nlp"
@@ -168,7 +169,7 @@ def _add_subparser_pytext(subparsers):
 
 
 def computer_vision(args):
-    """Insert computer vision Python packages: opencv-python, scikit-image and Pillow.
+    """Install computer vision Python packages: opencv-python, scikit-image and Pillow.
     """
     if args.install:
         if is_ubuntu_debian():
@@ -198,6 +199,35 @@ def _add_subparser_computer_vision(subparsers):
         func=computer_vision,
         aliases=["vision", "cv"],
         add_argument=_computer_vision_args
+    )
+
+
+def heic(args):
+    """Install HEIC related libraries and tools.
+    """
+    if args.install:
+        if is_ubuntu_debian():
+            cmd = f"""{args.prefix} apt-get update \
+                    && {args.prefix} apt-get install {args.yes_s} \
+                        heif-gdk-pixbuf libheif-examples
+                    """
+            run_cmd(cmd)
+        elif is_win():
+            pass
+        elif is_macos():
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_heic(subparsers):
+    add_subparser(
+        subparsers,
+        "heic",
+        func=heic,
+        aliases=["heif"],
     )
 
 
