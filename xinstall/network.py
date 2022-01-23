@@ -279,12 +279,7 @@ def _ngrok_args(subparser):
 
 
 def _add_subparser_ngrok(subparsers):
-    add_subparser(
-        subparsers,
-        "ngrok",
-        func=ngrok,
-        add_argument=_ngrok_args
-    )
+    add_subparser(subparsers, "ngrok", func=ngrok, add_argument=_ngrok_args)
 
 
 def _add_subparser_network(subparsers):
@@ -295,4 +290,3 @@ def _add_subparser_network(subparsers):
     _add_subparser_download_tools(subparsers)
     _add_subparser_sshuttle(subparsers)
     _add_subparser_ngrok(subparsers)
-
