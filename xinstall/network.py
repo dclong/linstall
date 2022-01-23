@@ -251,6 +251,37 @@ def _add_subparser_sshuttle(subparsers):
     )
 
 
+def ngrok(args: Namespace):
+    """Install and configures ngrok.
+
+    :param args: An instance of Namespace containing arguments.
+    """
+    if args.install:
+        if is_linux():
+            cmd = f"""curl -sSL https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.tgz -o /tmp/ngrok.tgz \
+                && tar -zxvf /tmp/ngrok.tgz -C {HOME}/.local/bin/"""
+            run_cmd(cmd)
+        elif is_macos():
+            cmd = f"""curl -sSL https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-darwin-amd64.zip -o /tmp/ngrok.tgz \
+                && unzip /tmp/ngrok.tgz -d {HOME}/.local/bin/"""
+            run_cmd(cmd)
+        else:
+            pass
+    if args.config:
+        cmd = f"{HOME}/.local/bin/ngrok authtoken 23wmm8NwCToDsy0bXj27UqawhkR_4J8eN7aWgoekzXuFJGvQ4"
+        run_cmd(cmd)
+    if args.uninstall:
+        (HOME / ".local/bin/ngrok").unlink()
+
+
+def _ngrok_args(subparser):
+    option_pip_bundle(subparser)
+
+
+def _add_subparser_ngrok(subparsers):
+    add_subparser(subparsers, "ngrok", func=ngrok, add_argument=_ngrok_args)
+
+
 def _add_subparser_network(subparsers):
     _add_subparser_ssh_server(subparsers)
     _add_subparser_ssh_client(subparsers)
@@ -258,3 +289,4 @@ def _add_subparser_network(subparsers):
     _add_subparser_dryscrape(subparsers)
     _add_subparser_download_tools(subparsers)
     _add_subparser_sshuttle(subparsers)
+    _add_subparser_ngrok(subparsers)
