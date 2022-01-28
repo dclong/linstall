@@ -324,7 +324,7 @@ def poetry(args):
     """Install and configure Python poetry.
     """
     if args.install:
-        url = "https://raw.githubusercontent.com/sdispater/poetry/master/install-poetry.py"
+        url = "https://install.python-poetry.org"
         cmd = f"curl -sSL {url} | {args.python}"
         if args.version:
             cmd += f" - --version {args.version}"
