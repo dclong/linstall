@@ -84,12 +84,12 @@ def pytorch(args):
             run_cmd(cmd)
         else:
             cmd = f"""{args.pip_install} -f {url} \
-                    torch==1.9.1+cpu torchvision==0.10.1+cpu torchaudio==0.9.1"""
+                    torch==1.11.0+cpu torchvision==0.12.0+cpu torchaudio==0.11.0+cpu"""
             if args.cuda_version:
                 args.cuda_version = args.cuda_version.replace(".", "")
                 cmd = f"""{args.pip_install} -f {url} \
-                    torch==1.9.1+cu{args.cuda_version} torchvision==0.10.1+cu{args.cuda_version} \
-                    torchaudio==0.9.1
+                    torch==1.11.0+cu{args.cuda_version} torchvision==0.12.0+cu{args.cuda_version} \
+                    torchaudio==0.11.0+cu{args.cuda_version} 
                     """
                 if args.cuda_version == "102":
                     cmd = f"{args.pip_install} torch torchvision torchaudio"
