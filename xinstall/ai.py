@@ -78,22 +78,9 @@ def pytorch(args):
     """Install PyTorch.
     """
     if args.install:
-        url = "https://download.pytorch.org/whl/torch_stable.html"
-        if is_macos():
-            cmd = f"{args.pip_install} torch torchvision torchaudio"
-            run_cmd(cmd)
-        else:
-            cmd = f"""{args.pip_install} -f {url} \
-                    torch==1.11.0+cpu torchvision==0.12.0+cpu torchaudio==0.11.0+cpu"""
-            if args.cuda_version:
-                args.cuda_version = args.cuda_version.replace(".", "")
-                cmd = f"""{args.pip_install} -f {url} \
-                    torch==1.11.0+cu{args.cuda_version} torchvision==0.12.0+cu{args.cuda_version} \
-                    torchaudio==0.11.0+cu{args.cuda_version} 
-                    """
-                if args.cuda_version == "102":
-                    cmd = f"{args.pip_install} torch torchvision torchaudio"
-            run_cmd(cmd)
+        version = "cu" + args.cuda_version.replace(".", "") if args.cuda_version else "cpu"
+        cmd = f"{args.pip_install} torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/{version}"
+        run_cmd(cmd)
     if args.config:
         pass
     if args.uninstall:
