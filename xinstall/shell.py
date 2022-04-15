@@ -15,7 +15,6 @@ from .utils import (
     is_ubuntu_debian,
     is_centos_series,
     is_linux,
-    is_fedora,
     update_apt_source,
     brew_install_safe,
     is_macos,
@@ -145,35 +144,18 @@ def _add_subparser_change_shell(subparsers) -> None:
     )
 
 
-def _homebrew_args(subparser) -> None:
-    subparser.add_argument(
-        "-d",
-        "--install-deps",
-        dest="dep",
-        action="store_true",
-        help="Whether to install dependencies."
-    )
-
-
 def homebrew(args) -> None:
     """Install Homebrew.
     """
-    if args.dep:
-        args.install = True
-        if is_ubuntu_debian():
-            update_apt_source(prefix=args.prefix)
-            run_cmd(
-                f"{args.prefix} apt-get install {args.yes_s} build-essential curl file git"
-            )
-        elif is_centos_series():
-            run_cmd(f"{args.prefix} yum groupinstall 'Development Tools'")
-            run_cmd(f"{args.prefix} yum install curl file git")
-            if is_fedora():
-                run_cmd(f"{args.prefix} yum install libxcrypt-compat")
-    url = "https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
-    cmd_brew = f'sh -c "$(curl -fsSL {url})"'
     if args.install:
-        run_cmd(cmd_brew)
+        if is_macos():
+            cmd = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"'
+            run_cmd(cmd)
+        elif is_linux():
+            cmd = "mkdir ~/homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C ~/homebrew"
+            run_cmd(cmd)
+        else:
+            pass
     if args.config:
         if is_linux():
             dirs = [f"{HOME}/.linuxbrew", "/home/linuxbrew/.linuxbrew"]
@@ -190,12 +172,7 @@ def homebrew(args) -> None:
             else:
                 sys.exit("Homebrew is not installed!")
     if args.uninstall:
-        if is_ubuntu_debian():
-            pass
-        elif is_macos():
-            pass
-        elif is_centos_series():
-            pass
+        pass
 
 
 def _add_subparser_homebrew(subparsers) -> None:
@@ -204,7 +181,6 @@ def _add_subparser_homebrew(subparsers) -> None:
         "Homebrew",
         func=homebrew,
         aliases=["brew"],
-        add_argument=_homebrew_args
     )
 
 
