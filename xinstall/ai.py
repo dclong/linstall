@@ -78,7 +78,9 @@ def pytorch(args):
     """Install PyTorch.
     """
     if args.install:
-        version = "cu" + args.cuda_version.replace(".", "") if args.cuda_version else "cpu"
+        version = "cu" + args.cuda_version.replace(
+            ".", ""
+        ) if args.cuda_version else "cpu"
         cmd = f"{args.pip_install} torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/{version}"
         run_cmd(cmd)
     if args.config:
