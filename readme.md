@@ -1,18 +1,10 @@
 # [xinstall](https://github.com/dclong/xinstall): Easy Cross-platform Installation and Configuration of Apps
 
 ## Installation
-Note: It is best to install `xinstall` into a system-wide location 
-(rather than users' local directories)
-so that the command `xinstall` is always on `$PATH`.
-You can download a copy of the latest release and install it using pip.
-```
-sudo pip3 install -U https://github.com/dclong/xinstall/releases/download/v0.48.2/xinstall-0.48.2-py3-none-any.whl
-```
-Or you can use the following command to install the latest main branch
-if you have pip 20.0+.
-```
-sudo pip3 install -U git+https://github.com/dclong/xinstall@main
-```
+
+    :::bash
+    pip3 install xinstall
+
 ## Usage
 
 1. Run `xinstall -h` for the help doc.
