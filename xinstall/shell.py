@@ -158,7 +158,7 @@ def homebrew(args) -> None:
             pass
     if args.config:
         if is_linux():
-            dirs = [f"{HOME}/.linuxbrew", "/home/linuxbrew/.linuxbrew"]
+            dirs = [f"{HOME}/homebrew", "/home/homebrew/.homebrew"]
             paths = [f"{dir_}/bin/brew" for dir_ in dirs if os.path.isdir(dir_)]
             if paths:
                 brew = paths[-1]
