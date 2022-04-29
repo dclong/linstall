@@ -39,6 +39,13 @@ def test_nodejs():
     run_cmd(cmd)
 
 
+def test_golang():
+    """Test installing GoLANG.
+    """
+    cmd = "xinstall --sudo -y golang -ic"
+    run_cmd(cmd)
+
+
 def test_rust():
     """Test installing the Rust programming language.
     """
