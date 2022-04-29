@@ -4,7 +4,9 @@ import os
 import logging
 import shutil
 from pathlib import Path
+import re
 import tempfile
+import urllib.request
 from argparse import Namespace
 import tomlkit
 import dulwich.porcelain
@@ -767,6 +769,53 @@ def _add_subparser_pyenv(subparsers):
     )
 
 
+def _parse_golang_version():
+    url = "https://github.com/golang/go/tags"
+    with urllib.request.urlopen(url) as fin:
+        html = fin.read()
+    pattern = r"tag/go(\d+\.\d+\.\d+)"
+    match = re.search(pattern, html)
+    if not match:
+        raise RuntimeError(
+            f"The pattern {pattern} is not found in the source HTML code of the page {url}!"
+        )
+    return match.groups(0)[0]
+
+
+def golang(args):
+    """Install and configure GoLANG.
+    """
+    if args.install:
+        logging.info("Installing GoLANG ...")
+        if is_linux():
+            ver = _parse_golang_version()
+            cmd = f"""curl -sSL https://go.dev/dl/go{ver}.linux-amd64.tar.gz -o /tmp/go.tar.gz \
+                    && {args.prefix} rm -rf /usr/local/go \
+                    && {args.prefix} tar -C /usr/local/ -xzf /tmp/go.tar.gz
+                """
+            run_cmd(cmd)
+        elif is_macos():
+            brew_install_safe("go")
+        elif is_win():
+            pass
+    if args.config:
+        if is_linux():
+            local_bin = HOME / ".local/bin/"
+            local_bin.mkdir(parents=True, exist_ok=True)
+            for path in Path("/usr/local/go/bin/").iterdir():
+                path.symlink_to(local_bin)
+        elif is_macos():
+            pass
+        else:
+            pass
+    if args.uninstall:
+        pass
+
+
+def _add_subparser_golang(subparsers):
+    add_subparser(subparsers, "golang", func=cmake, aliases=["go"])
+
+
 def cmake(args):
     """Install and configure cmake.
     """
@@ -838,6 +887,7 @@ def _add_subparser_dev(subparsers):
     _add_subparser_git(subparsers)
     _add_subparser_nodejs(subparsers)
     _add_subparser_python3(subparsers)
+    _add_subparser_golang(subparsers)
     _add_subparser_sphinx(subparsers)
     _add_subparser_pyjnius(subparsers)
     _add_subparser_yapf(subparsers)
