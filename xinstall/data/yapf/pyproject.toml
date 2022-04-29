@@ -5,4 +5,6 @@ column_limit = "88"
 [tool.yapfignore]
 ignore_patterns = [
     "*/.ipynb_checkpoints/",
+    ".venv",
+    "venv",
 ]
