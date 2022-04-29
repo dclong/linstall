@@ -813,7 +813,7 @@ def golang(args):
 
 
 def _add_subparser_golang(subparsers):
-    add_subparser(subparsers, "golang", func=cmake, aliases=["go"])
+    add_subparser(subparsers, "GoLANG", func=golang, aliases=["go"])
 
 
 def cmake(args):
