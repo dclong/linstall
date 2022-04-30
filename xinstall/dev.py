@@ -800,10 +800,11 @@ def golang(args):
             pass
     if args.config:
         if is_linux():
-            local_bin = HOME / ".local/bin/"
-            local_bin.mkdir(parents=True, exist_ok=True)
+            usr_local_bin = Path("/usr/local/bin/")
             for path in Path("/usr/local/go/bin/").iterdir():
-                (local_bin / path.name).symlink_to(path)
+                path_sym = usr_local_bin / path.name
+                logging.info(f"Creating symbolic link {path_sym} -> {path} ...")
+                path_sym.symlink_to(path)
         elif is_macos():
             pass
         else:
