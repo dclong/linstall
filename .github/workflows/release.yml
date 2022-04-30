@@ -27,7 +27,9 @@ jobs:
           files: |
             dist/*
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_XINSTALL }}
+        run: | 
+          twine upload --verbose dist/* -u __token__ -p ${{ secrets.PYPI_XINSTALL }}
+        #uses: pypa/gh-action-pypi-publish@release/v1
+        #with:
+        #  user: __token__
+        #  password: ${{ secrets.PYPI_XINSTALL }}
