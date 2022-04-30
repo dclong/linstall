@@ -202,35 +202,6 @@ def _add_subparser_dsutil(subparsers) -> None:
     )
 
 
-def xinstall(args) -> None:
-    """Install xonsh, a Python based shell.
-    """
-    if args.install:
-        url = "https://github.com/dclong/xinstall"
-        install_python_lib(
-            url=url,
-            user=args.user,
-            pip_option=args.pip_option,
-            prefix=args.prefix,
-            python=args.python,
-        )
-    if args.config:
-        pass
-    if args.uninstall:
-        run_cmd(f"{args.prefix} {args.pip_uninstall} uninstall xinstall")
-
-
-def _xinstall_args(subparser) -> None:
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_xinstall(subparsers) -> None:
-    add_subparser(
-        subparsers, "xinstall", func=xinstall, aliases=[], add_argument=_xinstall_args
-    )
-
-
 def _add_subparser_github(subparsers):
     _add_subparser_dsutil(subparsers)
-    _add_subparser_xinstall(subparsers)
     _add_subparser_install(subparsers)

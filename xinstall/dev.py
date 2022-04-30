@@ -803,7 +803,7 @@ def golang(args):
             usr_local_bin = Path("/usr/local/bin/")
             for path in Path("/usr/local/go/bin/").iterdir():
                 path_sym = usr_local_bin / path.name
-                logging.info(f"Creating symbolic link {path_sym} -> {path} ...")
+                logging.info("Creating symbolic link %s -> %s ...", path_sym, path)
                 path_sym.symlink_to(path)
         elif is_macos():
             pass
