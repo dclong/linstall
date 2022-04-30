@@ -772,7 +772,7 @@ def _add_subparser_pyenv(subparsers):
 def _parse_golang_version():
     url = "https://github.com/golang/go/tags"
     with urllib.request.urlopen(url) as fin:
-        html = fin.read()
+        html = fin.read().decode()
     pattern = r"tag/go(\d+\.\d+\.\d+)"
     match = re.search(pattern, html)
     if not match:
