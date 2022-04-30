@@ -772,7 +772,7 @@ def _add_subparser_pyenv(subparsers):
 def _parse_golang_version():
     url = "https://github.com/golang/go/tags"
     with urllib.request.urlopen(url) as fin:
-        html = fin.read()
+        html = fin.read().decode()
     pattern = r"tag/go(\d+\.\d+\.\d+)"
     match = re.search(pattern, html)
     if not match:
@@ -803,7 +803,7 @@ def golang(args):
             local_bin = HOME / ".local/bin/"
             local_bin.mkdir(parents=True, exist_ok=True)
             for path in Path("/usr/local/go/bin/").iterdir():
-                path.symlink_to(local_bin)
+                (local_bin / path.name).symlink_to(path)
         elif is_macos():
             pass
         else:
@@ -813,7 +813,7 @@ def golang(args):
 
 
 def _add_subparser_golang(subparsers):
-    add_subparser(subparsers, "golang", func=cmake, aliases=["go"])
+    add_subparser(subparsers, "GoLANG", func=golang, aliases=["go"])
 
 
 def cmake(args):
