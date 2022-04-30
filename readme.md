@@ -1,6 +1,6 @@
 # [xinstall](https://github.com/dclong/xinstall): Easy Cross-platform Installation and Configuration of Apps
 
-## Install `xinstall`
+## Install xinstall
 
     :::bash
     pip3 install -U xinstall
