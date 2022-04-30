@@ -803,7 +803,7 @@ def golang(args):
             local_bin = HOME / ".local/bin/"
             local_bin.mkdir(parents=True, exist_ok=True)
             for path in Path("/usr/local/go/bin/").iterdir():
-                path.symlink_to(local_bin)
+                (local_bin / path.name).symlink_to(path)
         elif is_macos():
             pass
         else:
