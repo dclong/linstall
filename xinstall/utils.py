@@ -1,7 +1,7 @@
 """Helper functions.
 """
 from __future__ import annotations
-from typing import Union, List, Tuple, Sequence, Iterable, Any, Sized, Callable
+from typing import Union, Sequence, Iterable, Any, Sized, Callable
 import os
 import sys
 import json
@@ -340,8 +340,8 @@ def add_subparser(
 
 def update_file(
     path: Union[str, Path],
-    regex: Union[List[Tuple[str, str]], None] = None,
-    exact: Union[List[Tuple[str, str]], None] = None,
+    regex: Union[list[tuple[str, str]], None] = None,
+    exact: Union[list[tuple[str, str]], None] = None,
     append: Union[str, Iterable[str], None] = None,
     exist_skip: bool = True,
 ) -> None:
