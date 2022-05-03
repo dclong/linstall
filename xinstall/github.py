@@ -171,7 +171,7 @@ def _add_subparser_install(subparsers) -> None:
         subparsers,
         "install_from_github",
         func=install,
-        aliases=["from_github", "github", "gh"],
+        aliases=["from_github"],
         add_argument=_install_args,
     )
 
