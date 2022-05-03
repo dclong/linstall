@@ -3,7 +3,7 @@
 from pathlib import Path
 import logging
 from .utils import (
-    HOME, USER, run_cmd, add_subparser, is_ubuntu_debian, is_macos, is_win,
+    HOME, USER, run_cmd, add_subparser, is_debian_series, is_macos, is_win,
     option_pip_bundle
 )
 
@@ -161,7 +161,7 @@ def computer_vision(args):
     """Install computer vision Python packages: opencv-python, scikit-image and Pillow.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             cmd = f"""{args.prefix} apt-get update \
                     && {args.prefix} apt-get install {args.yes_s} \
                         libsm6 libxrender-dev libaec-dev libxext6 \
@@ -195,7 +195,7 @@ def heic(args):
     """Install HEIC related libraries and tools.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             cmd = f"""{args.prefix} apt-get update \
                     && {args.prefix} apt-get install {args.yes_s} \
                         heif-gdk-pixbuf libheif-examples
@@ -240,7 +240,7 @@ def cuda(args):
     """Install CUDA for GPU computing.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             pkgs = "cuda" if args.full else "cuda-drivers"
             cmd = f"""wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin -O /tmp/cuda-ubuntu2004.pin \
                 && {args.prefix} mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 \
@@ -281,7 +281,7 @@ def nvidia_docker(args):
     """Install nvidia-docker2 (on a  Linux machine).
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             cmd = f"""distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
                     && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
                     && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list \

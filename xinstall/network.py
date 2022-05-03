@@ -14,10 +14,10 @@ from .utils import (
     add_subparser,
     update_apt_source,
     brew_install_safe,
-    is_ubuntu_debian,
+    is_debian_series,
     is_linux,
     is_macos,
-    is_centos_series,
+    is_fedora_series,
     option_pip_bundle,
 )
 
@@ -26,17 +26,17 @@ def ssh_server(args) -> None:
     """Install and configure SSH server.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(
                 f"{args.prefix} apt-get install {args.yes_s} openssh-server fail2ban"
             )
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} openssh-server fail2ban")
         elif is_macos():
             pass
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
 
 
@@ -106,14 +106,14 @@ def proxychains(args) -> None:
     :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             cmd = f"""{args.prefix} apt-get install {args.yes_s} proxychains4 \
                     && {args.prefix} ln -svf /usr/bin/proxychains4 /usr/bin/proxychains"""
             run_cmd(cmd)
         elif is_macos():
             brew_install_safe(["proxychains-ng"])
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum install proxychains")
     if args.config:
         print("Configuring proxychains ...")
@@ -123,11 +123,11 @@ def proxychains(args) -> None:
         shutil.copy2(src_file, des_dir)
         logging.info("%s is copied to the directory %s", src_file, des_dir)
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} proxychains4")
         elif is_macos():
             run_cmd("brew uninstall proxychains-ng")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove proxychains")
 
 
@@ -141,7 +141,7 @@ def dryscrape(args):
     """Install and configure dryscrape.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             cmd = f"""{args.prefix} apt-get install {args.yes_s} qt5-default libqt5webkit5-dev build-essential xvfb \
                 && {args.pip_install} dryscrape
@@ -149,16 +149,16 @@ def dryscrape(args):
             run_cmd(cmd)
         elif is_macos():
             pass
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             pass
         elif is_macos():
             pass
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
 
 
@@ -182,19 +182,19 @@ def download_tools(args: Namespace):
     :param args: An instance of Namespace containing arguments.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} wget curl aria2", )
         elif is_macos():
             brew_install_safe(["wget", "curl", "aria2"])
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} wget curl aria2")
         elif is_macos():
             run_cmd("brew uninstall wget curl aria2")
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
 
 
@@ -210,12 +210,12 @@ def iptables(args: Namespace):
     :param args: An instance of Namespace containing arguments.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} iptables")
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} iptables")
 
 

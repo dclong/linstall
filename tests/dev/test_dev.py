@@ -5,7 +5,7 @@ import shutil
 import subprocess as sp
 import tomlkit
 from deepdiff import DeepDiff
-from xinstall.utils import is_ubuntu_debian, update_apt_source, run_cmd
+from xinstall.utils import is_debian_series, update_apt_source, run_cmd
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent
 def setup_module():
     """Setup for testing the dev module.
     """
-    if is_ubuntu_debian():
+    if is_debian_series():
         update_apt_source(prefix="sudo", seconds=0)
 
 

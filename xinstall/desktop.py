@@ -5,7 +5,7 @@ import tempfile
 from pathlib import Path
 #import logging
 from .utils import (
-    is_ubuntu_debian,
+    is_debian_series,
     is_linux,
     is_ubuntu,
     update_apt_source,
@@ -27,7 +27,7 @@ def nomachine(args):
     """
     if args.install:
         ver = args.version[:args.version.rindex(".")]
-        if is_ubuntu_debian():
+        if is_debian_series():
             url = f"https://download.nomachine.com/download/{ver}/Linux/nomachine_{args.version}_amd64.deb"
             with tempfile.TemporaryDirectory() as tempdir:
                 file = Path(tempdir) / "nomachine.deb"
@@ -59,7 +59,7 @@ def lxqt(args):
     """Install the LXQt desktop environment.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             cmd = f"{args.prefix} apt-get install lxqt"
             run_cmd(cmd)

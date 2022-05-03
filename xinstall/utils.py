@@ -111,10 +111,22 @@ def is_ubuntu():
     return DISTRO_ID == "ubuntu"
 
 
-def is_ubuntu_debian():
+def is_ubuntu_series():
     """Check whehter the current OS is Ubuntu/Debian.
     """
-    return DISTRO_ID in ("ubuntu", "debian")
+    return DISTRO_ID in {"ubuntu", "linuxmint", "pop!_os"}
+
+
+def is_debian():
+    """Check whehter the current OS is Ubuntu.
+    """
+    return DISTRO_ID == "debian"
+
+
+def is_debian_series():
+    """Check whehter the current OS is Ubuntu/Debian.
+    """
+    return DISTRO_ID in {"debian", "ubuntu", "linuxmint", "pop!_os"}
 
 
 def is_linux():
@@ -123,10 +135,10 @@ def is_linux():
     return sys.platform == "linux"
 
 
-def is_centos_series():
+def is_fedora_series():
     """Check whehter the current OS belongs to the CentOS series (CentOS, RedHat or Fedora).
     """
-    return DISTRO_ID in ("centos", "redhat", "fedora")
+    return DISTRO_ID in ("centos", "rhel", "fedora")
 
 
 def is_fedora():

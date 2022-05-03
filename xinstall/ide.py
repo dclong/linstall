@@ -8,7 +8,7 @@ import os
 import shutil
 import re
 from .utils import (
-    USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, is_ubuntu_debian, is_centos_series,
+    USER, HOME, BASE_DIR, BIN_DIR, LOCAL_DIR, is_debian_series, is_fedora_series,
     update_apt_source, brew_install_safe, is_macos, run_cmd, add_subparser,
     intellij_idea_plugin, option_pip_bundle
 )
@@ -18,19 +18,19 @@ def vim(args) -> None:
     """Install Vim.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} vim vim-nox")
         elif is_macos():
             brew_install_safe(["vim"])
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum install {args.yes_s} vim-enhanced")
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} vim vim-nox")
         elif is_macos():
             run_cmd("brew uninstall vim")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove vim")
     if args.config:
         pass
@@ -43,23 +43,23 @@ def _add_subparser_vim(subparsers) -> None:
 def neovim(args) -> None:
     """Install NeoVim.
     """
-    if args.ppa and is_ubuntu_debian():
+    if args.ppa and is_debian_series():
         args.install = True
         run_cmd(f"{args.prefix} add-apt-repository -y ppa:neovim-ppa/unstable")
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} neovim")
         elif is_macos():
             brew_install_safe(["neovim"])
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum install neovim")
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} neovim")
         elif is_macos():
             run_cmd("brew uninstall neovim")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove neovim")
     if args.config:
         pass
@@ -250,7 +250,7 @@ def intellij_idea(args) -> None:
     """Install IntelliJ IDEA.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             des_dir = f"{LOCAL_DIR}/share/ide/idea"
             executable = f"{BIN_DIR}/idea"
@@ -263,14 +263,14 @@ def intellij_idea(args) -> None:
             run_cmd(cmd)
         elif is_macos():
             run_cmd("brew cask install intellij-idea-ce")
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} intellij-idea-ce")
         elif is_macos():
             run_cmd("brew cask uninstall intellij-idea-ce")
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
     if args.config:
         pass
@@ -280,19 +280,19 @@ def visual_studio_code(args) -> None:
     """Install Visual Studio Code.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} vscode")
         elif is_macos():
             run_cmd("brew cask install visual-studio-code")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum install vscode")
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} vscode")
         elif is_macos():
             run_cmd("brew cask uninstall visual-studio-code")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove vscode")
     if args.config:
         src_file = f"{BASE_DIR}/vscode/settings.json"
