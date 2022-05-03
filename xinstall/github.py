@@ -8,7 +8,23 @@ import re
 import requests
 from packaging.version import parse
 from packaging.specifiers import SpecifierSet
-from .utils import (option_version, option_pip_bundle, add_subparser, run_cmd)
+from .utils import (
+    option_version,
+    option_pip_bundle,
+    add_subparser,
+    run_cmd,
+    is_linux,
+    is_ubuntu_debian,
+    is_fedora,
+    is_macos,
+    is_win,
+)
+
+
+def _add_subparser_github(subparsers):
+    _add_subparser_dsutil(subparsers)
+    _add_subparser_install(subparsers)
+    _add_subparser_gh(subparsers)
 
 
 def get_latest_version(url: str) -> str:
@@ -202,6 +218,43 @@ def _add_subparser_dsutil(subparsers) -> None:
     )
 
 
-def _add_subparser_github(subparsers):
-    _add_subparser_dsutil(subparsers)
-    _add_subparser_install(subparsers)
+def gh(args) -> None:
+    """Install and configure gh (GitHub cli).
+    """
+    if args.install:
+        if is_macos():
+            run_cmd("brew install gh")
+        elif is_linux():
+            if is_ubuntu_debian():
+                cmd = """curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | {args.prefix} dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+                    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | {args.prefix} tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+                    && {args.prefix} apt-get update && {args.prefix} apt-get install -y gh
+                    """
+                run_cmd(cmd)
+            elif is_fedora():
+                cmd = "{args.prefix} dnf install gh"
+                run_cmd(cmd)
+            else:
+                pass
+        elif is_win():
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_macos():
+            run_cmd("brew uninstall gh")
+        elif is_linux():
+            if is_ubuntu_debian():
+                cmd = "{args.prefix} apt-get purge -y gh"
+                run_cmd(cmd)
+            elif is_fedora():
+                cmd = "{args.prefix} dnf remove gh"
+                run_cmd(cmd)
+            else:
+                pass
+        elif is_win():
+            pass
+
+
+def _add_subparser_gh(subparsers) -> None:
+    add_subparser(subparsers, "GitHub cli", func=gh, aliases=["github_cli"])
