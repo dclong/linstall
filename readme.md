@@ -1,23 +1,19 @@
 # [xinstall](https://github.com/dclong/xinstall): Easy Cross-platform Installation and Configuration of Apps
 
-## Installation
+## Install xinstall
 
     :::bash
-    pip3 install xinstall
+    pip3 install -U xinstall
 
 ## Usage
 
 1. Run `xinstall -h` for the help doc.
-
-2. Update xinstall.
-
-        xinstall xinstall -ic
         
 2. Below is an example of install SpaceVim and configure it.
 
         xinstall svim -ic
     
-4. In case `xinstall` is not on the search path, 
+3. In case `xinstall` is not on the search path, 
     you can use `python3 -m xinstall.main` instead. 
     For example, 
     to check the help doc.
