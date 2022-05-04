@@ -578,4 +578,4 @@ def gh(args) -> None:
 
 
 def _add_subparser_gh(subparsers) -> None:
-    add_subparser(subparsers, "GitHub cli", func=gh, aliases=["github_cli"])
+    add_subparser(subparsers, "gh", func=gh, aliases=["github_cli"])
