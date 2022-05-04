@@ -547,13 +547,13 @@ def gh(args) -> None:
             run_cmd("brew install gh")
         elif is_linux():
             if is_debian_series():
-                cmd = """curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | {args.prefix} dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+                cmd = f"""curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | {args.prefix} dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
                     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | {args.prefix} tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
                     && {args.prefix} apt-get update && {args.prefix} apt-get install -y gh
                     """
                 run_cmd(cmd)
             elif is_fedora_series():
-                cmd = "{args.prefix} dnf install gh"
+                cmd = f"{args.prefix} dnf install gh"
                 run_cmd(cmd)
             else:
                 pass
@@ -566,10 +566,10 @@ def gh(args) -> None:
             run_cmd("brew uninstall gh")
         elif is_linux():
             if is_debian_series():
-                cmd = "{args.prefix} apt-get purge -y gh"
+                cmd = f"{args.prefix} apt-get purge -y gh"
                 run_cmd(cmd)
             elif is_fedora_series():
-                cmd = "{args.prefix} dnf remove gh"
+                cmd = f"{args.prefix} dnf remove gh"
                 run_cmd(cmd)
             else:
                 pass
