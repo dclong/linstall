@@ -8,7 +8,17 @@ import re
 import requests
 from packaging.version import parse
 from packaging.specifiers import SpecifierSet
-from .utils import (option_version, option_pip_bundle, add_subparser, run_cmd)
+from .utils import (
+    option_version,
+    option_pip_bundle,
+    add_subparser,
+    run_cmd,
+)
+
+
+def _add_subparser_github(subparsers):
+    _add_subparser_dsutil(subparsers)
+    _add_subparser_install(subparsers)
 
 
 def get_latest_version(url: str) -> str:
@@ -161,7 +171,7 @@ def _add_subparser_install(subparsers) -> None:
         subparsers,
         "install_from_github",
         func=install,
-        aliases=["from_github", "github", "gh"],
+        aliases=["from_github"],
         add_argument=_install_args,
     )
 
@@ -200,8 +210,3 @@ def _add_subparser_dsutil(subparsers) -> None:
     add_subparser(
         subparsers, "dsutil", func=dsutil, aliases=[], add_argument=_dsutil_args
     )
-
-
-def _add_subparser_github(subparsers):
-    _add_subparser_dsutil(subparsers)
-    _add_subparser_install(subparsers)

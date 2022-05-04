@@ -12,12 +12,12 @@ from .utils import (
     BASE_DIR,
     BIN_DIR,
     is_win,
-    is_ubuntu_debian,
-    is_centos_series,
+    is_macos,
     is_linux,
+    is_debian_series,
+    is_fedora_series,
     update_apt_source,
     brew_install_safe,
-    is_macos,
     run_cmd,
     add_subparser,
     option_pip_bundle,
@@ -41,25 +41,26 @@ def _add_subparser_shell(subparsers):
     _add_subparser_dust(subparsers)
     _add_subparser_rip(subparsers)
     _add_subparser_long_path(subparsers)
+    _add_subparser_gh(subparsers)
 
 
 def coreutils(args) -> None:
     """Install CoreUtils.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} coreutils")
         elif is_macos():
             brew_install_safe("coreutils")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum install coreutils")
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} coreutils")
         elif is_macos():
             run_cmd("brew uninstall coreutils")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove coreutils")
     if args.config:
         if is_macos():
@@ -78,7 +79,7 @@ def shell_utils(args) -> None:
     """Install Shell-related utils.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(
                 f"""{args.prefix} apt-get install {args.yes_s} \
@@ -86,19 +87,19 @@ def shell_utils(args) -> None:
             )
         elif is_macos():
             brew_install_safe(["bash-completion@2", "man-db"])
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(
                 f"{args.prefix} yum install bash-completion command-not-found man-db"
             )
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(
                 f"""{args.prefix} apt-get purge {args.yes_s} \
                     bash-completion command-not-found man-db""",
             )
         elif is_macos():
             run_cmd("brew uninstall bash-completion man-db")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(
                 f"{args.prefix} yum remove bash-completion command-not-found man-db"
             )
@@ -188,14 +189,14 @@ def hyper(args) -> None:
     """Install the hyper.js terminal.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get update")
             args.output = "/tmp/hyper.deb"
             args.install_cmd = f"{args.prefix} apt-get install {args.yes_s}"
             github.install(args)
         elif is_macos():
             run_cmd("brew cask install hyper")
-        elif is_centos_series():
+        elif is_fedora_series():
             #!yum install hyper
             pass
     if args.config:
@@ -212,12 +213,12 @@ def hyper(args) -> None:
         shutil.copy2(os.path.join(BASE_DIR, "hyper/hyper.js"), path)
         logging.info("%s is copied to %s.", BASE_DIR / "hyper/hyper.js", path)
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             #!apt-get purge hyper
             pass
         elif is_macos():
             run_cmd("brew cask uninstall hyper")
-        elif is_centos_series():
+        elif is_fedora_series():
             #!yum remove hyper
             pass
 
@@ -315,21 +316,21 @@ def bash_completion(args) -> None:
     :param args:
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} bash-completion")
         elif is_macos():
             brew_install_safe(["bash-completion@2"])
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum install bash-completion")
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge bash-completion")
         elif is_macos():
             run_cmd("brew uninstall bash-completion")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove bash-completion")
 
 
@@ -346,20 +347,20 @@ def exa(args) -> None:
     """Install exa which is an Rust-implemented alternative to ls.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd("cargo install --root /usr/local/ exa")
         elif is_macos():
             brew_install_safe(["exa"])
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd("cargo install --root /usr/local/ exa")
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd("cargo uninstall --root /usr/local/ exa")
         elif is_macos():
             run_cmd("brew uninstall exa")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd("cargo uninstall --root /usr/local/ exa")
 
 
@@ -371,7 +372,7 @@ def osquery(args) -> None:
     """Install osquery for Linux admin.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             cmd = f"""xinstall github -r osquery/osquery -k linux amd64 deb -o /tmp/osquery.deb \
                     && {args.prefix} apt-get install {args.yes_s} /tmp/osquery.deb
@@ -380,7 +381,7 @@ def osquery(args) -> None:
         elif is_macos():
             cmd = "brew install --cask osquery"
             run_cmd(cmd)
-        elif is_centos_series():
+        elif is_fedora_series():
             cmd = f"""xinstall github -r osquery/osquery -k linux amd64 rpm -o /tmp/osquery.rpm \
                     && {args.prefix} yum install {args.yes_s} /tmp/osquery.rpm
                 """
@@ -393,11 +394,11 @@ def osquery(args) -> None:
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} osquery")
         elif is_macos():
             run_cmd("brew uninstall osquery")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove osquery")
         elif is_win():
             pass
@@ -410,7 +411,7 @@ def _add_subparser_osquery(subparsers) -> None:
 def wajig(args) -> None:
     """Install wajig.
     """
-    if not is_ubuntu_debian():
+    if not is_debian_series():
         return
     if args.install:
         update_apt_source(prefix=args.prefix)
@@ -536,3 +537,45 @@ def _add_subparser_long_path(subparsers) -> None:
         aliases=["longp", "lpath", "lp"],
         add_argument=_long_path_args
     )
+
+
+def gh(args) -> None:
+    """Install and configure gh (GitHub cli).
+    """
+    if args.install:
+        if is_macos():
+            run_cmd("brew install gh")
+        elif is_linux():
+            if is_debian_series():
+                cmd = f"""curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | {args.prefix} dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+                    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | {args.prefix} tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+                    && {args.prefix} apt-get update && {args.prefix} apt-get install -y gh
+                    """
+                run_cmd(cmd)
+            elif is_fedora_series():
+                cmd = f"{args.prefix} dnf install gh"
+                run_cmd(cmd)
+            else:
+                pass
+        elif is_win():
+            pass
+    if args.config:
+        pass
+    if args.uninstall:
+        if is_macos():
+            run_cmd("brew uninstall gh")
+        elif is_linux():
+            if is_debian_series():
+                cmd = f"{args.prefix} apt-get purge -y gh"
+                run_cmd(cmd)
+            elif is_fedora_series():
+                cmd = f"{args.prefix} dnf remove gh"
+                run_cmd(cmd)
+            else:
+                pass
+        elif is_win():
+            pass
+
+
+def _add_subparser_gh(subparsers) -> None:
+    add_subparser(subparsers, "gh", func=gh, aliases=["github_cli"])

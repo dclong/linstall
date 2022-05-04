@@ -9,8 +9,8 @@ from .utils import (
     is_win,
     is_macos,
     is_linux,
-    is_ubuntu_debian,
-    is_centos_series,
+    is_debian_series,
+    is_fedora_series,
     update_apt_source,
     brew_install_safe,
 )
@@ -22,19 +22,19 @@ def virtualbox(args) -> None:
     :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} virtualbox-qt", )
         elif is_macos():
             run_cmd("brew cask install virtualbox virtualbox-extension-pack")
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} virtualbox-qt", )
         elif is_macos():
             run_cmd("brew cask uninstall virtualbox virtualbox-extension-pack", )
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
     if args.config:
         pass
@@ -56,7 +56,7 @@ def virtualbox_guest_additions(args) -> None:
             logging.info(
                 "Searching for VirtualBox Guest Additions in default locations ..."
             )
-        if is_ubuntu_debian():
+        if is_debian_series():
             try:
                 args.dir = next(Path(f"/media/{USER}").glob("VBox_GAs_*"))
                 logging.info("VirtualBox Guest Additions is found at {args.dir}.")
@@ -69,7 +69,7 @@ def virtualbox_guest_additions(args) -> None:
                 && {args.prefix} {args.dir}/VBoxLinuxAdditions.run
                 """
             run_cmd(cmd)
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
         elif is_macos():
             pass
@@ -94,7 +94,7 @@ def docker(args):
     :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(
                 f"{args.prefix} apt-get install {args.yes_s} docker.io docker-compose"
@@ -105,11 +105,11 @@ def docker(args):
                 "docker-compose",
                 "bash-completion@2",
             ])
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum install docker docker-compose")
     if args.config:
         if args.user_to_docker:
-            if is_ubuntu_debian():
+            if is_debian_series():
                 run_cmd(f"{args.prefix} gpasswd -a {args.user_to_docker} docker")
                 logging.warning(
                     "Please run the command 'newgrp docker' or logout/login"
@@ -119,13 +119,13 @@ def docker(args):
                 cmd = f"{args.prefix} dseditgroup -o edit -a {args.user_to_docker} -t user staff"
                 run_cmd(cmd)
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} docker docker-compose", )
         elif is_macos():
             run_cmd(
                 "brew uninstall docker docker-completion docker-compose docker-compose-completion",
             )
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove docker docker-compose")
 
 
@@ -154,7 +154,7 @@ def kubectl(args):
     :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(
                 f"""{args.prefix} curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg \
                 && echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | {args.prefix} tee /etc/apt/sources.list.d/kubernetes.list
@@ -164,14 +164,14 @@ def kubectl(args):
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} kubectl")
         elif is_macos():
             brew_install_safe(["kubernetes-cli"])
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} kubectl")
         elif is_macos():
             run_cmd("brew uninstall kubectl")
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
 
 
@@ -197,12 +197,12 @@ def minikube(args) -> None:
     virtualbox(args)
     kubectl(args)
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix, seconds=-1E10)
             _minikube_linux(args)
         elif is_macos():
             run_cmd("brew install minikube")
-        elif is_centos_series():
+        elif is_fedora_series():
             _minikube_linux(args)
         elif is_win():
             run_cmd("choco install minikube")
@@ -210,11 +210,11 @@ def minikube(args) -> None:
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} rm /usr/local/bin/minikube")
         elif is_macos():
             run_cmd("brew cask uninstall minikube")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} rm /usr/local/bin/minikube")
 
 
@@ -228,25 +228,25 @@ def multipass(args) -> None:
     :param args: A Namespace object containing parsed command-line options.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             cmd = f"{args.prefix} snap install multipass --classic"
             run_cmd(cmd)
         elif is_macos():
             cmd = "brew cask install multipass"
             run_cmd(cmd)
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
         elif is_win():
             pass
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             cmd = f"{args.prefix} snap uninstall multipass"
             run_cmd(cmd)
         elif is_macos():
             run_cmd("brew cask uninstall multipass")
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
 
 
@@ -273,12 +273,12 @@ def microk8s(args) -> None:
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             cmd = f"{args.prefix} snap uninstall microk8s"
             run_cmd(cmd)
         elif is_macos():
             pass
-        elif is_centos_series():
+        elif is_fedora_series():
             pass
 
 

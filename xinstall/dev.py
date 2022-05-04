@@ -13,8 +13,8 @@ import dulwich.porcelain
 from .utils import (
     HOME,
     BASE_DIR,
-    is_ubuntu_debian,
-    is_centos_series,
+    is_debian_series,
+    is_fedora_series,
     is_linux,
     update_apt_source,
     brew_install_safe,
@@ -36,7 +36,7 @@ def openjdk8(args):
     """Install OpenJDK 8.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(
                 f"{args.prefix} apt-get install {args.yes_s} openjdk-jdk-8 maven gradle"
@@ -44,16 +44,16 @@ def openjdk8(args):
         if is_macos():
             cmd = "brew tap AdoptOpenJDK/openjdk && brew cask install adoptopenjdk8"
             run_cmd(cmd)
-        if is_centos_series():
+        if is_fedora_series():
             pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(
                 f"{args.prefix} apt-get purge {args.yes_s} openjdk-jdk-8 maven gradle"
             )
         if is_macos():
             run_cmd("brew cask uninstall adoptopenjdk8")
-        if is_centos_series():
+        if is_fedora_series():
             pass
 
 
@@ -252,22 +252,22 @@ def nodejs(args):
     """Install nodejs and npm.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             cmd = f"{args.prefix} apt-get install {args.yes_s} nodejs npm"
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["node"])
-        if is_centos_series():
+        if is_fedora_series():
             run_cmd(f"{args.prefix} yum install {args.yes_s} nodejs")
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} nodejs")
         if is_macos():
             run_cmd("brew uninstall nodejs")
-        if is_centos_series():
+        if is_fedora_series():
             run_cmd(f"{args.prefix} yum remove nodejs")
 
 
@@ -279,14 +279,14 @@ def python(args):
     """Install and configure Python (3).
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             cmd = f"""{args.prefix} apt-get install {args.yes_s} \
                 python3 python3-dev python3-pip python3-setuptools python3-venv"""
             run_cmd(cmd)
         if is_macos():
             brew_install_safe(["python3"])
-        if is_centos_series():
+        if is_fedora_series():
             run_cmd(
                 f"""{args.prefix} yum install {args.yes_s} \
                 python3 python3-devel python3-pip"""
@@ -298,13 +298,13 @@ def python(args):
             if python3:
                 Path(python3[:-1]).symlink_to(python3)
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             cmd = f"""{args.prefix} apt-get purge {args.yes_s} \
                 python3 python3-dev python3-setuptools python3-pip python3-venv"""
             run_cmd(cmd)
         if is_macos():
             run_cmd("brew uninstall python3")
-        if is_centos_series():
+        if is_fedora_series():
             run_cmd(f"{args.prefix} yum remove python3")
 
 
@@ -410,7 +410,7 @@ def rustup(args):
                 && ~/.cargo/bin/cargo install cargo-cache
                 """
             run_cmd(cmd)
-        if is_ubuntu_debian():
+        if is_debian_series():
             cmd = f"""{args.prefix} apt-get update \
                     && {args.prefix} apt-get install -y cmake libssl-dev pkg-config
                 """
@@ -474,7 +474,7 @@ def flamegraph(args):
     """Install and configure FlameGraph.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             logging.info("Installing FlameGraph ...")
             cmd = f"""{args.prefix} apt-get update \
                 && {args.prefix} apt-get install {args.yes_s} \
@@ -520,21 +520,21 @@ def git_(args) -> None:
     """Install and configure Git.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} git git-lfs")
         elif is_macos():
             brew_install_safe(["git", "git-lfs", "bash-completion@2"])
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum install git")
         run_cmd("git lfs install")
     if args.uninstall:
         run_cmd("git lfs uninstall")
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} git git-lfs")
         elif is_macos():
             run_cmd("brew uninstall git git-lfs")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove git")
     if args.config:
         ssh_client(args)
@@ -612,21 +612,21 @@ def antlr(args):
     """Install and configure Antrl4.
     """
     if args.install:
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix)
             run_cmd(f"{args.prefix} apt-get install {args.yes_s} antlr4")
         elif is_macos():
             brew_install_safe(["antlr4"])
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum install antlr")
     if args.config:
         pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             run_cmd(f"{args.prefix} apt-get purge {args.yes_s} antlr4")
         elif is_macos():
             run_cmd("brew uninstall antlr4")
-        elif is_centos_series():
+        elif is_fedora_series():
             run_cmd(f"{args.prefix} yum remove antlr")
 
 
@@ -714,7 +714,7 @@ def pyenv(args):
         cmd = f"""{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run \
             | PYENV_ROOT={args.root} bash"""
         run_cmd(cmd)
-        if is_ubuntu_debian():
+        if is_debian_series():
             logging.info(
                 "Installing header files (for building Python and Python packages) ..."
             )
@@ -822,7 +822,7 @@ def cmake(args):
     """
     if args.install:
         logging.info("Installing cmake ...")
-        if is_ubuntu_debian():
+        if is_debian_series():
             update_apt_source(prefix=args.prefix, seconds=1E-10)
             cmd = f"{args.prefix} apt-get install {args.yes_s} cmake"
             run_cmd(cmd)
@@ -831,7 +831,7 @@ def cmake(args):
         elif is_win():
             pass
     if args.uninstall:
-        if is_ubuntu_debian():
+        if is_debian_series():
             cmd = f"{args.prefix} apt-get purge {args.yes_s} cmake"
             run_cmd(cmd)
         elif is_macos():

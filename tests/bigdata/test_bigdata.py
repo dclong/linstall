@@ -1,9 +1,14 @@
 """Test the dev module.
 """
 import subprocess as sp
-from xinstall.utils import is_ubuntu_debian, update_apt_source
-if is_ubuntu_debian():
-    update_apt_source(prefix="sudo", seconds=0)
+from xinstall.utils import is_debian_series, update_apt_source
+
+
+def setup_module():
+    """Setup for testing the bigdata module.
+    """
+    if is_debian_series():
+        update_apt_source(prefix="sudo", seconds=0)
 
 
 def test_spark():
