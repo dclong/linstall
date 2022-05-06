@@ -25,7 +25,7 @@ def test_install_py_github():
 def test_github():
     """Test the github command.
     """
-    cmd = "xinstall from_github -r legendu-net/xinstall -k whl -o xinstall.wheel"
+    cmd = "xinstall from_github -r legendu-net/dockeree -k whl -o dockeree.wheel"
     msg = "rate limit exceeded for url"
     try:
         run_cmd(cmd, capture_output=True)
