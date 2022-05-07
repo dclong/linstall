@@ -114,7 +114,7 @@ def is_ubuntu():
 def is_ubuntu_series():
     """Check whehter the current OS is Ubuntu/Debian.
     """
-    return DISTRO_ID in {"ubuntu", "linuxmint", "pop!_os"}
+    return DISTRO_ID in {"ubuntu", "linuxmint", "pop"}
 
 
 def is_debian():
