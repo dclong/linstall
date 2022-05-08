@@ -61,3 +61,8 @@ merged = false
 [[custom_plugins]]
 repo = "glacambre/firenvim"
 merged = false
+
+[[custom_plugins]]
+repo = "luk400/vim-jukit"
+merged = false
+
