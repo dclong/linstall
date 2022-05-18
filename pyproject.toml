@@ -3,6 +3,10 @@ name = "xinstall"
 version = "0.51.1"
 description = "Easy Cross-platform Installation and Configuration of Apps."
 authors = ["Benjamin Du <longendu@yahoo.com>"]
+license = "MIT"
+readme = "readme.md"
+repository = "https://github.com/legendu-net/xinstall"
+keywords = ["installation", "configuration", "cross-platform"]
 
 [tool.poetry.scripts]
 xinstall = "xinstall:main.main"
