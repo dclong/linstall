@@ -5,11 +5,9 @@ import logging
 import shutil
 from pathlib import Path
 import re
-import tempfile
 import urllib.request
 from argparse import Namespace
 import tomlkit
-import dulwich.porcelain
 from .utils import (
     HOME,
     BASE_DIR,
@@ -850,41 +848,6 @@ def _add_subparser_cmake(subparsers):
     )
 
 
-def pg_formatter(args):
-    """Install and configure pgFormatter.
-    """
-    if args.install:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            dulwich.porcelain.clone(
-                "https://github.com/darold/pgFormatter.git", temp_dir
-            )
-            if is_win():
-                run_cmd(
-                    f"""cd /d {temp_dir} \
-                        && perl Makefile.PL \
-                        && make && {args.prefix} make install"""
-                )
-            else:
-                run_cmd(
-                    f"""cd {temp_dir} \
-                        && perl Makefile.PL \
-                        && make && {args.prefix} make install"""
-                )
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
-
-
-def _add_subparser_pg_formatter(subparsers):
-    add_subparser(
-        subparsers,
-        "pg_formatter",
-        aliases=["pgformatter", "pgfmt", "pgf"],
-        func=pg_formatter,
-    )
-
-
 def _add_subparser_dev(subparsers):
     _add_subparser_cmake(subparsers)
     _add_subparser_git(subparsers)
@@ -908,4 +871,3 @@ def _add_subparser_dev(subparsers):
     _add_subparser_deno(subparsers)
     _add_subparser_antlr(subparsers)
     _add_subparser_jpype1(subparsers)
-    _add_subparser_pg_formatter(subparsers)

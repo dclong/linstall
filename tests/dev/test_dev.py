@@ -74,13 +74,6 @@ def test_ipython():
     run_cmd(cmd)
 
 
-def test_pg_formatter():
-    """Test installing and configuring pgFormatter.
-    """
-    cmd = "xinstall --sudo pgfmt -ic"
-    run_cmd(cmd)
-
-
 def _comp_toml_cmd(src_toml, cmd) -> bool:
     """Compare TOML files after running a xinstall sub-command.
     """

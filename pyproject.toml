@@ -19,7 +19,6 @@ findspark = ">=1.4.2"
 requests = ">=2.25.0"
 packaging = ">=20.4"
 tomlkit = ">=0.7.0"
-dulwich = ">=0.20.24"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=3.0"
