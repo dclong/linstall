@@ -405,7 +405,7 @@ def rustup(args):
         else:
             cmd = """curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
                 && ~/.cargo/bin/rustup component add rust-src rustfmt clippy \
-                && ~/.cargo/bin/cargo install cargo-cache
+                && ~/.cargo/bin/cargo install sccache cargo-cache
                 """
             run_cmd(cmd)
         if is_debian_series():
