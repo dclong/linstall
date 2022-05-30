@@ -787,7 +787,7 @@ def jenv(args):
                 "The subcommand 'xinstall jenv' is not implemented for Windows yet!"
             )
         if is_macos():
-            cmd = "brew install jenv"
+            cmd = "brew install jenv"
             run_cmd(cmd)
         else:
             logging.info("Installing jenv ...")
