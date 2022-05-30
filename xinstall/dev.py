@@ -709,7 +709,9 @@ def pyenv(args):
         args.root = os.path.join(args.root, "pyenv")
     if args.install:
         if is_win():
-            raise NotImplementedError("The subcommand 'xinstall pyenv' is not implemented for Windows yet!")
+            raise NotImplementedError(
+                "The subcommand 'xinstall pyenv' is not implemented for Windows yet!"
+            )
         elif is_macos():
             cmd = "brew install pyenv"
             run_cmd(cmd)
@@ -781,7 +783,9 @@ def jenv(args):
         args.root = os.path.join(args.root, "jenv")
     if args.install:
         if is_win():
-            raise NotImplementedError("The subcommand 'xinstall jenv' is not implemented for Windows yet!")
+            raise NotImplementedError(
+                "The subcommand 'xinstall jenv' is not implemented for Windows yet!"
+            )
         elif is_macos():
             cmd = "brew install jenv"
             run(cmd)
