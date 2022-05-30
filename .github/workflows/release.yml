@@ -22,7 +22,7 @@ jobs:
           xinstall pt -ic
       - name: Build and Publish Package to PyPI
         run: |
-          ~/.local/bin/poetry publish --build -u __token__ -p ${{ secrets.PYPI_DOCKEREE }}
+          ~/.local/bin/poetry publish --build -u __token__ -p ${{ secrets.PYPI_XINSTALL }}
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
