@@ -1,4 +1,4 @@
-# [xinstall](https://github.com/dclong/xinstall): Easy Cross-platform Installation and Configuration of Apps
+# [xinstall](https://github.com/legendu-net/xinstall): Easy Cross-platform Installation and Configuration of Apps
 
 ## Install xinstall
 
