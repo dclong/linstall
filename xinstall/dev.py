@@ -712,7 +712,7 @@ def pyenv(args):
             raise NotImplementedError(
                 "The subcommand 'xinstall pyenv' is not implemented for Windows yet!"
             )
-        elif is_macos():
+        if is_macos():
             cmd = "brew install pyenv"
             run_cmd(cmd)
         else:
@@ -786,9 +786,9 @@ def jenv(args):
             raise NotImplementedError(
                 "The subcommand 'xinstall jenv' is not implemented for Windows yet!"
             )
-        elif is_macos():
+        if is_macos():
             cmd = "brew install jenv"
-            run(cmd)
+            run_cmd(cmd)
         else:
             logging.info("Installing jenv ...")
             cmd = f"""{args.prefix} rm -rf {args.root} \

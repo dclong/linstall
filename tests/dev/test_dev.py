@@ -5,7 +5,8 @@ import shutil
 import subprocess as sp
 import tomlkit
 from deepdiff import DeepDiff
-from xinstall.utils import is_debian_series, update_apt_source, run_cmd
+import pytest
+from xinstall.utils import is_win, is_debian_series, update_apt_source, run_cmd
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -36,6 +37,22 @@ def test_nodejs():
     """Test installing nodejs.
     """
     cmd = "xinstall --sudo -y nodejs -ic"
+    run_cmd(cmd)
+
+
+@pytest.mark.skipif(is_win(), reason="Skip test on Windows.")
+def test_pyenv():
+    """Test installing PyEnv.
+    """
+    cmd = "xinstall -y pyenv -ic"
+    run_cmd(cmd)
+
+
+@pytest.mark.skipif(is_win(), reason="Skip test on Windows.")
+def test_jenv():
+    """Test installing jEnv.
+    """
+    cmd = "xinstall -y jenv -ic"
     run_cmd(cmd)
 
 
