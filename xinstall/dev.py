@@ -405,7 +405,7 @@ def rustup(args):
         else:
             cmd = """curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
                 && ~/.cargo/bin/rustup component add rust-src rustfmt clippy \
-                && ~/.cargo/bin/cargo install cargo-cache
+                && ~/.cargo/bin/cargo install sccache cargo-cache
                 """
             run_cmd(cmd)
         if is_debian_series():
@@ -708,36 +708,45 @@ def pyenv(args):
     if not (args.root.endswith("pyenv") or args.root.endswith(".pyenv")):
         args.root = os.path.join(args.root, "pyenv")
     if args.install:
-        logging.info("Installing pyenv ...")
-        cmd = f"""{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run \
-            | PYENV_ROOT={args.root} bash"""
-        run_cmd(cmd)
-        if is_debian_series():
-            logging.info(
-                "Installing header files (for building Python and Python packages) ..."
+        if is_win():
+            raise NotImplementedError(
+                "The subcommand 'xinstall pyenv' is not implemented for Windows yet!"
             )
-            update_apt_source(prefix=args.prefix, seconds=1E-10)
-            cmd = f"""{args.prefix} apt-get install {args.yes_s} \
-                libssl-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev liblzma-dev
-                """
+        if is_macos():
+            cmd = "brew install pyenv"
             run_cmd(cmd)
+        else:
+            logging.info("Installing pyenv ...")
+            cmd = f"""{args.prefix} rm -rf {args.root} && curl -sSL https://pyenv.run \
+                | PYENV_ROOT={args.root} bash"""
+            run_cmd(cmd)
+            if is_debian_series():
+                logging.info(
+                    "Installing header files (for building Python and Python packages) ..."
+                )
+                update_apt_source(prefix=args.prefix, seconds=1E-10)
+                cmd = f"""{args.prefix} apt-get install {args.yes_s} \
+                    libssl-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev liblzma-dev
+                    """
+                run_cmd(cmd)
     if args.config:
         update_file(
             HOME / ".bashrc",
             append=[
-                "\n\n# pyenv",
-                'export PATH="$HOME/.pyenv/bin:$PATH"',
+                "\n\n# PyEnv",
+                f'export PATH="{args.root}/bin:$PATH"',
                 'eval "$(pyenv init -)"',
                 'eval "$(pyenv virtualenv-init -)"\n',
             ]
         )
+        logging.info("PyEnv has been configured for bash.")
     if args.uninstall:
-        run_cmd(f"rm -rf {HOME}/.pyenv/")
+        run_cmd(f"rm -rf {args.root}")
         update_file(
             HOME / ".bashrc",
             exact=[
-                ("# pyenv", ""),
-                ('export PATH="$HOME/.pyenv/bin:$PATH"\n', ""),
+                ("# PyEnv", ""),
+                (f'export PATH="{args.root}/bin:$PATH"\n', ""),
                 ('eval "$(pyenv init -)"\n', ""),
                 ('eval "$(pyenv virtualenv-init -)"\n', ""),
             ]
@@ -753,7 +762,7 @@ def _pyenv_args(subparser):
         dest="root",
         default=os.environ.get("PYENV_ROOT", str(HOME / ".pyenv")),
         help=
-        "The root directory for installing pyenv, e.g., `/opt/pyenv` or `/home/dclong/.pyenv`."
+        "The root directory for installing PyEnv, e.g., `/opt/pyenv` or `/home/dclong/.pyenv`."
     )
 
 
@@ -764,6 +773,70 @@ def _add_subparser_pyenv(subparsers):
         func=pyenv,
         aliases=[],
         add_argument=_pyenv_args,
+    )
+
+
+def jenv(args):
+    """Install and configure jEnv.
+    """
+    if not (args.root.endswith("jenv") or args.root.endswith(".jenv")):
+        args.root = os.path.join(args.root, "jenv")
+    if args.install:
+        if is_win():
+            raise NotImplementedError(
+                "The subcommand 'xinstall jenv' is not implemented for Windows yet!"
+            )
+        if is_macos():
+            cmd = "brew install jenv"
+            run_cmd(cmd)
+        else:
+            logging.info("Installing jenv ...")
+            cmd = f"""{args.prefix} rm -rf {args.root} \
+                && git clone https://github.com/jenv/jenv.git ~/.jenv
+                """
+            run_cmd(cmd)
+    if args.config:
+        update_file(
+            HOME / ".bashrc",
+            append=[
+                "\n\n# jEnv",
+                f'export PATH="{args.root}/bin:$PATH"',
+                'eval "$(jenv init -)"',
+            ]
+        )
+        logging.info("jEnv has been configured for bash.")
+    if args.uninstall:
+        run_cmd(f"rm -rf {args.root}")
+        update_file(
+            HOME / ".bashrc",
+            exact=[
+                ("# jEnv", ""),
+                (f'export PATH="{args.root}/bin:$PATH"\n', ""),
+                ('eval "$(jenv init -)"\n', ""),
+            ]
+        )
+
+
+def _jenv_args(subparser):
+    subparser.add_argument(
+        "-r",
+        "-d",
+        "--root",
+        "--jenv-root",
+        dest="root",
+        default=os.environ.get("JENV_ROOT", str(HOME / ".pyenv")),
+        help=
+        "The root directory for installing jEnv, e.g., `/opt/pyenv` or `/home/dclong/.pyenv`."
+    )
+
+
+def _add_subparser_jenv(subparsers):
+    add_subparser(
+        subparsers,
+        "jenv",
+        func=jenv,
+        aliases=[],
+        add_argument=_jenv_args,
     )
 
 
@@ -862,6 +935,7 @@ def _add_subparser_dev(subparsers):
     _add_subparser_darglint(subparsers)
     _add_subparser_pytype(subparsers)
     _add_subparser_pyenv(subparsers)
+    _add_subparser_jenv(subparsers)
     _add_subparser_openjdk(subparsers)
     _add_subparser_sdkman(subparsers)
     _add_subparser_poetry(subparsers)
