@@ -44,7 +44,7 @@ def test_nodejs():
 def test_pyenv():
     """Test installing PyEnv.
     """
-    cmd = "xinstall -y pyenv -ic"
+    cmd = "xinstall --sudo -y pyenv -ic"
     run_cmd(cmd)
 
 
