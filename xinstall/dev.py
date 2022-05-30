@@ -734,7 +734,7 @@ def pyenv(args):
             HOME / ".bashrc",
             append=[
                 "\n\n# PyEnv",
-                'export PATH="{args.root}/bin:$PATH"',
+                f'export PATH="{args.root}/bin:$PATH"',
                 'eval "$(pyenv init -)"',
                 'eval "$(pyenv virtualenv-init -)"\n',
             ]
@@ -746,7 +746,7 @@ def pyenv(args):
             HOME / ".bashrc",
             exact=[
                 ("# PyEnv", ""),
-                ('export PATH="{args.root}/bin:$PATH"\n', ""),
+                (f'export PATH="{args.root}/bin:$PATH"\n', ""),
                 ('eval "$(pyenv init -)"\n', ""),
                 ('eval "$(pyenv virtualenv-init -)"\n', ""),
             ]
@@ -800,7 +800,7 @@ def jenv(args):
             HOME / ".bashrc",
             append=[
                 "\n\n# jEnv",
-                'export PATH="{args.root}/bin:$PATH"',
+                f'export PATH="{args.root}/bin:$PATH"',
                 'eval "$(jenv init -)"',
             ]
         )
@@ -811,7 +811,7 @@ def jenv(args):
             HOME / ".bashrc",
             exact=[
                 ("# jEnv", ""),
-                ('export PATH="{args.root}/bin:$PATH"\n', ""),
+                (f'export PATH="{args.root}/bin:$PATH"\n', ""),
                 ('eval "$(jenv init -)"\n', ""),
             ]
         )
