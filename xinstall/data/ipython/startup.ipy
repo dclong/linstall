@@ -163,6 +163,7 @@ def set_path_env() -> None:
     paths = list(HOME.glob(".*/bin"))
     paths.extend(HOME.glob("Library/Python/3.*/bin"))
     paths.extend(Path("/").glob("apache/hadoop/bin"))
+    paths.extend(Path("/").glob("usr/local/*/bin"))
     paths.extend(os.environ["PATH"].split(delimiter))
     paths.append(HOME / ".pyenv/shims")
     if "win" in sys.platform:
