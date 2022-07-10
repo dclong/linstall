@@ -269,47 +269,6 @@ def _xonsh_args(subparser) -> None:
 def _add_subparser_xonsh(subparsers) -> None:
     add_subparser(subparsers, "xonsh", func=xonsh, add_argument=_xonsh_args)
 
-
-def bash_it(args) -> None:
-    """Install Bash-it, a community Bash framework.
-    For more details, please refer to https://github.com/Bash-it/bash-it#installation.
-    """
-    if args.install:
-        dir_ = Path.home() / ".bash_it"
-        try:
-            dir_.unlink()
-        except FileNotFoundError:
-            pass
-        cmd = f"""git clone --depth=1 https://github.com/Bash-it/bash-it.git {dir_} \
-                && {dir_}/install.sh --silent -f
-                """
-        run_cmd(cmd)
-    if args.config:
-        profile = HOME / (".bashrc" if is_linux() else ".bash_profile")
-        add_path_shell([BIN_DIR, Path.home() / ".cargo/bin"], profile)
-        logging.info("'export PATH=%s:$PATH' is inserted into %s.", BIN_DIR, profile)
-        if is_linux():
-            bash = textwrap.dedent(
-                """\
-                # source in ~/.bashrc
-                if [[ -f $HOME/.bashrc ]]; then
-                    . $HOME/.bashrc
-                fi
-                """
-            )
-            with (HOME / ".bash_profile").open("w") as fout:
-                fout.write(bash)
-    if args.uninstall:
-        run_cmd("~/.bash_it/uninstall.sh")
-        shutil.rmtree(HOME / ".bash_it")
-
-
-def _add_subparser_bash_it(subparsers) -> None:
-    add_subparser(
-        subparsers, "Bash-it", func=bash_it, aliases=["bashit", "shit", "bit"]
-    )
-
-
 def bash_completion(args) -> None:
     """Install and configure bash-complete.
 
