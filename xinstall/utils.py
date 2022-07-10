@@ -397,27 +397,3 @@ def update_dict(dict1, dict2, recursive: bool = False):
             continue
         update_dict(dict1[key], val)
 
-
-def add_path_shell(
-    paths: Union[str, Path, list[Union[str, Path]]], config_file: Union[str, Path]
-):
-    """Configure shell to add a path into the environment variable PATH. 
-
-    :param paths: Absolute paths to add into PATH.
-    :param config_file: The path of a shell's configuration file. 
-    """
-    if isinstance(paths, (str, Path)):
-        paths = [paths]
-    if isinstance(config_file, str):
-        config_file = Path(config_file)
-    with config_file.open("a", encoding="utf-8") as fout:
-        for path in paths:
-            bash = textwrap.dedent(
-                f"""
-                # PATH: add {path}
-                if [[ ! "$PATH" =~ (^{path}:)|(:{path}:)|(:{path}$) ]]; then
-                    export PATH={path}:$PATH
-                fi
-                """
-            )
-            fout.write(bash)
