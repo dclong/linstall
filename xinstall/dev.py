@@ -853,43 +853,6 @@ def _parse_golang_version():
     return match.groups(0)[0]
 
 
-def golang(args):
-    """Install and configure GoLANG.
-    """
-    if args.install:
-        logging.info("Installing GoLANG ...")
-        if is_linux():
-            ver = _parse_golang_version()
-            cmd = f"""curl -sSL https://go.dev/dl/go{ver}.linux-amd64.tar.gz -o /tmp/go.tar.gz \
-                    && {args.prefix} rm -rf /usr/local/go \
-                    && {args.prefix} tar -C /usr/local/ -xzf /tmp/go.tar.gz
-                """
-            run_cmd(cmd)
-        elif is_macos():
-            brew_install_safe("go")
-        elif is_win():
-            pass
-    if args.config:
-        if is_linux():
-            usr_local_bin = Path("/usr/local/bin/")
-            for path in Path("/usr/local/go/bin/").iterdir():
-                logging.info(
-                    "Creating a symbolic link of %s into %s/ ...", path, usr_local_bin
-                )
-                cmd = f"{args.prefix} ln -svf {path} {usr_local_bin}/"
-                run_cmd(cmd)
-        elif is_macos():
-            pass
-        else:
-            pass
-    if args.uninstall:
-        pass
-
-
-def _add_subparser_golang(subparsers):
-    add_subparser(subparsers, "GoLANG", func=golang, aliases=["go"])
-
-
 def cmake(args):
     """Install and configure cmake.
     """
