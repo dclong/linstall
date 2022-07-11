@@ -80,61 +80,6 @@ def _add_subparser_neovim(subparsers) -> None:
     )
 
 
-def _svim_true_color(true_color: Union[bool, None]) -> None:
-    """Enable/disable true color for SpaceVim.
-    """
-    if true_color is None:
-        return
-    file = HOME / ".SpaceVim.d/init.toml"
-    with file.open() as fin:
-        lines = fin.readlines()
-    for idx, line in enumerate(lines):
-        if line.strip().startswith("enable_guicolors"):
-            if true_color:
-                lines[idx] = line.replace("false", "true")
-            else:
-                lines[idx] = line.replace("true", "false")
-    with file.open("w") as fout:
-        fout.writelines(lines)
-
-
-def _strip_spacevim(args: Namespace) -> None:
-    if not args.strip:
-        return
-    dir_ = Path.home() / ".SpaceVim/"
-    paths = [
-        ".git",
-        ".SpaceVim.d/",
-        ".ci/",
-        ".github/",
-        "docker/",
-        "docs/",
-        "wiki/",
-        ".editorconfig",
-        ".gitignore",
-        "CODE_OF_CONDUCT.md",
-        "CONTRIBUTING.cn.md",
-        "CONTRIBUTING.md",
-        "Makefile",
-        "README.cn.md",
-        "README.md",
-        "codecov.yml",
-    ]
-    for path in paths:
-        path = dir_ / path
-        if path.is_file():
-            try:
-                path.unlink()
-            except FileNotFoundError:
-                pass
-        else:
-            try:
-                shutil.rmtree(path)
-            except FileNotFoundError:
-                pass
-
-
-
 
 
 def bash_lsp(args) -> None:
