@@ -248,52 +248,6 @@ def option_version(subparser, help: str = ""):
     subparser.add_argument("-v", "--version", dest="version", default="", help=help)
 
 
-def option_user(subparser):
-    """Add the option --user to the subparser.
-
-    :param subparser: A sub parser.
-    """
-    subparser.add_argument(
-        "--user",
-        dest="user",
-        action="store_true",
-        help="Install Python packages to user's local directory."
-    )
-
-
-def option_python(subparser) -> None:
-    """Add the option --python into the sub parser.
-
-    :param subparser: A sub parser.
-    """
-    subparser.add_argument(
-        "--python",
-        dest="python",
-        default="python3",
-        help="Path to the python3 command."
-    )
-
-
-def option_pip_option(subparser) -> None:
-    """Add the option --pip-option into the sub parser.
-
-    :param subparser: A sub parser.
-    """
-    subparser.add_argument(
-        "--pip-option", dest="pip_option", default="", help="Additional options."
-    )
-
-
-def option_pip_bundle(subparser) -> None:
-    """Add the options --python, --user and --pip-option into the sub parser.
-
-    :param subparser: A sub parser.
-    """
-    option_python(subparser)
-    option_user(subparser)
-    option_pip_option(subparser)
-
-
 def add_subparser(
     subparsers,
     name: str,
