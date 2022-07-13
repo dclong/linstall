@@ -147,55 +147,6 @@ def intellij_idea(args) -> None:
         pass
 
 
-def visual_studio_code(args) -> None:
-    """Install Visual Studio Code.
-    """
-    if args.install:
-        if is_debian_series():
-            update_apt_source(prefix=args.prefix)
-            run_cmd(f"{args.prefix} apt-get install {args.yes_s} vscode")
-        elif is_macos():
-            run_cmd("brew cask install visual-studio-code")
-        elif is_fedora_series():
-            run_cmd(f"{args.prefix} yum install vscode")
-    if args.uninstall:
-        if is_debian_series():
-            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} vscode")
-        elif is_macos():
-            run_cmd("brew cask uninstall visual-studio-code")
-        elif is_fedora_series():
-            run_cmd(f"{args.prefix} yum remove vscode")
-    if args.config:
-        src_file = f"{BASE_DIR}/vscode/settings.json"
-        if not args.user_dir:
-            args.user_dir = f"{HOME}/.config/Code/User/"
-            if is_macos():
-                args.user_dir = f"{HOME}/Library/Application Support/Code/User/"
-        os.makedirs(args.user_dir, exist_ok=True)
-        shutil.copy2(src_file, args.user_dir)
-
-
-def _visual_studio_code_args(subparser) -> None:
-    subparser.add_argument(
-        "--user-dir",
-        "-d",
-        dest="user_dir",
-        default="",
-        help="Configuration directory."
-    )
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_visual_studio_code(subparsers) -> None:
-    add_subparser(
-        subparsers,
-        "Visual Studio Code",
-        func=visual_studio_code,
-        aliases=["vscode", "code"],
-        add_argument=_visual_studio_code_args
-    )
-
-
 def intellij_idea_scala(args) -> None:
     """Install the Scala plugin for IntelliJ IDEA Community Edition.
     """
