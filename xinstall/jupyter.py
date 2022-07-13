@@ -16,8 +16,6 @@ from .dev import rustup, cmake
 
 
 def _add_subparser_jupyter(subparsers):
-    _add_subparser_ipython(subparsers)
-    _add_subparser_beakerx(subparsers)
     _add_subparser_jupyterlab_lsp(subparsers)
     _add_subparser_itypescript(subparsers)
     _add_subparser_nbdime(subparsers)
@@ -92,36 +90,7 @@ def _add_subparser_jupyterlab_lsp(subparsers) -> None:
         aliases=["jlab-lsp", "jlab_lsp"],
         add_argument=_jupyterlab_lsp_args,
     )
-
-
-def beakerx(args) -> None:
-    """Install/uninstall/configure the BeakerX kernels.
-    """
-    if args.install:
-        run_cmd(f"{args.pip_install} beakerx")
-        run_cmd(f"{args.prefix} beakerx install")
-        run_cmd(
-            f"{args.prefix} jupyter labextension install @jupyter-widgets/jupyterlab-manager",
-        )
-        run_cmd(f"{args.prefix} jupyter labextension install beakerx-jupyterlab")
-    if args.uninstall:
-        run_cmd(f"{args.prefix} jupyter labextension uninstall beakerx-jupyterlab")
-        run_cmd(
-            f"{args.prefix} jupyter labextension uninstall @jupyter-widgets/jupyterlab-manager"
-        )
-        run_cmd(f"{args.prefix} beakerx uninstall")
-        run_cmd(f"{args.pip_uninstall} beakerx")
-    if args.config:
-        run_cmd(f"{args.prefix} chown -R {USER}:`id -g {USER}` {HOME}")
-
-
-def _beakerx_args(subparser) -> None:
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_beakerx(subparsers) -> None:
-    add_subparser(subparsers, "BeakerX", func=beakerx, aliases=["bkx", "bk"])
-
+    
 
 def almond(args) -> None:
     """Install/uninstall/configure the Almond Scala kernel.
