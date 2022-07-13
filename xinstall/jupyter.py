@@ -211,50 +211,6 @@ def _add_subparser_jupyter_book(subparsers):
     )
 
 
-def ipython(args):
-    """Install IPython for Python 3.
-    """
-    if args.install:
-        cmd = f"{args.prefix} {args.pip_install} ipython"
-        run_cmd(cmd)
-    if args.config:
-        src_dir = BASE_DIR / "ipython"
-        dst_dir = args.profile_dir / "profile_default"
-        (dst_dir / "startup").mkdir(mode=0o755, parents=True, exist_ok=True)
-        shutil.copy2(src_dir / "ipython_config.py", dst_dir)
-        shutil.copy2(src_dir / "startup.ipy", dst_dir / "startup")
-        logging.info(
-            "%s is copied to the directory %s.", src_dir / "ipython_config.py", dst_dir
-        )
-        logging.info(
-            "%s is copied to the directory %s.", src_dir / "startup.ipy",
-            dst_dir / "startup"
-        )
-    if args.uninstall:
-        pass
-
-
-def _ipython_args(subparser):
-    subparser.add_argument(
-        "--profile-dir",
-        dest="profile_dir",
-        type=Path,
-        default=HOME / ".ipython",
-        help="The directory for storing IPython configuration files.",
-    )
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_ipython(subparsers):
-    add_subparser(
-        subparsers,
-        "IPython",
-        func=ipython,
-        aliases=["ipy"],
-        add_argument=_ipython_args,
-    )
-
-
 def jupyterlab_vim(args):
     """Install the jupyterlab_vim extension.
     """
