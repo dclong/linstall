@@ -211,52 +211,6 @@ def _add_subparser_jupyter_book(subparsers):
     )
 
 
-def jupyterlab_vim(args):
-    """Install the jupyterlab_vim extension.
-    """
-    if args.enable or args.disable:
-        args.config = True
-    if args.install:
-        cmd = f"{args.prefix} {args.pip_install} jupyterlab_vim"
-        run_cmd(cmd)
-    if args.config:
-        if args.enable:
-            cmd = f"{args.prefix} jupyter labextension enable @axlair/jupyterlab_vim"
-            run_cmd(cmd)
-        if args.disable:
-            cmd = f"{args.prefix} jupyter labextension disable @axlair/jupyterlab_vim"
-            run_cmd(cmd)
-    if args.uninstall:
-        cmd = f"{args.prefix} {args.pip_uninstall} jupyterlab_vim"
-        run_cmd(cmd)
-
-
-def _jupyterlab_vim_args(subparser):
-    option_pip_bundle(subparser)
-    subparser.add_argument(
-        "--enable",
-        dest="enable",
-        action="store_true",
-        help="Whether to enable the jupyterla_vim extension",
-    )
-    subparser.add_argument(
-        "--disable",
-        dest="disable",
-        action="store_true",
-        help="Whether to disable the jupyterla_vim extension",
-    )
-
-
-def _add_subparser_jupyterlab_vim(subparsers):
-    add_subparser(
-        subparsers,
-        "jupyterlab_vim",
-        func=jupyterlab_vim,
-        aliases=["jlab_vim", "jlabvim", "jvim"],
-        add_argument=_jupyterlab_vim_args,
-    )
-
-
 def jupyterlab(args):
     """Install the JupyterLab.
     """
