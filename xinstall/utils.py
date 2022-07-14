@@ -105,60 +105,6 @@ def brew_install_safe(pkgs: Union[str, list]) -> None:
         )
 
 
-def is_ubuntu():
-    """Check whehter the current OS is Ubuntu.
-    """
-    return DISTRO_ID == "ubuntu"
-
-
-def is_ubuntu_series():
-    """Check whehter the current OS is Ubuntu/Debian.
-    """
-    return DISTRO_ID in {"ubuntu", "linuxmint", "pop"}
-
-
-def is_debian():
-    """Check whehter the current OS is Ubuntu.
-    """
-    return DISTRO_ID == "debian"
-
-
-def is_debian_series():
-    """Check whehter the current OS is Ubuntu/Debian.
-    """
-    return DISTRO_ID in {"debian", "ubuntu", "linuxmint", "pop!_os"}
-
-
-def is_linux():
-    """Check whehter the current OS is Linux.
-    """
-    return sys.platform == "linux"
-
-
-def is_fedora_series():
-    """Check whehter the current OS belongs to the CentOS series (CentOS, RedHat or Fedora).
-    """
-    return DISTRO_ID in ("centos", "rhel", "fedora")
-
-
-def is_fedora():
-    """Check whehter the current OS is Fedora.
-    """
-    return DISTRO_ID == "fedora"
-
-
-def is_macos():
-    """Check whehter the current OS is macOS.
-    """
-    return DISTRO_ID == "darwin"
-
-
-def is_win():
-    """Check whehter the current OS is Windows.
-    """
-    return sys.platform == "win32"
-
-
 def copy_file(srcfile, dstfile):
     """Copy file without throwing exceptions
     when a broken symbolic link already exists at the destination.
