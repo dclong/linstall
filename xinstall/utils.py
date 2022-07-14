@@ -134,26 +134,6 @@ def to_bool(value: Any) -> bool:
     return False
 
 
-def update_apt_source(prefix: str = "", yes: str = "--yes", seconds: float = 3600 * 12):
-    """Run apt-get update if necessary.
-
-    :param prefix: The prefix command (e.g., sudo) to use.
-    :param yes: The yes flag (-y, --yes or an empty string).
-    :param seconds: Do not run if this function has already been run `seconds` seconds ago.
-    """
-    fmt = "%Y-%m-%d %H:%M:%S.%f"
-    key = "apt_source_update_time"
-    time = datetime.datetime.strptime(
-        SETTINGS.get(key, "2000-01-01 00:00:00.000000"), fmt
-    )
-    now = datetime.datetime.now()
-    if (now - time).seconds > seconds:
-        run_cmd(f"{prefix} apt-get update {yes}")
-        SETTINGS[key] = now.strftime(fmt)
-        with open(SETTINGS_FILE, "w", encoding="utf-8") as fout:
-            json.dump(SETTINGS, fout)
-
-
 def intellij_idea_plugin(version: str, url: str):
     """Install the specified plugin for IntelliJ IDEA Community Edition.
 
