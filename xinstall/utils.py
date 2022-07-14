@@ -79,18 +79,6 @@ def remove_file_safe(path: Path) -> None:
         pass
 
 
-def run_cmd(cmd: Union[list, str], capture_output: bool = False) -> None:
-    """Run a shell command.
-
-    :param cmd: The command to run.
-    :param capture_output: Whether to capture stdout and stderr of the command.
-    """
-    proc = sp.run(
-        cmd, shell=isinstance(cmd, str), check=True, capture_output=capture_output
-    )
-    logging.debug(proc.args)
-
-
 def brew_install_safe(pkgs: Union[str, list]) -> None:
     """Using Homebrew to install without throwing exceptions if a package to install already exists.
 
