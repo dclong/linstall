@@ -174,39 +174,3 @@ def _add_subparser_install(subparsers) -> None:
         aliases=["from_github"],
         add_argument=_install_args,
     )
-
-
-def dsutil(args) -> None:
-    """Install the Python package dsutil.
-    """
-    if args.install:
-        url = "https://github.com/dclong/dsutil"
-        install_python_lib(
-            url=url,
-            user=args.user,
-            pip_option=args.pip_option,
-            extras=args.extras,
-            prefix=args.prefix,
-            python=args.python,
-        )
-    if args.config:
-        pass
-    if args.uninstall:
-        run_cmd(f"{args.prefix} {args.pip_uninstall} dsutil")
-
-
-def _dsutil_args(subparser) -> None:
-    option_pip_bundle(subparser)
-    subparser.add_argument(
-        "-e",
-        "--extras",
-        dest="extras",
-        default="",
-        help="Extra components to install."
-    )
-
-
-def _add_subparser_dsutil(subparsers) -> None:
-    add_subparser(
-        subparsers, "dsutil", func=dsutil, aliases=[], add_argument=_dsutil_args
-    )
