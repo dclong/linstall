@@ -79,20 +79,6 @@ def remove_file_safe(path: Path) -> None:
         pass
 
 
-def brew_install_safe(pkgs: Union[str, list]) -> None:
-    """Using Homebrew to install without throwing exceptions if a package to install already exists.
-
-    :param pkgs: A (list of) package(s) to install using Homebrew.
-    """
-    if isinstance(pkgs, str):
-        pkgs = [pkgs]
-    for pkg in pkgs:
-        run_cmd(
-            f"""brew install --force {pkg} \
-            || brew link --overwrite --force {pkg}"""
-        )
-
-
 def copy_file(srcfile, dstfile):
     """Copy file without throwing exceptions
     when a broken symbolic link already exists at the destination.
