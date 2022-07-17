@@ -511,46 +511,7 @@ def _git_ignore(args: Namespace) -> None:
     with dstfile.open(mode) as fout:
         fout.write(srcfile.read_text())
     msg = f"%s is {'appended into' if mode == 'a' else 'copied to'} %s."
-    logging.info(msg, srcfile, dstfile)
-
-
-def git_(args) -> None:
-    """Install and configure Git.
-    """
-    if args.install:
-        if is_debian_series():
-            update_apt_source(prefix=args.prefix)
-            run_cmd(f"{args.prefix} apt-get install {args.yes_s} git git-lfs")
-        elif is_macos():
-            brew_install_safe(["git", "git-lfs", "bash-completion@2"])
-        elif is_fedora_series():
-            run_cmd(f"{args.prefix} yum install git")
-        run_cmd("git lfs install")
-    if args.uninstall:
-        run_cmd("git lfs uninstall")
-        if is_debian_series():
-            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} git git-lfs")
-        elif is_macos():
-            run_cmd("brew uninstall git git-lfs")
-        elif is_fedora_series():
-            run_cmd(f"{args.prefix} yum remove git")
-    if args.config:
-        ssh_client(args)
-        gitconfig = HOME / ".gitconfig"
-        # try to remove the file to avoid dead symbolic link problem
-        remove_file_safe(gitconfig)
-        shutil.copy2(BASE_DIR / "git/gitconfig", gitconfig)
-        logging.info("%s is copied to %s", BASE_DIR / "git/gitconfig", gitconfig)
-        if is_macos():
-            file = "/usr/local/etc/bash_completion.d/git-completion.bash"
-            bashrc = f"\n# Git completion\n[ -f {file} ] &&  . {file}"
-            with (HOME / ".bash_profile").open("a") as fout:
-                fout.write(bashrc)
-            logging.info("Bash completion is enabled for Git.")
-    _git_ignore(args)
-    if "proxy" in args and args.proxy:
-        run_cmd(f"git config --global http.proxy {args.proxy}")
-        run_cmd(f"git config --global https.proxy {args.proxy}")
+    logging.info(msg, srcfile, dstfile) 
 
 
 def _git_args(subparser):
