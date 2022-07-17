@@ -22,28 +22,6 @@ from .utils import (
 )
 
 
-def ssh_server(args) -> None:
-    """Install and configure SSH server.
-    """
-    if args.install:
-        if is_debian_series():
-            update_apt_source(prefix=args.prefix)
-            run_cmd(
-                f"{args.prefix} apt-get install {args.yes_s} openssh-server fail2ban"
-            )
-    if args.uninstall:
-        if is_debian_series():
-            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} openssh-server fail2ban")
-        elif is_macos():
-            pass
-        elif is_fedora_series():
-            pass
-
-
-def _add_subparser_ssh_server(subparsers):
-    add_subparser(subparsers, "SSH server", func=ssh_server, aliases=["sshs"])
-
-
 def _ignore_socket(dir_, files):
     dir_ = Path(dir_)
     return [file for file in files if (dir_ / file).is_socket()]
