@@ -16,11 +16,6 @@ from .utils import (
 )
 
 
-def _add_subparser_github(subparsers):
-    _add_subparser_dsutil(subparsers)
-    _add_subparser_install(subparsers)
-
-
 def get_latest_version(url: str) -> str:
     """Get the latest release version of a project on GitHub.
 
