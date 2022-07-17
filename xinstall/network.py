@@ -22,62 +22,6 @@ from .utils import (
 )
 
 
-def _ignore_socket(dir_, files):
-    dir_ = Path(dir_)
-    return [file for file in files if (dir_ / file).is_socket()]
-
-
-def _sshc_copy_from_host(ssh_home: Path):
-    """Copy configuration files from /home_host/USER/.ssh if it exists.
-
-    :param ssh_home: The home directory (~/.ssh) of SSH client configuration.
-    """
-    ssh_src = Path(f"/home_host/{USER}/.ssh")
-    if ssh_src.is_dir():
-        # inside a Docker container, use .ssh from host
-        try:
-            shutil.rmtree(ssh_home)
-        except FileNotFoundError:
-            pass
-        shutil.copytree(ssh_src, ssh_home, ignore=_ignore_socket)
-        logging.info("%s is copied to %s.", ssh_src, ssh_home)
-
-
-def _sshc_copy_config(ssh_home: Path):
-    src = BASE_DIR / "ssh/client/config"
-    des = ssh_home / "config"
-    shutil.copy2(src, des)
-    logging.info("%s is copied to %s.", src, ssh_home)
-
-
-def ssh_client(args) -> None:
-    """Configure SSH client.
-
-    :param args: A Namespace object containing parsed command-line options.
-    """
-    if args.config:
-        ssh_home = HOME / ".ssh"
-        _sshc_copy_from_host(ssh_home)
-        ssh_home.mkdir(exist_ok=True)
-        _sshc_copy_config(ssh_home)
-        control = ssh_home / "control"
-        control.mkdir(exist_ok=True)
-        control.chmod(0o700)
-        if is_linux() or is_macos():
-            cmd = f"{args.prefix} chown -R {USER}:`id -g {USER}` {HOME}/.ssh"
-            run_cmd(cmd)
-        for path in ssh_home.glob("**/*"):
-            if path.is_file():
-                path.chmod(0o600)
-            else:
-                path.chmod(0o700)
-        logging.info("The permissions of ~/.ssh and its contents are corrected set.")
-
-
-def _add_subparser_ssh_client(subparsers):
-    add_subparser(subparsers, "SSH client", func=ssh_client, aliases=["sshc"])
-
-
 def proxychains(args) -> None:
     """Install and configure ProxyChains.
 
