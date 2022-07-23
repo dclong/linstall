@@ -8,17 +8,6 @@ from .utils import (
 )
 
 
-def _add_subparser_ai(subparsers):
-    _add_subparser_kaggle(subparsers)
-    _add_subparser_lightgbm(subparsers)
-    _add_subparser_pytorch(subparsers)
-    _add_subparser_autogluon(subparsers)
-    _add_subparser_pytext(subparsers)
-    _add_subparser_computer_vision(subparsers)
-    _add_subparser_nlp(subparsers)
-    _add_subparser_heic(subparsers)
-
-
 def kaggle(args):
     """Install the Python package kaggle.
     """
@@ -73,37 +62,6 @@ def _add_subparser_lightgbm(subparsers):
         subparsers, "lightgbm", func=lightgbm, aliases=[], add_argument=_lightgbm_args
     )
 
-
-def pytorch(args):
-    """Install PyTorch.
-    """
-    if args.install:
-        version = "cu" + args.cuda_version.replace(
-            ".", ""
-        ) if args.cuda_version else "cpu"
-        cmd = f"{args.pip_install} torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/{version}"
-        run_cmd(cmd)
-    if args.config:
-        pass
-    if args.uninstall:
-        pass
-
-
-def _pytorch_args(subparser):
-    subparser.add_argument(
-        "--cuda-version",
-        "--cuda",
-        dest="cuda_version",
-        default="",
-        help="The version of CUDA. If not specified, the CPU version is used."
-    )
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_pytorch(subparsers):
-    add_subparser(
-        subparsers, "PyTorch", func=pytorch, aliases=[], add_argument=_pytorch_args
-    )
 
 
 def autogluon(args):

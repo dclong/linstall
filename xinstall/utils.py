@@ -68,17 +68,6 @@ def link_if_exists(
         return False
 
 
-def remove_file_safe(path: Path) -> None:
-    """Remove a file or sybmolic link.
-
-    :param path: The path to the file or symbolic link.
-    """
-    try:
-        path.unlink()
-    except FileNotFoundError:
-        pass
-
-
 def copy_file(srcfile, dstfile):
     """Copy file without throwing exceptions
     when a broken symbolic link already exists at the destination.

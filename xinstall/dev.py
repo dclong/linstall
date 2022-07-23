@@ -27,7 +27,6 @@ from .utils import (
     update_file,
     update_dict,
 )
-from .network import ssh_client
 
 
 def openjdk8(args):
@@ -320,54 +319,6 @@ def _add_subparser_python3(subparsers):
     )
 
 
-def poetry(args):
-    """Install and configure Python poetry.
-    """
-    if args.install:
-        url = "https://install.python-poetry.org"
-        cmd = f"curl -sSL {url} | {args.python}"
-        if args.version:
-            cmd += f" - --version {args.version}"
-        run_cmd(cmd)
-    poetry_bin = HOME / ".local/bin/poetry"
-    if args.config:
-        # make poetry always create virtual environment in the root directory of the project
-        run_cmd(f"{poetry_bin} config virtualenvs.in-project true")
-        logging.info(
-            "Python poetry has been configured to create virtual environments inside projects!"
-        )
-        # bash completion
-        if args.bash_completion:
-            if is_linux():
-                cmd = f"""{poetry_bin} completions bash | tee \
-                    /etc/bash_completion.d/poetry.bash-completion > /dev/null"""
-                run_cmd(cmd)
-                return
-            if is_macos():
-                cmd = f"""{poetry_bin} completions bash > \
-                    $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion"""
-                run_cmd(cmd)
-            logging.info("Bash completion is enabled for poetry.")
-    if args.uninstall:
-        run_cmd(f"{poetry_bin} self:uninstall")
-
-
-def _poetry_args(subparser):
-    subparser.add_argument(
-        "-b",
-        "--bash-completion",
-        dest="bash_completion",
-        action="store_true",
-        help="Configure Bash completion for poetry as well."
-    )
-    option_version(subparser, help="The version of Python Poetry to install.")
-    option_python(subparser)
-
-
-def _add_subparser_poetry(subparsers):
-    add_subparser(
-        subparsers, "Poetry", func=poetry, aliases=["pt"], add_argument=_poetry_args
-    )
 
 
 def pyjnius(args):
@@ -499,72 +450,6 @@ def _add_subparser_flamegraph(subparsers):
         aliases=["flame", "flameg", "fgraph", "fg"],
     )
 
-
-def _git_ignore(args: Namespace) -> None:
-    """Insert patterns to ingore into .gitignore in the current directory.
-    """
-    if not args.language:
-        return
-    srcfile = BASE_DIR / f"git/gitignore_{args.language}"
-    dstfile = args.dst_dir / ".gitignore"
-    mode = "a" if args.append else "w"
-    with dstfile.open(mode) as fout:
-        fout.write(srcfile.read_text())
-    msg = f"%s is {'appended into' if mode == 'a' else 'copied to'} %s."
-    logging.info(msg, srcfile, dstfile) 
-
-
-def _git_args(subparser):
-    subparser.add_argument(
-        "--proxy",
-        dest="proxy",
-        default="",
-        help="Configure Git to use the specified proxy."
-    )
-    subparser.add_argument(
-        "-d",
-        "--dest-dir",
-        dest="dst_dir",
-        type=Path,
-        default=Path(),
-        help="The destination directory to copy the YAPF configuration file to.",
-    )
-    subparser.add_argument(
-        "-p",
-        "--python",
-        dest="language",
-        action="store_const",
-        const="python",
-        default="",
-        help="Gitignore patterns for Python developing."
-    )
-    subparser.add_argument(
-        "-j",
-        "--java",
-        dest="language",
-        action="store_const",
-        const="java",
-        help="Gitignore patterns for Java developing."
-    )
-    subparser.add_argument(
-        "-r",
-        "--rust",
-        dest="language",
-        action="store_const",
-        const="rust",
-        help="Gitignore patterns for Rust developing."
-    )
-    subparser.add_argument(
-        "-a",
-        "--append",
-        dest="append",
-        action="store_true",
-        help="Append patterns to ignore into .gitignore rather than overwrite it."
-    )
-
-
-def _add_subparser_git(subparsers):
-    add_subparser(subparsers, "Git", func=git_, add_argument=_git_args)
 
 
 def antlr(args):
