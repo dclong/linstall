@@ -696,7 +696,6 @@ def _add_subparser_dev(subparsers):
     _add_subparser_openjdk(subparsers)
     _add_subparser_sdkman(subparsers)
     _add_subparser_poetry(subparsers)
-    _add_subparser_rustup(subparsers)
     _add_subparser_flamegraph(subparsers)
     _add_subparser_rustpython(subparsers)
     _add_subparser_deno(subparsers)
