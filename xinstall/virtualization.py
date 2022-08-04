@@ -88,64 +88,6 @@ def _add_subparser_virtualbox_guest_additions(subparsers):
     )
 
 
-def docker(args):
-    """Install and configure Docker container.
-
-    :param args: A Namespace object containing parsed command-line options.
-    """
-    if args.install:
-        if is_debian_series():
-            update_apt_source(prefix=args.prefix)
-            run_cmd(
-                f"{args.prefix} apt-get install {args.yes_s} docker.io docker-compose"
-            )
-        elif is_macos():
-            brew_install_safe([
-                "docker",
-                "docker-compose",
-                "bash-completion@2",
-            ])
-        elif is_fedora_series():
-            run_cmd(f"{args.prefix} yum install docker docker-compose")
-    if args.config:
-        if args.user_to_docker:
-            if is_debian_series():
-                run_cmd(f"{args.prefix} gpasswd -a {args.user_to_docker} docker")
-                logging.warning(
-                    "Please run the command 'newgrp docker' or logout/login"
-                    " to make the group 'docker' effective!"
-                )
-            elif is_macos():
-                cmd = f"{args.prefix} dseditgroup -o edit -a {args.user_to_docker} -t user staff"
-                run_cmd(cmd)
-    if args.uninstall:
-        if is_debian_series():
-            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} docker docker-compose", )
-        elif is_macos():
-            run_cmd(
-                "brew uninstall docker docker-completion docker-compose docker-compose-completion",
-            )
-        elif is_fedora_series():
-            run_cmd(f"{args.prefix} yum remove docker docker-compose")
-
-
-def _docker_args(subparser):
-    subparser.add_argument(
-        "--user-to-docker",
-        dest="user_to_docker",
-        default="" if USER == "root" else USER,
-        help="The user to add to the docker group.",
-    )
-
-
-def _add_subparser_docker(subparsers):
-    add_subparser(
-        subparsers,
-        "Docker",
-        func=docker,
-        add_argument=_docker_args,
-        aliases=["dock", "dk"]
-    )
 
 
 def kubectl(args):
