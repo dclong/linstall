@@ -111,42 +111,6 @@ def _add_subparser_yapf(subparsers):
     add_subparser(subparsers, "yapf", func=yapf, aliases=[], add_argument=_yapf_args)
 
 
-def pylint(args):
-    """Install and configure pylint.
-    """
-    if args.install:
-        run_cmd(f"{args.pip_install} pylint")
-    if args.config:
-        src_file = BASE_DIR / "pylint/pyproject.toml"
-        dic_src = tomlkit.loads(src_file.read_text())
-        des_file = args.dst_dir / "pyproject.toml"
-        if des_file.is_file():
-            dic_des = tomlkit.loads(des_file.read_text())
-        else:
-            dic_des = {}
-        update_dict(dic_des, dic_src, recursive=True)
-        des_file.write_text(tomlkit.dumps(dic_des))
-        logging.info("pylint is configured via %s.", des_file)
-    if args.uninstall:
-        run_cmd(f"{args.pip_uninstall} pylint")
-
-
-def _pylint_args(subparser):
-    subparser.add_argument(
-        "-d",
-        "--dest-dir",
-        dest="dst_dir",
-        type=Path,
-        default=Path(),
-        help="The destination directory to copy the pylint configuration file to.",
-    )
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_pylint(subparsers):
-    add_subparser(
-        subparsers, "pylint", func=pylint, aliases=[], add_argument=_pylint_args
-    )
 
 
 def flake8(args):
@@ -680,14 +644,11 @@ def _add_subparser_cmake(subparsers):
 
 def _add_subparser_dev(subparsers):
     _add_subparser_cmake(subparsers)
-    _add_subparser_git(subparsers)
     _add_subparser_nodejs(subparsers)
     _add_subparser_python3(subparsers)
-    _add_subparser_golang(subparsers)
     _add_subparser_sphinx(subparsers)
     _add_subparser_pyjnius(subparsers)
     _add_subparser_yapf(subparsers)
-    _add_subparser_pylint(subparsers)
     _add_subparser_flake8(subparsers)
     _add_subparser_darglint(subparsers)
     _add_subparser_pytype(subparsers)
@@ -695,8 +656,6 @@ def _add_subparser_dev(subparsers):
     _add_subparser_jenv(subparsers)
     _add_subparser_openjdk(subparsers)
     _add_subparser_sdkman(subparsers)
-    _add_subparser_poetry(subparsers)
-    _add_subparser_rustup(subparsers)
     _add_subparser_flamegraph(subparsers)
     _add_subparser_rustpython(subparsers)
     _add_subparser_deno(subparsers)

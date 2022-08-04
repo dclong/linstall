@@ -185,47 +185,6 @@ def _add_subparser_homebrew(subparsers) -> None:
     )
 
 
-def hyper(args) -> None:
-    """Install the hyper.js terminal.
-    """
-    if args.install:
-        if is_debian_series():
-            run_cmd(f"{args.prefix} apt-get update")
-            args.output = "/tmp/hyper.deb"
-            args.install_cmd = f"{args.prefix} apt-get install {args.yes_s}"
-            github.install(args)
-        elif is_macos():
-            run_cmd("brew cask install hyper")
-        elif is_fedora_series():
-            #!yum install hyper
-            pass
-    if args.config:
-        run_cmd("hyper i hypercwd")
-        run_cmd("hyper i hyper-search")
-        run_cmd("hyper i hyper-pane")
-        run_cmd("hyper i hyperpower")
-        logging.info(
-            "Hyper plugins hypercwd, hyper-search, hyper-pane and hyperpower are installed."
-        )
-        path = f"{HOME}/.hyper.js"
-        #if os.path.exists(path):
-        #    os.remove(path)
-        shutil.copy2(os.path.join(BASE_DIR, "hyper/hyper.js"), path)
-        logging.info("%s is copied to %s.", BASE_DIR / "hyper/hyper.js", path)
-    if args.uninstall:
-        if is_debian_series():
-            #!apt-get purge hyper
-            pass
-        elif is_macos():
-            run_cmd("brew cask uninstall hyper")
-        elif is_fedora_series():
-            #!yum remove hyper
-            pass
-
-
-def _add_subparser_hyper(subparsers) -> None:
-    add_subparser(subparsers, "Hyper", func=hyper, aliases=["hp"])
-
 
 def openinterminal(args) -> None:
     """Install openinterminal.
