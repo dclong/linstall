@@ -40,48 +40,6 @@ def _add_subparser_vim(subparsers) -> None:
     add_subparser(subparsers, "Vim", func=vim)
 
 
-def neovim(args) -> None:
-    """Install NeoVim.
-    """
-    if args.ppa and is_debian_series():
-        args.install = True
-        run_cmd(f"{args.prefix} add-apt-repository -y ppa:neovim-ppa/unstable")
-    if args.install:
-        if is_debian_series():
-            update_apt_source(prefix=args.prefix)
-            run_cmd(f"{args.prefix} apt-get install {args.yes_s} neovim")
-        elif is_macos():
-            brew_install_safe(["neovim"])
-        elif is_fedora_series():
-            run_cmd(f"{args.prefix} yum install neovim")
-    if args.uninstall:
-        if is_debian_series():
-            run_cmd(f"{args.prefix} apt-get purge {args.yes_s} neovim")
-        elif is_macos():
-            run_cmd("brew uninstall neovim")
-        elif is_fedora_series():
-            run_cmd(f"{args.prefix} yum remove neovim")
-    if args.config:
-        pass
-
-
-def _neovim_args(subparser) -> None:
-    subparser.add_argument(
-        "--ppa",
-        dest="ppa",
-        action="store_true",
-        help="Install the unstable version of NeoVim from PPA."
-    )
-
-
-def _add_subparser_neovim(subparsers) -> None:
-    add_subparser(
-        subparsers, "NeoVim", func=neovim, aliases=["nvim"], add_argument=_neovim_args
-    )
-
-
-
-
 def bash_lsp(args) -> None:
     """Install Bash Language Server for SpaceVim.
     """
