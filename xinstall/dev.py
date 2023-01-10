@@ -74,45 +74,6 @@ def _add_subparser_sdkman(subparsers):
     add_subparser(subparsers, "sdkman", func=sdkman, aliases=[])
 
 
-def yapf(args):
-    """Install Google's yapf (for formatting Python scripts).
-    """
-    if args.install:
-        run_cmd(f"{args.pip_install} yapf")
-    if args.config:
-        # configure yapf formatting via pyproject.toml
-        src_file = BASE_DIR / "yapf/pyproject.toml"
-        dic_src = tomlkit.loads(src_file.read_text())
-        des_file = args.dst_dir / "pyproject.toml"
-        if des_file.is_file():
-            dic_des = tomlkit.loads(des_file.read_text())
-        else:
-            dic_des = {}
-        update_dict(dic_des, dic_src, recursive=True)
-        des_file.write_text(tomlkit.dumps(dic_des))
-        logging.info("yapf is configured via %s.", des_file)
-    if args.uninstall:
-        run_cmd(f"{args.pip_uninstall} yapf")
-
-
-def _yapf_args(subparser):
-    subparser.add_argument(
-        "-d",
-        "--dest-dir",
-        dest="dst_dir",
-        type=Path,
-        default=Path(),
-        help="The destination directory to copy the YAPF configuration file to.",
-    )
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_yapf(subparsers):
-    add_subparser(subparsers, "yapf", func=yapf, aliases=[], add_argument=_yapf_args)
-
-
-
-
 def flake8(args):
     """Install and configure flake8.
     """
@@ -174,38 +135,6 @@ def _darglint_args(subparser):
 def _add_subparser_darglint(subparsers):
     add_subparser(
         subparsers, "darglint", func=darglint, aliases=[], add_argument=_darglint_args
-    )
-
-
-def pytype(args):
-    """Install and configure pytype.
-    """
-    if args.install:
-        run_cmd(f"{args.pip_install} pytype")
-    if args.config:
-        src_file = BASE_DIR / "pytype/setup.cfg"
-        des_file = args.dst_dir / "setup.cfg"
-        shutil.copy2(src_file, des_file)
-        logging.info("%s is copied to %s.", src_file, des_file)
-    if args.uninstall:
-        run_cmd(f"{args.pip_uninstall} pytype")
-
-
-def _pytype_args(subparser):
-    subparser.add_argument(
-        "-d",
-        "--dest-dir",
-        dest="dst_dir",
-        type=Path,
-        default=Path(),
-        help="The destination directory to copy the pytype configuration file to.",
-    )
-    option_pip_bundle(subparser)
-
-
-def _add_subparser_pytype(subparsers):
-    add_subparser(
-        subparsers, "pytype", func=pytype, aliases=[], add_argument=_pytype_args
     )
 
 
@@ -648,10 +577,8 @@ def _add_subparser_dev(subparsers):
     _add_subparser_python3(subparsers)
     _add_subparser_sphinx(subparsers)
     _add_subparser_pyjnius(subparsers)
-    _add_subparser_yapf(subparsers)
     _add_subparser_flake8(subparsers)
     _add_subparser_darglint(subparsers)
-    _add_subparser_pytype(subparsers)
     _add_subparser_pyenv(subparsers)
     _add_subparser_jenv(subparsers)
     _add_subparser_openjdk(subparsers)
